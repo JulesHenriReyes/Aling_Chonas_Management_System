@@ -11,6 +11,7 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
+    protected $attributes = ['is_active' => true];
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 

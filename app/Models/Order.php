@@ -22,7 +22,14 @@ class Order extends Model
         'completed_at',
         'cancelled_at',
         'notes_text',
+        'private_token',
+        'fixed_catalog_pricing',
+        'ready_at',
+        'cancellation_kind',
+        'cancellation_reason',
     ];
+
+    protected $hidden = ['private_token'];
 
     protected function casts(): array
     {
@@ -30,6 +37,8 @@ class Order extends Model
             'pickup_date' => 'date',
             'completed_at' => 'datetime',
             'cancelled_at' => 'datetime',
+            'ready_at' => 'datetime',
+            'fixed_catalog_pricing' => 'boolean',
         ];
     }
 
@@ -58,6 +67,21 @@ class Order extends Model
         return $this->hasMany(Payment::class, 'order_id');
     }
 
+    public function paymentProofs(): HasMany
+    {
+        return $this->hasMany(PaymentProof::class)->latest('id');
+    }
+
+    public function refund(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Refund::class);
+    }
+
+    public function pickupDeadline(): \Carbon\Carbon
+    {
+        return \Carbon\Carbon::parse($this->pickup_date->toDateString().' '.$this->pickup_time, config('bakery.pickup_timezone'));
+    }
+
     /**
      * Calculate total order amount dynamically from order_details.
      */
@@ -73,7 +97,10 @@ class Order extends Model
                     ->selectRaw('COALESCE(SUM(quantity * unit_price), 0) as total')
                     ->value('total');
 
-                return round((float) $total, 2);
+                $extras = OrderAddOn::whereIn('order_detail_id', $this->orderDetails()->select('id'))
+                    ->selectRaw('COALESCE(SUM(quantity * unit_price), 0) as total')->value('total');
+
+                return round((float) $total + (float) $extras, 2);
             }
         );
     }

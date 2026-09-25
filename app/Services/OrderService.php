@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Payment;
-use App\Models\Product;
+use App\Models\PaymentProof;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -64,6 +64,10 @@ class OrderService
                 ]);
             }
 
+            $quote = app(CatalogPricingService::class)->quote($data['items']);
+            if (isset($data['expected_total']) && !$this->sameAmount((float) $data['expected_total'], (float) $quote['total'])) {
+                throw ValidationException::withMessages(['items' => 'A catalog price changed. Review the current itemized total before submitting again.']);
+            }
             $orderNumber = $this->generateOrderNumber();
 
             $order = Order::create([
@@ -74,34 +78,16 @@ class OrderService
                 'pickup_date' => $data['pickup_date'],
                 'pickup_time' => $data['pickup_time'],
                 'notes_text' => $data['notes_text'] ?? null,
+                'private_token' => $user === null ? bin2hex(random_bytes(32)) : null,
+                'fixed_catalog_pricing' => true,
             ]);
 
-            foreach ($data['items'] as $item) {
-                if (!isset($item['quantity']) || (int) $item['quantity'] <= 0) {
-                    throw ValidationException::withMessages([
-                        'quantity' => ['Each selected product must have a quantity greater than zero.'],
-                    ]);
-                }
-
-                $product = Product::findOrFail($item['product_id']);
-                if ($user === null && !$product->is_active) {
-                    throw ValidationException::withMessages([
-                        'items' => ['Public orders may only contain active products.'],
-                    ]);
-                }
-                $unitPrice = isset($item['unit_price']) && is_numeric($item['unit_price'])
-                    ? (float) $item['unit_price']
-                    : (float) $product->price;
-
-                $orderDetail = OrderDetail::create([
-                    'order_id' => $order->id,
-                    'product_id' => $product->id,
-                    'quantity' => (int) $item['quantity'],
-                    'unit_price' => $unitPrice,
-                    'layers' => isset($item['layers']) && $item['layers'] !== '' ? (int) $item['layers'] : null,
-                    'themes' => $item['themes'] ?? null,
-                    'special_request' => $item['special_request'] ?? null,
-                ]);
+            foreach (array_values($data['items']) as $index => $item) {
+                $line = $quote['lines'][$index];
+                $extras = $line['add_ons'];
+                unset($line['add_ons']);
+                $orderDetail = $order->orderDetails()->create($line);
+                $orderDetail->addOns()->createMany($extras);
 
                 if (!empty($item['images']) && is_array($item['images'])) {
                     foreach ($item['images'] as $imageFile) {
@@ -116,7 +102,7 @@ class OrderService
                 }
             }
 
-            return $order->load(['customer', 'orderDetails.product', 'orderDetails.images', 'images', 'payments']);
+            return $order->load(['customer', 'orderDetails.product', 'orderDetails.addOns', 'orderDetails.images', 'images', 'payments']);
         });
     }
 
@@ -156,8 +142,14 @@ class OrderService
             $path = $imageFile->store("order_images/{$order->id}", 'public');
             $filename = $imageFile->getClientOriginalName();
         } elseif (is_array($imageFile)) {
-            $path = $imageFile['file_path'];
             $filename = $imageFile['original_filename'];
+            if (isset($imageFile['staged_path'])) {
+                $extension = pathinfo($imageFile['staged_path'], PATHINFO_EXTENSION);
+                $path = "order_images/{$order->id}/".\Illuminate\Support\Str::uuid().'.'.$extension;
+                \Illuminate\Support\Facades\Storage::disk('public')->put($path, \Illuminate\Support\Facades\Storage::disk('local')->get($imageFile['staged_path']));
+            } else {
+                $path = $imageFile['file_path'];
+            }
         } else {
             $path = (string) $imageFile;
             $filename = basename($path);
@@ -167,39 +159,15 @@ class OrderService
     }
 
     /**
-     * Staff can revise unit_price on a pending order.
-     * Locked once confirmed.
+     * Kept as a rejecting boundary for callers of the old service API.
      */
     public function updateOrderDetailPrice(Order $order, OrderDetail $orderDetail, float $newPrice, ?User $user): OrderDetail
     {
         $this->requireStaffUser($user);
 
-        return DB::transaction(function () use ($order, $orderDetail, $newPrice) {
-            if ((int) $orderDetail->order_id !== (int) $order->id) {
-                throw ValidationException::withMessages([
-                    'order_detail' => ['The specified order detail does not belong to this order.'],
-                ]);
-            }
-
-            if ($order->status !== 'pending') {
-                throw ValidationException::withMessages([
-                    'status' => ['Unit prices can only be adjusted while the order is in pending status.'],
-                ]);
-            }
-
-            if ($newPrice < 0) {
-                throw ValidationException::withMessages([
-                    'unit_price' => ['Unit price cannot be negative.'],
-                ]);
-            }
-
-            $orderDetail->unit_price = round($newPrice, 2);
-            $orderDetail->save();
-
-            $order->load(['orderDetails', 'payments']);
-
-            return $orderDetail;
-        });
+        throw ValidationException::withMessages([
+            'unit_price' => ['Order prices are fixed catalog snapshots and cannot be adjusted.'],
+        ]);
     }
 
     /**
@@ -211,13 +179,23 @@ class OrderService
         string $paymentMethod,
         ?string $referenceNumber,
         ?User $user,
-        ?Carbon $paymentDate = null
+        ?Carbon $paymentDate = null,
+        ?PaymentProof $verifiedProof = null
     ): Payment {
         $user = $this->requireStaffUser($user);
 
-        return DB::transaction(function () use ($order, $amount, $paymentMethod, $referenceNumber, $user, $paymentDate) {
-            // Reload relationships to ensure fresh totals
-            $order->load(['orderDetails', 'payments']);
+        return DB::transaction(function () use ($order, $amount, $paymentMethod, $referenceNumber, $user, $paymentDate, $verifiedProof) {
+            $order = $this->lockOrder($order);
+            $order->load(['orderDetails.addOns', 'payments']);
+
+            if ($order->user_id === null) {
+                $proof = $verifiedProof ? PaymentProof::whereKey($verifiedProof->id)->lockForUpdate()->first() : null;
+                if ($paymentMethod !== 'gcash' || !$proof || $proof->order_id !== $order->id
+                    || $proof->status !== 'awaiting_verification'
+                    || $proof->reference_number !== $this->normalizeReference($referenceNumber)) {
+                    throw ValidationException::withMessages(['payment' => 'Review the buyer’s GCash proof to verify a public deposit.']);
+                }
+            }
 
             if ($order->status === 'cancelled') {
                 throw ValidationException::withMessages([
@@ -256,6 +234,7 @@ class OrderService
                 ]);
             }
 
+            $referenceNumber = $this->reserveReference($paymentMethod, $referenceNumber);
             $payment = Payment::create([
                 'order_id' => $order->id,
                 'user_id' => $user->id,
@@ -266,8 +245,14 @@ class OrderService
                 'payment_date' => $paymentDate ?? now(),
             ]);
 
+            $this->assignReference($paymentMethod, $referenceNumber, $payment);
+            if (isset($proof)) {
+                $proof->update(['status' => 'verified', 'reviewed_by' => $user->id, 'reviewed_at' => now(), 'payment_id' => $payment->id]);
+            }
+
             // A verified 50% deposit is the only valid pending -> confirmed transition.
             $order->update(['status' => 'confirmed']);
+            $order->unsetRelation('payments');
 
             return $payment;
         });
@@ -287,7 +272,8 @@ class OrderService
         $user = $this->requireStaffUser($user);
 
         return DB::transaction(function () use ($order, $amount, $paymentMethod, $referenceNumber, $user, $paymentDate) {
-            $order->load(['orderDetails', 'payments']);
+            $order = $this->lockOrder($order);
+            $order->load(['orderDetails.addOns', 'payments']);
 
             if ($order->status === 'cancelled') {
                 throw ValidationException::withMessages([
@@ -327,7 +313,8 @@ class OrderService
                 ]);
             }
 
-            return Payment::create([
+            $referenceNumber = $this->reserveReference($paymentMethod, $referenceNumber);
+            $payment = Payment::create([
                 'order_id' => $order->id,
                 'user_id' => $user->id,
                 'amount' => $amount,
@@ -336,6 +323,11 @@ class OrderService
                 'reference_number' => $referenceNumber,
                 'payment_date' => $paymentDate ?? now(),
             ]);
+            $this->assignReference($paymentMethod, $referenceNumber, $payment);
+
+            $order->unsetRelation('payments');
+
+            return $payment;
         });
     }
 
@@ -347,7 +339,8 @@ class OrderService
         $user = $this->requireStaffUser($user);
 
         return DB::transaction(function () use ($order, $newStatus, $user) {
-            $order->load(['orderDetails', 'payments']);
+            $order = $this->lockOrder($order);
+            $order->load(['orderDetails.addOns', 'payments']);
 
             if ($order->status === 'cancelled') {
                 throw ValidationException::withMessages([
@@ -384,6 +377,9 @@ class OrderService
                 }
             }
 
+            if ($newStatus === 'ready_for_pickup' && $order->ready_at === null) {
+                $order->ready_at = now();
+            }
             $order->status = $newStatus;
             $order->save();
 
@@ -399,6 +395,7 @@ class OrderService
         $this->requireStaffUser($user);
 
         return DB::transaction(function () use ($order) {
+            $order = $this->lockOrder($order);
             if ($order->status === 'completed') {
                 throw ValidationException::withMessages([
                     'status' => ['Completed orders cannot be cancelled.'],
@@ -411,6 +408,7 @@ class OrderService
                     $order->cancelled_at = now();
                 }
                 $order->status = 'cancelled';
+                $order->cancellation_kind = 'customer';
                 $order->save();
             }
 
@@ -421,7 +419,7 @@ class OrderService
     protected function generateOrderNumber(): string
     {
         $date = now()->format('Ymd');
-        $random = strtoupper(substr(uniqid(), -4));
+        $random = strtoupper(bin2hex(random_bytes(5)));
         return "ORD-{$date}-{$random}";
     }
 
@@ -432,13 +430,47 @@ class OrderService
      */
     private function requireStaffUser(?User $user): User
     {
-        if ($user === null || !$user->exists || !$user->id || !in_array($user->role, ['owner', 'assistant'], true)) {
-            throw ValidationException::withMessages([
-                'user' => ['This action requires an authenticated Owner or Assistant user.'],
-            ]);
+        return StaffAccess::require($user);
+    }
+
+    private function lockOrder(Order $order): Order
+    {
+        $locked = Order::whereKey($order->id)->lockForUpdate()->firstOrFail();
+        $order->setRawAttributes($locked->getAttributes(), true);
+        $order->unsetRelations();
+
+        return $order;
+    }
+
+    public function normalizeReference(?string $reference): string
+    {
+        return strtoupper(preg_replace('/\s+/', '', trim($reference ?? '')));
+    }
+
+    private function reserveReference(string $method, ?string $reference): ?string
+    {
+        if (!in_array($method, ['cash', 'gcash'], true)) {
+            throw ValidationException::withMessages(['payment_method' => 'Choose Cash or GCash.']);
+        }
+        if ($method === 'cash') {
+            return null;
+        }
+        $reference = $this->normalizeReference($reference);
+        if ($reference === '' || strlen($reference) > 100) {
+            throw ValidationException::withMessages(['reference_number' => 'Enter the GCash transaction reference (up to 100 characters).']);
+        }
+        if (!DB::table('gcash_references')->insertOrIgnore(['reference_number' => $reference])) {
+            throw ValidationException::withMessages(['reference_number' => 'This GCash transaction reference has already been recorded.']);
         }
 
-        return $user;
+        return $reference;
+    }
+
+    private function assignReference(string $method, ?string $reference, Payment $payment): void
+    {
+        if ($method === 'gcash') {
+            DB::table('gcash_references')->where('reference_number', $reference)->update(['payment_id' => $payment->id]);
+        }
     }
 
     /**

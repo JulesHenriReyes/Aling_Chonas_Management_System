@@ -14,6 +14,7 @@ use Tests\TestCase;
 class OrderReviewAndPricingTest extends TestCase
 {
     use RefreshDatabase;
+    use \Tests\Concerns\CreatesCatalogFixtures;
 
     private User $owner;
     private Customer $customer;
@@ -37,8 +38,8 @@ class OrderReviewAndPricingTest extends TestCase
             'last_name' => 'Santos',
             'phone_number' => '09171234567',
         ]);
-        $this->cake = Product::create(['product_name' => 'Celebration Cake', 'price' => 1000.00, 'is_active' => true]);
-        $this->cupcakes = Product::create(['product_name' => 'Cupcakes', 'price' => 500.00, 'is_active' => true]);
+        $this->cake = $this->catalogProduct(['product_name' => 'Celebration Cake', 'price' => 1000.00, 'is_active' => true]);
+        $this->cupcakes = $this->catalogProduct(['product_name' => 'Cupcakes', 'price' => 500.00, 'is_active' => true]);
         $this->orderService = app(OrderService::class);
     }
 
@@ -54,40 +55,29 @@ class OrderReviewAndPricingTest extends TestCase
         $this->orderService->createInternalOrder($this->orderData(), null);
     }
 
-    public function test_pending_public_prices_can_be_reviewed_then_lock_at_confirmation(): void
+    public function test_pending_public_prices_are_fixed_immediately_and_cannot_be_manually_adjusted(): void
     {
         $order = $this->orderService->createPublicOrder($this->orderData());
         $detail = $order->orderDetails->firstWhere('product_id', $this->cake->id);
-
         $this->assertSame(1000.00, (float) $detail->unit_price);
         $this->assertSame(1500.00, $order->total_amount);
-
-        $this->orderService->updateOrderDetailPrice($order, $detail, 1200.00, $this->owner);
-        $order->refresh();
-        $this->assertSame(1700.00, $order->total_amount);
-        $this->assertSame(850.00, $order->required_down_payment);
-
-        $this->orderService->recordDownPayment($order, 850.00, 'cash', null, $this->owner);
-        $order->refresh();
-        $this->assertSame('confirmed', $order->status);
-
+        $this->assertSame(750.00, $order->required_down_payment);
         $this->expectException(ValidationException::class);
-        $this->orderService->updateOrderDetailPrice($order, $detail, 1500.00, $this->owner);
+        $this->orderService->updateOrderDetailPrice($order, $detail, 1200.00, $this->owner);
     }
 
-    public function test_confirmed_order_retains_reviewed_price_after_catalog_price_changes(): void
+    public function test_confirmed_order_retains_option_price_after_catalog_price_changes(): void
     {
-        $order = $this->orderService->createPublicOrder($this->orderData());
+        $order = $this->orderService->createInternalOrder($this->orderData(), $this->owner);
         $detail = $order->orderDetails->firstWhere('product_id', $this->cake->id);
-        $this->orderService->updateOrderDetailPrice($order, $detail, 1200.00, $this->owner);
-        $this->orderService->recordDownPayment($order, 850.00, 'cash', null, $this->owner);
-
-        $this->cake->update(['price' => 2000.00]);
+        $this->orderService->recordDownPayment($order, 750.00, 'cash', null, $this->owner);
+        $this->cake->options()->first()->update(['price' => 2000.00]);
         $detail->refresh();
         $order->refresh();
-
-        $this->assertSame(1200.00, (float) $detail->unit_price);
-        $this->assertSame(1700.00, $order->total_amount);
+        $this->assertSame(1000.00, (float) $detail->unit_price);
+        $this->assertSame(1500.00, $order->total_amount);
+        $this->expectException(ValidationException::class);
+        $this->orderService->updateOrderDetailPrice($order, $detail, 1200.00, $this->owner);
     }
 
     public function test_invalid_status_transitions_and_terminal_state_changes_are_rejected(): void
@@ -143,8 +133,8 @@ class OrderReviewAndPricingTest extends TestCase
             'pickup_date' => now()->addDays(3)->toDateString(),
             'pickup_time' => '14:00',
             'items' => [
-                ['product_id' => $this->cake->id, 'quantity' => 1],
-                ['product_id' => $this->cupcakes->id, 'quantity' => 1],
+                ['product_id' => $this->cake->id, 'package_option_id' => $this->cake->options()->first()->id, 'quantity' => 1],
+                ['product_id' => $this->cupcakes->id, 'package_option_id' => $this->cupcakes->options()->first()->id, 'quantity' => 1],
             ],
         ];
     }

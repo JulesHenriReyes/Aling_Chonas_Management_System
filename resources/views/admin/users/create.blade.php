@@ -4,67 +4,67 @@
 
 @section('content')
 <div class="max-w-xl mx-auto space-y-6">
-    <div class="flex items-center justify-between">
-        <h1 class="text-2xl font-bold text-stone-900">Create Internal User</h1>
-        <a href="{{ route('users.index') }}" class="text-xs text-rose-900 font-bold hover:underline">
-            ← Back to Users
+    <div class="page-heading">
+        <h1 class="text-xl font-bold text-cocoa-600">Create Internal User</h1>
+        <a href="{{ route('users.index') }}" class="text-cocoa-500 hover:text-cocoa-600 font-medium text-sm">
+            <x-icon name="arrow-left" class="mr-1" /> Back to Users
         </a>
     </div>
 
-    <div class="bg-white border border-stone-200 rounded-2xl p-6 shadow-sm">
+    <div class="bg-white border border-cocoa-100 rounded-xl p-6">
         <form action="{{ route('users.store') }}" method="POST" class="space-y-4">
             @csrf
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-xs font-bold uppercase text-stone-700 mb-1">First Name <span class="text-red-500">*</span></label>
-                    <input required name="first_name" value="{{ old('first_name') }}" class="w-full text-xs rounded-xl border-stone-300 focus:border-rose-700 focus:ring-rose-700 shadow-sm">
+                    <label class="block text-xs font-semibold text-cocoa-500 mb-1.5" for="field-admin-users-create-blade-php-1">first name <span class="text-red-500">*</span></label>
+                    <input autocomplete="given-name" id="field-admin-users-create-blade-php-1" required name="first_name" value="{{ old('first_name') }}" class="w-full text-sm rounded-lg border-cocoa-100 bg-white focus:border-cocoa-300 focus:ring-cocoa-300 placeholder-cocoa-400/50">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold uppercase text-stone-700 mb-1">Middle Name <span class="text-stone-400 font-normal">(optional)</span></label>
-                    <input name="middle_name" value="{{ old('middle_name') }}" class="w-full text-xs rounded-xl border-stone-300 focus:border-rose-700 focus:ring-rose-700 shadow-sm">
+                    <label class="block text-xs font-semibold text-cocoa-500 mb-1.5" for="field-admin-users-create-blade-php-2">middle name <span class="text-cocoa-400 font-normal">(optional)</span></label>
+                    <input autocomplete="additional-name" id="field-admin-users-create-blade-php-2" name="middle_name" value="{{ old('middle_name') }}" class="w-full text-sm rounded-lg border-cocoa-100 bg-white focus:border-cocoa-300 focus:ring-cocoa-300 placeholder-cocoa-400/50">
                 </div>
             </div>
 
             <div>
-                <label class="block text-xs font-bold uppercase text-stone-700 mb-1">Last Name <span class="text-red-500">*</span></label>
-                <input required name="last_name" value="{{ old('last_name') }}" class="w-full text-xs rounded-xl border-stone-300 focus:border-rose-700 focus:ring-rose-700 shadow-sm">
+                <label class="block text-xs font-semibold text-cocoa-500 mb-1.5" for="field-admin-users-create-blade-php-3">last name <span class="text-red-500">*</span></label>
+                <input autocomplete="family-name" id="field-admin-users-create-blade-php-3" required name="last_name" value="{{ old('last_name') }}" class="w-full text-sm rounded-lg border-cocoa-100 bg-white focus:border-cocoa-300 focus:ring-cocoa-300 placeholder-cocoa-400/50">
             </div>
 
             <div>
-                <label class="block text-xs font-bold uppercase text-stone-700 mb-1">Email Address <span class="text-red-500">*</span></label>
-                <input required type="email" name="email" value="{{ old('email') }}" class="w-full text-xs rounded-xl border-stone-300 focus:border-rose-700 focus:ring-rose-700 shadow-sm">
+                <label class="block text-xs font-semibold text-cocoa-500 mb-1.5" for="field-admin-users-create-blade-php-4">Email address <span class="text-red-500">*</span></label>
+                <input autocomplete="email" id="field-admin-users-create-blade-php-4" required type="email" name="email" value="{{ old('email') }}" class="w-full text-sm rounded-lg border-cocoa-100 bg-white focus:border-cocoa-300 focus:ring-cocoa-300 placeholder-cocoa-400/50">
             </div>
 
             <div>
-                <label class="block text-xs font-bold uppercase text-stone-700 mb-1">Role <span class="text-red-500">*</span></label>
-                <select name="role" class="w-full text-xs rounded-xl border-stone-300 focus:border-rose-700 focus:ring-rose-700 shadow-sm">
+                <label class="block text-xs font-semibold text-cocoa-500 mb-1.5" for="field-admin-users-create-blade-php-5">role <span class="text-red-500">*</span></label>
+                <select id="field-admin-users-create-blade-php-5" name="role" class="w-full text-sm rounded-lg border-cocoa-100 bg-white focus:border-cocoa-300 focus:ring-cocoa-300">
                     <option value="assistant" @selected(old('role') === 'assistant')>Assistant</option>
                     <option value="owner" @selected(old('role') === 'owner')>Owner</option>
                 </select>
-                <p class="text-[11px] text-stone-400 mt-1">Owners can manage users; Assistants have access to all business operations.</p>
+                <p class="text-xs text-cocoa-400 mt-1.5">Owners can manage users; Assistants have access to all business operations.</p>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                 <div>
-                    <label class="block text-xs font-bold uppercase text-stone-700 mb-1">Password <span class="text-red-500">*</span></label>
-                    <input required type="password" name="password" class="w-full text-xs rounded-xl border-stone-300 focus:border-rose-700 focus:ring-rose-700 shadow-sm">
+                    <label class="block text-xs font-semibold text-cocoa-500 mb-1.5" for="field-admin-users-create-blade-php-6">password <span class="text-red-500">*</span></label>
+                    <input id="field-admin-users-create-blade-php-6" required type="password" name="password" class="w-full text-sm rounded-lg border-cocoa-100 bg-white focus:border-cocoa-300 focus:ring-cocoa-300">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold uppercase text-stone-700 mb-1">Confirm Password <span class="text-red-500">*</span></label>
-                    <input required type="password" name="password_confirmation" class="w-full text-xs rounded-xl border-stone-300 focus:border-rose-700 focus:ring-rose-700 shadow-sm">
+                    <label class="block text-xs font-semibold text-cocoa-500 mb-1.5" for="field-admin-users-create-blade-php-7">confirm password <span class="text-red-500">*</span></label>
+                    <input id="field-admin-users-create-blade-php-7" required type="password" name="password_confirmation" class="w-full text-sm rounded-lg border-cocoa-100 bg-white focus:border-cocoa-300 focus:ring-cocoa-300">
                 </div>
             </div>
 
             <input type="hidden" name="is_active" value="0">
-            <div class="flex items-center gap-2 pt-1">
-                <input type="checkbox" name="is_active" value="1" id="is_active" checked class="rounded text-rose-900 focus:ring-rose-800">
-                <label for="is_active" class="text-xs text-stone-700 font-semibold cursor-pointer">Active Account</label>
+            <div class="flex items-center gap-2 pt-2">
+                <input type="checkbox" name="is_active" value="1" id="is_active" checked class="rounded border-cocoa-100 text-cocoa-600 focus:ring-cocoa-300">
+                <label for="is_active" class="text-sm font-medium text-cocoa-500 cursor-pointer">active account</label>
             </div>
 
-            <div class="pt-4 flex items-center justify-end gap-3 border-t">
-                <a href="{{ route('users.index') }}" class="px-4 py-2 text-xs text-stone-600">Cancel</a>
-                <button type="submit" class="px-5 py-2 bg-rose-900 hover:bg-rose-800 text-white text-xs font-bold rounded-xl shadow">
+            <div class="pt-6 flex items-center justify-end gap-3 border-t border-cocoa-100/60 mt-4">
+                <a href="{{ route('users.index') }}" class="bg-white border border-cocoa-100 text-cocoa-500 hover:bg-cream-100 font-medium text-sm px-4 py-2 rounded-lg transition">Cancel</a>
+                <button type="submit" class="bg-cocoa-600 hover:bg-cocoa-700 text-white font-semibold text-sm px-4 py-2 rounded-lg transition">
                     Create User
                 </button>
             </div>

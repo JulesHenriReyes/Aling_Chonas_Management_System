@@ -177,7 +177,7 @@ class InventoryAndAuthorizationBusinessRulesTest extends TestCase
         $this->assertFalse(Gate::forUser($this->assistant)->allows('manage-users'));
         
         // Permitted business/operational features for Assistant
-        $this->assertTrue(Gate::forUser($this->assistant)->allows('manage-products'));
+        $this->assertFalse(Gate::forUser($this->assistant)->allows('manage-products'));
         $this->assertTrue(Gate::forUser($this->assistant)->allows('view-reports'));
         $this->assertTrue(Gate::forUser($this->assistant)->allows('manage-expenses'));
         $this->assertTrue(Gate::forUser($this->assistant)->allows('manage-customers'));
@@ -199,7 +199,7 @@ class InventoryAndAuthorizationBusinessRulesTest extends TestCase
             'product_name' => 'Assistant-added Cake',
             'price' => 650.00,
             'is_active' => true,
-        ])->assertRedirect();
+        ])->assertForbidden();
 
         $this->post('/expenses', [
             'description' => 'Assistant-recorded packaging purchase',
@@ -208,7 +208,7 @@ class InventoryAndAuthorizationBusinessRulesTest extends TestCase
             'expense_date' => today()->toDateString(),
         ])->assertRedirect();
 
-        $this->assertDatabaseHas('products', ['product_name' => 'Assistant-added Cake']);
+        $this->assertDatabaseMissing('products', ['product_name' => 'Assistant-added Cake']);
         $this->assertDatabaseHas('expenses', ['description' => 'Assistant-recorded packaging purchase', 'user_id' => $this->assistant->id]);
         $this->get('/users')->assertForbidden();
     }

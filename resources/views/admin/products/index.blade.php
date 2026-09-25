@@ -13,21 +13,20 @@
         this.editingProduct = null;
     }
 }">
-    <div class="flex items-center justify-between">
+    <div class="page-heading">
         <div>
-            <h1 class="text-2xl font-bold text-stone-900">Product Management</h1>
-            <p class="text-xs text-stone-500 mt-1">Manage standard bakery offerings and base starting prices.</p>
+            <h1 class="text-xl font-bold text-cocoa-600">Product Management</h1>
+            <p class="text-sm text-cocoa-400 mt-1">Manage standard bakery offerings and base starting prices.</p>
         </div>
-        <button type="button" @click="showCreateModal = true" class="px-4 py-2 bg-rose-900 hover:bg-rose-800 text-white font-bold text-xs rounded-xl shadow">
-            + Add New Product
+        <button type="button" @click="showCreateModal = true" class="bg-cocoa-600 hover:bg-cocoa-700 text-white font-semibold text-sm px-4 py-2 rounded-lg transition"><x-icon name="plus" class="mr-1" /> Add New Product
         </button>
     </div>
 
     <!-- Products Table -->
-    <div class="bg-white rounded-2xl border border-stone-200 shadow-sm overflow-hidden">
-        <div class="overflow-x-auto">
-            <table class="w-full text-left text-xs">
-                <thead class="bg-stone-50 border-b text-stone-500 uppercase text-[10px]">
+    <div class="bg-white border border-cocoa-100 rounded-xl overflow-hidden">
+        <div class="table-scroll" role="region" aria-label="Scrollable data table" tabindex="0">
+            <table class="w-full text-left">
+                <thead class="bg-cream-100 text-cocoa-400 text-xs  font-semibold">
                     <tr>
                         <th class="p-4">Product Name</th>
                         <th class="p-4">Catalog Base Price</th>
@@ -36,37 +35,37 @@
                         <th class="p-4 text-right">Actions</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-stone-100">
+                <tbody class="divide-y divide-cocoa-100/60">
                     @foreach ($products as $p)
-                        <tr class="hover:bg-stone-50 transition">
-                            <td class="p-4 font-bold text-stone-900">
+                        <tr class="text-sm text-cocoa-500 hover:bg-cream-50 transition">
+                            <td class="p-4 font-semibold text-cocoa-600">
                                 {{ $p->product_name }}
                             </td>
-                            <td class="p-4 font-semibold text-rose-950">
+                            <td class="p-4 font-semibold">
                                 ₱{{ number_format($p->price, 2) }}
                             </td>
-                            <td class="p-4 text-stone-500">
+                            <td class="p-4">
                                 {{ $p->order_details_count }} orders
                             </td>
                             <td class="p-4">
                                 @if ($p->is_active)
-                                    <span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">
+                                    <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-cream-100 text-cocoa-500 ">
                                         Active (Public)
                                     </span>
                                 @else
-                                    <span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-stone-100 text-stone-500">
+                                    <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-cocoa-50 text-cocoa-500 ">
                                         Hidden (Inactive)
                                     </span>
                                 @endif
                             </td>
-                            <td class="p-4 text-right space-x-2">
-                                <button type="button" @click="openEdit({{ $p }})" class="text-xs text-rose-900 font-bold hover:underline">
+                            <td class="p-4 text-right space-x-3">
+                                <button type="button" @click="openEdit({{ $p }})" class="text-cocoa-500 hover:text-cocoa-600 font-medium">
                                     Edit
                                 </button>
                                 <form action="{{ route('products.toggleStatus', $p) }}" method="POST" class="inline">
                                     @csrf
                                     @method('PATCH')
-                                    <button type="submit" class="text-xs {{ $p->is_active ? 'text-amber-700 hover:text-amber-900' : 'text-emerald-700 hover:text-emerald-900' }} hover:underline">
+                                    <button type="submit" class="font-medium {{ $p->is_active ? 'text-cocoa-500 hover:text-cocoa-700' : 'text-cocoa-500 hover:text-cocoa-700' }}">
                                         {{ $p->is_active ? 'Deactivate' : 'Activate' }}
                                     </button>
                                 </form>
@@ -79,56 +78,56 @@
     </div>
 
     <!-- Create Modal -->
-    <div x-show="showCreateModal" x-cloak class="fixed inset-0 bg-stone-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-stone-200" @click.away="showCreateModal = false">
-            <h3 class="text-lg font-bold text-stone-900 mb-4">Add New Bakery Product</h3>
+    <div x-show="showCreateModal" x-cloak data-dialog role="dialog" aria-modal="true" aria-labelledby="product-dialog-1" tabindex="-1" class="dialog-overlay fixed inset-0 bg-cocoa-800/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="dialog-panel bg-white border border-cocoa-100 rounded-xl max-w-md w-full p-6 " @click.away="showCreateModal = false">
+            <h3 id="product-dialog-1" class="text-sm font-semibold text-cocoa-600 mb-4">Add New Bakery Product</h3>
             <form action="{{ route('products.store') }}" method="POST" class="space-y-4">
                 @csrf
                 <div>
-                    <label class="block text-xs font-bold uppercase text-stone-700 mb-1">Product Name <span class="text-red-500">*</span></label>
-                    <input type="text" name="product_name" required placeholder="e.g. Red Velvet Heart Cake" class="w-full text-xs rounded-xl border-stone-300">
+                    <label class="block text-xs font-semibold text-cocoa-500 mb-1.5" for="field-admin-products-index-blade-php-1">product name <span class="text-red-500">*</span></label>
+                    <input id="field-admin-products-index-blade-php-1" type="text" name="product_name" required placeholder="e.g. Red Velvet Heart Cake" class="w-full text-sm rounded-lg border-cocoa-100 bg-white focus:border-cocoa-300 focus:ring-cocoa-300 placeholder-cocoa-400/50">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold uppercase text-stone-700 mb-1">Catalog Base Price (₱) <span class="text-red-500">*</span></label>
-                    <input type="number" step="0.01" min="0" name="price" required placeholder="e.g. 850.00" class="w-full text-xs rounded-xl border-stone-300">
+                    <label class="block text-xs font-semibold text-cocoa-500 mb-1.5" for="field-admin-products-index-blade-php-2">catalog base price (₱) <span class="text-red-500">*</span></label>
+                    <input id="field-admin-products-index-blade-php-2" type="number" step="0.01" min="0" name="price" required placeholder="e.g. 850.00" class="w-full text-sm rounded-lg border-cocoa-100 bg-white focus:border-cocoa-300 focus:ring-cocoa-300 placeholder-cocoa-400/50">
                 </div>
                 <div class="flex items-center gap-2">
-                    <input type="checkbox" name="is_active" value="1" id="create_active" checked class="rounded text-rose-900">
-                    <label for="create_active" class="text-xs text-stone-700 font-semibold">Active & Visible in Public Ordering</label>
+                    <input type="checkbox" name="is_active" value="1" id="create_active" checked class="rounded border-cocoa-100 text-cocoa-600 focus:ring-cocoa-300">
+                    <label for="create_active" class="text-sm font-medium text-cocoa-500">active & Visible in Public Ordering</label>
                 </div>
-                <div class="flex items-center justify-end gap-3 pt-4 border-t">
-                    <button type="button" @click="showCreateModal = false" class="px-4 py-2 text-xs text-stone-600">Cancel</button>
-                    <button type="submit" class="px-5 py-2 bg-rose-900 text-white font-bold text-xs rounded-xl shadow">Save Product</button>
+                <div class="flex items-center justify-end gap-3 pt-4 border-t border-cocoa-100/60 mt-4">
+                    <button type="button" data-dialog-close @click="showCreateModal = false" class="bg-white border border-cocoa-100 text-cocoa-500 hover:bg-cream-100 font-medium text-sm px-4 py-2 rounded-lg transition">Cancel</button>
+                    <button type="submit" class="bg-cocoa-600 hover:bg-cocoa-700 text-white font-semibold text-sm px-4 py-2 rounded-lg transition">Save Product</button>
                 </div>
             </form>
         </div>
     </div>
 
     <!-- Edit Modal -->
-    <div x-show="editingProduct" x-cloak class="fixed inset-0 bg-stone-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-stone-200" @click.away="closeEdit()">
-            <h3 class="text-lg font-bold text-stone-900 mb-4">Edit Product Details</h3>
-            <form :action="'/products/' + editingProduct.id" method="POST" class="space-y-4">
+    <div x-show="editingProduct" x-cloak data-dialog role="dialog" aria-modal="true" aria-labelledby="product-dialog-2" tabindex="-1" class="dialog-overlay fixed inset-0 bg-cocoa-800/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="dialog-panel bg-white border border-cocoa-100 rounded-xl max-w-md w-full p-6 " @click.away="closeEdit()">
+            <h3 id="product-dialog-2" class="text-sm font-semibold text-cocoa-600 mb-4">Edit Product Details</h3>
+            <template x-if="editingProduct"><form :action="'/products/' + editingProduct.id" method="POST" class="space-y-4">
                 @csrf
                 @method('PATCH')
                 <div>
-                    <label class="block text-xs font-bold uppercase text-stone-700 mb-1">Product Name <span class="text-red-500">*</span></label>
-                    <input type="text" name="product_name" x-model="editingProduct.product_name" required class="w-full text-xs rounded-xl border-stone-300">
+                    <label class="block text-xs font-semibold text-cocoa-500 mb-1.5">product name <span class="text-red-500">*</span></label>
+                    <input type="text" name="product_name" x-model="editingProduct.product_name" required class="w-full text-sm rounded-lg border-cocoa-100 bg-white focus:border-cocoa-300 focus:ring-cocoa-300 placeholder-cocoa-400/50">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold uppercase text-stone-700 mb-1">Catalog Base Price (₱) <span class="text-red-500">*</span></label>
-                    <input type="number" step="0.01" min="0" name="price" x-model="editingProduct.price" required class="w-full text-xs rounded-xl border-stone-300">
-                    <p class="text-[10px] text-stone-400 mt-1">Note: Modifying this price will only affect new orders; existing confirmed orders remain locked.</p>
+                    <label class="block text-xs font-semibold text-cocoa-500 mb-1.5" for="field-admin-products-index-blade-php-3">catalog base price (₱) <span class="text-red-500">*</span></label>
+                    <input id="field-admin-products-index-blade-php-3" type="number" step="0.01" min="0" name="price" x-model="editingProduct.price" required class="w-full text-sm rounded-lg border-cocoa-100 bg-white focus:border-cocoa-300 focus:ring-cocoa-300 placeholder-cocoa-400/50">
+                    <p class="text-xs text-cocoa-400 mt-1">Note: Modifying this price will only affect new orders; existing confirmed orders remain locked.</p>
                 </div>
                 <div class="flex items-center gap-2">
-                    <input type="checkbox" name="is_active" value="1" id="edit_active" :checked="editingProduct.is_active" class="rounded text-rose-900">
-                    <label for="edit_active" class="text-xs text-stone-700 font-semibold">Active & Visible in Public Ordering</label>
+                    <input type="checkbox" name="is_active" value="1" id="edit_active" :checked="editingProduct.is_active" class="rounded border-cocoa-100 text-cocoa-600 focus:ring-cocoa-300">
+                    <label for="edit_active" class="text-sm font-medium text-cocoa-500">active & Visible in Public Ordering</label>
                 </div>
-                <div class="flex items-center justify-end gap-3 pt-4 border-t">
-                    <button type="button" @click="closeEdit()" class="px-4 py-2 text-xs text-stone-600">Cancel</button>
-                    <button type="submit" class="px-5 py-2 bg-rose-900 text-white font-bold text-xs rounded-xl shadow">Update Product</button>
+                <div class="flex items-center justify-end gap-3 pt-4 border-t border-cocoa-100/60 mt-4">
+                    <button type="button" data-dialog-close @click="closeEdit()" class="bg-white border border-cocoa-100 text-cocoa-500 hover:bg-cream-100 font-medium text-sm px-4 py-2 rounded-lg transition">Cancel</button>
+                    <button type="submit" class="bg-cocoa-600 hover:bg-cocoa-700 text-white font-semibold text-sm px-4 py-2 rounded-lg transition">Update Product</button>
                 </div>
-            </form>
+            </form></template>
         </div>
     </div>
 </div>

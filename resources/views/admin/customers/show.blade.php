@@ -4,40 +4,39 @@
 
 @section('content')
 <div class="space-y-6">
-    <div class="flex items-center justify-between">
-        <a href="{{ route('customers.index') }}" class="text-xs text-rose-900 font-bold hover:underline">
-            ← Back to Customers
+    <div class="page-heading">
+        <a href="{{ route('customers.index') }}" class="text-cocoa-500 hover:text-cocoa-600 font-medium text-sm transition">
+            <x-icon name="arrow-left" class="mr-1" /> Back to Customers
         </a>
-        <a href="{{ route('customers.edit', $customer) }}" class="px-3 py-1.5 bg-stone-800 text-white rounded-lg text-xs font-bold shadow hover:bg-stone-700">
+        <a href="{{ route('customers.edit', $customer) }}" class="bg-white border border-cocoa-100 text-cocoa-500 hover:bg-cream-100 font-medium text-sm px-4 py-2 rounded-lg transition">
             Edit Details
         </a>
     </div>
 
     <!-- Info Card -->
-    <div class="bg-white rounded-2xl border border-stone-200 p-6 shadow-sm">
+    <div class="bg-white rounded-xl border border-cocoa-100 p-6">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-                <span class="text-xs text-stone-400 uppercase font-bold tracking-wider">Customer Profile</span>
-                <h1 class="text-2xl font-black text-stone-900 mt-1">{{ $customer->full_name }}</h1>
-                <p class="text-sm font-mono text-rose-950 font-bold mt-1">📞 {{ $customer->phone_number }}</p>
+                <h1 class="text-2xl font-bold text-cocoa-600 mt-1">{{ $customer->full_name }}</h1>
+                <p class="text-sm font-mono text-cocoa-500 font-medium mt-1">Phone: {{ $customer->phone_number }}</p>
             </div>
-            <div class="text-left sm:text-right text-xs text-stone-500">
-                <div>Client Since: <strong>{{ $customer->created_at->format('M d, Y') }}</strong></div>
-                <div>Total Lifetime Orders: <strong>{{ $customer->orders->count() }}</strong></div>
+            <div class="text-left sm:text-right text-sm text-cocoa-500">
+                <div>Client Since: <strong class="text-cocoa-600">{{ $customer->created_at->format('M d, Y') }}</strong></div>
+                <div>Total Lifetime Orders: <strong class="text-cocoa-600">{{ $customer->orders->count() }}</strong></div>
             </div>
         </div>
     </div>
 
     <!-- Orders History -->
-    <div class="bg-white rounded-2xl border border-stone-200 p-6 shadow-sm space-y-4">
-        <h2 class="text-sm font-bold text-stone-900">Order History for {{ $customer->first_name }}</h2>
+    <div class="space-y-4">
+        <h2 class="text-sm font-semibold text-cocoa-600">Order history</h2>
 
         @if ($customer->orders->isEmpty())
-            <p class="text-xs text-stone-400 py-6 text-center">No orders placed by this customer yet.</p>
+            <p class="text-sm text-cocoa-400 py-6 text-center">No orders placed by this customer yet.</p>
         @else
-            <div class="overflow-x-auto">
-                <table class="w-full text-left text-xs">
-                    <thead class="bg-stone-50 border-b text-stone-500 uppercase text-[10px]">
+            <div class="table-scroll" role="region" aria-label="Scrollable data table" tabindex="0">
+                <table class="w-full text-left">
+                    <thead class="bg-cream-100 text-cocoa-400 text-xs  font-semibold">
                         <tr>
                             <th class="p-3">Order #</th>
                             <th class="p-3">Order Date</th>
@@ -48,36 +47,27 @@
                             <th class="p-3 text-right">Action</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-stone-100">
+                    <tbody class="divide-y divide-cocoa-100/60">
                         @foreach ($customer->orders as $order)
-                            <tr>
-                                <td class="p-3 font-mono font-bold text-rose-950">
+                            <tr class="text-sm text-cocoa-500 hover:bg-cream-50 transition">
+                                <td class="p-3 font-mono font-semibold text-cocoa-600">
                                     <a href="{{ route('orders.show', $order) }}" class="hover:underline">
                                         {{ $order->order_number }}
                                     </a>
                                 </td>
-                                <td class="p-3 text-stone-600">{{ $order->created_at->format('M d, Y') }}</td>
-                                <td class="p-3 font-medium text-stone-800">
+                                <td class="p-3">{{ $order->created_at->format('M d, Y') }}</td>
+                                <td class="p-3 font-medium text-cocoa-600">
                                     {{ $order->pickup_date->format('M d, Y') }} {{ \Carbon\Carbon::parse($order->pickup_time)->format('h:i A') }}
                                 </td>
-                                <td class="p-3 font-bold text-stone-900">₱{{ number_format($order->total_amount, 2) }}</td>
-                                <td class="p-3 uppercase font-bold text-[10px]">
-                                    <span class="px-2 py-0.5 rounded
-                                        {{ $order->payment_status === 'fully_paid' ? 'bg-emerald-100 text-emerald-800' : ($order->payment_status === 'partially_paid' ? 'bg-blue-100 text-blue-800' : 'bg-red-100 text-red-800') }}">
-                                        {{ str_replace('_', ' ', $order->payment_status) }}
-                                    </span>
+                                <td class="p-3 font-semibold text-cocoa-600">₱{{ number_format($order->total_amount, 2) }}</td>
+                                <td class="p-3 font-semibold text-xs">
+                                    <x-status :value="$order->payment_status" />
                                 </td>
-                                <td class="p-3 uppercase font-bold text-[10px]">
-                                    <span class="px-2 py-0.5 rounded
-                                        @if($order->status === 'completed') bg-emerald-100 text-emerald-800
-                                        @elseif($order->status === 'cancelled') bg-red-100 text-red-800
-                                        @elseif($order->status === 'confirmed') bg-blue-100 text-blue-800
-                                        @else bg-amber-100 text-amber-800 @endif">
-                                        {{ str_replace('_', ' ', $order->status) }}
-                                    </span>
+                                <td class="p-3 font-semibold text-xs">
+                                    <x-status :value="$order->status" />
                                 </td>
                                 <td class="p-3 text-right">
-                                    <a href="{{ route('orders.show', $order) }}" class="px-2.5 py-1 bg-rose-50 text-rose-900 rounded font-bold hover:bg-rose-100">
+                                    <a href="{{ route('orders.show', $order) }}" class="bg-white border border-cocoa-100 text-cocoa-500 hover:bg-cream-100 font-medium text-xs px-2.5 py-1.5 rounded-lg transition inline-block">
                                         View
                                     </a>
                                 </td>

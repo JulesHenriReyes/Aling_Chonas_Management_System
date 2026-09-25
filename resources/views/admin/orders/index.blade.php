@@ -7,18 +7,17 @@
     <!-- Header -->
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-            <h1 class="text-2xl font-bold text-stone-900">Order Management</h1>
-            <p class="text-xs text-stone-500 mt-1">Review public submissions, adjust custom pricing, and record payments.</p>
+            <h1 class="text-xl font-bold text-cocoa-600">Order Management</h1>
+            <p class="text-sm text-cocoa-400 mt-1">Review public submissions, adjust custom pricing, and record payments.</p>
         </div>
-        <a href="{{ route('orders.create') }}" class="px-4 py-2 bg-rose-900 hover:bg-rose-800 text-white font-bold text-xs rounded-xl shadow transition self-start sm:self-auto">
-            + New Staff Order
+        <a href="{{ route('orders.create') }}" class="bg-cocoa-600 hover:bg-cocoa-700 text-white font-semibold text-sm px-4 py-2 rounded-lg transition self-start sm:self-auto"><x-icon name="plus" class="mr-1" /> New Staff Order
         </a>
     </div>
 
     <!-- Filters & Search -->
-    <div class="bg-white p-4 rounded-2xl border border-stone-200 shadow-sm space-y-4">
+    <div class="space-y-4">
         <!-- Status Tabs -->
-        <div class="flex flex-wrap gap-1 text-xs border-b border-stone-200 pb-3">
+        <div class="flex flex-wrap gap-2 text-sm border-b border-cocoa-100 pb-3">
             @php
                 $currentStatus = request('status', '');
                 $statuses = [
@@ -33,7 +32,7 @@
             @endphp
             @foreach ($statuses as $key => $label)
                 <a href="{{ route('orders.index', array_merge(request()->query(), ['status' => $key, 'page' => 1])) }}"
-                   class="px-3 py-1.5 rounded-lg font-medium transition {{ $currentStatus === $key ? 'bg-rose-900 text-white' : 'text-stone-600 hover:bg-stone-100' }}">
+                   class="px-3 py-1.5 rounded-lg font-medium transition {{ $currentStatus === $key ? 'bg-cocoa-600 text-white' : 'text-cocoa-500 hover:bg-cream-100' }}">
                     {{ $label }}
                 </a>
             @endforeach
@@ -42,22 +41,22 @@
         <form action="{{ route('orders.index') }}" method="GET" class="flex flex-col sm:flex-row gap-3">
             <input type="hidden" name="status" value="{{ request('status') }}">
             <div class="flex-grow">
-                <input type="text" name="search" value="{{ request('search') }}" 
+                <input aria-label="Search" type="text" name="search" value="{{ request('search') }}" 
                        placeholder="Search by Order #, Customer Name, or Phone..." 
-                       class="w-full text-xs rounded-xl border-stone-300 focus:border-rose-700 focus:ring-rose-700 shadow-sm">
+                       class="w-full text-sm rounded-lg border-cocoa-100 bg-white focus:border-cocoa-300 focus:ring-cocoa-300 placeholder-cocoa-400/50">
             </div>
             <div>
-                <select name="origin" class="text-xs rounded-xl border-stone-300 focus:border-rose-700 focus:ring-rose-700 shadow-sm">
+                <select aria-label="Order origin" name="origin" class="w-full sm:w-auto text-sm rounded-lg border-cocoa-100 bg-white focus:border-cocoa-300 focus:ring-cocoa-300">
                     <option value="">All Origins</option>
                     <option value="public" {{ request('origin') === 'public' ? 'selected' : '' }}>Public Web Orders</option>
                     <option value="staff" {{ request('origin') === 'staff' ? 'selected' : '' }}>Staff Created</option>
                 </select>
             </div>
-            <button type="submit" class="px-4 py-2 bg-stone-800 hover:bg-stone-700 text-white text-xs font-bold rounded-xl shadow">
+            <button type="submit" class="bg-white border border-cocoa-100 text-cocoa-500 hover:bg-cream-100 font-medium text-sm px-4 py-2 rounded-lg transition">
                 Filter
             </button>
             @if(request()->hasAny(['status', 'search', 'origin']))
-                <a href="{{ route('orders.index') }}" class="px-3 py-2 text-stone-500 hover:text-stone-800 text-xs self-center">
+                <a href="{{ route('orders.index') }}" class="text-cocoa-500 hover:text-cocoa-600 font-medium text-sm self-center px-3 py-2">
                     Reset
                 </a>
             @endif
@@ -65,15 +64,15 @@
     </div>
 
     <!-- Orders Table -->
-    <div class="bg-white rounded-2xl border border-stone-200 shadow-sm overflow-hidden">
+    <div class="bg-white rounded-xl border border-cocoa-100 overflow-hidden">
         @if ($orders->isEmpty())
-            <div class="p-12 text-center text-stone-400 text-xs">
+            <div class="py-12 text-center text-sm text-cocoa-400">
                 No orders found matching the filter criteria.
             </div>
         @else
-            <div class="overflow-x-auto">
-                <table class="w-full text-left text-xs">
-                    <thead class="bg-stone-50 border-b text-stone-500 uppercase text-[10px] tracking-wider">
+            <div class="table-scroll" role="region" aria-label="Scrollable data table" tabindex="0">
+                <table class="w-full text-left orders-table">
+                    <thead class="bg-cream-100 text-cocoa-400 text-xs  font-semibold">
                         <tr>
                             <th class="p-4">Order #</th>
                             <th class="p-4">Customer</th>
@@ -86,74 +85,62 @@
                             <th class="p-4 text-right">Action</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-stone-100">
+                    <tbody class="divide-y divide-cocoa-100/60">
                         @foreach ($orders as $order)
-                            <tr class="hover:bg-stone-50/60 transition">
-                                <td class="p-4 font-mono font-bold text-rose-950">
+                            <tr class="text-sm text-cocoa-500 hover:bg-cream-50 transition">
+                                <td class="p-4 font-mono font-semibold text-cocoa-600">
                                     <a href="{{ route('orders.show', $order) }}" class="hover:underline">
                                         {{ $order->order_number }}
                                     </a>
                                 </td>
                                 <td class="p-4">
-                                    <div class="font-bold text-stone-900">{{ $order->customer->full_name }}</div>
-                                    <div class="text-[11px] text-stone-500">{{ $order->customer->phone_number }}</div>
+                                    <div class="font-semibold text-cocoa-600">{{ $order->customer->full_name }}</div>
+                                    <div class="text-xs text-cocoa-400">{{ $order->customer->phone_number }}</div>
                                 </td>
                                 <td class="p-4">
                                     @if ($order->user_id === null)
-                                        <span class="inline-block px-2 py-0.5 rounded text-[10px] font-bold bg-purple-100 text-purple-800">
+                                        <span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-medium text-cocoa-500">
                                             Public Web
                                         </span>
                                     @else
-                                        <span class="inline-block px-2 py-0.5 rounded text-[10px] font-bold bg-stone-100 text-stone-700">
+                                        <span class="text-xs text-cocoa-500">
                                             Staff ({{ $order->user->first_name }})
                                         </span>
                                     @endif
                                 </td>
                                 <td class="p-4">
-                                    <span class="text-stone-700">{{ $order->orderDetails->sum('quantity') }} items</span>
-                                    <span class="text-stone-400 block text-[10px]">({{ $order->orderDetails->count() }} line items)</span>
+                                    <span class="font-medium text-cocoa-600">{{ $order->orderDetails->sum('quantity') }} {{ $order->fixed_catalog_pricing ? 'packages' : 'items' }}</span>
+                                    @if ($order->orderDetails->flatMap->addOns->sum('quantity'))
+                                        <span class="block text-sm">{{ $order->orderDetails->flatMap->addOns->sum('quantity') }} paid extras</span>
+                                    @endif
+                                    <span class="text-cocoa-400 block text-xs">{{ $order->orderDetails->count() }} product lines</span>
                                 </td>
                                 <td class="p-4">
-                                    <div class="font-semibold text-stone-800">{{ $order->pickup_date->format('M d, Y') }}</div>
-                                    <div class="text-[11px] text-stone-500">{{ \Carbon\Carbon::parse($order->pickup_time)->format('h:i A') }}</div>
+                                    <div class="font-semibold text-cocoa-600">{{ $order->pickup_date->format('M d, Y') }}</div>
+                                    <div class="text-xs text-cocoa-400">{{ \Carbon\Carbon::parse($order->pickup_time)->format('h:i A') }}</div>
                                 </td>
-                                <td class="p-4 font-bold text-stone-900">
+                                <td class="p-4 font-semibold text-cocoa-600">
                                     ₱{{ number_format($order->total_amount, 2) }}
                                 </td>
                                 <td class="p-4">
-                                    <span class="inline-block px-2 py-0.5 rounded text-[10px] font-bold uppercase
-                                        @if($order->payment_status === 'fully_paid') bg-emerald-100 text-emerald-800
-                                        @elseif($order->payment_status === 'partially_paid') bg-blue-100 text-blue-800
-                                        @else bg-red-100 text-red-800 @endif">
-                                        {{ str_replace('_', ' ', $order->payment_status) }}
-                                    </span>
+                                    <x-status :value="$order->payment_status" />
                                     @if($order->payment_status === 'partially_paid')
-                                        <span class="block text-[10px] text-stone-500">Bal: ₱{{ number_format($order->remaining_balance, 2) }}</span>
+                                        <span class="block text-xs text-cocoa-400 mt-1">Bal: ₱{{ number_format($order->remaining_balance, 2) }}</span>
                                     @endif
                                 </td>
                                 <td class="p-4">
-                                    <span class="inline-block px-2 py-0.5 rounded text-[10px] font-bold uppercase
-                                        @if($order->status === 'completed') bg-emerald-100 text-emerald-800
-                                        @elseif($order->status === 'cancelled') bg-red-100 text-red-800
-                                        @elseif($order->status === 'confirmed') bg-blue-100 text-blue-800
-                                        @elseif($order->status === 'ready_for_pickup') bg-teal-100 text-teal-800
-                                        @elseif($order->status === 'preparing') bg-indigo-100 text-indigo-800
-                                        @else bg-amber-100 text-amber-800 @endif">
-                                        {{ str_replace('_', ' ', $order->status) }}
-                                    </span>
+                                    <x-status :value="$order->status" />
                                 </td>
                                 <td class="p-4 text-right">
                                     <a href="{{ route('orders.show', $order) }}" 
-                                       class="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-900 font-bold rounded-lg transition">
-                                        Review
-                                    </a>
+                                       class="bg-white border border-cocoa-100 text-cocoa-500 hover:bg-cream-100 font-medium text-sm px-3 py-1.5 rounded-lg transition inline-block">{{ $order->status === 'pending' ? 'Review' : 'View' }}</a>
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
-            <div class="p-4 border-t">
+            <div class="p-4 border-t border-cocoa-100/60">
                 {{ $orders->links() }}
             </div>
         @endif

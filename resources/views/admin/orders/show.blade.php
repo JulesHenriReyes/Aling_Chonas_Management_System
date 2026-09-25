@@ -3,252 +3,108 @@
 @section('title', 'Order ' . $order->order_number)
 
 @section('content')
-<div class="space-y-6">
-    <!-- Top Nav / Back Button -->
-    <div class="flex items-center justify-between">
-        <div class="flex items-center gap-3">
-            <a href="{{ route('orders.index') }}" class="text-xs text-rose-900 font-bold hover:underline">
-                ← Back to Orders
-            </a>
-            <span class="text-stone-300">/</span>
-            <span class="text-xs text-stone-500 font-mono">{{ $order->order_number }}</span>
+<div class="space-y-4">
+    {{-- Breadcrumb --}}
+    <div class="page-heading">
+        <div class="flex items-center gap-2 text-sm">
+            <a href="{{ route('orders.index') }}" class="text-cocoa-500 hover:text-cocoa-600 font-medium transition"><x-icon name="arrow-left" class="mr-1" /> Orders</a>
+            <span class="text-cocoa-200">/</span>
+            <span class="text-cocoa-400 font-mono">{{ $order->order_number }}</span>
         </div>
-        <div>
-            @if ($order->user_id === null)
-                <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-purple-100 text-purple-800">
-                    🌐 Origin: Public Web Submission
-                </span>
-            @else
-                <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-stone-200 text-stone-800">
-                    👤 Origin: Staff Created ({{ $order->user->first_name }})
-                </span>
-            @endif
-        </div>
+        <span class="px-3 py-1 rounded-full text-xs font-semibold
+            {{ $order->user_id === null ? 'bg-cream-100 text-cocoa-500 ' : 'bg-cocoa-50 text-cocoa-500 ' }}">
+            {{ $order->user_id === null ? 'Public Web Order' : 'Staff Created (' . $order->user->first_name . ')' }}
+        </span>
     </div>
 
-    <!-- Order Header Card -->
-    <div class="bg-white rounded-2xl border border-stone-200 p-6 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6">
-        <div>
-            <div class="flex items-center gap-3 flex-wrap">
-                <h1 class="text-2xl font-black text-stone-900 font-mono">{{ $order->order_number }}</h1>
-                <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider
-                    @if($order->status === 'completed') bg-emerald-100 text-emerald-800
-                    @elseif($order->status === 'cancelled') bg-red-100 text-red-800
-                    @elseif($order->status === 'confirmed') bg-blue-100 text-blue-800
-                    @elseif($order->status === 'ready_for_pickup') bg-teal-100 text-teal-800
-                    @elseif($order->status === 'preparing') bg-indigo-100 text-indigo-800
-                    @else bg-amber-100 text-amber-800 @endif">
-                    {{ str_replace('_', ' ', $order->status) }}
-                </span>
-                <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider
-                    @if($order->payment_status === 'fully_paid') bg-emerald-100 text-emerald-800
-                    @elseif($order->payment_status === 'partially_paid') bg-blue-100 text-blue-800
-                    @else bg-red-100 text-red-800 @endif">
-                    {{ str_replace('_', ' ', $order->payment_status) }}
-                </span>
+    {{-- Order Header --}}
+    <div class="bg-white border border-cocoa-100 rounded-xl p-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div>
+                <div class="flex items-center gap-3 flex-wrap">
+                    <h1 class="text-2xl font-bold text-cocoa-600 font-mono">{{ $order->order_number }}</h1>
+                    <x-status :value="$order->status" />
+                    <x-status :value="$order->payment_status" />
+                </div>
+                <div class="text-xs text-cocoa-400 mt-2 flex flex-wrap gap-x-4 gap-y-1">
+                    <span>Submitted: <strong class="text-cocoa-500">{{ $order->created_at->format('M d, Y h:i A') }}</strong></span>
+                    @if ($order->completed_at)
+                        <span>Completed: <strong class="text-emerald-700">{{ $order->completed_at->format('M d, Y h:i A') }}</strong></span>
+                    @endif
+                    @if ($order->cancelled_at)
+                        <span>Cancelled: <strong class="text-red-700">{{ $order->cancelled_at->format('M d, Y h:i A') }}</strong></span>
+                    @endif
+                </div>
             </div>
-            <div class="text-xs text-stone-500 mt-2 space-x-4">
-                <span>Submitted: <strong>{{ $order->created_at->format('M d, Y h:i A') }}</strong></span>
-                @if ($order->completed_at)
-                    <span>Completed: <strong class="text-emerald-700">{{ $order->completed_at->format('M d, Y h:i A') }}</strong></span>
-                @endif
-                @if ($order->cancelled_at)
-                    <span>Cancelled: <strong class="text-red-700">{{ $order->cancelled_at->format('M d, Y h:i A') }}</strong></span>
-                @endif
-            </div>
-        </div>
 
-        <!-- Quick Summary Amounts -->
-        <div class="flex items-center gap-6 border-t md:border-t-0 md:border-l md:pl-6 pt-4 md:pt-0">
-            <div>
-                <span class="text-[10px] text-stone-500 uppercase tracking-wider font-bold block">Total Amount</span>
-                <span class="text-2xl font-black text-rose-950">₱{{ number_format($order->total_amount, 2) }}</span>
-            </div>
-            <div>
-                <span class="text-[10px] text-stone-500 uppercase tracking-wider font-bold block">Amount Paid</span>
-                <span class="text-lg font-bold text-emerald-700">₱{{ number_format($order->amount_paid, 2) }}</span>
-            </div>
-            <div>
-                <span class="text-[10px] text-stone-500 uppercase tracking-wider font-bold block">Balance</span>
-                <span class="text-lg font-bold {{ $order->remaining_balance > 0 ? 'text-red-600' : 'text-stone-400' }}">
-                    ₱{{ number_format($order->remaining_balance, 2) }}
-                </span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Workflow Guidance Banner for Pending Orders -->
-    @if ($order->status === 'pending')
-        <div class="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-300 rounded-2xl p-5 shadow-sm text-xs text-amber-950">
-            <div class="flex items-start gap-3">
-                <span class="text-2xl">⏳</span>
+            {{-- Financial Summary --}}
+            <div class="order-money border-t md:border-t-0 md:border-l border-cocoa-100 md:pl-6 pt-4 md:pt-0">
                 <div>
-                    <h3 class="font-bold text-sm text-amber-900">Pending Order Workflow</h3>
-                    <p class="mt-1 leading-relaxed">
-                        1. <strong>Review Customizations & Images:</strong> Inspect each product's layers, themes, special requests, and reference photos below.<br>
-                        2. <strong>Adjust Prices:</strong> If the custom design requires extra labor/materials, revise the unit price for each item. The total and 50% deposit recalculate automatically.<br>
-                        3. <strong>Confirm via 50% Down Payment:</strong> Record the exact 50% deposit (₱{{ number_format($order->required_down_payment, 2) }}) using the payment form below to confirm the order.
-                    </p>
+                    <span class="text-xs text-cocoa-500  font-bold block">Total</span>
+                    <span class="text-xl font-bold text-cocoa-600">₱{{ number_format($order->total_amount, 2) }}</span>
+                </div>
+                <div>
+                    <span class="text-xs text-cocoa-500  font-bold block">Paid</span>
+                    <span class="text-base font-bold text-emerald-700">₱{{ number_format($order->amount_paid, 2) }}</span>
+                </div>
+                <div>
+                    <span class="text-xs text-cocoa-500  font-bold block">Balance</span>
+                    <span class="text-base font-bold {{ $order->remaining_balance > 0 ? 'text-red-600' : 'text-cocoa-400' }}">
+                        ₱{{ number_format($order->remaining_balance, 2) }}
+                    </span>
                 </div>
             </div>
         </div>
-    @endif
+    </div>
 
-    <!-- 2 Column Details Section -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <!-- Customer & Schedule Info (1 Column) -->
-        <div class="space-y-6">
-            <!-- Customer Card -->
-            <div class="bg-white rounded-2xl border border-stone-200 p-5 shadow-sm">
-                <h3 class="text-xs font-bold text-stone-400 uppercase tracking-wider mb-3">Customer Information</h3>
-                <div class="space-y-2 text-xs">
-                    <div>
-                        <span class="text-stone-500 block">Name</span>
-                        <a href="{{ route('customers.show', $order->customer) }}" class="font-bold text-stone-900 hover:text-rose-900 hover:underline">
-                            {{ $order->customer->full_name }}
-                        </a>
-                    </div>
-                    <div>
-                        <span class="text-stone-500 block">Phone Number</span>
-                        <span class="font-mono font-semibold text-stone-800">{{ $order->customer->phone_number }}</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Pickup Schedule Card -->
-            <div class="bg-white rounded-2xl border border-stone-200 p-5 shadow-sm">
-                <h3 class="text-xs font-bold text-stone-400 uppercase tracking-wider mb-3">Pickup Schedule</h3>
-                <div class="space-y-2 text-xs">
-                    <div>
-                        <span class="text-stone-500 block">Date</span>
-                        <span class="font-bold text-stone-900">{{ $order->pickup_date->format('F d, Y (l)') }}</span>
-                    </div>
-                    <div>
-                        <span class="text-stone-500 block">Time</span>
-                        <span class="font-bold text-stone-900">{{ \Carbon\Carbon::parse($order->pickup_time)->format('h:i A') }}</span>
-                    </div>
-                    @if ($order->notes_text)
-                        <div class="pt-2 border-t mt-2">
-                            <span class="text-stone-500 block">Order Notes</span>
-                            <p class="text-stone-700 italic mt-0.5">{{ $order->notes_text }}</p>
-                        </div>
-                    @endif
-                </div>
-            </div>
-
-            <!-- Lifecycle Actions Card -->
-            <div class="bg-white rounded-2xl border border-stone-200 p-5 shadow-sm space-y-4">
-                <h3 class="text-xs font-bold text-stone-400 uppercase tracking-wider">Lifecycle Transitions</h3>
-
-                @if ($order->status === 'confirmed')
-                    <form action="{{ route('orders.updateStatus', $order) }}" method="POST">
-                        @csrf
-                        @method('PATCH')
-                        <input type="hidden" name="status" value="preparing">
-                        <button type="submit" class="w-full py-2 bg-indigo-700 hover:bg-indigo-600 text-white font-bold text-xs rounded-xl shadow transition">
-                            👩‍🍳 Start Preparing (Baking)
-                        </button>
-                    </form>
-                @elseif ($order->status === 'preparing')
-                    <form action="{{ route('orders.updateStatus', $order) }}" method="POST">
-                        @csrf
-                        @method('PATCH')
-                        <input type="hidden" name="status" value="ready_for_pickup">
-                        <button type="submit" class="w-full py-2 bg-teal-700 hover:bg-teal-600 text-white font-bold text-xs rounded-xl shadow transition">
-                            📦 Mark as Ready for Pickup
-                        </button>
-                    </form>
-                @elseif ($order->status === 'ready_for_pickup')
-                    @if ($order->remaining_balance > 0)
-                        <div class="p-3 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-800">
-                            <strong>Full payment required:</strong> Please settle the remaining balance of ₱{{ number_format($order->remaining_balance, 2) }} before completing the order.
-                        </div>
-                    @else
-                        <form action="{{ route('orders.updateStatus', $order) }}" method="POST">
-                            @csrf
-                            @method('PATCH')
-                            <input type="hidden" name="status" value="completed">
-                            <button type="submit" class="w-full py-2 bg-emerald-700 hover:bg-emerald-600 text-white font-bold text-xs rounded-xl shadow transition">
-                                ✓ Complete Order (Picked Up)
-                            </button>
-                        </form>
-                    @endif
-                @elseif ($order->status === 'completed')
-                    <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-xs text-emerald-800 font-bold text-center">
-                        Order is Fully Completed
-                    </div>
-                @elseif ($order->status === 'cancelled')
-                    <div class="p-3 bg-red-50 border border-red-200 rounded-xl text-xs text-red-800 font-bold text-center">
-                        Order is Cancelled
-                    </div>
-                @endif
-
-                <!-- Cancellation Button (available before completed and not already cancelled) -->
-                @if ($order->status !== 'completed' && $order->status !== 'cancelled')
-                    <form action="{{ route('orders.cancel', $order) }}" method="POST" onsubmit="return confirm('Are you sure you want to cancel this order? Any payments received will be retained as non-refundable cancellation income.');">
-                        @csrf
-                        <button type="submit" class="w-full py-2 bg-red-50 hover:bg-red-100 text-red-700 font-bold text-xs rounded-xl border border-red-200 transition">
-                            ✕ Cancel Order
-                        </button>
-                    </form>
-                @endif
-            </div>
-        </div>
-
-        <!-- Per-Product Customizations & Price Adjustments (2 Columns) -->
-        <div class="lg:col-span-2 space-y-6">
-            <!-- Line Items Card -->
-            <div class="bg-white rounded-2xl border border-stone-200 p-6 shadow-sm">
-                <div class="flex items-center justify-between border-b pb-4 mb-4">
-                    <h2 class="text-sm font-bold text-stone-900">Per-Product Customizations & Line Items</h2>
-                    @if ($order->status === 'pending')
-                        <span class="text-xs bg-amber-100 text-amber-800 px-2.5 py-0.5 rounded-full font-bold">
-                            Prices Adjustable
-                        </span>
-                    @else
-                        <span class="text-xs bg-stone-100 text-stone-600 px-2.5 py-0.5 rounded-full font-bold">
-                            🔒 Prices Locked
-                        </span>
-                    @endif
+    {{-- 3-Column Layout --}}
+    <div class="review-layout">
+        {{-- Main Content: Line Items, Images, Payments --}}
+        <div class="review-main space-y-4">
+            {{-- Line Items --}}
+            <div class="bg-white border border-cocoa-100 rounded-xl p-4">
+                <div class="flex items-center justify-between border-b border-cocoa-100 pb-4 mb-5">
+                    <h2 class="text-sm font-semibold text-cocoa-600">Order Items & Customizations</h2>
+                    <span class="text-sm text-cocoa-500">Saved prices</span>
                 </div>
 
-                <div class="space-y-6">
+                <div class="space-y-5">
                     @foreach ($order->orderDetails as $detail)
-                        <div class="border border-stone-200 rounded-xl p-4 bg-stone-50/40 space-y-3">
-                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-stone-200/60 pb-3">
+                        <div class="item-section space-y-3">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-cocoa-100/60 pb-3">
                                 <div>
-                                    <h4 class="font-bold text-stone-900 text-sm">{{ $detail->product->product_name }}</h4>
-                                    <span class="text-xs text-stone-500">Catalog Price: ₱{{ number_format($detail->product->price, 2) }}</span>
+                                    <h3 class="font-semibold text-cocoa-600 text-sm">{{ $detail->product_name_snapshot ?? $detail->product->product_name }}</h3>
+                                    <span class="text-xs text-cocoa-400">Saved package price: ₱{{ number_format($detail->unit_price, 2) }}</span>
                                 </div>
                                 <div class="text-right">
-                                    <span class="text-xs text-stone-500 block">Subtotal ({{ $detail->quantity }} qty)</span>
-                                    <span class="text-base font-extrabold text-stone-900">₱{{ number_format($detail->subtotal, 2) }}</span>
+                                    <span class="text-xs text-cocoa-400 block">Subtotal ({{ $detail->quantity }} qty)</span>
+                                    <span class="text-base font-bold text-cocoa-600">₱{{ number_format($detail->subtotal, 2) }}</span>
                                 </div>
                             </div>
 
-                            <!-- Customization details -->
+                            {{-- Customization Details --}}
                             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
                                 <div>
-                                    <span class="text-stone-400 font-semibold block uppercase text-[10px]">Layers</span>
-                                    <span class="font-bold text-stone-800">{{ $detail->layers ?? 'N/A' }}</span>
+                                    <span class="text-cocoa-500 font-bold block text-xs ">Layers</span>
+                                    <span class="text-cocoa-700 font-medium">{{ $detail->layers ?? 'N/A' }}</span>
                                 </div>
                                 <div>
-                                    <span class="text-stone-400 font-semibold block uppercase text-[10px]">Theme / Colors</span>
-                                    <span class="font-bold text-stone-800">{{ $detail->themes ?? 'None specified' }}</span>
+                                    <span class="text-cocoa-500 font-bold block text-xs ">Theme / Colors</span>
+                                    <span class="text-cocoa-700 font-medium">{{ $detail->themes ?? 'None specified' }}</span>
                                 </div>
                                 <div>
-                                    <span class="text-stone-400 font-semibold block uppercase text-[10px]">Special Requests</span>
-                                    <span class="text-stone-800">{{ $detail->special_request ?? 'None' }}</span>
+                                    <span class="text-cocoa-500 font-bold block text-xs ">Special Requests</span>
+                                    <span class="text-cocoa-700 font-medium">{{ $detail->special_request ?? 'None' }}</span>
                                 </div>
                             </div>
 
-                            <!-- Associated Reference Images for this Product Line -->
+                            {{-- Per-Product Reference Images --}}
                             @if ($detail->images->isNotEmpty())
                                 <div class="pt-2">
-                                    <span class="text-[10px] text-stone-400 uppercase font-bold block mb-1">Product Reference Photos:</span>
+                                    <span class="text-xs text-cocoa-500 font-bold block mb-1.5">Reference Photos:</span>
                                     <div class="flex flex-wrap gap-2">
                                         @foreach ($detail->images as $img)
-                                            <a href="{{ asset('storage/' . $img->file_path) }}" target="_blank" class="block border rounded-lg overflow-hidden w-16 h-16 bg-white shadow-sm hover:opacity-80 transition">
+                                            <a href="{{ asset('storage/' . $img->file_path) }}" target="_blank" class="block border border-cocoa-100 rounded-lg overflow-hidden w-16 h-16 bg-cream-50 hover:opacity-80 transition">
                                                 <img src="{{ asset('storage/' . $img->file_path) }}" alt="{{ $img->original_filename }}" class="w-full h-full object-cover">
                                             </a>
                                         @endforeach
@@ -256,211 +112,179 @@
                                 </div>
                             @endif
 
-                            <!-- Price Adjustment Form (Pending Status only) -->
-                            @if ($order->status === 'pending')
-                                <div class="pt-3 border-t border-dashed border-stone-200">
-                                    <form action="{{ route('orders.updateDetailPrice', [$order, $detail]) }}" method="POST" class="flex items-center gap-3">
-                                        @csrf
-                                        @method('PATCH')
-                                        <div class="flex items-center gap-1.5">
-                                            <label class="text-xs font-bold text-stone-700">Unit Price (₱):</label>
-                                            <input type="number" step="0.01" min="0" name="unit_price" value="{{ $detail->unit_price }}" 
-                                                   class="w-28 text-xs rounded-lg border-stone-300 focus:border-rose-700 focus:ring-rose-700 shadow-sm font-semibold">
-                                        </div>
-                                        <button type="submit" class="px-3 py-1.5 bg-stone-800 hover:bg-stone-700 text-white font-bold text-xs rounded-lg transition shadow">
-                                            Update Price
-                                        </button>
-                                    </form>
-                                </div>
-                            @else
-                                <div class="pt-2 text-[11px] text-stone-400 italic">
-                                    Price locked at ₱{{ number_format($detail->unit_price, 2) }} per unit.
-                                </div>
+                            {{-- Fixed catalog snapshot --}}
+                            @if ($detail->included_contents_snapshot)
+                                <p class="text-sm"><strong>Included per package:</strong> {{ $detail->included_contents_snapshot }}</p>
                             @endif
+                            @foreach ($detail->addOns as $extra)
+                                <p class="text-sm"><strong>Paid extra:</strong> {{ $extra->name_snapshot }} × {{ $extra->quantity }} · ₱{{ number_format($extra->subtotal, 2) }}<br>{{ $extra->description_snapshot }} · ₱{{ number_format($extra->unit_price, 2) }} each</p>
+                            @endforeach
                         </div>
                     @endforeach
                 </div>
             </div>
 
-            <!-- General Order Reference Images & Attach Image Form -->
-            <div class="bg-white rounded-2xl border border-stone-200 p-6 shadow-sm">
-                <div class="flex items-center justify-between border-b pb-4 mb-4">
-                    <h2 class="text-sm font-bold text-stone-900">All Order Reference Images</h2>
-                    <span class="text-xs text-stone-400">Total: {{ $order->images->count() }} image(s)</span>
+            {{-- Reference Images --}}
+            <div class="bg-white border border-cocoa-100 rounded-xl p-4">
+                <div class="flex items-center justify-between border-b border-cocoa-100 pb-4 mb-4">
+                    <h2 class="text-sm font-semibold text-cocoa-600">All Reference Images</h2>
+                    <span class="text-xs text-cocoa-400">{{ $order->images->count() }} image(s)</span>
                 </div>
 
                 @if ($order->images->isNotEmpty())
-                    <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3 mb-4">
+                    <div class="grid grid-cols-3 sm:grid-cols-2 xl:grid-cols-4 md:grid-cols-6 gap-3 mb-4">
                         @foreach ($order->images as $img)
-                            <div class="border rounded-xl overflow-hidden bg-stone-50 group relative">
+                            <div class="border border-cocoa-100 rounded-lg overflow-hidden bg-cream-50">
                                 <a href="{{ asset('storage/' . $img->file_path) }}" target="_blank" class="block aspect-square">
                                     <img src="{{ asset('storage/' . $img->file_path) }}" alt="{{ $img->original_filename }}" class="w-full h-full object-cover">
                                 </a>
-                                <div class="p-1 text-[9px] text-stone-500 truncate" title="{{ $img->original_filename }}">
+                                <div class="px-1.5 py-1 text-[9px] text-cocoa-400 truncate" title="{{ $img->original_filename }}">
                                     {{ $img->original_filename }}
                                 </div>
                             </div>
                         @endforeach
                     </div>
                 @else
-                    <p class="text-xs text-stone-400 py-3 text-center">No images uploaded for this order.</p>
+                    <p class="text-sm text-cocoa-400 py-4 text-center">No images uploaded for this order.</p>
                 @endif
 
-                <!-- Staff Upload Image Form -->
-                @if ($order->status !== 'completed' && $order->status !== 'cancelled')
-                    <form action="{{ route('orders.attachImage', $order) }}" method="POST" enctype="multipart/form-data" class="pt-3 border-t flex flex-col sm:flex-row items-center gap-3">
-                        @csrf
-                        <div class="w-full sm:w-auto flex-grow">
-                            <input type="file" name="image" required accept="image/*" class="w-full text-xs text-stone-500 file:mr-2 file:py-1.5 file:px-3 file:rounded file:border-0 file:text-xs file:bg-stone-100">
-                        </div>
-                        <div>
-                            <select name="order_detail_id" class="text-xs rounded-lg border-stone-300">
-                                <option value="">Associate with: Whole Order</option>
-                                @foreach ($order->orderDetails as $d)
-                                    <option value="{{ $d->id }}">{{ $d->product->product_name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <button type="submit" class="w-full sm:w-auto px-4 py-1.5 bg-rose-900 hover:bg-rose-800 text-white font-bold text-xs rounded-lg shadow">
-                            Upload
-                        </button>
-                    </form>
-                @endif
             </div>
 
-            <!-- Payment Management & Confirmation Section -->
-            <div class="bg-white rounded-2xl border border-stone-200 p-6 shadow-sm space-y-4">
-                <div class="flex items-center justify-between border-b pb-4">
-                    <h2 class="text-sm font-bold text-stone-900">Payments & Receipts</h2>
-                    <span class="text-xs font-mono font-bold text-emerald-700">
+            @include('admin.orders.proof-review')
+
+            {{-- Payments --}}
+            <div class="bg-white border border-cocoa-100 rounded-xl p-6 space-y-4">
+                <div class="flex items-center justify-between border-b border-cocoa-100 pb-4">
+                    <h2 class="text-sm font-semibold text-cocoa-600">Payments</h2>
+                    <span class="text-xs font-mono font-semibold text-emerald-700">
                         Paid: ₱{{ number_format($order->amount_paid, 2) }} / ₱{{ number_format($order->total_amount, 2) }}
                     </span>
                 </div>
 
-                <!-- Down Payment Recording Form (for Pending Orders) -->
-                @if ($order->status === 'pending')
-                    <div class="bg-amber-50/70 border border-amber-200 rounded-xl p-5 space-y-3">
-                        <div class="flex items-center justify-between">
-                            <h4 class="font-bold text-amber-950 text-xs uppercase tracking-wide">
+                {{-- Down Payment Form --}}
+                @if ($order->status === 'pending' && $order->user_id !== null)
+                    <div class="bg-cream-50 border border-cocoa-100 rounded-lg p-5 space-y-3">
+                        <div class="page-heading">
+                            <h3 class="font-semibold text-cocoa-600 text-xs ">
                                 Record 50% Down Payment to Confirm Order
-                            </h4>
-                            <span class="font-extrabold text-sm text-rose-950">
+                            </h3>
+                            <span class="font-bold text-sm text-cocoa-600">
                                 Exact 50%: ₱{{ number_format($order->required_down_payment, 2) }}
                             </span>
                         </div>
-                        <p class="text-xs text-amber-800">
-                            Recording this verified payment will automatically transition the order to <strong>Confirmed</strong> and lock product pricing.
+                        <p class="text-xs text-cocoa-500">
+                            Recording this verified payment will automatically <strong>confirm</strong> the order.
                         </p>
 
-                        <form action="{{ route('orders.payments.store', $order) }}" method="POST" class="grid grid-cols-1 sm:grid-cols-4 gap-3 pt-2">
+                        <form action="{{ route('orders.payments.store', $order) }}" method="POST" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3 pt-2">
                             @csrf
                             <input type="hidden" name="payment_type" value="down_payment">
-                            
+
                             <div>
-                                <label class="block text-[10px] uppercase font-bold text-stone-600 mb-1">Amount (₱)</label>
-                                <input type="number" step="0.01" name="amount" value="{{ $order->required_down_payment }}" readonly 
-                                       class="w-full text-xs rounded-lg border-stone-300 bg-stone-100 font-bold text-stone-800">
+                                <label class="block text-xs font-bold text-cocoa-600 mb-1" for="field-admin-orders-show-blade-php-2-{{ $detail->id ?? 0 }}">amount (₱)</label>
+                                <input id="field-admin-orders-show-blade-php-2-{{ $detail->id ?? 0 }}" type="number" step="0.01" name="amount" value="{{ $order->required_down_payment }}" readonly
+                                       class="w-full text-xs rounded-lg border-cocoa-100 bg-cream-100 font-semibold text-cocoa-600">
                             </div>
 
                             <div>
-                                <label class="block text-[10px] uppercase font-bold text-stone-600 mb-1">Payment Method</label>
-                                <select name="payment_method" required class="w-full text-xs rounded-lg border-stone-300 focus:border-rose-700 focus:ring-rose-700">
+                                <label class="block text-xs font-bold text-cocoa-600 mb-1" for="field-admin-orders-show-blade-php-3-{{ $detail->id ?? 0 }}">method</label>
+                                <select id="field-admin-orders-show-blade-php-3-{{ $detail->id ?? 0 }}" name="payment_method" required class="w-full text-xs rounded-lg border-cocoa-100 focus:border-cocoa-300 focus:ring-cocoa-300">
                                     <option value="cash">Cash</option>
                                     <option value="gcash">GCash</option>
                                 </select>
                             </div>
 
                             <div>
-                                <label class="block text-[10px] uppercase font-bold text-stone-600 mb-1">GCash Ref #</label>
-                                <input type="text" name="reference_number" placeholder="Required if GCash" 
-                                       class="w-full text-xs rounded-lg border-stone-300 focus:border-rose-700 focus:ring-rose-700">
+                                <label class="block text-xs font-bold text-cocoa-600 mb-1" for="field-admin-orders-show-blade-php-4-{{ $detail->id ?? 0 }}">GCash Ref #</label>
+                                <input id="field-admin-orders-show-blade-php-4-{{ $detail->id ?? 0 }}" type="text" name="reference_number" placeholder="Required if GCash"
+                                       class="w-full text-xs rounded-lg border-cocoa-100 focus:border-cocoa-300 focus:ring-cocoa-300 placeholder-cocoa-400/50">
                             </div>
 
                             <div class="flex items-end">
-                                <button type="submit" class="w-full py-2 bg-emerald-700 hover:bg-emerald-600 text-white font-bold text-xs rounded-lg shadow transition">
-                                    Confirm & Pay 50%
+                                <button type="submit" class="w-full py-2 bg-cocoa-600 hover:bg-cocoa-700 text-white font-semibold text-xs rounded-lg transition ">
+                                    Record deposit & confirm
                                 </button>
                             </div>
                         </form>
                     </div>
                 @endif
 
-                <!-- Final Payment Recording Form (for Confirmed / Ready orders with balance) -->
+                {{-- Final Payment Form --}}
                 @if ($order->status !== 'pending' && $order->status !== 'cancelled' && $order->status !== 'completed' && $order->remaining_balance > 0)
-                    <div class="bg-blue-50/70 border border-blue-200 rounded-xl p-5 space-y-3">
-                        <div class="flex items-center justify-between">
-                            <h4 class="font-bold text-blue-950 text-xs uppercase tracking-wide">
-                                Record Final Payment (Settle Balance)
-                            </h4>
-                            <span class="font-extrabold text-sm text-blue-950">
+                    <div class="bg-cream-50 border border-cocoa-100 rounded-lg p-5 space-y-3">
+                        <div class="page-heading">
+                            <h3 class="font-semibold text-cocoa-600 text-xs ">
+                                Record Final Payment
+                            </h3>
+                            <span class="font-bold text-sm text-cocoa-600">
                                 Balance: ₱{{ number_format($order->remaining_balance, 2) }}
                             </span>
                         </div>
 
-                        <form action="{{ route('orders.payments.store', $order) }}" method="POST" class="grid grid-cols-1 sm:grid-cols-4 gap-3 pt-2">
+                        <form action="{{ route('orders.payments.store', $order) }}" method="POST" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3 pt-2">
                             @csrf
                             <input type="hidden" name="payment_type" value="final_payment">
-                            
+
                             <div>
-                                <label class="block text-[10px] uppercase font-bold text-stone-600 mb-1">Amount (₱)</label>
-                                <input type="number" step="0.01" name="amount" value="{{ $order->remaining_balance }}" readonly 
-                                       class="w-full text-xs rounded-lg border-stone-300 bg-stone-100 font-bold text-stone-800">
+                                <label class="block text-xs font-bold text-cocoa-600 mb-1" for="field-admin-orders-show-blade-php-5-{{ $detail->id ?? 0 }}">amount (₱)</label>
+                                <input id="field-admin-orders-show-blade-php-5-{{ $detail->id ?? 0 }}" type="number" step="0.01" name="amount" value="{{ $order->remaining_balance }}" readonly
+                                       class="w-full text-xs rounded-lg border-cocoa-100 bg-cream-100 font-semibold text-cocoa-600">
                             </div>
 
                             <div>
-                                <label class="block text-[10px] uppercase font-bold text-stone-600 mb-1">Payment Method</label>
-                                <select name="payment_method" required class="w-full text-xs rounded-lg border-stone-300 focus:border-rose-700 focus:ring-rose-700">
+                                <label class="block text-xs font-bold text-cocoa-600 mb-1" for="field-admin-orders-show-blade-php-6-{{ $detail->id ?? 0 }}">method</label>
+                                <select id="field-admin-orders-show-blade-php-6-{{ $detail->id ?? 0 }}" name="payment_method" required class="w-full text-xs rounded-lg border-cocoa-100 focus:border-cocoa-300 focus:ring-cocoa-300">
                                     <option value="cash">Cash</option>
                                     <option value="gcash">GCash</option>
                                 </select>
                             </div>
 
                             <div>
-                                <label class="block text-[10px] uppercase font-bold text-stone-600 mb-1">GCash Ref #</label>
-                                <input type="text" name="reference_number" placeholder="Required if GCash" 
-                                       class="w-full text-xs rounded-lg border-stone-300 focus:border-rose-700 focus:ring-rose-700">
+                                <label class="block text-xs font-bold text-cocoa-600 mb-1" for="field-admin-orders-show-blade-php-7-{{ $detail->id ?? 0 }}">GCash Ref #</label>
+                                <input id="field-admin-orders-show-blade-php-7-{{ $detail->id ?? 0 }}" type="text" name="reference_number" placeholder="Required if GCash"
+                                       class="w-full text-xs rounded-lg border-cocoa-100 focus:border-cocoa-300 focus:ring-cocoa-300 placeholder-cocoa-400/50">
                             </div>
 
                             <div class="flex items-end">
-                                <button type="submit" class="w-full py-2 bg-blue-700 hover:bg-blue-600 text-white font-bold text-xs rounded-lg shadow transition">
-                                    Record Final Settlement
+                                <button type="submit" class="w-full py-2 bg-cocoa-600 hover:bg-cocoa-700 text-white font-semibold text-xs rounded-lg transition ">
+                                    Record Final Payment
                                 </button>
                             </div>
                         </form>
                     </div>
                 @endif
 
-                <!-- Payment Records Table -->
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left text-xs">
-                        <thead class="bg-stone-50 border-b text-stone-500 uppercase text-[10px]">
-                            <tr>
-                                <th class="p-3">Date</th>
-                                <th class="p-3">Type</th>
-                                <th class="p-3">Method</th>
-                                <th class="p-3">Ref #</th>
-                                <th class="p-3">Recorded By</th>
-                                <th class="p-3 text-right">Amount</th>
+                {{-- Payment History Table --}}
+                <div class="table-scroll" role="region" aria-label="Scrollable data table" tabindex="0">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="bg-cream-100 text-cocoa-600 text-xs  font-bold">
+                                <th class="px-4 py-3">Date</th>
+                                <th class="px-4 py-3">Type</th>
+                                <th class="px-4 py-3">Method</th>
+                                <th class="px-4 py-3">Ref #</th>
+                                <th class="px-4 py-3">Recorded By</th>
+                                <th class="px-4 py-3 text-right">Amount</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-stone-100">
+                        <tbody class="divide-y divide-cocoa-100/60">
                             @forelse ($order->payments as $payment)
-                                <tr>
-                                    <td class="p-3">{{ $payment->payment_date->format('M d, Y h:i A') }}</td>
-                                    <td class="p-3">
-                                        <span class="inline-block px-2 py-0.5 rounded text-[10px] font-bold uppercase
-                                            {{ $payment->payment_type === 'down_payment' ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800' }}">
+                                <tr class="text-sm hover:bg-cream-50 transition">
+                                    <td class="px-4 py-3 text-xs text-cocoa-500">{{ $payment->payment_date->format('M d, Y h:i A') }}</td>
+                                    <td class="px-4 py-3">
+                                        <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold
+                                            {{ $payment->payment_type === 'down_payment' ? 'bg-amber-50 text-cocoa-500 ring-1 ring-amber-200' : 'bg-emerald-50 text-emerald-700 ' }}">
                                             {{ str_replace('_', ' ', $payment->payment_type) }}
                                         </span>
                                     </td>
-                                    <td class="p-3 uppercase font-semibold text-stone-700">{{ $payment->payment_method }}</td>
-                                    <td class="p-3 font-mono text-stone-600">{{ $payment->reference_number ?? '—' }}</td>
-                                    <td class="p-3 text-stone-600">{{ $payment->user->first_name ?? 'Staff' }}</td>
-                                    <td class="p-3 text-right font-bold text-stone-900">₱{{ number_format($payment->amount, 2) }}</td>
+                                    <td class="px-4 py-3 font-medium text-cocoa-500 text-xs">{{ $payment->payment_method }}</td>
+                                    <td class="px-4 py-3 font-mono text-cocoa-400 text-xs">{{ $payment->reference_number ?? '—' }}</td>
+                                    <td class="px-4 py-3 text-cocoa-400 text-xs">{{ $payment->user->first_name ?? 'Staff' }}</td>
+                                    <td class="px-4 py-3 text-right font-semibold text-cocoa-600">₱{{ number_format($payment->amount, 2) }}</td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="6" class="p-4 text-center text-stone-400">No payment records yet.</td>
+                                    <td colspan="6" class="px-4 py-8 text-center text-sm text-cocoa-400">No payment records yet.</td>
                                 </tr>
                             @endforelse
                         </tbody>
@@ -468,6 +292,103 @@
                 </div>
             </div>
         </div>
+        {{-- Sidebar: Customer, Schedule, Actions --}}
+        <div class="review-context space-y-6">
+            {{-- Customer --}}
+            <div class="bg-white border border-cocoa-100 rounded-xl p-5">
+                <h2 class="text-sm font-semibold text-cocoa-600 mb-3">Customer and pickup</h2>
+                <div class="space-y-2.5 text-sm">
+                    <div>
+                        <span class="text-xs text-cocoa-400 block font-medium">Name</span>
+                        <a href="{{ route('customers.show', $order->customer) }}" class="font-semibold text-cocoa-600 hover:text-cocoa-500 transition">
+                            {{ $order->customer->full_name }}
+                        </a>
+                    </div>
+                    <div>
+                        <span class="text-xs text-cocoa-400 block font-medium">Phone</span>
+                        <span class="font-mono font-medium text-cocoa-600">{{ $order->customer->phone_number }}</span>
+                    </div>
+                </div>
+                <div class="border-t border-cocoa-100 my-4"></div>
+                <h3 class="text-xs font-semibold text-cocoa-500 mb-3">Pickup Schedule</h3>
+                <div class="space-y-2.5 text-sm">
+                    <div>
+                        <span class="text-xs text-cocoa-400 block font-medium">Pickup Date</span>
+                        <span class="font-semibold text-cocoa-600">{{ $order->pickup_date->format('F d, Y (l)') }}</span>
+                    </div>
+                    <div>
+                        <span class="text-xs text-cocoa-400 block font-medium">Pickup Time</span>
+                        <span class="font-semibold text-cocoa-600">{{ \Carbon\Carbon::parse($order->pickup_time)->format('h:i A') }}</span>
+                    </div>
+                    @if ($order->notes_text)
+                        <div class="pt-2 border-t border-cocoa-100 mt-2">
+                            <span class="text-xs text-cocoa-400 block font-medium">Order Notes</span>
+                            <p class="text-cocoa-600 italic mt-0.5 text-xs">{{ $order->notes_text }}</p>
+                        </div>
+                    @endif
+                </div>
+            </div>
+
+            @include('admin.orders.refund')
+
+            {{-- Lifecycle Actions --}}
+            <div class="bg-white border border-cocoa-100 rounded-xl p-5 space-y-3">
+                <h2 class="text-sm font-semibold text-cocoa-600">Order actions</h2>
+
+                @if ($order->status === 'confirmed')
+                    <form action="{{ route('orders.updateStatus', $order) }}" method="POST">
+                        @csrf
+                        @method('PATCH')
+                        <input type="hidden" name="status" value="preparing">
+                        <button type="submit" class="w-full py-2.5 bg-cocoa-600 hover:bg-cocoa-700 text-white font-semibold text-sm rounded-lg transition flex items-center justify-center gap-2 ">
+                            <span>Start Preparing (Baking)</span>
+                        </button>
+                    </form>
+                @elseif ($order->status === 'preparing')
+                    <form action="{{ route('orders.updateStatus', $order) }}" method="POST">
+                        @csrf
+                        @method('PATCH')
+                        <input type="hidden" name="status" value="ready_for_pickup">
+                        <button type="submit" class="w-full py-2.5 bg-cocoa-600 hover:bg-cocoa-700 text-white font-semibold text-sm rounded-lg transition flex items-center justify-center gap-2 ">
+                            <span>Mark Ready for Pickup</span>
+                        </button>
+                    </form>
+                @elseif ($order->status === 'ready_for_pickup')
+                    @if ($order->remaining_balance > 0)
+                        <div class="p-3 bg-amber-50 border border-amber-200 rounded-lg text-xs text-cocoa-600">
+                            <strong>Payment required:</strong> Please settle ₱{{ number_format($order->remaining_balance, 2) }} before completing.
+                        </div>
+                    @else
+                        <form action="{{ route('orders.updateStatus', $order) }}" method="POST">
+                            @csrf
+                            @method('PATCH')
+                            <input type="hidden" name="status" value="completed">
+                            <button type="submit" class="w-full py-2.5 bg-cocoa-600 hover:bg-cocoa-700 text-white font-semibold text-sm rounded-lg transition flex items-center justify-center gap-2 ">
+                                <span>Complete Order</span>
+                            </button>
+                        </form>
+                    @endif
+                @elseif ($order->status === 'completed')
+                    <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-lg text-xs text-emerald-800 font-semibold text-center">
+                        Order Completed
+                    </div>
+                @elseif ($order->status === 'cancelled')
+                    <div class="p-3 bg-red-50 border border-red-200 rounded-lg text-xs text-red-800 font-semibold text-center">
+                        Order Cancelled
+                    </div>
+                @endif
+
+                @if ($order->status !== 'completed' && $order->status !== 'cancelled')
+                    <form action="{{ route('orders.cancel', $order) }}" method="POST" onsubmit="return confirm('Are you sure you want to cancel this order? The deposit is retained under the customer-cancellation policy. For bakery failure, use the full-refund action instead.');">
+                        @csrf
+                        <button type="submit" class="w-full py-2 bg-white hover:bg-red-50 text-red-600 font-medium text-sm rounded-lg border border-red-200 transition">
+                            <span>Customer cancellation</span>
+                        </button>
+                    </form>
+                @endif
+            </div>
+        </div>
+
     </div>
 </div>
 @endsection

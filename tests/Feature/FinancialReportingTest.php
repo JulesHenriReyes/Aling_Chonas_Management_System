@@ -17,6 +17,7 @@ use Tests\TestCase;
 class FinancialReportingTest extends TestCase
 {
     use RefreshDatabase;
+    use \Tests\Concerns\CreatesCatalogFixtures;
 
     protected User $owner;
     protected Customer $customer;
@@ -45,7 +46,7 @@ class FinancialReportingTest extends TestCase
             'phone_number' => '09171234567',
         ]);
 
-        $this->cake = Product::create([
+        $this->cake = $this->catalogProduct([
             'product_name' => 'Celebration Cake',
             'price' => 2000.00,
             'is_active' => true,
@@ -63,7 +64,7 @@ class FinancialReportingTest extends TestCase
             'pickup_date' => $today->toDateString(),
             'pickup_time' => '15:00',
             'items' => [
-                ['product_id' => $this->cake->id, 'quantity' => 1],
+                ['product_id' => $this->cake->id, 'package_option_id' => $this->cake->options()->first()->id, 'quantity' => 1],
             ],
         ], $this->owner);
 
@@ -82,7 +83,7 @@ class FinancialReportingTest extends TestCase
             'pickup_date' => $today->copy()->addDay()->toDateString(),
             'pickup_time' => '12:00',
             'items' => [
-                ['product_id' => $this->cake->id, 'quantity' => 1],
+                ['product_id' => $this->cake->id, 'package_option_id' => $this->cake->options()->first()->id, 'quantity' => 1],
             ],
         ], $this->owner);
 
@@ -157,7 +158,7 @@ class FinancialReportingTest extends TestCase
             'customer_id' => $this->customer->id,
             'pickup_date' => $today->copy()->addDay()->toDateString(),
             'pickup_time' => '12:00',
-            'items' => [['product_id' => $this->cake->id, 'quantity' => 1]],
+            'items' => [['product_id' => $this->cake->id, 'package_option_id' => $this->cake->options()->first()->id, 'quantity' => 1]],
         ], $this->owner);
 
         $this->orderService->recordDownPayment($order, 1000.00, 'cash', null, $this->owner, $today);
@@ -175,7 +176,7 @@ class FinancialReportingTest extends TestCase
             'customer_id' => $this->customer->id,
             'pickup_date' => $today->copy()->addDay()->toDateString(),
             'pickup_time' => '12:00',
-            'items' => [['product_id' => $this->cake->id, 'quantity' => 1]],
+            'items' => [['product_id' => $this->cake->id, 'package_option_id' => $this->cake->options()->first()->id, 'quantity' => 1]],
         ], $this->owner);
 
         $this->orderService->recordDownPayment($order, 1000.00, 'cash', null, $this->owner, $today);

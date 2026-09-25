@@ -1,0 +1,1695 @@
+[
+  {
+    "id": "TC001",
+    "title": "Submit a multi-item custom order",
+    "description": "A public buyer can configure and submit a custom order with multiple items and reach the success page with a pending order confirmation.",
+    "category": "Public Order Submission",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Select one active product and add it to the order"
+      },
+      {
+        "type": "action",
+        "description": "Select another active product and add it to the order"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the customer name field with a valid name"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the phone number field with a valid phone number"
+      },
+      {
+        "type": "action",
+        "description": "Select a valid pickup date"
+      },
+      {
+        "type": "action",
+        "description": "Select a valid pickup time"
+      },
+      {
+        "type": "action",
+        "description": "Submit the order"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the order success page is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the order is marked as pending"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC002",
+    "title": "Submit a custom order as a public buyer",
+    "description": "A public buyer can configure a multi-item custom order with notes and a reference image, submit it, and land on the success page with a pending order status.",
+    "category": "Order Review and Price Adjustment",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the customer name field with a valid name"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the customer phone field with a valid phone number"
+      },
+      {
+        "type": "action",
+        "description": "Select a valid pickup date"
+      },
+      {
+        "type": "action",
+        "description": "Select a valid pickup time"
+      },
+      {
+        "type": "action",
+        "description": "Add at least two products to the order"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the order notes field with a customization note"
+      },
+      {
+        "type": "action",
+        "description": "Attach a valid reference image"
+      },
+      {
+        "type": "action",
+        "description": "Submit the order"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the success confirmation is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the order is marked as pending"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC003",
+    "title": "Sign in to the admin dashboard",
+    "description": "A staff member can log in with valid credentials and reach the admin dashboard.",
+    "category": "Staff Authentication",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign-in form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the admin dashboard is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user is signed in"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC004",
+    "title": "Review a pending order and capture full payment",
+    "description": "A staff member can inspect a pending order, confirm it, record the required down payment, and complete the final balance.",
+    "category": "Order Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign-in form"
+      },
+      {
+        "type": "action",
+        "description": "Open the orders list"
+      },
+      {
+        "type": "action",
+        "description": "Open a pending order"
+      },
+      {
+        "type": "action",
+        "description": "Review the order details and customization information"
+      },
+      {
+        "type": "action",
+        "description": "Adjust the provisional item price if needed"
+      },
+      {
+        "type": "action",
+        "description": "Confirm the order"
+      },
+      {
+        "type": "action",
+        "description": "Record a down payment equal to half of the order total"
+      },
+      {
+        "type": "action",
+        "description": "Record the remaining balance payment"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the order is confirmed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the order is marked as fully paid"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC005",
+    "title": "Review a pending order and confirm it",
+    "description": "A staff member can open a pending order, review the customization details and reference image, then confirm the order.",
+    "category": "Order Review and Price Adjustment",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff username field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /orders"
+      },
+      {
+        "type": "action",
+        "description": "Open a pending order"
+      },
+      {
+        "type": "action",
+        "description": "Review the order details"
+      },
+      {
+        "type": "action",
+        "description": "Review the reference image"
+      },
+      {
+        "type": "action",
+        "description": "Confirm the order"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the order is marked as confirmed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the order remains accessible in the order details view"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC006",
+    "title": "Record the exact down payment required to confirm an order",
+    "description": "A staff member can enter the exact 50% down payment, choose a payment method, and submit it so the order advances from confirmed to paid in part.",
+    "category": "Down Payment and Final Payment Processing",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff username field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /orders"
+      },
+      {
+        "type": "action",
+        "description": "Open a confirmed order"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the down payment amount field with the exact required 50% amount"
+      },
+      {
+        "type": "action",
+        "description": "Select a payment method"
+      },
+      {
+        "type": "action",
+        "description": "Submit the payment"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the down payment is recorded"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the order advances to the next fulfillment stage"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC007",
+    "title": "End a staff session",
+    "description": "A signed-in staff member can log out and return to the login page.",
+    "category": "Staff Authentication",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign-in form"
+      },
+      {
+        "type": "action",
+        "description": "Open the account menu"
+      },
+      {
+        "type": "action",
+        "description": "End the current session"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the login page is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user is signed out"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC008",
+    "title": "Create a new staff account",
+    "description": "This test verifies that the Owner can create a staff account and see it listed in user management.",
+    "category": "User Management (Owner Only)",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff login credentials with {{LOGIN_USER}} and {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /users"
+      },
+      {
+        "type": "action",
+        "description": "Open the create user form"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff member name field with a valid name"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with a valid email address"
+      },
+      {
+        "type": "action",
+        "description": "Select the staff role"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with a valid password"
+      },
+      {
+        "type": "action",
+        "description": "Save the staff account"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the new staff account is displayed in the user list"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC009",
+    "title": "Complete an order by recording the remaining balance",
+    "description": "A staff member can collect the final balance on an order ready for pickup and mark it completed.",
+    "category": "Down Payment and Final Payment Processing",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff username field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /orders"
+      },
+      {
+        "type": "action",
+        "description": "Open an order ready for pickup"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the final payment amount field with the remaining balance"
+      },
+      {
+        "type": "action",
+        "description": "Select a payment method"
+      },
+      {
+        "type": "action",
+        "description": "Submit the payment"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the payment is recorded as the final balance"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the order is marked as completed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC010",
+    "title": "Submit a custom order with notes and reference image",
+    "description": "A public buyer can add customization details, upload a reference image, and successfully submit the order.",
+    "category": "Public Order Submission",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Select an active product and add it to the order"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the customer name field with a valid name"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the phone number field with a valid phone number"
+      },
+      {
+        "type": "action",
+        "description": "Enter customization notes for the selected item"
+      },
+      {
+        "type": "action",
+        "description": "Upload a valid reference image"
+      },
+      {
+        "type": "action",
+        "description": "Select a valid pickup date"
+      },
+      {
+        "type": "action",
+        "description": "Select a valid pickup time"
+      },
+      {
+        "type": "action",
+        "description": "Submit the order"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the order success page is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the submitted customization details are shown"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC011",
+    "title": "Block assistants from user management",
+    "description": "An Assistant can access normal admin areas but is denied access to user management.",
+    "category": "Owner User Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the assistant username field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the assistant password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /dashboard"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /users"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify access to user management is denied"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the assistant can still access the admin area"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC012",
+    "title": "Create an owner account and block Assistant access to user management",
+    "description": "An Owner can manage staff accounts while an Assistant is prevented from opening the user management area.",
+    "category": "User Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign-in form"
+      },
+      {
+        "type": "action",
+        "description": "Open the user management page"
+      },
+      {
+        "type": "action",
+        "description": "Create a new staff account"
+      },
+      {
+        "type": "action",
+        "description": "Save the new user"
+      },
+      {
+        "type": "action",
+        "description": "Sign out"
+      },
+      {
+        "type": "action",
+        "description": "Sign in with Assistant credentials"
+      },
+      {
+        "type": "action",
+        "description": "Attempt to open the user management page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user management page is blocked for the Assistant"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the Assistant can still access normal admin areas"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC013",
+    "title": "Adjust a provisional item price before confirming an order",
+    "description": "A staff member can revise a provisional price on a pending order item and save the updated value before confirming the order.",
+    "category": "Order Review and Price Adjustment",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff username field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /orders"
+      },
+      {
+        "type": "action",
+        "description": "Open a pending order"
+      },
+      {
+        "type": "action",
+        "description": "Open the price editing control for an order item"
+      },
+      {
+        "type": "action",
+        "description": "Fill in a new provisional price"
+      },
+      {
+        "type": "action",
+        "description": "Save the updated price"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the updated price is reflected in the order details"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the order remains pending after the price update"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC014",
+    "title": "Update a staff account role or details",
+    "description": "This test verifies that the Owner can edit an existing staff account and see the updated account information reflected in user management.",
+    "category": "User Management (Owner Only)",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff login credentials with {{LOGIN_USER}} and {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /users"
+      },
+      {
+        "type": "action",
+        "description": "Open an existing staff account for editing"
+      },
+      {
+        "type": "action",
+        "description": "Update the staff account details with valid changes"
+      },
+      {
+        "type": "action",
+        "description": "Save the staff account changes"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the updated staff account is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC015",
+    "title": "View dashboard metrics and operational shortcuts",
+    "description": "A staff member can view key business metrics on the dashboard and access core operational pages from it.",
+    "category": "Admin Dashboard Overview",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign-in form"
+      },
+      {
+        "type": "action",
+        "description": "Open the dashboard"
+      },
+      {
+        "type": "action",
+        "description": "Review the sales and pending order metrics"
+      },
+      {
+        "type": "action",
+        "description": "Open the orders section from the dashboard"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify dashboard metrics are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a shortcut to core operations is available"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC016",
+    "title": "Allow owners to manage staff accounts",
+    "description": "An owner can open user management, create a staff account, and edit an existing staff account’s role.",
+    "category": "Owner User Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the owner username field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the owner password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /users"
+      },
+      {
+        "type": "action",
+        "description": "Create a new staff account"
+      },
+      {
+        "type": "action",
+        "description": "Save the new account"
+      },
+      {
+        "type": "action",
+        "description": "Open the edit view for an existing staff account"
+      },
+      {
+        "type": "action",
+        "description": "Update the staff role"
+      },
+      {
+        "type": "action",
+        "description": "Save the staff account changes"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the new staff account appears in the user list"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the updated staff role is reflected"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC017",
+    "title": "Create and update a product in the catalog",
+    "description": "A staff member can create a product, edit it, and keep it available for public ordering.",
+    "category": "Product Catalog",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign-in form"
+      },
+      {
+        "type": "action",
+        "description": "Open the products page"
+      },
+      {
+        "type": "action",
+        "description": "Create a new product"
+      },
+      {
+        "type": "action",
+        "description": "Open the newly created product"
+      },
+      {
+        "type": "action",
+        "description": "Update the product details"
+      },
+      {
+        "type": "action",
+        "description": "Save the product changes"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the product is listed in the catalog"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the updated product details are shown"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC018",
+    "title": "Create a product and toggle its public visibility",
+    "description": "A staff member can add a product to the catalog, change its active status, and verify the visibility state updates in the catalog.",
+    "category": "Product Catalog Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff username field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /products"
+      },
+      {
+        "type": "action",
+        "description": "Create a new product with a valid name, price, description, and category"
+      },
+      {
+        "type": "action",
+        "description": "Save the product"
+      },
+      {
+        "type": "action",
+        "description": "Toggle the product active status"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the new product appears in the catalog"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the product visibility status changes"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC019",
+    "title": "View and follow pickups from the schedule",
+    "description": "This test verifies that staff can review upcoming pickups in the schedule, narrow them by status, and open an order from the schedule to inspect its details.",
+    "category": "Pickup Schedule Calendar",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff login credentials with {{LOGIN_USER}} and {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /pickup-schedule"
+      },
+      {
+        "type": "action",
+        "description": "Select a status filter for the schedule"
+      },
+      {
+        "type": "action",
+        "description": "Click an order entry from the schedule"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify upcoming pickups are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the order details page is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC020",
+    "title": "Require customer name and phone before submission",
+    "description": "A public buyer cannot submit an order until the required customer details are provided.",
+    "category": "Public Order Submission",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Select an active product and add it to the order"
+      },
+      {
+        "type": "action",
+        "description": "Select a valid pickup date"
+      },
+      {
+        "type": "action",
+        "description": "Select a valid pickup time"
+      },
+      {
+        "type": "action",
+        "description": "Submit the order"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify required field validation errors are visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the order is not submitted"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC021",
+    "title": "Review customer order history",
+    "description": "This test verifies that staff can search for a customer, open the customer profile, and review the customer's order history.",
+    "category": "Customer Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff login credentials with {{LOGIN_USER}} and {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /customers"
+      },
+      {
+        "type": "action",
+        "description": "Search for an existing customer"
+      },
+      {
+        "type": "action",
+        "description": "Click the customer profile"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the customer profile is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the customer's order history is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC022",
+    "title": "Toggle a product between active and inactive",
+    "description": "A staff member can change a product's availability and the public order page only exposes active products.",
+    "category": "Product Catalog",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign-in form"
+      },
+      {
+        "type": "action",
+        "description": "Open the products page"
+      },
+      {
+        "type": "action",
+        "description": "Toggle a product to inactive"
+      },
+      {
+        "type": "action",
+        "description": "Open the public order page"
+      },
+      {
+        "type": "action",
+        "description": "Verify the inactive product is not available for selection"
+      },
+      {
+        "type": "action",
+        "description": "Return to the products page"
+      },
+      {
+        "type": "action",
+        "description": "Toggle the same product back to active"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the product is available again for selection"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the product status is active"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC023",
+    "title": "Edit an existing product’s details",
+    "description": "A staff member can update a product’s details and see the catalog reflect the saved changes.",
+    "category": "Product Catalog Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff username field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /products"
+      },
+      {
+        "type": "action",
+        "description": "Open an existing product for editing"
+      },
+      {
+        "type": "action",
+        "description": "Update the product details"
+      },
+      {
+        "type": "action",
+        "description": "Save the changes"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the updated product details are reflected in the catalog"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the product remains available in the product list"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC024",
+    "title": "Reject an invalid pickup schedule",
+    "description": "A public buyer sees validation when an invalid pickup date or time is chosen and cannot submit the order.",
+    "category": "Public Order Submission",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Select an active product and add it to the order"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the customer name field with a valid name"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the phone number field with a valid phone number"
+      },
+      {
+        "type": "action",
+        "description": "Select an invalid pickup date"
+      },
+      {
+        "type": "action",
+        "description": "Select an invalid pickup time"
+      },
+      {
+        "type": "action",
+        "description": "Submit the order"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify pickup schedule validation errors are visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the order is not submitted"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC025",
+    "title": "Require a GCash reference when GCash is used",
+    "description": "A staff member can only submit a GCash payment after providing a reference number, while cash payment does not require one.",
+    "category": "Down Payment and Final Payment Processing",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff username field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /orders"
+      },
+      {
+        "type": "action",
+        "description": "Open a confirmed order"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the down payment amount field with the exact required 50% amount"
+      },
+      {
+        "type": "action",
+        "description": "Select GCash as the payment method"
+      },
+      {
+        "type": "action",
+        "description": "Submit the payment"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a payment reference validation error is visible"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the GCash reference number field with a valid reference"
+      },
+      {
+        "type": "action",
+        "description": "Submit the payment"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the payment is recorded"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC026",
+    "title": "Show only active products to public buyers",
+    "description": "A public buyer can browse products on the public page and only active items are available to add to an order.",
+    "category": "Public Order Submission",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Review the list of products available for selection"
+      },
+      {
+        "type": "action",
+        "description": "Verify active products are displayed"
+      },
+      {
+        "type": "action",
+        "description": "Verify inactive products are not available for selection"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC027",
+    "title": "Create a new customer record",
+    "description": "This test verifies that staff can create a customer record and see the new customer added to the customer list.",
+    "category": "Customer Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff login credentials with {{LOGIN_USER}} and {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /customers/create"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the customer name field with a valid customer name"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the customer contact field with a valid phone number"
+      },
+      {
+        "type": "action",
+        "description": "Save the customer record"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the new customer record is displayed in the customer list"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC028",
+    "title": "Prevent incorrect payment amounts on an order",
+    "description": "A staff member sees validation when a payment amount does not match the required down payment or remaining balance.",
+    "category": "Order Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign-in form"
+      },
+      {
+        "type": "action",
+        "description": "Open the orders list"
+      },
+      {
+        "type": "action",
+        "description": "Open a pending order"
+      },
+      {
+        "type": "action",
+        "description": "Attempt to record an incorrect payment amount"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify payment validation errors are visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the payment is not recorded"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC029",
+    "title": "Record stock-in for a supply item",
+    "description": "A staff member can record a stock-in transaction and see the supply quantity increase.",
+    "category": "Supplies and Inventory Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff credentials with {{LOGIN_USER}} and {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /supplies"
+      },
+      {
+        "type": "action",
+        "description": "Open an existing supply item"
+      },
+      {
+        "type": "action",
+        "description": "Record a stock-in transaction with a valid quantity and cost"
+      },
+      {
+        "type": "action",
+        "description": "Save the stock-in transaction"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the supply quantity increases"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC030",
+    "title": "Edit an existing customer record",
+    "description": "This test verifies that staff can open an existing customer profile, update its information, and see the saved changes reflected in the record.",
+    "category": "Customer Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff login credentials with {{LOGIN_USER}} and {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /customers"
+      },
+      {
+        "type": "action",
+        "description": "Click the customer profile"
+      },
+      {
+        "type": "action",
+        "description": "Open the customer edit form"
+      },
+      {
+        "type": "action",
+        "description": "Update the customer information with valid changes"
+      },
+      {
+        "type": "action",
+        "description": "Save the customer changes"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the updated customer profile is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC031",
+    "title": "Filter reports by date range",
+    "description": "A staff member can change the report period and see revenue, expenses, and net profit update for the selected range.",
+    "category": "Financial and Operational Reports",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff credentials with {{LOGIN_USER}} and {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /reports"
+      },
+      {
+        "type": "action",
+        "description": "Choose a date range filter"
+      },
+      {
+        "type": "action",
+        "description": "Switch to a different report period"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify gross revenue, recorded expenses, and net profit are displayed for the selected period"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC032",
+    "title": "Add an operating expense",
+    "description": "A staff member can submit a new expense and see it added to the expense register.",
+    "category": "Expense Tracking",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff credentials with {{LOGIN_USER}} and {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /expenses"
+      },
+      {
+        "type": "action",
+        "description": "Enter a valid expense description, category, amount, and date"
+      },
+      {
+        "type": "action",
+        "description": "Add notes or receipt details"
+      },
+      {
+        "type": "action",
+        "description": "Submit the expense"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the new expense appears in the expense register"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC033",
+    "title": "Add a supply item to inventory",
+    "description": "A staff member can create a new supply item and see it appear in the inventory list.",
+    "category": "Supplies and Inventory Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff credentials with {{LOGIN_USER}} and {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /supplies"
+      },
+      {
+        "type": "action",
+        "description": "Add a new supply item with a valid unit and reorder threshold"
+      },
+      {
+        "type": "action",
+        "description": "Save the supply item"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the new supply item is listed in inventory"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC034",
+    "title": "Block editing of a locked order",
+    "description": "A staff member cannot modify an order that has already been confirmed and locked for editing.",
+    "category": "Order Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign-in form"
+      },
+      {
+        "type": "action",
+        "description": "Open the orders list"
+      },
+      {
+        "type": "action",
+        "description": "Open a confirmed order"
+      },
+      {
+        "type": "action",
+        "description": "Attempt to edit the locked order"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify editing controls are unavailable"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the order remains unchanged"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC035",
+    "title": "Review report summaries and performance breakdowns",
+    "description": "A staff member can view sales and fulfillment summaries alongside financial totals on the reports page.",
+    "category": "Financial and Operational Reports",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff credentials with {{LOGIN_USER}} and {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /reports"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify top-selling products are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify order fulfillment statistics are displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC036",
+    "title": "Edit a supply item",
+    "description": "A staff member can update an existing supply item and see the updated details reflected in inventory.",
+    "category": "Supplies and Inventory Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff credentials with {{LOGIN_USER}} and {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /supplies"
+      },
+      {
+        "type": "action",
+        "description": "Open an existing supply item"
+      },
+      {
+        "type": "action",
+        "description": "Edit the supply details with a new valid unit or reorder threshold"
+      },
+      {
+        "type": "action",
+        "description": "Save the supply changes"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the updated supply details are shown in inventory"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC037",
+    "title": "See low-stock warnings for supplies",
+    "description": "A staff member can view low-stock indicators for supplies that are at or below their reorder threshold.",
+    "category": "Supplies and Inventory Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the staff credentials with {{LOGIN_USER}} and {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /supplies"
+      },
+      {
+        "type": "action",
+        "description": "Review the inventory list"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify low-stock warning indicators are displayed for supplies at or below their reorder threshold"
+      }
+    ],
+    "priority": "Medium"
+  }
+]

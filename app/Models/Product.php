@@ -15,6 +15,8 @@ class Product extends Model
         'product_name',
         'price',
         'is_active',
+        'description',
+        'photo_path',
     ];
 
     protected function casts(): array
@@ -33,5 +35,15 @@ class Product extends Model
     public function orderDetails(): HasMany
     {
         return $this->hasMany(OrderDetail::class, 'product_id');
+    }
+
+    public function options(): HasMany
+    {
+        return $this->hasMany(PackageOption::class)->orderBy('layers');
+    }
+
+    public function addOns(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(AddOn::class);
     }
 }

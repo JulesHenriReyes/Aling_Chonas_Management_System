@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Expense;
 use App\Models\Payment;
+use App\Models\Refund;
 use App\Models\Supply;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
@@ -26,7 +27,14 @@ class FinancialReportService
             ->selectRaw('COALESCE(SUM(od.quantity * od.unit_price), 0) as total_sales')
             ->value('total_sales');
 
-        return round((float) $total, 2);
+        $extras = DB::table('order_add_ons as extras')
+            ->join('order_details as od', 'extras.order_detail_id', '=', 'od.id')
+            ->join('orders as o', 'od.order_id', '=', 'o.id')
+            ->where('o.status', 'completed')
+            ->whereBetween('o.completed_at', [$start, $end])
+            ->selectRaw('COALESCE(SUM(extras.quantity * extras.unit_price), 0) as total')->value('total');
+
+        return round((float) $total + (float) $extras, 2);
     }
 
     /**
@@ -40,7 +48,9 @@ class FinancialReportService
         $total = Payment::whereBetween('payment_date', [$start, $end])
             ->sum('amount');
 
-        return round((float) $total, 2);
+        $refunded = Refund::where('status', 'completed')->whereBetween('completed_at', [$start, $end])->sum('amount');
+
+        return round((float) $total - (float) $refunded, 2);
     }
 
     /**
@@ -54,6 +64,9 @@ class FinancialReportService
         $total = DB::table('payments as p')
             ->join('orders as o', 'p.order_id', '=', 'o.id')
             ->where('o.status', 'cancelled')
+            ->where(function ($query) {
+                $query->whereNull('o.cancellation_kind')->orWhere('o.cancellation_kind', 'customer');
+            })
             ->where('p.payment_type', 'down_payment')
             ->whereBetween('o.cancelled_at', [$start, $end])
             ->selectRaw('COALESCE(SUM(p.amount), 0) as total_cancellation')
@@ -113,6 +126,9 @@ class FinancialReportService
             'period_end' => Carbon::parse($endDate)->toDateString(),
             'sales' => $sales,
             'payment_collections' => $collections,
+            'refunds_completed' => (float) Refund::where('status', 'completed')
+                ->whereBetween('completed_at', [Carbon::parse($startDate)->startOfDay(), Carbon::parse($endDate)->endOfDay()])->sum('amount'),
+            'refunds_pending' => (float) Refund::where('status', 'pending')->sum('amount'),
             'cancellation_income' => $cancellationIncome,
             'expenses' => $expenses,
             'operational_net_income' => $operationalNetIncome,

@@ -3,55 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
     <title>@yield('title', 'Aling Chona Cakes and Cupcakes - Order Custom Bakery Treats')</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Alpine.js -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+                    colors: {
+                        cream: { 50: '#FDFBF7', 100: '#F5F1EB' },
+                        cocoa: { 50: '#F5F1EB', 100: '#E8E0D4', 200: '#D4C4B0', 300: '#C2956B', 400: '#716153', 500: '#5C4A3A', 600: '#3C2415', 700: '#2C1810', 800: '#1A0E08' },
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <style>
         [x-cloak] { display: none !important; }
     </style>
+    @include('partials.ui-assets')
 </head>
-<body class="bg-amber-50/40 text-stone-800 font-sans min-h-screen flex flex-col">
-    <!-- Header / Navigation -->
-    <header class="bg-rose-900 text-white shadow-md sticky top-0 z-40">
-        <div class="max-w-6xl mx-auto px-4 py-3 sm:px-6 flex items-center justify-between">
+<body class="bg-cream-50 text-cocoa-500 font-sans min-h-screen flex flex-col">
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    {{-- Header --}}
+    <header class="bg-white border-b border-cocoa-100 sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
             <a href="{{ route('public.order.index') }}" class="flex items-center gap-3">
-                <span class="text-2xl">🎂</span>
+                <span class="w-10 h-10 rounded-xl bg-cocoa-600 flex items-center justify-center text-white text-lg font-bold">A</span>
                 <div>
-                    <h1 class="text-xl font-bold tracking-tight text-amber-100">Aling Chona</h1>
-                    <p class="text-xs text-rose-200 uppercase tracking-widest">Cakes & Cupcakes</p>
+                    <span class="text-base font-bold text-cocoa-600 leading-tight tracking-tight">Aling Chona</span>
+                    <p class="text-xs text-cocoa-500  leading-tight">Cakes & Cupcakes</p>
                 </div>
             </a>
-            <div class="flex items-center gap-4">
-                <a href="{{ route('public.order.index') }}" class="text-sm font-medium hover:text-amber-200 transition">Place Order</a>
-                <span class="text-rose-400">|</span>
-                @auth
-                    <a href="{{ route('dashboard') }}" class="text-xs bg-rose-800 hover:bg-rose-700 px-3 py-1.5 rounded text-amber-200 transition font-medium">
-                        Staff Dashboard ({{ Auth::user()->first_name }})
-                    </a>
-                @else
-                    <a href="{{ route('login') }}" class="text-xs text-rose-200 hover:text-white transition">
-                        Staff Login
-                    </a>
-                @endauth
+            <div class="flex items-center gap-3">
+                <a href="{{ route('login') }}" class="text-xs font-medium text-cocoa-400 hover:text-cocoa-600 transition">
+                    Staff Login
+                </a>
             </div>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="flex-grow max-w-6xl w-full mx-auto px-4 py-8 sm:px-6">
+    {{-- Main Content --}}
+    <main id="main-content" tabindex="-1" class="flex-grow max-w-7xl w-full mx-auto px-4 py-8 sm:px-6 lg:px-8">
         @if (session('info'))
-            <div class="mb-6 p-4 rounded-lg bg-blue-50 border border-blue-200 text-blue-800 text-sm flex items-center gap-2">
-                <svg class="w-5 h-5 text-blue-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+            <div role="alert" class="mb-6 px-4 py-3 rounded-lg bg-cream-100 border border-blue-200 text-blue-800 text-sm flex items-center gap-2">
+                <x-icon path="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" class="w-4 h-4 flex-shrink-0 text-blue-600" />
                 <span>{{ session('info') }}</span>
             </div>
         @endif
 
         @if ($errors->any())
-            <div class="mb-6 p-4 rounded-lg bg-red-50 border border-red-200 text-red-800 text-sm">
-                <div class="font-bold mb-1">Please correct the following errors:</div>
-                <ul class="list-disc list-inside space-y-1">
+            <div data-error-summary role="alert" tabindex="-1" class="mb-6 px-4 py-3 rounded-lg bg-red-50 border border-red-200 text-red-800 text-sm">
+                <div class="font-semibold mb-1">Please correct the following errors:</div>
+                <ul class="list-disc list-inside space-y-0.5 text-xs">
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                     @endforeach
@@ -62,16 +71,24 @@
         @yield('content')
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-stone-900 text-stone-400 text-xs py-6 mt-12 border-t border-stone-800">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p>&copy; {{ date('Y') }} Aling Chona Cakes and Cupcakes. All rights reserved.</p>
-            <div class="flex items-center gap-4 text-stone-400">
-                <span>📍 Custom Bakes & Celebration Delights</span>
-                <span>•</span>
-                <span>💵 Cash & GCash Accepted</span>
+    {{-- Footer --}}
+    <footer class="bg-cocoa-700 text-cocoa-200 py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+                <div class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-lg bg-cocoa-300/20 flex items-center justify-center text-cocoa-200 text-sm font-bold">A</span>
+                    <div>
+                        <span class="font-semibold text-white block">Aling Chona Cakes & Cupcakes</span>
+                        <span class="text-cocoa-200">Custom Bakes & Celebration Delights</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4 text-cocoa-200">
+                    <span>Cash & GCash Accepted</span>
+                    <span>&copy; {{ date('Y') }}</span>
+                </div>
             </div>
         </div>
     </footer>
+    @include('partials.validation-data')
 </body>
 </html>

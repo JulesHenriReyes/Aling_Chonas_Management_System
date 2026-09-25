@@ -17,6 +17,7 @@ use Tests\TestCase;
 class Phase3QAFixesTest extends TestCase
 {
     use RefreshDatabase;
+    use \Tests\Concerns\CreatesCatalogFixtures;
 
     protected User $owner;
     protected User $assistant;
@@ -50,7 +51,7 @@ class Phase3QAFixesTest extends TestCase
             'phone_number' => '09171112233',
         ]);
 
-        $this->product = Product::create([
+        $this->product = $this->catalogProduct([
             'product_name' => 'Classic Mocha Cake',
             'price' => 750.00,
             'is_active' => true,
@@ -79,7 +80,7 @@ class Phase3QAFixesTest extends TestCase
         $putResponse->assertRedirect();
         $this->product->refresh();
         $this->assertSame('Signature Mocha Chiffon Cake', $this->product->product_name);
-        $this->assertEquals(850.00, (float) $this->product->price);
+        $this->assertEquals(750.00, (float) $this->product->price);
 
         // 2. PATCH request
         $patchResponse = $this->patch(route('products.update', $this->product), [
@@ -90,7 +91,7 @@ class Phase3QAFixesTest extends TestCase
         $patchResponse->assertRedirect();
         $this->product->refresh();
         $this->assertSame('Deluxe Mocha Chiffon Cake', $this->product->product_name);
-        $this->assertEquals(900.00, (float) $this->product->price);
+        $this->assertEquals(750.00, (float) $this->product->price);
         $this->assertFalse($this->product->is_active);
     }
 
@@ -145,9 +146,10 @@ class Phase3QAFixesTest extends TestCase
 
         $order = app(OrderService::class)->createInternalOrder([
             'customer_id' => $this->customer->id,
+            'expected_total' => 750,
             'pickup_date' => now()->addDays(2)->toDateString(),
             'pickup_time' => '10:00',
-            'items' => [['product_id' => $this->product->id, 'quantity' => 1]],
+            'items' => [['product_id' => $this->product->id, 'package_option_id' => $this->product->options()->first()->id, 'quantity' => 1]],
         ], $this->owner);
 
         // Attempt GCash down payment without reference number
@@ -185,11 +187,12 @@ class Phase3QAFixesTest extends TestCase
 
         $response = $this->post(route('orders.store'), [
             'customer_id' => $this->customer->id,
+            'expected_total' => 750,
             'pickup_date' => now()->addDays(3)->toDateString(),
             'pickup_time' => '14:00',
             'items' => [
                 [
-                    'product_id' => $this->product->id,
+                    'product_id' => $this->product->id, 'package_option_id' => $this->product->options()->first()->id,
                     'quantity' => 1,
                     'layers' => 2,
                     'themes' => 'Vintage Gold & Navy',
@@ -198,6 +201,7 @@ class Phase3QAFixesTest extends TestCase
             ],
         ]);
 
+        $response->assertSessionHasNoErrors();
         $order = Order::latest()->first();
         $response->assertRedirect(route('orders.show', $order));
 

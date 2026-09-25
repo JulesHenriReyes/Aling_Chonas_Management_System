@@ -28,7 +28,7 @@ class AppServiceProvider extends ServiceProvider
 
         // Every active business module is available to both approved staff roles.
         $staffCanOperate = fn (User $user) => in_array($user->role, ['owner', 'assistant'], true);
-        Gate::define('manage-products', $staffCanOperate);
+        Gate::define('manage-products', fn (User $user) => $user->is_active && $user->isOwner());
         Gate::define('view-reports', $staffCanOperate);
         Gate::define('manage-expenses', $staffCanOperate);
         Gate::define('manage-customers', $staffCanOperate);
@@ -40,5 +40,10 @@ class AppServiceProvider extends ServiceProvider
         RateLimiter::for('public-orders', function (Request $request) {
             return Limit::perMinute(5)->by($request->ip());
         });
+        RateLimiter::for('public-quotes', fn (Request $request) => Limit::perMinute(30)->by($request->ip()));
+        RateLimiter::for('public-receipts', fn (Request $request) => [
+            Limit::perMinute(5)->by('receipt-ip:'.$request->ip()),
+            Limit::perHour(10)->by('receipt-order:'.hash('sha256', (string) $request->route('token'))),
+        ]);
     }
 }

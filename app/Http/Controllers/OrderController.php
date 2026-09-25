@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CatalogOrderRules;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
 use App\Services\OrderService;
+use App\Services\OrderDraftService;
+use App\Services\CatalogPricingService;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -60,36 +63,63 @@ class OrderController extends Controller
     /**
      * Show form for staff to manually create an order.
      */
-    public function create(): View
+    public function create(Request $request, OrderDraftService $drafts): View
     {
         $customers = Customer::orderBy('last_name')->get();
-        $products = Product::where('is_active', true)->orderBy('product_name')->get();
+        $products = Product::active()->whereHas('options', fn ($query) => $query->where('is_active', true))
+            ->with(['options' => fn ($query) => $query->where('is_active', true), 'addOns' => fn ($query) => $query->where('is_active', true)])
+            ->orderBy('product_name')->get();
 
-        return view('admin.orders.create', compact('customers', 'products'));
+        $draft = $drafts->get($request, true);
+        return view('admin.orders.create', compact('customers', 'products', 'draft'));
+    }
+
+    public function saveSelection(Request $request, OrderDraftService $drafts, CatalogPricingService $pricing): RedirectResponse
+    {
+        $drafts->save($request, true, $pricing);
+        return redirect()->route('orders.details');
+    }
+
+    public function details(Request $request, OrderDraftService $drafts, CatalogPricingService $pricing)
+    {
+        $draft = $drafts->get($request, true);
+        if (!$draft || empty($draft['items'])) {
+            return redirect()->route('orders.create');
+        }
+        $quote = $pricing->quote($draft['items']);
+        $customers = Customer::orderBy('last_name')->get();
+        return view('admin.orders.details', compact('draft', 'quote', 'customers'));
+    }
+
+    public function backToSelection(Request $request, OrderDraftService $drafts): RedirectResponse
+    {
+        $drafts->saveDetails($request, true);
+        return redirect()->route('orders.create');
+    }
+
+    public function inlineCustomer(Request $request)
+    {
+        $data = $request->validate([
+            'first_name' => ['required', 'string', 'max:100'],
+            'middle_name' => ['nullable', 'string', 'max:100'],
+            'last_name' => ['required', 'string', 'max:100'],
+            'phone_number' => ['required', 'string', 'min:7', 'max:20'],
+        ]);
+        $customer = Customer::findOrCreateMatching($data);
+        return response()->json(['id' => $customer->id, 'full_name' => $customer->full_name, 'phone_number' => $customer->phone_number]);
     }
 
     /**
      * Store an internally created order. Strictly requires authenticated staff user_id.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request, OrderDraftService $drafts): RedirectResponse
     {
-        $validated = $request->validate([
-            'customer_id' => ['required', 'exists:customers,id'],
-            'pickup_date' => ['required', 'date', 'after_or_equal:today'],
-            'pickup_time' => ['required'],
-            'notes_text' => ['nullable', 'string', 'max:1000'],
-            'items' => ['required', 'array', 'min:1'],
-            'items.*.product_id' => ['required', 'exists:products,id'],
-            'items.*.quantity' => ['required', 'integer', 'min:1'],
-            'items.*.unit_price' => ['nullable', 'numeric', 'min:0'],
-            'items.*.layers' => ['nullable', 'integer', 'min:1'],
-            'items.*.themes' => ['nullable', 'string', 'max:255'],
-            'items.*.special_request' => ['nullable', 'string', 'max:1000'],
-            'items.*.images' => ['nullable', 'array'],
-            'items.*.images.*' => ['nullable', 'image', 'max:5120'],
-            'images' => ['nullable', 'array'],
-            'images.*' => ['nullable', 'image', 'max:5120'],
-        ]);
+        $draft = $drafts->get($request, true);
+        $rules = ($draft ? array_diff_key(CatalogOrderRules::order(), CatalogOrderRules::items()) : CatalogOrderRules::order()) + ['customer_id' => ['required', 'exists:customers,id']];
+        $validated = $request->validate($rules);
+        if ($draft) {
+            $validated['items'] = $drafts->itemsForOrder($draft);
+        }
 
         // Internal staff order must strictly assign user_id = Auth::id()
         $staffUser = Auth::user();
@@ -111,15 +141,20 @@ class OrderController extends Controller
             'pickup_time' => $validated['pickup_time'],
             'notes_text' => $validated['notes_text'] ?? null,
             'items' => $items,
+            'expected_total' => $validated['expected_total'],
             'images' => $request->file('images', []),
         ], $staffUser);
+
+        if ($draft) {
+            $drafts->finish($request, true);
+        }
 
         return redirect()->route('orders.show', $order)
             ->with('success', "Order {$order->order_number} created successfully.");
     }
 
     /**
-     * Detailed order review page (customizations, price adjustments, payments, lifecycle).
+     * Detailed order review page (fixed-price snapshots, customizations, payments, lifecycle).
      */
     public function show(Order $order): View
     {
@@ -130,23 +165,13 @@ class OrderController extends Controller
             'orderDetails.images',
             'images',
             'payments.user',
+            'orderDetails.addOns',
+            'paymentProofs.reviewer',
+            'refund.requestedBy',
+            'refund.completedBy',
         ]);
 
         return view('admin.orders.show', compact('order'));
-    }
-
-    /**
-     * Staff adjusts unit_price on a pending order detail.
-     */
-    public function updateDetailPrice(Request $request, Order $order, OrderDetail $orderDetail): RedirectResponse
-    {
-        $request->validate([
-            'unit_price' => ['required', 'numeric', 'min:0'],
-        ]);
-
-        $this->orderService->updateOrderDetailPrice($order, $orderDetail, (float) $request->unit_price, Auth::user());
-
-        return back()->with('success', "Updated unit price for {$orderDetail->product->product_name} to ₱" . number_format($request->unit_price, 2) . ".");
     }
 
     /**

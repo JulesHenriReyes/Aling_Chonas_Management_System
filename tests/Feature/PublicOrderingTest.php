@@ -16,6 +16,7 @@ use Tests\TestCase;
 class PublicOrderingTest extends TestCase
 {
     use RefreshDatabase;
+    use \Tests\Concerns\CreatesCatalogFixtures;
 
     private Product $cake;
     private Product $cupcakes;
@@ -25,17 +26,17 @@ class PublicOrderingTest extends TestCase
     {
         parent::setUp();
 
-        $this->cake = Product::create([
+        $this->cake = $this->catalogProduct([
             'product_name' => 'Custom Celebration Cake',
             'price' => 1000.00,
             'is_active' => true,
         ]);
-        $this->cupcakes = Product::create([
+        $this->cupcakes = $this->catalogProduct([
             'product_name' => 'Custom Cupcakes',
             'price' => 500.00,
             'is_active' => true,
         ]);
-        $this->inactiveProduct = Product::create([
+        $this->inactiveProduct = $this->catalogProduct([
             'product_name' => 'Retired Seasonal Cake',
             'price' => 800.00,
             'is_active' => false,
@@ -55,22 +56,21 @@ class PublicOrderingTest extends TestCase
     {
         $response = $this->post('/order', $this->validPayload([
             [
-                'product_id' => $this->cake->id,
+                'product_id' => $this->cake->id, 'package_option_id' => $this->cake->options()->first()->id,
                 'quantity' => 1,
                 'layers' => 2,
                 'themes' => 'Floral garden',
                 'special_request' => 'Write Happy Birthday Mia',
             ],
             [
-                'product_id' => $this->cupcakes->id,
+                'product_id' => $this->cupcakes->id, 'package_option_id' => $this->cupcakes->options()->first()->id,
                 'quantity' => 2,
                 'themes' => 'Pastel pink',
                 'special_request' => 'Use gold toppers',
             ],
         ]));
 
-        $response->assertRedirect(route('public.order.success'))
-            ->assertSessionHas('public_order_success');
+        $response->assertRedirect(route('public.order.payment', Order::latest('id')->first()->private_token));
 
         $order = Order::with(['customer', 'orderDetails.product', 'payments'])->sole();
         $this->assertNull($order->user_id);
@@ -84,11 +84,11 @@ class PublicOrderingTest extends TestCase
         $this->assertSame(2, $cakeDetail->layers);
         $this->assertSame('Floral garden', $cakeDetail->themes);
         $this->assertSame('Write Happy Birthday Mia', $cakeDetail->special_request);
-        $this->assertNull($cupcakeDetail->layers);
+        $this->assertSame(2, $cupcakeDetail->layers);
         $this->assertSame('Pastel pink', $cupcakeDetail->themes);
         $this->assertSame('Use gold toppers', $cupcakeDetail->special_request);
 
-        $this->get('/order/success')->assertOk()->assertSee($order->order_number);
+        $this->get(route('public.order.payment', $order->private_token))->assertOk()->assertSee($order->order_number);
     }
 
     public function test_customer_matching_uses_normalized_phone_and_exact_names(): void
@@ -100,9 +100,9 @@ class PublicOrderingTest extends TestCase
             'phone_number' => '09171234567',
         ]);
 
-        $payload = $this->validPayload([['product_id' => $this->cake->id, 'quantity' => 1]]);
+        $payload = $this->validPayload([['product_id' => $this->cake->id, 'package_option_id' => $this->cake->options()->first()->id, 'quantity' => 1]]);
         $payload['phone_number'] = '+63 917-123-4567';
-        $this->post('/order', $payload)->assertRedirect(route('public.order.success'));
+        $this->post('/order', $payload)->assertRedirect(route('public.order.payment', Order::latest('id')->first()->private_token));
 
         $this->assertDatabaseCount('customers', 1);
         $this->assertSame($customer->id, Order::sole()->customer_id);
@@ -110,11 +110,11 @@ class PublicOrderingTest extends TestCase
 
     public function test_public_submission_creates_a_new_normalized_customer_when_no_exact_match_exists(): void
     {
-        $payload = $this->validPayload([['product_id' => $this->cake->id, 'quantity' => 1]]);
+        $payload = $this->validPayload([['product_id' => $this->cake->id, 'package_option_id' => $this->cake->options()->first()->id, 'quantity' => 1]]);
         $payload['phone_number'] = '0917-987-6543';
         $payload['middle_name'] = null;
 
-        $this->post('/order', $payload)->assertRedirect(route('public.order.success'));
+        $this->post('/order', $payload)->assertRedirect(route('public.order.payment', Order::latest('id')->first()->private_token));
 
         $customer = Customer::sole();
         $this->assertSame('09179876543', $customer->phone_number);
@@ -127,12 +127,12 @@ class PublicOrderingTest extends TestCase
         Storage::fake('public');
 
         $payload = $this->validPayload([[
-            'product_id' => $this->cake->id,
+            'product_id' => $this->cake->id, 'package_option_id' => $this->cake->options()->first()->id,
             'quantity' => 1,
             'images' => [UploadedFile::fake()->image('floral-reference.jpg')],
         ]]);
 
-        $this->post('/order', $payload)->assertRedirect(route('public.order.success'));
+        $this->post('/order', $payload)->assertRedirect(route('public.order.payment', Order::latest('id')->first()->private_token));
 
         $order = Order::with(['orderDetails.images', 'images'])->sole();
         $detail = $order->orderDetails->sole();
@@ -157,7 +157,7 @@ class PublicOrderingTest extends TestCase
         $service->attachImage($orderA, 'order_images/example.jpg', 'example.jpg', $orderB->orderDetails->sole());
     }
 
-    public function test_success_page_requires_submission_session_data_and_guests_cannot_reach_internal_routes(): void
+    public function test_old_success_url_redirects_and_guests_cannot_reach_internal_routes(): void
     {
         $this->get('/order/success')->assertRedirect(route('public.order.index'));
 
@@ -179,11 +179,11 @@ class PublicOrderingTest extends TestCase
         $this->withServerVariables(['REMOTE_ADDR' => '198.51.100.100']);
 
         for ($attempt = 0; $attempt < 5; $attempt++) {
-            $this->post('/order', $this->validPayload([['product_id' => $this->cake->id, 'quantity' => 1]]))
-                ->assertRedirect(route('public.order.success'));
+            $this->post('/order', $this->validPayload([['product_id' => $this->cake->id, 'package_option_id' => $this->cake->options()->first()->id, 'quantity' => 1]]))
+                ->assertRedirect(route('public.order.payment', Order::latest('id')->first()->private_token));
         }
 
-        $this->post('/order', $this->validPayload([['product_id' => $this->cake->id, 'quantity' => 1]]))
+        $this->post('/order', $this->validPayload([['product_id' => $this->cake->id, 'package_option_id' => $this->cake->options()->first()->id, 'quantity' => 1]]))
             ->assertStatus(429);
     }
 
@@ -197,6 +197,7 @@ class PublicOrderingTest extends TestCase
             'pickup_date' => now()->addDays(3)->toDateString(),
             'pickup_time' => '14:00',
             'items' => $items,
+            'expected_total' => collect($items)->sum(fn ($item) => Product::find($item['product_id'])->options()->first()->price * $item['quantity']),
         ];
     }
 
@@ -206,7 +207,7 @@ class PublicOrderingTest extends TestCase
             'customer_id' => $customer->id,
             'pickup_date' => now()->addDays(3)->toDateString(),
             'pickup_time' => '14:00',
-            'items' => [['product_id' => $this->cake->id, 'quantity' => 1]],
+            'items' => [['product_id' => $this->cake->id, 'package_option_id' => $this->cake->options()->first()->id, 'quantity' => 1]],
         ];
     }
 }

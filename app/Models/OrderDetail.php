@@ -12,6 +12,8 @@ class OrderDetail extends Model
 {
     use HasFactory;
 
+    protected $with = ['addOns'];
+
     protected $fillable = [
         'order_id',
         'product_id',
@@ -20,6 +22,9 @@ class OrderDetail extends Model
         'layers',
         'themes',
         'special_request',
+        'package_option_id',
+        'product_name_snapshot',
+        'included_contents_snapshot',
     ];
 
     protected function casts(): array
@@ -46,13 +51,18 @@ class OrderDetail extends Model
         return $this->hasMany(OrderImage::class, 'order_detail_id');
     }
 
+    public function addOns(): HasMany
+    {
+        return $this->hasMany(OrderAddOn::class);
+    }
+
     /**
      * Subtotal calculated from quantity * unit_price.
      */
     protected function subtotal(): Attribute
     {
         return Attribute::make(
-            get: fn () => round((float) ($this->quantity * $this->unit_price), 2)
+            get: fn () => round((float) ($this->quantity * $this->unit_price) + $this->addOns->sum('subtotal'), 2)
         );
     }
 }

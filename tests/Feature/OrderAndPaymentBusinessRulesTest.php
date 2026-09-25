@@ -17,6 +17,7 @@ use Tests\TestCase;
 class OrderAndPaymentBusinessRulesTest extends TestCase
 {
     use RefreshDatabase;
+    use \Tests\Concerns\CreatesCatalogFixtures;
 
     protected User $owner;
     protected User $assistant;
@@ -53,13 +54,13 @@ class OrderAndPaymentBusinessRulesTest extends TestCase
             'phone_number' => '09171234567',
         ]);
 
-        $this->cake = Product::create([
+        $this->cake = $this->catalogProduct([
             'product_name' => 'Custom Birthday Cake',
             'price' => 1000.00,
             'is_active' => true,
         ]);
 
-        $this->cupcakes = Product::create([
+        $this->cupcakes = $this->catalogProduct([
             'product_name' => 'Box of 12 Cupcakes',
             'price' => 500.00,
             'is_active' => true,
@@ -73,8 +74,8 @@ class OrderAndPaymentBusinessRulesTest extends TestCase
             'pickup_date' => now()->addDays(3)->toDateString(),
             'pickup_time' => '14:00',
             'items' => [
-                ['product_id' => $this->cake->id, 'quantity' => 1, 'layers' => 2, 'themes' => 'Floral'],
-                ['product_id' => $this->cupcakes->id, 'quantity' => 1, 'themes' => 'Pastel'],
+                ['product_id' => $this->cake->id, 'package_option_id' => $this->cake->options()->first()->id, 'quantity' => 1, 'layers' => 2, 'themes' => 'Floral'],
+                ['product_id' => $this->cupcakes->id, 'package_option_id' => $this->cupcakes->options()->first()->id, 'quantity' => 1, 'themes' => 'Pastel'],
             ],
         ], $this->owner); // Total: 1000 + 500 = 1500.00
     }
