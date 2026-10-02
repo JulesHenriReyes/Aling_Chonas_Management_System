@@ -33,14 +33,20 @@ class CatalogPricingService
             }
 
             $priceCentavos = (int) round((float) $option->price * 100);
-            if ($priceCentavos <= 0 || trim($option->included_contents) === '') {
-                $this->invalid("{$key}.package_option_id", 'This package option needs a price and included contents before ordering.');
+            if ($priceCentavos <= 0) {
+                $this->invalid("{$key}.package_option_id", 'This package option needs a fixed price before ordering.');
             }
             $line = [
                 'product_id' => $product->id,
                 'package_option_id' => $option->id,
                 'product_name_snapshot' => $product->product_name,
                 'included_contents_snapshot' => $option->included_contents,
+                'included_items_snapshot' => $option->includedItems()->lockForUpdate()->get()->map(fn ($included) => [
+                    'add_on_id' => $included->id,
+                    'name' => $included->name,
+                    'description' => $included->description,
+                    'quantity' => (int) $included->pivot->quantity,
+                ])->all(),
                 'quantity' => $quantity,
                 'unit_price' => $priceCentavos / 100,
                 'layers' => $option->layers,

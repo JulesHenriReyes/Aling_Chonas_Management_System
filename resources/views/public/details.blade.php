@@ -1,9 +1,18 @@
 @extends('public.layout')
 @section('title', 'Contact and pickup · Aling Chona')
 @section('content')
-<div class="public-intro">
-    <h1 class="font-bold text-cocoa-600">Contact and pickup</h1>
-    <p>Your packages are saved while you finish the order. Use Back to packages to make changes.</p>
+<nav aria-label="Progress" class="mb-5">
+    <div class="flex items-center text-xs tracking-wide">
+        <a href="{{ route('public.order.index') }}" class="text-cocoa-700 hover:text-cocoa-900 transition">Packages</a>
+        <span class="text-cocoa-300 mx-2">/</span>
+        <span class="text-cocoa-700 font-semibold" aria-current="step">Contact & pickup</span>
+        <span class="text-cocoa-300 mx-2">/</span>
+        <span class="text-cocoa-400">Payment</span>
+    </div>
+</nav>
+
+<div class="public-intro mb-6">
+    <h1 class="font-bold text-cocoa-700 text-2xl sm:text-3xl">Contact and pickup</h1>
 </div>
 @include('partials.catalog-order-details', ['staff' => false])
 @endsection

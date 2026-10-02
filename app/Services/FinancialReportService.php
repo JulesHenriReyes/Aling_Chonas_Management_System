@@ -2,147 +2,105 @@
 
 namespace App\Services;
 
-use App\Models\Expense;
-use App\Models\Payment;
-use App\Models\Refund;
-use App\Models\Supply;
-use Carbon\Carbon;
+use App\Models\{Expense, Refund, Supply};
+use Carbon\{Carbon, CarbonImmutable};
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class FinancialReportService
 {
-    /**
-     * Sales: The total value of orders whose status is completed, based on completed_at.
-     */
-    public function getSales(string|Carbon $startDate, string|Carbon $endDate): float
+    public const LABELS = ['sales' => 'Completed sales', 'gross_collections' => 'Gross verified collections', 'refunds_completed' => 'Completed refunds', 'cancellation_income' => 'Retained cancellation deposits', 'expenses' => 'Valid expenses'];
+
+    private function lines(ReportPeriod $period)
     {
-        $start = Carbon::parse($startDate)->startOfDay();
-        $end = Carbon::parse($endDate)->endOfDay();
-
-        $total = DB::table('order_details as od')
-            ->join('orders as o', 'od.order_id', '=', 'o.id')
-            ->where('o.status', 'completed')
-            ->whereBetween('o.completed_at', [$start, $end])
-            ->selectRaw('COALESCE(SUM(od.quantity * od.unit_price), 0) as total_sales')
-            ->value('total_sales');
-
-        $extras = DB::table('order_add_ons as extras')
-            ->join('order_details as od', 'extras.order_detail_id', '=', 'od.id')
-            ->join('orders as o', 'od.order_id', '=', 'o.id')
-            ->where('o.status', 'completed')
-            ->whereBetween('o.completed_at', [$start, $end])
-            ->selectRaw('COALESCE(SUM(extras.quantity * extras.unit_price), 0) as total')->value('total');
-
-        return round((float) $total + (float) $extras, 2);
+        $extras = DB::table('order_add_ons')->select('order_detail_id')->selectRaw('SUM(quantity * unit_price) as extras_amount')->groupBy('order_detail_id');
+        return $period->apply(DB::table('order_details as od')->join('orders as o', 'o.id', '=', 'od.order_id')
+            ->leftJoinSub($extras, 'extras', 'extras.order_detail_id', '=', 'od.id')->where('o.status', 'completed'), 'o.completed_at');
     }
 
-    /**
-     * Payment Collections: The actual amounts received through the payments table, based on payment_date.
-     */
+    /** The sole record-level source for headline totals, trends, breakdowns and drill-downs. */
+    public function events(ReportPeriod $period, ?string $kind = null)
+    {
+        $sales = $this->lines($period)->selectRaw("'sales' as kind, o.id as record_id, o.id as order_id, o.order_number as label, o.completed_at as event_at, SUM(od.quantity * od.unit_price + COALESCE(extras.extras_amount,0)) as amount, NULL as method, NULL as category")
+            ->groupBy('o.id', 'o.order_number', 'o.completed_at');
+        // Only verified receipts create payments; pending/rejected payment_proofs never enter this ledger.
+        $payments = $period->apply(DB::table('payments as p')->join('orders as o', 'o.id', '=', 'p.order_id'), 'p.payment_date')
+            ->selectRaw("'gross_collections' as kind, p.id as record_id, o.id as order_id, o.order_number as label, p.payment_date as event_at, p.amount, p.payment_method as method, NULL as category");
+        $refunds = $period->apply(DB::table('refunds as r')->join('orders as o', 'o.id', '=', 'r.order_id')->where('r.status', 'completed'), 'r.completed_at')
+            ->selectRaw("'refunds_completed' as kind, r.id as record_id, o.id as order_id, o.order_number as label, r.completed_at as event_at, r.amount, r.method, NULL as category");
+        $retained = $period->apply(DB::table('payments as p')->join('orders as o', 'o.id', '=', 'p.order_id')->where('o.status', 'cancelled')
+            ->where(fn ($q) => $q->whereNull('o.cancellation_kind')->orWhere('o.cancellation_kind', 'customer'))->where('p.payment_type', 'down_payment'), 'o.cancelled_at')
+            ->selectRaw("'cancellation_income' as kind, p.id as record_id, o.id as order_id, o.order_number as label, o.cancelled_at as event_at, p.amount, p.payment_method as method, NULL as category");
+        $expenses = $period->apply(DB::table('expenses as e')->whereNull('e.deleted_at'), 'e.expense_date', true)
+            ->selectRaw("'expenses' as kind, e.id as record_id, NULL as order_id, e.description as label, e.expense_date as event_at, e.amount, NULL as method, e.category");
+        $queries = compact('sales', 'payments', 'refunds', 'retained', 'expenses');
+        $mapping = ['sales' => 'sales', 'gross_collections' => 'payments', 'refunds_completed' => 'refunds', 'cancellation_income' => 'retained', 'expenses' => 'expenses'];
+        if ($kind) return DB::query()->fromSub($queries[$mapping[$kind]], 'events');
+        return DB::query()->fromSub($sales->unionAll($payments)->unionAll($refunds)->unionAll($retained)->unionAll($expenses), 'events');
+    }
+
+    public function report(ReportPeriod $period): array
+    {
+        $keys = array_keys(self::LABELS);
+        $summary = array_fill_keys($keys, 0);
+        $summary['completed_order_count'] = 0;
+        $monthly = $period->start->diffInDays($period->end) > 62;
+        $trends = [];
+        for ($date = $monthly ? $period->start->startOfMonth() : $period->start; $date->lte($period->end); $date = $monthly ? $date->addMonth() : $date->addDay()) {
+            $key = $date->format($monthly ? 'Y-m' : 'Y-m-d');
+            $trends[$key] = ['period' => $key, 'completed_order_count' => 0] + array_fill_keys($keys, 0);
+        }
+        $categories = array_fill_keys(['ingredients', 'packaging', 'equipment', 'miscellaneous'], 0);
+        $methods = ['cash' => ['gross' => 0, 'refunds' => 0], 'gcash' => ['gross' => 0, 'refunds' => 0]];
+        // Stream records instead of loading all purchases or payments into the browser or PHP memory.
+        foreach ($this->events($period)->orderBy('event_at')->cursor() as $event) {
+            $amount = (int) round((float) $event->amount * 100);
+            $day = $event->kind === 'expenses' ? CarbonImmutable::parse($event->event_at, $period->timezone)
+                : CarbonImmutable::parse($event->event_at, config('app.timezone'))->setTimezone($period->timezone);
+            $bucket = $day->format($monthly ? 'Y-m' : 'Y-m-d');
+            $summary[$event->kind] += $amount; $trends[$bucket][$event->kind] += $amount;
+            if ($event->kind === 'sales') { $summary['completed_order_count']++; $trends[$bucket]['completed_order_count']++; }
+            if ($event->kind === 'expenses') $categories[$event->category] = ($categories[$event->category] ?? 0) + $amount;
+            if (in_array($event->kind, ['gross_collections', 'refunds_completed'])) {
+                $method = $event->method ?: 'unspecified';
+                $methods[$method] ??= ['gross' => 0, 'refunds' => 0];
+                $methods[$method][$event->kind === 'gross_collections' ? 'gross' : 'refunds'] += $amount;
+            }
+        }
+        $convert = function (array $row) use ($keys): array {
+            foreach ($keys as $key) $row[$key] = round($row[$key] / 100, 2);
+            $row['payment_collections'] = round($row['gross_collections'] - $row['refunds_completed'], 2);
+            $row['operational_net_income'] = round($row['sales'] + $row['cancellation_income'] - $row['expenses'], 2);
+            return $row;
+        };
+        $summary = $convert($summary) + ['period_start' => $period->start->toDateString(), 'period_end' => $period->end->toDateString(), 'refunds_pending' => (float) Refund::where('status', 'pending')->sum('amount')];
+        return ['period' => $period, 'summary' => $summary, 'trends' => array_map($convert, array_values($trends)), 'grain' => $monthly ? 'Monthly' : 'Daily',
+            'expensesByCategory' => collect($categories)->map(fn ($cents, $category) => (object) ['category' => $category, 'total_amount' => $cents / 100])->values(),
+            'methods' => collect($methods)->map(fn ($values, $method) => ['method' => $method, 'gross' => $values['gross'] / 100, 'refunds' => $values['refunds'] / 100, 'net' => ($values['gross'] - $values['refunds']) / 100])->values(),
+            'packages' => $this->packagePerformance($period), 'asOf' => CarbonImmutable::now($period->timezone),
+            'lowStockCount' => Supply::active()->lowStock()->count()];
+    }
+
+    public function packagePerformance(ReportPeriod $period): Collection
+    {
+        return $this->lines($period)->select('od.product_id', 'od.product_name_snapshot')
+            ->selectRaw('SUM(od.quantity) as package_quantity, COUNT(DISTINCT o.id) as order_count, SUM(od.quantity * od.unit_price) as package_amount, SUM(COALESCE(extras.extras_amount,0)) as extras_amount, SUM(od.quantity * od.unit_price + COALESCE(extras.extras_amount,0)) as total_amount')
+            ->groupBy('od.product_id', 'od.product_name_snapshot')->orderByDesc('total_amount')->get();
+    }
+
+    private function total(ReportPeriod $period, string $kind): float { return round((float) $this->events($period, $kind)->sum('amount'), 2); }
+    public function getSales(string|Carbon $startDate, string|Carbon $endDate): float { return $this->total(ReportPeriod::dates($startDate, $endDate), 'sales'); }
     public function getPaymentCollections(string|Carbon $startDate, string|Carbon $endDate): float
     {
-        $start = Carbon::parse($startDate)->startOfDay();
-        $end = Carbon::parse($endDate)->endOfDay();
-
-        $total = Payment::whereBetween('payment_date', [$start, $end])
-            ->sum('amount');
-
-        $refunded = Refund::where('status', 'completed')->whereBetween('completed_at', [$start, $end])->sum('amount');
-
-        return round((float) $total - (float) $refunded, 2);
+        $period = ReportPeriod::dates($startDate, $endDate);
+        return round($this->total($period, 'gross_collections') - $this->total($period, 'refunds_completed'), 2);
     }
-
-    /**
-     * Cancellation Income: Non-refundable down payments retained from cancelled orders, based on cancelled_at.
-     */
-    public function getCancellationIncome(string|Carbon $startDate, string|Carbon $endDate): float
-    {
-        $start = Carbon::parse($startDate)->startOfDay();
-        $end = Carbon::parse($endDate)->endOfDay();
-
-        $total = DB::table('payments as p')
-            ->join('orders as o', 'p.order_id', '=', 'o.id')
-            ->where('o.status', 'cancelled')
-            ->where(function ($query) {
-                $query->whereNull('o.cancellation_kind')->orWhere('o.cancellation_kind', 'customer');
-            })
-            ->where('p.payment_type', 'down_payment')
-            ->whereBetween('o.cancelled_at', [$start, $end])
-            ->selectRaw('COALESCE(SUM(p.amount), 0) as total_cancellation')
-            ->value('total_cancellation');
-
-        return round((float) $total, 2);
-    }
-
-    /**
-     * Expenses: Recorded business expenses, based on expense_date.
-     */
-    public function getExpenses(string|Carbon $startDate, string|Carbon $endDate): float
-    {
-        $start = Carbon::parse($startDate)->toDateString();
-        $end = Carbon::parse($endDate)->toDateString();
-
-        $total = Expense::whereDate('expense_date', '>=', $start)
-            ->whereDate('expense_date', '<=', $end)
-            ->sum('amount');
-
-        return round((float) $total, 2);
-    }
-
-    /**
-     * Expenses breakdown by category.
-     */
+    public function getCancellationIncome(string|Carbon $startDate, string|Carbon $endDate): float { return $this->total(ReportPeriod::dates($startDate, $endDate), 'cancellation_income'); }
+    public function getExpenses(string|Carbon $startDate, string|Carbon $endDate): float { return $this->total(ReportPeriod::dates($startDate, $endDate), 'expenses'); }
     public function getExpensesByCategory(string|Carbon $startDate, string|Carbon $endDate): Collection
     {
-        $start = Carbon::parse($startDate)->toDateString();
-        $end = Carbon::parse($endDate)->toDateString();
-
-        return Expense::whereDate('expense_date', '>=', $start)
-            ->whereDate('expense_date', '<=', $end)
-            ->select('category', DB::raw('SUM(amount) as total_amount'))
-            ->groupBy('category')
-            ->get();
+        return $this->events(ReportPeriod::dates($startDate, $endDate), 'expenses')->select('category')->selectRaw('SUM(amount) as total_amount')->groupBy('category')->get();
     }
-
-    /**
-     * Operational Net Income:
-     * Formula: Net Income = Sales + Cancellation Income - Expenses
-     *
-     * Note: Operational reporting metric defined for this academic project.
-     * Not intended to function as a full accounting system.
-     */
-    public function getFinancialSummary(string|Carbon $startDate, string|Carbon $endDate): array
-    {
-        $sales = $this->getSales($startDate, $endDate);
-        $collections = $this->getPaymentCollections($startDate, $endDate);
-        $cancellationIncome = $this->getCancellationIncome($startDate, $endDate);
-        $expenses = $this->getExpenses($startDate, $endDate);
-
-        $operationalNetIncome = round(($sales + $cancellationIncome) - $expenses, 2);
-
-        return [
-            'period_start' => Carbon::parse($startDate)->toDateString(),
-            'period_end' => Carbon::parse($endDate)->toDateString(),
-            'sales' => $sales,
-            'payment_collections' => $collections,
-            'refunds_completed' => (float) Refund::where('status', 'completed')
-                ->whereBetween('completed_at', [Carbon::parse($startDate)->startOfDay(), Carbon::parse($endDate)->endOfDay()])->sum('amount'),
-            'refunds_pending' => (float) Refund::where('status', 'pending')->sum('amount'),
-            'cancellation_income' => $cancellationIncome,
-            'expenses' => $expenses,
-            'operational_net_income' => $operationalNetIncome,
-        ];
-    }
-
-    /**
-     * Supplies at or below reorder level.
-     */
-    public function getLowStockSupplies(): Collection
-    {
-        return Supply::active()
-            ->lowStock()
-            ->orderBy('current_quantity', 'asc')
-            ->get();
-    }
+    public function getFinancialSummary(string|Carbon $startDate, string|Carbon $endDate): array { return $this->report(ReportPeriod::dates($startDate, $endDate))['summary']; }
+    public function getLowStockSupplies(): Collection { return Supply::active()->lowStock()->orderBy('current_quantity')->get(); }
 }

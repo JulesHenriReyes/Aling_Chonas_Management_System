@@ -18,4 +18,9 @@ class OrderAddOn extends Model
     {
         return Attribute::make(get: fn () => round($this->quantity * (float) $this->unit_price, 2));
     }
+
+    public function addOn(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(AddOn::class, 'add_on_id');
+    }
 }

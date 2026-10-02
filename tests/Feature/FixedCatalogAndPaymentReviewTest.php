@@ -216,7 +216,7 @@ class FixedCatalogAndPaymentReviewTest extends TestCase
 
     public function test_http_public_flow_has_persistent_token_access_and_private_receipt_authorization(): void
     {
-        $this->get('/')->assertOk()->assertSee('Continue to contact and pickup');
+        $this->get('/')->assertOk()->assertSee('Select package');
         $data = $this->data() + ['first_name' => 'Test', 'last_name' => 'Buyer', 'phone_number' => '09171234567', 'expected_total' => 2700];
         $this->postJson(route('public.order.quote'), ['items' => $data['items']])->assertOk()->assertJsonPath('total', 2700)->assertJsonPath('deposit', 1350);
         $response = $this->post(route('public.order.store'), $data);

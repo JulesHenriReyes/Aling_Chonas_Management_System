@@ -1,11 +1,44 @@
-window.catalogOrder = function (products, previousItems, quoteUrl, staff = false) {
+window.catalogOrder = function (products, previousItems, quoteUrl, staff = false, persistKey = null) {
     return {
-        products, staff, items: [], sequence: 0, quote: null, busy: false, error: '',
+        products, staff, items: [], sequence: 0, quote: null, busy: false, error: '', uploading:false, uploadStatus:'',
         init() {
             this.items = Object.values(previousItems || {}).map(item => ({
                 ...item, uid: ++this.sequence, draft_key: item.draft_key || this.newKey(), add_ons: Object.values(item.add_ons || {}),
             }));
-            this.$watch('items', () => { this.quote = null; this.error = ''; });
+            if (persistKey) {
+                try {
+                    const saved = JSON.parse(sessionStorage.getItem(persistKey) || 'null');
+                    if (saved && !Object.keys(JSON.parse(document.getElementById('validation-errors')?.textContent || '{}')).length && String(saved.product_id) === String(this.items[0]?.product_id)) {
+                        Object.assign(this.items[0], {package_option_id:saved.package_option_id, quantity:saved.quantity, themes:saved.themes, special_request:saved.special_request, add_ons:saved.add_ons || []});
+                    }
+                } catch {}
+                this.$el.addEventListener('change', event => {
+                    if (event.target.type === 'file' || event.target.name.includes('remove_staged_images')) this.saveReferences();
+                });
+                window.addEventListener('beforeunload', event => { if (this.uploading) { event.preventDefault(); event.returnValue=''; } });
+                window.addEventListener('pageshow', () => { this.busy=false; });
+            }
+            this.$watch('items', () => {
+                this.quote = null;
+                if (!persistKey) this.error = '';
+                if (persistKey) try { sessionStorage.setItem(persistKey, JSON.stringify(this.items[0])); } catch {}
+            });
+        },
+        async saveReferences() {
+            if (this.uploading) return;
+            this.uploading=true; this.error=''; this.uploadStatus='';
+            const form=this.$el, data=new FormData(form);
+            const files=[...form.querySelectorAll('input[type=file]')];
+            files.forEach(input => input.disabled=true);
+            try {
+                const response=await fetch(form.dataset.editorUrl,{method:'POST', body:data, headers:{Accept:'application/json'}});
+                const result=await response.json();
+                if (!response.ok) throw new Error(Object.values(result.errors || {}).flat().join(' ') || 'Reference photos could not be saved.');
+                this.items[0].staged_images=result.staged_images;
+                files.forEach(input => input.value='');
+                this.uploadStatus='Reference photos saved with this package draft.';
+            } catch(error) { this.error=error.message; }
+            finally { files.forEach(input => input.disabled=false); this.uploading=false; }
         },
         product(item) { return this.products.find(product => String(product.id) === String(item.product_id)); },
         option(item) { return this.product(item)?.options.find(option => String(option.id) === String(item.package_option_id)); },

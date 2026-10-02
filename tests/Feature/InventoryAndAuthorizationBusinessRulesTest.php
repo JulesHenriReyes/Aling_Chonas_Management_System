@@ -149,7 +149,7 @@ class InventoryAndAuthorizationBusinessRulesTest extends TestCase
 
         $this->inventoryService->recordTransaction($this->flour, 'stock_in', 10.00, $this->assistant);
         $this->inventoryService->recordTransaction($this->flour, 'stock_out', 3.00, $this->assistant);
-        $this->inventoryService->recordTransaction($this->flour, 'adjustment', -1.00, $this->owner);
+        $this->inventoryService->recordTransaction($this->flour, 'adjustment', -1.00, $this->owner, 'Counted one kg less');
 
         $this->flour->refresh();
         $expected = $initial + 10.00 - 3.00 - 1.00; // 16.00

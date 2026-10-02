@@ -18,7 +18,7 @@ class CatalogController extends Controller
 
     public function index()
     {
-        $products = Product::with('options')->withCount('orderDetails')->orderBy('product_name')->get();
+        $products = Product::with('options.includedItems')->withCount('orderDetails')->orderBy('product_name')->get();
         $addOns = AddOn::with('products')->orderBy('name')->get();
 
         return view('admin.catalog.index', compact('products', 'addOns'));
@@ -27,9 +27,10 @@ class CatalogController extends Controller
     public function editProduct(?Product $product = null)
     {
         $product ??= new Product(['is_active' => true]);
-        $product->load('options');
+        $product->load('options.includedItems');
+        $inclusionItems = AddOn::orderBy('name')->get();
 
-        return view('admin.catalog.product', compact('product'));
+        return view('admin.catalog.product', compact('product', 'inclusionItems'));
     }
 
     public function saveProduct(Request $request, ?Product $product = null)
@@ -57,11 +58,27 @@ class CatalogController extends Controller
         abort_if($option && $option->product_id !== $product->id, 404);
         $data = $request->validate([
             'layers' => ['required', 'integer', 'between:1,10', Rule::unique('package_options')->where('product_id', $product->id)->ignore($option?->id)],
-            'included_contents' => ['required', 'string', 'max:2000'],
+            'included_contents' => ['nullable', 'string', 'max:2000'],
+            'included_items' => ['nullable', 'array', 'max:50'],
+            'included_items.*.add_on_id' => ['required', 'integer', 'distinct', 'exists:add_ons,id'],
+            'included_items.*.quantity' => ['required', 'integer', 'between:1,999'],
             'price' => self::PRICE, 'is_active' => ['nullable', 'boolean'],
         ]);
         $data['is_active'] = $request->boolean('is_active');
-        $option ? $option->update($data) : $product->options()->create($data);
+        $items = $data['included_items'] ?? [];
+        unset($data['included_items']);
+        $data['included_contents'] = $data['included_contents'] ?? '';
+        DB::transaction(function () use ($product, $option, $data, $items) {
+            if ($option) {
+                $option = $product->options()->whereKey($option->id)->lockForUpdate()->firstOrFail();
+                $option->update($data);
+            } else {
+                $option = $product->options()->create($data);
+            }
+            $option->includedItems()->sync(collect($items)->mapWithKeys(fn ($item) => [
+                $item['add_on_id'] => ['quantity' => (int) $item['quantity']],
+            ])->all());
+        });
 
         return redirect()->route('products.edit', $product)->with('success', 'Layer option saved. Existing order snapshots are unchanged.');
     }
@@ -89,10 +106,10 @@ class CatalogController extends Controller
             'description' => ['required', 'string', 'max:2000'],
             'price' => self::PRICE, 'photo' => self::PHOTO,
             'is_active' => ['nullable', 'boolean'],
-            'products' => ['required', 'array', 'min:1'],
+            'products' => ['nullable', 'array'],
             'products.*' => ['required', 'integer', 'distinct', 'exists:products,id'],
         ]);
-        $packages = $data['products'];
+        $packages = $data['products'] ?? [];
         unset($data['photo'], $data['products']);
         $data['is_active'] = $request->boolean('is_active');
         $this->savePhoto($request, $addOn, $data, 'catalog/add-ons', fn () => $addOn->products()->sync($packages));

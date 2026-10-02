@@ -23,6 +23,7 @@ class Order extends Model
         'cancelled_at',
         'notes_text',
         'private_token',
+        'submission_key',
         'fixed_catalog_pricing',
         'ready_at',
         'cancellation_kind',

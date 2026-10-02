@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 @section('title', $product->exists ? 'Edit cake package' : 'Add cake package')
 @section('content')
+<script src="{{ asset('js/package-inclusions.js') }}?v={{ filemtime(public_path('js/package-inclusions.js')) }}"></script>
 <div class="max-w-3xl mx-auto space-y-6">
     <div class="page-heading"><h1 class="font-bold text-cocoa-600">{{ $product->exists ? 'Edit cake package' : 'Add cake package' }}</h1><a href="{{ route('products.index') }}" class="underline">Back to catalog</a></div>
     <form action="{{ $product->exists ? route('products.update', $product) : route('products.store') }}" method="POST" enctype="multipart/form-data" class="section-form space-y-4">
@@ -15,11 +16,28 @@
     </form>
     @if ($product->exists)
         <section class="section-form space-y-5" aria-labelledby="layer-options"><h2 id="layer-options" class="font-semibold text-cocoa-600">Layer options and inclusions</h2>
-            <p class="text-sm">List all contents included in each option. Prices use ₱0.02 increments so every order supports an exact 50% deposit. Existing orders keep their saved prices and inclusions.</p>
+            <p class="text-sm">Select reusable items included in each package. They add ₱0 to its fixed price. Paid extras are configured separately in the item catalog. Prices use ₱0.02 increments for an exact 50% deposit. Existing orders keep their saved prices and inclusions.</p>
             @foreach ($product->options as $option)
                 @include('admin.catalog.option-form', ['option' => $option])
             @endforeach
-            @include('admin.catalog.option-form', ['option' => new \App\Models\PackageOption(['is_active' => true])])
+
+            @php($isAddingNew = old('_option') === 'new')
+            @php($hasOptions = $product->options->isNotEmpty())
+            <div x-data="{ showAddOption: {{ $isAddingNew || !$hasOptions ? 'true' : 'false' }} }" @close-add-option="showAddOption = false" class="pt-4 border-t border-cocoa-100">
+                <div x-show="!showAddOption" class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-xl bg-cream-50 border border-cocoa-200/80">
+                    <div>
+                        <h3 class="font-medium text-cocoa-800">Add another layer option?</h3>
+                        <p class="text-xs text-cocoa-500">Only needed if this cake package offers additional sizing or tier options.</p>
+                    </div>
+                    <button type="button" @click="showAddOption = true" class="px-4 py-2 bg-white border border-cocoa-300 text-cocoa-700 rounded-lg hover:bg-cream-100 font-medium text-sm transition shadow-sm shrink-0">
+                        + Add layer option
+                    </button>
+                </div>
+
+                <div x-show="showAddOption" x-cloak class="space-y-4">
+                    @include('admin.catalog.option-form', ['option' => new \App\Models\PackageOption(['is_active' => true])])
+                </div>
+            </div>
         </section>
     @endif
 </div>

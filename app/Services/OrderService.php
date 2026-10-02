@@ -50,6 +50,10 @@ class OrderService
     private function executeOrderCreation(array $data, ?User $user): Order
     {
         return DB::transaction(function () use ($data, $user) {
+            if (!empty($data['submission_key'])) {
+                $existing = Order::where('submission_key', $data['submission_key'])->first();
+                if ($existing) return $existing;
+            }
             if (empty($data['items']) || !is_array($data['items'])) {
                 throw ValidationException::withMessages([
                     'items' => ['At least one product line item is required.'],
@@ -79,6 +83,7 @@ class OrderService
                 'pickup_time' => $data['pickup_time'],
                 'notes_text' => $data['notes_text'] ?? null,
                 'private_token' => $user === null ? bin2hex(random_bytes(32)) : null,
+                'submission_key' => $data['submission_key'] ?? null,
                 'fixed_catalog_pricing' => true,
             ]);
 

@@ -17,14 +17,28 @@ class InventoryTransaction extends Model
         'quantity',
         'transaction_date',
         'notes',
+        'inventory_operation_id', 'quantity_before', 'quantity_after', 'unit', 'reversal_of_id',
     ];
 
     protected function casts(): array
     {
         return [
             'quantity' => 'decimal:2',
+            'quantity_before' => 'decimal:2',
+            'quantity_after' => 'decimal:2',
             'transaction_date' => 'datetime',
         ];
+    }
+
+    public function operation(): BelongsTo
+    {
+        return $this->belongsTo(InventoryOperation::class, 'inventory_operation_id');
+    }
+
+    protected static function booted(): void
+    {
+        static::updating(fn () => throw new \LogicException('Post a linked reversal to correct a movement.'));
+        static::deleting(fn () => throw new \LogicException('Movement history cannot be deleted.'));
     }
 
     public function supply(): BelongsTo

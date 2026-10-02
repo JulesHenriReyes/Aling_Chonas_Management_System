@@ -67,7 +67,7 @@ class OrderController extends Controller
     {
         $customers = Customer::orderBy('last_name')->get();
         $products = Product::active()->whereHas('options', fn ($query) => $query->where('is_active', true))
-            ->with(['options' => fn ($query) => $query->where('is_active', true), 'addOns' => fn ($query) => $query->where('is_active', true)])
+            ->with(['options' => fn ($query) => $query->where('is_active', true)->with('includedItems'), 'addOns' => fn ($query) => $query->where('is_active', true)])
             ->orderBy('product_name')->get();
 
         $draft = $drafts->get($request, true);

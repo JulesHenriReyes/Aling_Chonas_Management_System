@@ -104,20 +104,30 @@
                                     <span class="text-xs text-cocoa-500 font-bold block mb-1.5">Reference Photos:</span>
                                     <div class="flex flex-wrap gap-2">
                                         @foreach ($detail->images as $img)
-                                            <a href="{{ asset('storage/' . $img->file_path) }}" target="_blank" class="block border border-cocoa-100 rounded-lg overflow-hidden w-16 h-16 bg-cream-50 hover:opacity-80 transition">
-                                                <img src="{{ asset('storage/' . $img->file_path) }}" alt="{{ $img->original_filename }}" class="w-full h-full object-cover">
-                                            </a>
+                                            <div x-data="{ expanded: false }" class="relative">
+                                                <button type="button" @click="expanded = true" class="block border border-cocoa-100 rounded-lg overflow-hidden w-16 h-16 bg-cream-50 hover:opacity-80 transition focus:outline-none">
+                                                    <img src="{{ asset('storage/' . $img->file_path) }}" alt="{{ $img->original_filename }}" class="w-full h-full object-cover">
+                                                </button>
+                                                <template x-teleport="body">
+                                                    <div x-show="expanded" style="display: none;" class="fixed inset-0 z-[100] flex items-center justify-center bg-black bg-opacity-80 p-4 backdrop-blur-sm" @keydown.escape.window="expanded = false">
+                                                        <div class="relative w-full h-full flex justify-center items-center" @click.outside="expanded = false">
+                                                            <button @click="expanded = false" class="absolute top-4 right-4 text-white hover:text-gray-300 focus:outline-none z-[110]">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 drop-shadow-md" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                                                            </button>
+                                                            <img src="{{ asset('storage/' . $img->file_path) }}" alt="{{ $img->original_filename }}" class="max-w-full max-h-full object-contain rounded drop-shadow-2xl">
+                                                        </div>
+                                                    </div>
+                                                </template>
+                                            </div>
                                         @endforeach
                                     </div>
                                 </div>
                             @endif
 
                             {{-- Fixed catalog snapshot --}}
-                            @if ($detail->included_contents_snapshot)
-                                <p class="text-sm"><strong>Included per package:</strong> {{ $detail->included_contents_snapshot }}</p>
-                            @endif
+                            @include('partials.included-items', ['includedItems' => $detail->included_items_snapshot ?? [], 'includedText' => $detail->included_contents_snapshot, 'packageQuantity' => $detail->quantity])
                             @foreach ($detail->addOns as $extra)
-                                <p class="text-sm"><strong>Paid extra:</strong> {{ $extra->name_snapshot }} × {{ $extra->quantity }} · ₱{{ number_format($extra->subtotal, 2) }}<br>{{ $extra->description_snapshot }} · ₱{{ number_format($extra->unit_price, 2) }} each</p>
+                                <p class="text-sm"><strong>Paid extra:</strong> {{ $extra->name_snapshot }} × {{ $extra->quantity }} for this whole order line · ₱{{ number_format($extra->subtotal, 2) }}<br>{{ $extra->description_snapshot }} · ₱{{ number_format($extra->unit_price, 2) }} each</p>
                             @endforeach
                         </div>
                     @endforeach
@@ -134,13 +144,23 @@
                 @if ($order->images->isNotEmpty())
                     <div class="grid grid-cols-3 sm:grid-cols-2 xl:grid-cols-4 md:grid-cols-6 gap-3 mb-4">
                         @foreach ($order->images as $img)
-                            <div class="border border-cocoa-100 rounded-lg overflow-hidden bg-cream-50">
-                                <a href="{{ asset('storage/' . $img->file_path) }}" target="_blank" class="block aspect-square">
+                            <div class="border border-cocoa-100 rounded-lg overflow-hidden bg-cream-50" x-data="{ expanded: false }">
+                                <button type="button" @click="expanded = true" class="block aspect-square w-full hover:opacity-80 transition focus:outline-none">
                                     <img src="{{ asset('storage/' . $img->file_path) }}" alt="{{ $img->original_filename }}" class="w-full h-full object-cover">
-                                </a>
+                                </button>
                                 <div class="px-1.5 py-1 text-[9px] text-cocoa-400 truncate" title="{{ $img->original_filename }}">
                                     {{ $img->original_filename }}
                                 </div>
+                                <template x-teleport="body">
+                                    <div x-show="expanded" style="display: none;" class="fixed inset-0 z-[100] flex items-center justify-center bg-black bg-opacity-80 p-4 backdrop-blur-sm" @keydown.escape.window="expanded = false">
+                                        <div class="relative w-full h-full flex justify-center items-center" @click.outside="expanded = false">
+                                            <button @click="expanded = false" class="absolute top-4 right-4 text-white hover:text-gray-300 focus:outline-none z-[110]">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 drop-shadow-md" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                                            </button>
+                                            <img src="{{ asset('storage/' . $img->file_path) }}" alt="{{ $img->original_filename }}" class="max-w-full max-h-full object-contain rounded drop-shadow-2xl">
+                                        </div>
+                                    </div>
+                                </template>
                             </div>
                         @endforeach
                     </div>

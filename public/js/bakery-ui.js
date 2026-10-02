@@ -78,3 +78,31 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (Object.keys(errors).length) (firstInvalid || document.querySelector('[data-error-summary]'))?.focus();
 });
+
+// Dedicated editing pages retain old input on errors and warn before discarding edits.
+document.addEventListener('DOMContentLoaded', () => {
+    const forms = [...document.querySelectorAll('form[data-safe-form]')];
+    for (const form of forms) {
+        let dirty = false, submitting = false;
+        form.addEventListener('input', () => { dirty = true; });
+        form.addEventListener('change', () => { dirty = true; });
+        form.addEventListener('submit', event => {
+            if (event.defaultPrevented) return;
+            if (submitting) { event.preventDefault(); return; }
+            if (!form.checkValidity()) return;
+            submitting = true; dirty = false;
+            const status = form.querySelector('[data-submit-status]');
+            if (status) status.textContent = 'Saving…';
+            setTimeout(() => form.querySelectorAll('button[type=submit], button:not([type])').forEach(button => button.disabled = true), 0);
+        });
+        window.addEventListener('beforeunload', event => { if (dirty && !submitting) { event.preventDefault(); event.returnValue = ''; } });
+        window.addEventListener('pageshow', () => { submitting = false; form.querySelectorAll('button[type=submit], button:not([type])').forEach(button => button.disabled = false); });
+    }
+    const target = location.hash && document.getElementById(location.hash.slice(1));
+    if (target?.tagName === 'DETAILS') target.open = true;
+    document.addEventListener('keydown', event => {
+        if (event.key !== 'Escape') return;
+        const menu = document.activeElement.closest?.('.row-actions[open]');
+        if (menu) { menu.open = false; menu.querySelector('summary').focus(); }
+    });
+});

@@ -20,9 +20,8 @@
         }
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="{{ asset('js/alpine.min.js') }}"></script>
     <style>
         [x-cloak] { display: none !important; }
     </style>
@@ -32,16 +31,16 @@
     <a class="skip-link" href="#main-content">Skip to main content</a>
     {{-- Header --}}
     <header class="bg-white border-b border-cocoa-100 sticky top-0 z-40">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+        <div class="max-w-7xl 2xl:max-w-[1600px] w-full mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12 flex flex-wrap items-center justify-between gap-4 min-h-[4rem] py-3">
             <a href="{{ route('public.order.index') }}" class="flex items-center gap-3">
-                <span class="w-10 h-10 rounded-xl bg-cocoa-600 flex items-center justify-center text-white text-lg font-bold">A</span>
-                <div>
-                    <span class="text-base font-bold text-cocoa-600 leading-tight tracking-tight">Aling Chona</span>
-                    <p class="text-xs text-cocoa-500  leading-tight">Cakes & Cupcakes</p>
+                <span class="w-10 h-10 rounded-xl bg-cocoa-600 flex items-center justify-center text-white text-lg font-bold shrink-0 shadow-sm">A</span>
+                <div class="min-w-0">
+                    <span class="text-base font-bold text-cocoa-600 leading-tight tracking-tight block whitespace-nowrap">Aling Chona</span>
+                    <p class="text-xs text-cocoa-500 leading-tight whitespace-nowrap">Cakes & Cupcakes</p>
                 </div>
             </a>
-            <div class="flex items-center gap-3">
-                <a href="{{ route('login') }}" class="text-xs font-medium text-cocoa-400 hover:text-cocoa-600 transition">
+            <div class="flex items-center gap-3 shrink-0">
+                <a href="{{ route('login') }}" class="text-xs font-semibold px-3 py-1.5 rounded-lg border border-cocoa-100 text-cocoa-500 hover:text-cocoa-700 hover:bg-cream-100 transition">
                     Staff Login
                 </a>
             </div>
@@ -49,7 +48,7 @@
     </header>
 
     {{-- Main Content --}}
-    <main id="main-content" tabindex="-1" class="flex-grow max-w-7xl w-full mx-auto px-4 py-8 sm:px-6 lg:px-8">
+    <main id="main-content" tabindex="-1" class="flex-grow max-w-7xl 2xl:max-w-[1600px] w-full mx-auto px-4 py-8 sm:px-6 lg:px-8 2xl:px-12">
         @if (session('info'))
             <div role="alert" class="mb-6 px-4 py-3 rounded-lg bg-cream-100 border border-blue-200 text-blue-800 text-sm flex items-center gap-2">
                 <x-icon path="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" class="w-4 h-4 flex-shrink-0 text-blue-600" />
@@ -73,16 +72,16 @@
 
     {{-- Footer --}}
     <footer class="bg-cocoa-700 text-cocoa-200 py-8 mt-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
-                <div class="flex items-center gap-3">
-                    <span class="w-8 h-8 rounded-lg bg-cocoa-300/20 flex items-center justify-center text-cocoa-200 text-sm font-bold">A</span>
-                    <div>
+        <div class="max-w-7xl 2xl:max-w-[1600px] w-full mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12">
+            <div class="flex flex-wrap items-center justify-between gap-6 text-xs">
+                <div class="flex items-center gap-3 min-w-0">
+                    <span class="w-8 h-8 rounded-lg bg-cocoa-300/20 flex items-center justify-center text-cocoa-200 text-sm font-bold shrink-0">A</span>
+                    <div class="min-w-0">
                         <span class="font-semibold text-white block">Aling Chona Cakes & Cupcakes</span>
-                        <span class="text-cocoa-200">Custom Bakes & Celebration Delights</span>
+                        <span class="text-cocoa-200 block">Custom Bakes & Celebration Delights</span>
                     </div>
                 </div>
-                <div class="flex items-center gap-4 text-cocoa-200">
+                <div class="flex flex-wrap items-center gap-4 text-cocoa-200 shrink-0">
                     <span>Cash & GCash Accepted</span>
                     <span>&copy; {{ date('Y') }}</span>
                 </div>

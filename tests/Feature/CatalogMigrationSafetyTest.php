@@ -13,7 +13,7 @@ class CatalogMigrationSafetyTest extends TestCase
         config(['database.connections.migration_audit' => ['driver' => 'sqlite', 'database' => ':memory:', 'prefix' => '', 'foreign_key_constraints' => true]]);
         DB::setDefaultConnection('migration_audit');
         foreach (glob(database_path('migrations/*.php')) as $file) {
-            if (!str_contains(basename($file), '2026_09_24_')) {
+            if (basename($file) < '2026_09_24_') {
                 (require $file)->up();
             }
         }

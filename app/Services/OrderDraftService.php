@@ -17,7 +17,12 @@ class OrderDraftService
 
     public function get(Request $request, bool $staff): ?array
     {
-        return $request->session()->get($this->key($staff));
+        $draft = $request->session()->get($this->key($staff));
+        if ($draft && empty($draft['submission_key'])) {
+            $draft['submission_key'] = (string) Str::uuid();
+            $request->session()->put($this->key($staff), $draft);
+        }
+        return $draft;
     }
 
     public function save(Request $request, bool $staff, CatalogPricingService $pricing): array
@@ -26,6 +31,7 @@ class OrderDraftService
         $pricing->quote($validated['items']);
         $previous = $this->get($request, $staff);
         $items = [];
+        $newPaths = [];
         $priorByKey = [];
         foreach ($previous['items'] ?? [] as $prior) {
             if (isset($prior['draft_key'])) {
@@ -33,40 +39,49 @@ class OrderDraftService
             }
         }
 
-        foreach (array_values($validated['items']) as $index => $item) {
-            $raw = $request->input("items.{$index}", []);
-            $key = $raw['draft_key'] ?? null;
-            $old = $key && isset($priorByKey[$key]) ? $priorByKey[$key] : null;
-            if ($old) {
-                unset($priorByKey[$key]);
-            }
-            $item['draft_key'] = $old ? $key : (string) Str::uuid();
-            $saved = [];
-            if (!$staff && $old && (int) $old['product_id'] === (int) $item['product_id']) {
-                $saved = $old['staged_images'] ?? [];
-                $removed = $raw['remove_staged_images'] ?? [];
-                $saved = array_values(array_filter($saved, fn ($image) => !in_array($image['staged_path'], (array) $removed, true)));
-            }
-            $uploads = $item['images'] ?? [];
-            if (count($saved) + count($uploads) > 5) {
-                throw ValidationException::withMessages(["items.{$index}.images" => 'Use up to five reference photos for each package.']);
-            }
-            unset($item['images']);
-            if (!$staff) {
-                foreach ($uploads as $file) {
-                    $path = Storage::disk('local')->putFileAs(
-                        'order_drafts/'.$request->session()->getId(),
-                        $file,
-                        Str::uuid().'.'.$file->extension()
-                    );
-                    $saved[] = ['staged_path' => $path, 'original_filename' => $file->getClientOriginalName()];
+        try {
+            foreach (array_values($validated['items']) as $index => $item) {
+                $raw = $request->input("items.{$index}", []);
+                $key = $raw['draft_key'] ?? null;
+                $old = $key && isset($priorByKey[$key]) ? $priorByKey[$key] : null;
+                if ($old) {
+                    unset($priorByKey[$key]);
                 }
-                $item['staged_images'] = $saved;
+                $item['draft_key'] = $old ? $key : (string) Str::uuid();
+                $saved = [];
+                if (!$staff && $old && (int) $old['product_id'] === (int) $item['product_id']) {
+                    $saved = $old['staged_images'] ?? [];
+                    $removed = $raw['remove_staged_images'] ?? [];
+                    $saved = array_values(array_filter($saved, fn ($image) => !in_array($image['staged_path'], (array) $removed, true)));
+                }
+                $uploads = $item['images'] ?? [];
+                if (count($saved) + count($uploads) > 5) {
+                    throw ValidationException::withMessages(["items.{$index}.images" => 'Use up to five reference photos for each package.']);
+                }
+                unset($item['images']);
+                if (!$staff) {
+                    foreach ($uploads as $file) {
+                        $path = Storage::disk('local')->putFileAs(
+                            'order_drafts/'.$request->session()->getId(),
+                            $file,
+                            Str::uuid().'.'.$file->extension()
+                        );
+                        if ($path === false) {
+                            throw ValidationException::withMessages(["items.{$index}.images" => 'Could not save the design reference. Please try again.']);
+                        }
+                        $newPaths[] = $path;
+                        $saved[] = ['staged_path' => $path, 'original_filename' => $file->getClientOriginalName()];
+                    }
+                    $item['staged_images'] = $saved;
+                }
+                $items[] = $item;
             }
-            $items[] = $item;
+        } catch (\Throwable $exception) {
+            Storage::disk('local')->delete($newPaths);
+            throw $exception;
         }
 
-        $draft = ['items' => $items, 'details' => $previous['details'] ?? []];
+        $draft = ['items' => $items, 'details' => $previous['details'] ?? [], 'submission_key' => $previous['submission_key'] ?? (string) Str::uuid()];
         $request->session()->put($this->key($staff), $draft);
         $kept = [];
         foreach ($items as $item) {

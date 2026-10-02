@@ -21,8 +21,13 @@ use Illuminate\Support\Facades\Route;
 
 // Private order links are bearer credentials, never sequential order IDs.
 Route::get('/', [PublicOrderController::class, 'index'])->name('public.order.index');
+Route::get('/packages/{product}/customize/{line}', [PublicOrderController::class, 'customize'])->middleware(PrivateOrderResponse::class)->block()->name('public.package.customize');
+Route::post('/packages/{product}/customize/{line}', [PublicOrderController::class, 'savePackage'])->middleware(PrivateOrderResponse::class)->block()->name('public.package.save');
+Route::post('/packages/{product}/draft/{line}', [PublicOrderController::class, 'saveEditor'])->middleware(['throttle:60,1', PrivateOrderResponse::class])->block()->name('public.package.draft');
+Route::post('/order/packages/{line}/remove', [PublicOrderController::class, 'removePackage'])->block()->name('public.package.remove');
 Route::post('/order', [PublicOrderController::class, 'store'])
     ->middleware('throttle:public-orders')
+    ->block()
     ->name('public.order.store');
 Route::get('/order/success', [PublicOrderController::class, 'success'])->name('public.order.success');
 Route::post('/order/quote', [PublicOrderController::class, 'quote'])->middleware('throttle:public-quotes')->name('public.order.quote');
@@ -82,14 +87,31 @@ Route::middleware(['auth', 'role:owner,assistant'])->group(function () {
     Route::post('/refunds/{refund}/complete', [RefundController::class, 'complete'])->name('refunds.complete');
 
     Route::get('/supplies', [SupplyController::class, 'index'])->name('supplies.index');
+    Route::get('/supplies/create', [SupplyController::class, 'create'])->name('supplies.create');
+    Route::get('/supplies/lookup', [SupplyController::class, 'lookup'])->name('supplies.lookup');
+    Route::get('/supplies/{supply}/edit', [SupplyController::class, 'edit'])->name('supplies.edit');
+    Route::get('/supplies/{supply}', [SupplyController::class, 'show'])->name('supplies.show');
+    Route::get('/inventory/history', [SupplyController::class, 'history'])->name('inventory.history');
+    Route::get('/inventory/create/{type}', [SupplyController::class, 'operationForm'])->name('inventory.create');
+    Route::post('/inventory', [SupplyController::class, 'postOperation'])->name('inventory.store');
+    Route::get('/inventory/{operation}', [SupplyController::class, 'operation'])->name('inventory.show');
+    Route::post('/inventory/{operation}/reverse', [SupplyController::class, 'reverse'])->name('inventory.reverse');
     Route::post('/supplies', [SupplyController::class, 'store'])->name('supplies.store');
     Route::match(['put', 'patch'], '/supplies/{supply}', [SupplyController::class, 'update'])->name('supplies.update');
     Route::post('/supplies/{supply}/transactions', [SupplyController::class, 'recordTransaction'])->name('supplies.transactions.store');
 
     Route::get('/expenses', [ExpenseController::class, 'index'])->name('expenses.index');
+    Route::get('/expenses/create', [ExpenseController::class, 'create'])->name('expenses.create');
+    Route::get('/expenses/history', [ExpenseController::class, 'history'])->name('expenses.history');
+    Route::get('/expenses/{expense}', [ExpenseController::class, 'show'])->name('expenses.show');
+    Route::get('/expenses/{expense}/edit', [ExpenseController::class, 'edit'])->name('expenses.edit');
+    Route::patch('/expenses/{expense}', [ExpenseController::class, 'update'])->name('expenses.update');
+    Route::delete('/expenses/{expense}', [ExpenseController::class, 'destroy'])->name('expenses.destroy');
     Route::post('/expenses', [ExpenseController::class, 'store'])->name('expenses.store');
 
     Route::get('/reports', [ReportsController::class, 'index'])->name('reports.index');
+    Route::get('/reports/records', [ReportsController::class, 'records'])->name('reports.records');
+    Route::get('/reports/export', [ReportsController::class, 'export'])->name('reports.export');
     Route::get('/pickup-schedule', [PickupScheduleController::class, 'index'])->name('schedule.index');
 
     Route::middleware(['can:manage-users', 'role:owner'])->group(function () {

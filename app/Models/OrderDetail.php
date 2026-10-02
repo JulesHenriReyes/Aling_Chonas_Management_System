@@ -12,7 +12,7 @@ class OrderDetail extends Model
 {
     use HasFactory;
 
-    protected $with = ['addOns'];
+    protected $with = ['addOns.addOn', 'product', 'images'];
 
     protected $fillable = [
         'order_id',
@@ -25,6 +25,7 @@ class OrderDetail extends Model
         'package_option_id',
         'product_name_snapshot',
         'included_contents_snapshot',
+        'included_items_snapshot',
     ];
 
     protected function casts(): array
@@ -33,6 +34,7 @@ class OrderDetail extends Model
             'quantity' => 'integer',
             'unit_price' => 'decimal:2',
             'layers' => 'integer',
+            'included_items_snapshot' => 'array',
         ];
     }
 

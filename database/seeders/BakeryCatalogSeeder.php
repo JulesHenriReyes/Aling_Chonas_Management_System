@@ -78,81 +78,10 @@ class BakeryCatalogSeeder extends Seeder
             ];
 
             foreach ($supplies as $s) {
-                Supply::create($s);
+                Supply::firstOrCreate(['supply_name' => $s['supply_name']], $s);
             }
 
-            // 2. Products & Package Options
-            $packages = [
-                [
-                    'product' => [
-                        'product_name' => '1-Layer Chiffon Cake Package (with Free 6 pcs Cupcakes)',
-                        'price' => 800.00,
-                        'description' => 'A soft and fluffy 1-layer vanilla chiffon cake package that comes with 6 pieces of free cupcakes.',
-                        'photo_path' => 'catalog/packages/simple_1_layer_chiffon.jpg',
-                        'is_active' => true,
-                    ],
-                    'option' => [
-                        'layers' => 1,
-                        'included_contents' => 'Includes a 1-layer vanilla chiffon cake and 6 pieces of free cupcakes.',
-                        'price' => 800.00,
-                        'is_active' => true,
-                    ],
-                ],
-                [
-                    'product' => [
-                        'product_name' => '2-Layer Chiffon Cake Package (with Free 12 pcs Cupcakes)',
-                        'price' => 1500.00,
-                        'description' => 'An elegant 2-layer vanilla chiffon cake package that comes with 12 pieces of free cupcakes.',
-                        'photo_path' => 'catalog/packages/simple_2_layer_chiffon.jpg',
-                        'is_active' => true,
-                    ],
-                    'option' => [
-                        'layers' => 2,
-                        'included_contents' => 'Includes a 2-layer vanilla chiffon cake and 12 pieces of free cupcakes.',
-                        'price' => 1500.00,
-                        'is_active' => true,
-                    ],
-                ],
-                [
-                    'product' => [
-                        'product_name' => '1-Layer Chocolate Moist Cake Package (with Free 6 pcs Puto Cheese)',
-                        'price' => 900.00,
-                        'description' => 'A rich and moist 1-layer chocolate cake package that comes with 6 pieces of free puto cheese.',
-                        'photo_path' => 'catalog/packages/simple_1_layer_chocolate_moist.jpg',
-                        'is_active' => true,
-                    ],
-                    'option' => [
-                        'layers' => 1,
-                        'included_contents' => 'Includes a 1-layer chocolate moist cake and 6 pieces of free puto cheese.',
-                        'price' => 900.00,
-                        'is_active' => true,
-                    ],
-                ],
-                [
-                    'product' => [
-                        'product_name' => '2-Layer Chocolate Moist Cake Package (with Free 12 pcs Puto Cheese)',
-                        'price' => 1600.00,
-                        'description' => 'A rich and moist 2-layer chocolate cake package that comes with 12 pieces of free puto cheese.',
-                        'photo_path' => 'catalog/packages/simple_2_layer_chocolate_moist.jpg',
-                        'is_active' => true,
-                    ],
-                    'option' => [
-                        'layers' => 2,
-                        'included_contents' => 'Includes a 2-layer chocolate moist cake and 12 pieces of free puto cheese.',
-                        'price' => 1600.00,
-                        'is_active' => true,
-                    ],
-                ],
-            ];
-
-            $createdProducts = [];
-            foreach ($packages as $pkg) {
-                $product = Product::create($pkg['product']);
-                $product->options()->create($pkg['option']);
-                $createdProducts[] = $product;
-            }
-
-            // 3. Optional Paid Add-ons
+            // 2. Add-ons (Preserved or Created if missing)
             $addOns = [
                 [
                     'name' => 'Cupcakes (Box of 6)',
@@ -184,16 +113,143 @@ class BakeryCatalogSeeder extends Seeder
                 ],
             ];
 
-            $createdAddOns = [];
             foreach ($addOns as $ao) {
-                $addon = AddOn::create($ao);
-                $createdAddOns[] = $addon;
+                AddOn::firstOrCreate(['name' => $ao['name']], $ao);
             }
 
-            // 4. Attach optional paid Add-ons to Products
-            $addOnIds = collect($createdAddOns)->pluck('id')->toArray();
-            foreach ($createdProducts as $prod) {
-                $prod->addOns()->sync($addOnIds);
+            $cupcakes = AddOn::where('name', 'like', '%Cupcakes%')->first();
+            $puto = AddOn::where('name', 'like', '%Puto Cheese%')->first();
+            $kutsinta = AddOn::where('name', 'like', '%Kutsinta%')->first();
+            $flan = AddOn::where('name', 'like', '%Leche Flan%')->first();
+
+            // 3. Four Cake Packages (2 Multi-layer, 2 Fixed 2-layer Bundles)
+            $packages = [
+                [
+                    'product' => [
+                        'product_name' => 'Vanilla Chiffon Cake Package (with Free Cupcakes)',
+                        'price' => 800.00,
+                        'description' => 'A soft and fluffy vanilla chiffon cake package. Includes free cupcakes scaled with your selected cake layers.',
+                        'photo_path' => 'catalog/packages/simple_2_layer_chiffon.jpg',
+                        'is_active' => true,
+                    ],
+                    'options' => [
+                        [
+                            'data' => [
+                                'layers' => 1,
+                                'included_contents' => '',
+                                'price' => 800.00,
+                                'is_active' => true,
+                            ],
+                            'included_items' => $cupcakes ? [
+                                $cupcakes->id => ['quantity' => 1],
+                            ] : [],
+                        ],
+                        [
+                            'data' => [
+                                'layers' => 2,
+                                'included_contents' => '',
+                                'price' => 1500.00,
+                                'is_active' => true,
+                            ],
+                            'included_items' => $cupcakes ? [
+                                $cupcakes->id => ['quantity' => 2],
+                            ] : [],
+                        ],
+                    ],
+                ],
+                [
+                    'product' => [
+                        'product_name' => 'Chocolate Moist Cake Package (with Free Puto Cheese)',
+                        'price' => 900.00,
+                        'description' => 'A rich and decadent chocolate moist cake package. Includes free puto cheese scaled with your selected cake layers.',
+                        'photo_path' => 'catalog/packages/simple_2_layer_chocolate_moist.jpg',
+                        'is_active' => true,
+                    ],
+                    'options' => [
+                        [
+                            'data' => [
+                                'layers' => 1,
+                                'included_contents' => '',
+                                'price' => 900.00,
+                                'is_active' => true,
+                            ],
+                            'included_items' => $puto ? [
+                                $puto->id => ['quantity' => 1],
+                            ] : [],
+                        ],
+                        [
+                            'data' => [
+                                'layers' => 2,
+                                'included_contents' => '',
+                                'price' => 1600.00,
+                                'is_active' => true,
+                            ],
+                            'included_items' => $puto ? [
+                                $puto->id => ['quantity' => 2],
+                            ] : [],
+                        ],
+                    ],
+                ],
+                [
+                    'product' => [
+                        'product_name' => 'Chiffon Celebration Bundle (with Free Kutsinta)',
+                        'price' => 1450.00,
+                        'description' => 'A 2-layer vanilla chiffon celebration bundle. Comes with a complimentary box of 12 kutsinta.',
+                        'photo_path' => 'catalog/packages/simple_1_layer_chiffon.jpg',
+                        'is_active' => true,
+                    ],
+                    'options' => [
+                        [
+                            'data' => [
+                                'layers' => 2,
+                                'included_contents' => '',
+                                'price' => 1450.00,
+                                'is_active' => true,
+                            ],
+                            'included_items' => $kutsinta ? [
+                                $kutsinta->id => ['quantity' => 1],
+                            ] : [],
+                        ],
+                    ],
+                ],
+                [
+                    'product' => [
+                        'product_name' => 'Chocolate Deluxe Feast Bundle (with Free Leche Flan)',
+                        'price' => 1700.00,
+                        'description' => 'A rich 2-layer chocolate moist cake deluxe bundle. Comes with a complimentary whole traditional leche flan.',
+                        'photo_path' => 'catalog/packages/simple_1_layer_chocolate_moist.jpg',
+                        'is_active' => true,
+                    ],
+                    'options' => [
+                        [
+                            'data' => [
+                                'layers' => 2,
+                                'included_contents' => '',
+                                'price' => 1700.00,
+                                'is_active' => true,
+                            ],
+                            'included_items' => $flan ? [
+                                $flan->id => ['quantity' => 1],
+                            ] : [],
+                        ],
+                    ],
+                ],
+            ];
+
+            $allActiveAddOnIds = AddOn::where('is_active', true)->pluck('id')->toArray();
+
+            foreach ($packages as $pkg) {
+                $product = Product::create($pkg['product']);
+
+                foreach ($pkg['options'] as $opt) {
+                    $option = $product->options()->create($opt['data']);
+                    if (!empty($opt['included_items'])) {
+                        $option->includedItems()->sync($opt['included_items']);
+                    }
+                }
+
+                // Attach all active add-ons as optional paid extras for this package
+                $product->addOns()->sync($allActiveAddOnIds);
             }
         });
     }
