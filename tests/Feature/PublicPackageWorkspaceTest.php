@@ -39,6 +39,9 @@ class PublicPackageWorkspaceTest extends TestCase
         $this->post(route('public.package.remove',$key))->assertRedirect();
         $this->assertCount(1, session('public_order_draft.items'));
         $this->assertSame($second, session('public_order_draft.items.0.draft_key'));
+        $this->post($url, $data)->assertSessionHasErrors('items');
+        $this->get($url)->assertRedirect(route('public.order.index'));
+        $this->assertCount(1, session('public_order_draft.items'));
     }
 
     public function test_validation_keeps_uploads_and_submitted_order_associates_images_and_extras_with_each_line(): void
@@ -83,5 +86,17 @@ class PublicPackageWorkspaceTest extends TestCase
         $this->get('/order/details')->assertRedirect(route('public.order.index'));
         $this->get('/')->assertOk()->assertSee('Remove');
         $this->assertDatabaseCount('orders',0);
+    }
+
+    public function test_removing_an_uncommitted_reference_cleans_its_file(): void
+    {
+        Storage::fake('local');
+        $cake=$this->catalogProduct(['product_name'=>'Cake','price'=>1000,'is_active'=>true]); $key=(string)Str::uuid();
+        $url=route('public.package.draft',[$cake,$key]);
+        $this->postJson($url,['items'=>[$this->line($cake)+['images'=>[UploadedFile::fake()->image('reference.png')]]]])->assertOk();
+        $path=session('public_package_editors.'.$key.'.staged_images.0.staged_path');
+        $this->postJson($url,['items'=>[$this->line($cake)+['remove_staged_images'=>[$path]]]])->assertOk();
+        Storage::disk('local')->assertMissing($path);
+        $this->assertCount(0,session('public_package_editors.'.$key.'.staged_images'));
     }
 }

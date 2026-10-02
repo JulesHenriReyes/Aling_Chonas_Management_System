@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('title', ['receipt'=>'Receive stock','usage'=>'Record usage / waste','waste'=>'Record usage / waste','stocktake'=>'Stocktake'][$type])
 @section('content')
-<script src="{{ asset('js/inventory-workspace.js') }}" defer></script>
+<script src="{{ asset('js/inventory-workspace.js') }}?v={{ filemtime(public_path('js/inventory-workspace.js')) }}"></script>
 <div class="workspace" x-data="stockOperation(@js($type), @js($initialLines), @js(route('supplies.lookup')))">
 <header class="workspace-heading"><div><a class="back-link" href="{{ route('supplies.index') }}">← Inventory</a><h1>{{ ['receipt'=>'Receive stock','usage'=>'Record usage / waste','waste'=>'Record usage / waste','stocktake'=>'Stocktake'][$type] }}</h1><p>{{ $type === 'stocktake' ? 'Enter actual counted quantities. Changes are checked again when you post.' : 'Add supplies and review the stock changes before posting.' }}</p></div></header>
 <form class="workspace-form" data-safe-form action="{{ route('inventory.store') }}" method="POST" @submit="if (!lines.length) { $event.preventDefault(); error = 'Add at least one supply.'; $refs.search.focus(); }">

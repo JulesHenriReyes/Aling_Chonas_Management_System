@@ -27,7 +27,7 @@
     </style>
     @include('partials.ui-assets')
 </head>
-<body class="bg-cream-50 text-cocoa-500 font-sans min-h-screen flex flex-col">
+<body class="public-store bg-cream-50 text-cocoa-500 font-sans min-h-screen flex flex-col">
     <a class="skip-link" href="#main-content">Skip to main content</a>
     {{-- Header --}}
     <header class="bg-white border-b border-cocoa-100 sticky top-0 z-40">

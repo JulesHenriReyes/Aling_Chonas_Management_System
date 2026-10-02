@@ -1,0 +1,10 @@
+
+   PASS  Tests\Feature\StockConcurrencyAndMigrationTest
+  ✓ concurrent receipts have no lost update                                                                      6.63s  
+  ✓ concurrent usage cannot overspend stock                                                                      1.25s  
+  ✓ concurrent duplicate receipt posts once                                                                      1.25s  
+  ✓ real additive migration preserves preexisting records                                                        0.48s  
+
+  Tests:    4 passed (52 assertions)
+  Duration: 16.19s
+

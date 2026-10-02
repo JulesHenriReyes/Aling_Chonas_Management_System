@@ -106,6 +106,27 @@ class StockOperationsAndExpensesTest extends TestCase
         foreach (['/supplies/create', '/supplies/'.$supply->id.'/edit', '/inventory/history', '/inventory/create/receipt', '/inventory/create/usage', '/inventory/create/stocktake'] as $page) $this->get($page)->assertOk();
     }
 
+    public function test_legacy_movement_can_be_corrected_once_without_rewriting_history(): void
+    {
+        $actor=$this->staff(); $this->actingAs($actor); $supply=$this->supply('Legacy sugar', 'kg', 15);
+        $movement=InventoryTransaction::create(['supply_id'=>$supply->id,'user_id'=>$actor->id,'transaction_type'=>'stock_in','quantity'=>5,'transaction_date'=>'2026-09-01','notes'=>'Original delivery']);
+        $this->get('/inventory/movements/'.$movement->id)->assertOk()->assertSee('Correct this movement');
+        $data=['submission_key'=>(string)Str::uuid(),'notes'=>'Duplicate legacy delivery entry'];
+        $this->post('/inventory/movements/'.$movement->id.'/reverse',$data)->assertRedirect();
+        $this->post('/inventory/movements/'.$movement->id.'/reverse',$data)->assertRedirect();
+        $this->assertEquals(10,$supply->fresh()->current_quantity);
+        $this->assertEquals(5,$movement->fresh()->quantity);
+        $this->assertDatabaseHas('inventory_baselines',['supply_id'=>$supply->id,'opening_quantity'=>10]);
+        $this->assertDatabaseCount('inventory_transactions',2);
+        $this->get('/inventory/movements/'.$movement->id)->assertSee('Reversed by');
+        $data['submission_key']=(string)Str::uuid();
+        $this->post('/inventory/movements/'.$movement->id.'/reverse',$data)->assertSessionHasErrors('notes');
+        $operation=InventoryOperation::sole();
+        $this->get('/inventory/'.$operation->id)->assertDontSee('Correct this operation');
+        $this->expectException(\LogicException::class);
+        $operation->update(['notes'=>'Rewrite history']);
+    }
+
     private function expenseData(): array
     {
         return ['submission_key' => (string) Str::uuid(), 'description' => 'Flour delivery', 'category' => 'ingredients', 'amount' => 250, 'expense_date' => '2026-10-02'];

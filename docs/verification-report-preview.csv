@@ -1,0 +1,45 @@
+section,period,label,sales,gross_collections,refunds_completed,payment_collections,cancellation_income,expenses,operational_net_income,completed_order_count,package_quantity,package_amount,extras_amount,amount
+period,"2026-09-01 through 2026-09-30","Asia/Manila; amounts in PHP",,,,,,,,,,,,
+summary,,,6550,6550,0,6550,0,3980,2570,6,,,,
+trend,2026-09-01,,0,0,0,0,0,0,0,0,,,,
+trend,2026-09-02,,0,0,0,0,0,0,0,0,,,,
+trend,2026-09-03,,0,0,0,0,0,0,0,0,,,,
+trend,2026-09-04,,0,0,0,0,0,0,0,0,,,,
+trend,2026-09-05,,800,800,0,800,0,0,800,1,,,,
+trend,2026-09-06,,0,0,0,0,0,0,0,0,,,,
+trend,2026-09-07,,0,0,0,0,0,0,0,0,,,,
+trend,2026-09-08,,0,0,0,0,0,0,0,0,,,,
+trend,2026-09-09,,0,0,0,0,0,0,0,0,,,,
+trend,2026-09-10,,900,900,0,900,0,0,900,1,,,,
+trend,2026-09-11,,0,0,0,0,0,0,0,0,,,,
+trend,2026-09-12,,0,0,0,0,0,0,0,0,,,,
+trend,2026-09-13,,0,0,0,0,0,0,0,0,,,,
+trend,2026-09-14,,0,0,0,0,0,0,0,0,,,,
+trend,2026-09-15,,1450,1450,0,1450,0,1850,-400,1,,,,
+trend,2026-09-16,,0,0,0,0,0,650,-650,0,,,,
+trend,2026-09-17,,0,0,0,0,0,0,0,0,,,,
+trend,2026-09-18,,0,0,0,0,0,0,0,0,,,,
+trend,2026-09-19,,0,0,0,0,0,0,0,0,,,,
+trend,2026-09-20,,1700,1700,0,1700,0,1200,500,1,,,,
+trend,2026-09-21,,0,0,0,0,0,0,0,0,,,,
+trend,2026-09-22,,0,0,0,0,0,280,-280,0,,,,
+trend,2026-09-23,,0,0,0,0,0,0,0,0,,,,
+trend,2026-09-24,,0,0,0,0,0,0,0,0,,,,
+trend,2026-09-25,,800,800,0,800,0,0,800,1,,,,
+trend,2026-09-26,,0,0,0,0,0,0,0,0,,,,
+trend,2026-09-27,,0,0,0,0,0,0,0,0,,,,
+trend,2026-09-28,,0,0,0,0,0,0,0,0,,,,
+trend,2026-09-29,,0,0,0,0,0,0,0,0,,,,
+trend,2026-09-30,,900,900,0,900,0,0,900,1,,,,
+expense_category,,ingredients,,,,,,,,,,,,1850
+expense_category,,packaging,,,,,,,,,,,,650
+expense_category,,equipment,,,,,,,,,,,,1200
+expense_category,,miscellaneous,,,,,,,,,,,,280
+payment_method,,cash,,3050,0,3050,,,,,,,,
+payment_method,,gcash,,3500,0,3500,,,,,,,,
+package,,"Chocolate Moist Cake Package (with Free Puto Cheese)",,,,,,,,2,2,1800,0,1800
+package,,"Chocolate Deluxe Feast Bundle (with Free Leche Flan)",,,,,,,,1,1,1700,0,1700
+package,,"Vanilla Chiffon Cake Package (with Free Cupcakes)",,,,,,,,2,2,1600,0,1600
+package,,"Chiffon Celebration Bundle (with Free Kutsinta)",,,,,,,,1,1,1450,0,1450
+current_snapshot,2026-10-02T21:26:23+08:00,"Outstanding refunds across all dates",,,,,,,,,,,,0
+definition,,"Operational result = completed sales + retained cancellation deposits - valid expenses. Not accounting profit; COGS and other accounting costs are unavailable.",,,,,,,,,,,,

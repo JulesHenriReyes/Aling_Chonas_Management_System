@@ -19,7 +19,7 @@ window.stockOperation = (type, initialLines, lookupUrl) => ({
         this.lines.push({supply_id:supply.id, name:supply.supply_name, unit:supply.unit, current_quantity:supply.current_quantity, expected_version:supply.stock_version, quantity:''});
         this.results = []; this.searched = false; this.search = '';
         this.$nextTick(() => document.getElementById('stock-quantity-'+supply.id)?.focus());
-        this.$el.querySelector('form').dispatchEvent(new Event('input', {bubbles:true}));
+        this.$root.querySelector('form')?.dispatchEvent(new Event('input', {bubbles:true}));
     },
     delta(line) { const qty = Number(line.quantity || 0); return this.type === 'stocktake' ? qty - Number(line.current_quantity) : ['usage','waste'].includes(this.type) ? -qty : qty; },
     after(line) { return Number(line.current_quantity) + this.delta(line); },

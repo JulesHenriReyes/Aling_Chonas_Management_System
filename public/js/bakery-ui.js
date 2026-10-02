@@ -84,6 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const forms = [...document.querySelectorAll('form[data-safe-form]')];
     for (const form of forms) {
         let dirty = false, submitting = false;
+        const disabledBeforeSubmit = new Map();
         form.addEventListener('input', () => { dirty = true; });
         form.addEventListener('change', () => { dirty = true; });
         form.addEventListener('submit', event => {
@@ -93,10 +94,11 @@ document.addEventListener('DOMContentLoaded', () => {
             submitting = true; dirty = false;
             const status = form.querySelector('[data-submit-status]');
             if (status) status.textContent = 'Saving…';
+            form.querySelectorAll('button[type=submit], button:not([type])').forEach(button => disabledBeforeSubmit.set(button,button.disabled));
             setTimeout(() => form.querySelectorAll('button[type=submit], button:not([type])').forEach(button => button.disabled = true), 0);
         });
         window.addEventListener('beforeunload', event => { if (dirty && !submitting) { event.preventDefault(); event.returnValue = ''; } });
-        window.addEventListener('pageshow', () => { submitting = false; form.querySelectorAll('button[type=submit], button:not([type])').forEach(button => button.disabled = false); });
+        window.addEventListener('pageshow', () => { submitting = false; for (const [button,disabled] of disabledBeforeSubmit) button.disabled=disabled; disabledBeforeSubmit.clear(); });
     }
     const target = location.hash && document.getElementById(location.hash.slice(1));
     if (target?.tagName === 'DETAILS') target.open = true;

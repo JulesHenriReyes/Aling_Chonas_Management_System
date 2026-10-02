@@ -37,6 +37,7 @@ class PublicOrderController extends Controller
 
     public function customize(Request $request, Product $product, string $line, PublicPackageDraftService $editors)
     {
+        if ($request->session()->has('public_removed_lines.'.$line)) return redirect()->route('public.order.index')->with('success', 'This package line was removed. Select a package to add a new line.');
         abort_unless($product->is_active, 404);
         $product->load(['options' => fn ($q) => $q->where('is_active', true)->with('includedItems'), 'addOns' => fn ($q) => $q->where('is_active', true)]);
         abort_if($product->options->isEmpty(), 404);

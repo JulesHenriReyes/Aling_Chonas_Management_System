@@ -14,7 +14,7 @@
                     <template x-if="(product(item)?.options || []).length > 1">
                         <div><label :for="'option-'+item.uid">Layer option and fixed price</label>
                             <select :id="'option-'+item.uid" :name="'items['+index+'][package_option_id]'" x-model="item.package_option_id" required class="w-full">
-                                <option value="">Choose an option</option><template x-for="option in (product(item)?.options || [])" :key="option.id"><option :value="option.id" x-text="option.layers + ' layer(s) · ' + money(option.price)"></option></template>
+                                <option value="">Choose an option</option><template x-for="option in (product(item)?.options || [])" :key="option.id"><option :value="option.id" :selected="String(option.id) === String(item.package_option_id)" x-text="option.layers + ' layer(s) · ' + money(option.price)"></option></template>
                             </select></div>
                     </template>
                     <template x-if="(product(item)?.options || []).length === 1">

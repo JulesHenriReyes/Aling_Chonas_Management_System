@@ -93,6 +93,8 @@ Route::middleware(['auth', 'role:owner,assistant'])->group(function () {
     Route::get('/supplies/{supply}', [SupplyController::class, 'show'])->name('supplies.show');
     Route::get('/inventory/history', [SupplyController::class, 'history'])->name('inventory.history');
     Route::get('/inventory/create/{type}', [SupplyController::class, 'operationForm'])->name('inventory.create');
+    Route::get('/inventory/movements/{movement}', [SupplyController::class, 'legacyMovement'])->name('inventory.movement');
+    Route::post('/inventory/movements/{movement}/reverse', [SupplyController::class, 'reverseLegacy'])->name('inventory.movement.reverse');
     Route::post('/inventory', [SupplyController::class, 'postOperation'])->name('inventory.store');
     Route::get('/inventory/{operation}', [SupplyController::class, 'operation'])->name('inventory.show');
     Route::post('/inventory/{operation}/reverse', [SupplyController::class, 'reverse'])->name('inventory.reverse');

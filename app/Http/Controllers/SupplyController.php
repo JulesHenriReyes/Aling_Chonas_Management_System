@@ -92,6 +92,7 @@ class SupplyController extends Controller
     {
         Gate::authorize('manage-inventory');
         abort_unless(in_array($type, ['receipt', 'usage', 'waste', 'stocktake']), 404);
+        $type = $request->old('type', $type);
         $lines = $request->old('lines', []);
         $selected = Supply::whereIn('id', array_slice(array_column($lines, 'supply_id'), 0, 100))->get()->keyBy('id');
         $initialLines = array_map(function ($line) use ($selected) {
@@ -111,7 +112,7 @@ class SupplyController extends Controller
     public function operation(InventoryOperation $operation)
     {
         Gate::authorize('manage-inventory');
-        $operation->load(['user', 'movements.supply', 'reversal', 'original']);
+        $operation->load(['user', 'movements.supply', 'movements.user', 'movements.operation', 'reversal', 'original']);
         return view('admin.supplies.operation', compact('operation'));
     }
     public function reverse(Request $request, InventoryOperation $operation)
@@ -131,11 +132,25 @@ class SupplyController extends Controller
         if ($request->filled('supply_id')) $query->where('supply_id', $request->supply_id);
         return view('admin.supplies.history', ['movements' => $query->latest('id')->paginate(25)->withQueryString()]);
     }
+    public function legacyMovement(InventoryTransaction $movement)
+    {
+        Gate::authorize('manage-inventory');
+        if ($movement->inventory_operation_id) return redirect()->route('inventory.show', $movement->inventory_operation_id);
+        $movement->load(['supply', 'user', 'operation', 'reversal.operation']);
+        return view('admin.supplies.legacy-movement', compact('movement'));
+    }
+    public function reverseLegacy(Request $request, InventoryTransaction $movement)
+    {
+        Gate::authorize('manage-inventory');
+        $data = $request->validate(['submission_key' => ['required', 'uuid'], 'notes' => ['required', 'string', 'max:2000']]);
+        $reversal = $this->inventoryService->reverseLegacy($movement, $data['submission_key'], $data['notes'], $request->user());
+        return redirect()->route('inventory.show', $reversal)->with('success', 'Linked reversal posted. The original legacy movement is preserved.');
+    }
     public function recordTransaction(Request $request, Supply $supply)
     {
         Gate::authorize('manage-inventory');
-        $data = $request->validate(['transaction_type' => ['required', 'in:stock_in,stock_out,adjustment'], 'quantity' => ['required', 'numeric'], 'notes' => ['required_if:transaction_type,adjustment', 'nullable', 'string', 'max:2000']]);
-        $this->inventoryService->recordTransaction($supply, $data['transaction_type'], (float) $data['quantity'], $request->user(), $data['notes'] ?? null);
+        $data = $request->validate(['submission_key' => ['nullable', 'uuid'], 'transaction_type' => ['required', 'in:stock_in,stock_out,adjustment'], 'quantity' => ['required', 'numeric'], 'notes' => ['required_if:transaction_type,adjustment', 'nullable', 'string', 'max:2000']]);
+        $this->inventoryService->recordTransaction($supply, $data['transaction_type'], (float) $data['quantity'], $request->user(), $data['notes'] ?? null, null, $data['submission_key'] ?? null);
         return back()->with('success', 'Movement recorded.');
     }
 }

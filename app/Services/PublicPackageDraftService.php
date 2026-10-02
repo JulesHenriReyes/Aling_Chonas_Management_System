@@ -15,6 +15,9 @@ class PublicPackageDraftService
     {
         $request->validate(['line' => ['sometimes', 'uuid']]);
         abort_unless(Str::isUuid($key), 404);
+        if ($request->session()->has('public_removed_lines.'.$key)) {
+            throw ValidationException::withMessages(['items' => 'This package line was removed. Select a package to add a new line.']);
+        }
         $draft = $request->session()->get('public_order_draft', []);
         $saved = collect($draft['items'] ?? [])->firstWhere('draft_key', $key);
         $editor = $request->session()->get('public_package_editors.'.$key);
@@ -60,7 +63,11 @@ class PublicPackageDraftService
             throw $exception;
         }
         $editor['staged_images'] = $saved;
-        // Removed files may still belong to the committed line; cleanup on save/remove/finish.
+        // Keep files still referenced by a saved line until the edit is committed.
+        $committedPaths = collect($request->session()->get('public_order_draft.items', []))->flatMap(fn ($line) => $line['staged_images'] ?? [])->pluck('staged_path');
+        foreach ($removed as $path) {
+            if (collect($request->session()->get('public_package_editors.'.$key.'.staged_images', []))->contains('staged_path', $path) && !$committedPaths->contains($path)) Storage::disk('local')->delete($path);
+        }
         $request->session()->put('public_package_editors.'.$key, $editor);
         return $editor;
     }
@@ -91,6 +98,8 @@ class PublicPackageDraftService
 
     public function remove(Request $request, string $key): void
     {
+        abort_unless(Str::isUuid($key), 404);
+        $request->session()->put('public_removed_lines.'.$key, true);
         $draft = $request->session()->get('public_order_draft');
         if (!$draft) return;
         $line = collect($draft['items'])->firstWhere('draft_key', $key);

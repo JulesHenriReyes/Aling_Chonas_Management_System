@@ -33,6 +33,7 @@ class InventoryService
             'delivery_reference' => ['nullable', 'string', 'max:255'],
             'notes' => ['required_if:type,waste,stocktake,adjustment,reversal', 'nullable', 'string', 'max:2000'],
             'reversal_of_id' => ['nullable', 'integer'],
+            'legacy_reversal_of_id' => ['nullable', 'integer'],
             'lines' => ['required', 'array', 'min:1', 'max:100'],
             'lines.*.supply_id' => ['required', 'integer', 'distinct', 'exists:supplies,id'],
             'lines.*.quantity' => ['required', 'numeric', 'decimal:0,2', 'between:-99999999.99,99999999.99'],
@@ -43,11 +44,25 @@ class InventoryService
         if ($existing) return $this->replay($existing, $hash);
         try {
             return DB::transaction(function () use ($data, $user, $hash) {
+                // SQLite has no row locks; PHP <8.4 starts a deferred transaction even
+                // with IMMEDIATE configured. Acquire its writer lock before any read.
+                if (DB::connection()->getDriverName() === 'sqlite') {
+                    DB::table('supplies')->whereIn('id', array_column($data['lines'], 'supply_id'))
+                        ->update(['stock_version' => DB::raw('stock_version')]);
+                }
                 $original = null;
+                $legacy = null;
                 if ($data['type'] === 'reversal') {
-                    $original = InventoryOperation::whereKey($data['reversal_of_id'] ?? 0)->lockForUpdate()->firstOrFail();
-                    if ($original->reversal_of_id || $original->reversal()->exists()) {
-                        throw ValidationException::withMessages(['notes' => 'This operation has already been reversed or is itself a reversal.']);
+                    if (!empty($data['legacy_reversal_of_id'])) {
+                        $legacy = InventoryTransaction::whereKey($data['legacy_reversal_of_id'])->lockForUpdate()->firstOrFail();
+                        if ($legacy->inventory_operation_id || $legacy->reversal_of_id || $legacy->reversal()->exists()) {
+                            throw ValidationException::withMessages(['notes' => 'This movement is grouped or already reversed. Open its operation history.']);
+                        }
+                    } else {
+                        $original = InventoryOperation::whereKey($data['reversal_of_id'] ?? 0)->lockForUpdate()->firstOrFail();
+                        if ($original->type === 'reversal' || $original->reversal()->exists()) {
+                            throw ValidationException::withMessages(['notes' => 'This operation has already been reversed or is itself a reversal.']);
+                        }
                     }
                 }
                 // Stable lock order prevents multi-item batches deadlocking each other.
@@ -58,13 +73,13 @@ class InventoryService
                     'supplier' => $data['supplier'] ?? null, 'delivery_reference' => $data['delivery_reference'] ?? null,
                     'notes' => $data['notes'] ?? null, 'reversal_of_id' => $original?->id,
                 ]);
-                $originalLines = $original?->movements()->get()->keyBy('supply_id');
-                if ($original && $originalLines->count() !== count($data['lines'])) {
+                $originalLines = $legacy ? collect([$legacy])->keyBy('supply_id') : $original?->movements()->get()->keyBy('supply_id');
+                if ($originalLines && $originalLines->count() !== count($data['lines'])) {
                     throw ValidationException::withMessages(['lines' => 'Reverse all lines in the original operation together.']);
                 }
                 foreach ($data['lines'] as $index => $line) {
                     $supply = $supplies->get($line['supply_id']);
-                    if (!$supply || (!$supply->is_active && !$original)) {
+                    if (!$supply || (!$supply->is_active && !$original && !$legacy)) {
                         throw ValidationException::withMessages(["lines.$index.supply_id" => 'Choose an active supply.']);
                     }
                     $this->establishBaseline($supply, 'legacy_reconciliation');
@@ -82,7 +97,7 @@ class InventoryService
                         'stocktake' => $quantity - $before, default => $quantity,
                     };
                     $reversed = $originalLines?->get($supply->id);
-                    if ($original) {
+                    if ($original || $legacy) {
                         if (!$reversed) throw ValidationException::withMessages(['lines' => 'Original movement is missing.']);
                         $delta = (int) round((float) $reversed->quantity * ($reversed->transaction_type === 'stock_out' ? 100 : -100));
                     }
@@ -128,11 +143,20 @@ class InventoryService
         ], $user);
     }
 
-    public function recordTransaction(Supply $supply, string $type, float $quantity, User $user, ?string $notes = null, ?Carbon $date = null): InventoryTransaction
+    public function reverseLegacy(InventoryTransaction $original, string $key, string $reason, User $user): InventoryOperation
+    {
+        return $this->post([
+            'submission_key' => $key, 'type' => 'reversal', 'operation_date' => now()->toDateString(),
+            'notes' => $reason, 'legacy_reversal_of_id' => $original->id,
+            'lines' => [['supply_id' => $original->supply_id, 'quantity' => 0]],
+        ], $user);
+    }
+
+    public function recordTransaction(Supply $supply, string $type, float $quantity, User $user, ?string $notes = null, ?Carbon $date = null, ?string $key = null): InventoryTransaction
     {
         $type = match ($type) { 'stock_in' => 'receipt', 'stock_out' => 'usage', 'adjustment' => 'adjustment', default => '' };
         return $this->post([
-            'submission_key' => (string) Str::uuid(), 'type' => $type, 'operation_date' => ($date ?? now())->toDateString(),
+            'submission_key' => $key ?? (string) Str::uuid(), 'type' => $type, 'operation_date' => ($date ?? now())->toDateString(),
             'notes' => $notes, 'lines' => [['supply_id' => $supply->id, 'quantity' => $quantity]],
         ], $user)->movements()->firstOrFail();
     }
