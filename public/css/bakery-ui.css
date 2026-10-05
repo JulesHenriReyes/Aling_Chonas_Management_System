@@ -236,9 +236,9 @@ header .min-w-0 { overflow-wrap: anywhere; }
 .ui-button.primary { background:var(--bakery-ink); border-color:var(--bakery-ink); color:white; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
 .ui-button.primary:hover { background:#2c1810; filter: brightness(1.1); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); transform: translateY(-1px); }
 .ui-button.primary:active { transform: translateY(0); box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); }
-.ui-button.quiet, .ui-button.subtle { background:transparent; border-color:transparent; text-decoration:underline; text-underline-offset:3px; box-shadow:none !important; transform:none !important; }
-.ui-button.quiet:hover, .ui-button.subtle:hover { background:#f5f1eb; box-shadow:none !important; transform:none !important; }
-.ui-button.quiet:active, .ui-button.subtle:active { box-shadow:none !important; transform:none !important; }
+.ui-button.quiet, .ui-button.subtle { background:transparent !important; border:none !important; border-color:transparent !important; text-decoration:underline; text-underline-offset:3px; box-shadow:none !important; transform:none !important; padding:0 !important; min-height:auto !important; border-radius:0 !important; }
+.ui-button.quiet:hover, .ui-button.subtle:hover, .ui-button.quiet:focus, .ui-button.subtle:focus { background:transparent !important; border:none !important; border-color:transparent !important; box-shadow:none !important; transform:none !important; color:#2c1810; text-decoration:underline; }
+.ui-button.quiet:active, .ui-button.subtle:active { background:transparent !important; border:none !important; border-color:transparent !important; box-shadow:none !important; transform:none !important; }
 .ui-button.danger { background:#991b1b; border-color:#991b1b; color:#fff; }
 .ui-button:disabled { opacity:.55; cursor:not-allowed; }
 .workspace-filters { display:flex; flex-wrap:wrap; gap:.75rem; align-items:end; padding:1rem; background:#fff; border:1px solid var(--bakery-line); border-radius:.6rem; }

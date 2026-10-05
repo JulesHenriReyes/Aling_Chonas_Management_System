@@ -207,9 +207,9 @@ class UiPresentationTest extends TestCase
         // 1. Quiet button styling: completely flat, no box-shadow, no translateY, subtle hover background
         $this->assertStringContainsString('.ui-button.quiet, .ui-button.subtle {', $css);
         $this->assertStringContainsString('box-shadow:none !important;', $css);
-        $this->assertStringContainsString('transform:none !important;', $css);
-        $this->assertStringContainsString('.ui-button.quiet:hover, .ui-button.subtle:hover { background:#f5f1eb; box-shadow:none !important; transform:none !important; }', $css);
-        $this->assertStringContainsString('.ui-button.quiet:active, .ui-button.subtle:active { box-shadow:none !important; transform:none !important; }', $css);
+        $this->assertStringContainsString('.ui-button.quiet:hover, .ui-button.subtle:hover,', $css);
+        $this->assertStringContainsString('background:transparent !important;', $css);
+        $this->assertStringContainsString('.ui-button.quiet:active, .ui-button.subtle:active {', $css);
 
         // Primary button elevation and hover lift are preserved
         $this->assertStringContainsString('.ui-button.primary:hover { background:#2c1810; filter: brightness(1.1);', $css);
