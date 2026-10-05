@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
 class Order extends Model
 {
@@ -31,7 +32,15 @@ class Order extends Model
         'cancellation_reason',
     ];
 
-    protected $hidden = ['private_token'];
+    protected $hidden = ['private_token', 'receipt_key'];
+
+    protected static function booted(): void
+    {
+        static::creating(function (Order $order) {
+            // A reset can recycle numeric IDs; receipt ownership must not recycle.
+            $order->receipt_key = (string) Str::uuid();
+        });
+    }
 
     protected function casts(): array
     {

@@ -92,10 +92,11 @@ class StockConcurrencyAndMigrationTest extends TestCase
         DB::table('expenses')->insert(['user_id'=>$actor->id,'description'=>'Legacy invoice','amount'=>250,'category'=>'ingredients','expense_date'=>'2026-09-01','created_at'=>now(),'updated_at'=>now()]);
         $customer=Customer::create(['first_name'=>'Legacy','last_name'=>'Buyer','phone_number'=>'09170000002']);
         $product=Product::create(['product_name'=>'Legacy celebration cake','description'=>'Saved catalog record','price'=>1250,'is_active'=>true]);
-        $order=Order::create(['order_number'=>'LEGACY-SAVED-ORDER','customer_id'=>$customer->id,'user_id'=>$actor->id,'status'=>'completed','completed_at'=>'2026-09-20 08:00:00','pickup_date'=>'2026-09-20','pickup_time'=>'16:00','total_amount'=>1250]);
+        // Populate the pre-migration schema without current-model creation hooks.
+        $order=Order::withoutEvents(fn () => Order::create(['order_number'=>'LEGACY-SAVED-ORDER','customer_id'=>$customer->id,'user_id'=>$actor->id,'status'=>'completed','completed_at'=>'2026-09-20 08:00:00','pickup_date'=>'2026-09-20','pickup_time'=>'16:00','total_amount'=>1250]));
         $order->orderDetails()->create(['product_id'=>$product->id,'product_name_snapshot'=>'Original saved cake name','quantity'=>1,'unit_price'=>1250,'layers'=>1]);
         Payment::create(['order_id'=>$order->id,'user_id'=>$actor->id,'amount'=>1250,'payment_type'=>'final_payment','payment_method'=>'cash','payment_date'=>'2026-09-20 08:00:00']);
-        $cancelled=Order::create(['order_number'=>'LEGACY-REFUND','customer_id'=>$customer->id,'user_id'=>$actor->id,'status'=>'cancelled','cancelled_at'=>'2026-09-21 08:00:00','cancellation_kind'=>'bakery_failure','pickup_date'=>'2026-09-21','pickup_time'=>'16:00']);
+        $cancelled=Order::withoutEvents(fn () => Order::create(['order_number'=>'LEGACY-REFUND','customer_id'=>$customer->id,'user_id'=>$actor->id,'status'=>'cancelled','cancelled_at'=>'2026-09-21 08:00:00','cancellation_kind'=>'bakery_failure','pickup_date'=>'2026-09-21','pickup_time'=>'16:00']));
         Refund::create(['order_id'=>$cancelled->id,'requested_by'=>$actor->id,'amount'=>500,'reason'=>'Legacy bakery-failure refund','status'=>'pending']);
         $snapshots=[];
         foreach(['users','customers','products','orders','order_details','payments','refunds','supplies','inventory_transactions','expenses'] as $table) $snapshots[$table]=DB::table($table)->get()->map(fn($row)=>(array)$row)->all();

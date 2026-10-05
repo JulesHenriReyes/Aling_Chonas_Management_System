@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="C:\Users\User\Desktop\IT12_Project\phpunit.xml" tests="3" assertions="43" errors="0" failures="0" skipped="0" time="6.419094">
+    <testsuite name="Feature" tests="3" assertions="43" errors="0" failures="0" skipped="0" time="6.419094">
+      <testsuite name="Tests\Feature\ReceiptOrderIdentityTest" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ReceiptOrderIdentityTest.php" tests="3" assertions="43" errors="0" failures="0" skipped="0" time="6.419094">
+        <testcase name="test_repeat_customer_does_not_inherit_receipts_and_new_uploads_work" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ReceiptOrderIdentityTest.php" line="64" class="Tests\Feature\ReceiptOrderIdentityTest" classname="Tests.Feature.ReceiptOrderIdentityTest" assertions="9" time="4.692347"/>
+        <testcase name="test_recycled_id_cannot_expose_or_verify_an_old_receipt_even_in_the_same_second" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ReceiptOrderIdentityTest.php" line="81" class="Tests\Feature\ReceiptOrderIdentityTest" classname="Tests.Feature.ReceiptOrderIdentityTest" assertions="23" time="1.222677"/>
+        <testcase name="test_migration_preserves_valid_history_and_leaves_stale_or_unknown_history_unbound" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ReceiptOrderIdentityTest.php" line="125" class="Tests\Feature\ReceiptOrderIdentityTest" classname="Tests.Feature.ReceiptOrderIdentityTest" assertions="11" time="0.504070"/>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>

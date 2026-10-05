@@ -49,7 +49,7 @@
     </header>
 
     {{-- Main Content --}}
-    <main id="main-content" tabindex="-1" class="flex-grow max-w-7xl 2xl:max-w-[1600px] w-full mx-auto px-4 py-8 sm:px-6 lg:px-8 2xl:px-12">
+    <main id="main-content" tabindex="-1" class="flex-grow max-w-7xl 2xl:max-w-[1600px] w-full mx-auto px-4 py-6 sm:px-6 lg:px-8 2xl:px-12">
         @if (session('info'))
             <div role="alert" class="mb-6 px-4 py-3 rounded-lg bg-cream-100 border border-blue-200 text-blue-800 text-sm flex items-center gap-2">
                 <x-icon path="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" class="w-4 h-4 flex-shrink-0 text-blue-600" />
@@ -72,7 +72,7 @@
     </main>
 
     {{-- Footer --}}
-    <footer class="bg-cocoa-700 text-cocoa-100 py-8 px-4 sm:px-6 lg:px-8 2xl:px-12 mt-12">
+    <footer class="bg-cocoa-700 text-cocoa-100 py-8 px-4 sm:px-6 lg:px-8 2xl:px-12 mt-6">
         <div class="max-w-[1216px] 2xl:max-w-[1504px] w-full mx-auto">
             <div class="flex flex-wrap items-center justify-between gap-6 text-xs">
                 <div class="flex items-center gap-3 min-w-0">

@@ -197,4 +197,83 @@ class UiPresentationTest extends TestCase
         $suppliesView = file_get_contents(resource_path('views/admin/supplies/index.blade.php'));
         $this->assertStringContainsString('<x-icon name="plus" /> Receive stock', $suppliesView);
     }
+
+    public function test_public_storefront_layout_and_quiet_button_presentation(): void
+    {
+        $css = file_get_contents(public_path('css/bakery-ui.css'));
+        $layout = file_get_contents(resource_path('views/public/layout.blade.php'));
+        $payment = file_get_contents(resource_path('views/public/payment.blade.php'));
+
+        // 1. Quiet button styling: completely flat, no box-shadow, no translateY, subtle hover background
+        $this->assertStringContainsString('.ui-button.quiet, .ui-button.subtle {', $css);
+        $this->assertStringContainsString('box-shadow:none !important;', $css);
+        $this->assertStringContainsString('transform:none !important;', $css);
+        $this->assertStringContainsString('.ui-button.quiet:hover, .ui-button.subtle:hover { background:#f5f1eb; box-shadow:none !important; transform:none !important; }', $css);
+        $this->assertStringContainsString('.ui-button.quiet:active, .ui-button.subtle:active { box-shadow:none !important; transform:none !important; }', $css);
+
+        // Primary button elevation and hover lift are preserved
+        $this->assertStringContainsString('.ui-button.primary:hover { background:#2c1810; filter: brightness(1.1);', $css);
+        $this->assertStringContainsString('.ui-button.primary:active { transform: translateY(0);', $css);
+
+        // 2. Layout tightening in layout.blade.php
+        $this->assertStringContainsString('id="main-content" tabindex="-1" class="flex-grow max-w-7xl 2xl:max-w-[1600px] w-full mx-auto px-4 py-6 sm:px-6 lg:px-8 2xl:px-12"', $layout);
+        $this->assertStringContainsString('class="bg-cocoa-700 text-cocoa-100 py-8 px-4 sm:px-6 lg:px-8 2xl:px-12 mt-6"', $layout);
+
+        // Layout tightening in bakery-ui.css
+        $this->assertStringContainsString('body.public-store main#main-content { padding-top: 1.5rem; padding-bottom: 1.5rem; }', $css);
+        $this->assertStringContainsString('.public-store footer { margin-top: 1.5rem;', $css);
+
+        // 3. Order status page spacing and sticky sidebar
+        $this->assertStringContainsString('class="public-order-status max-w-5xl mx-auto space-y-4"', $payment);
+        $this->assertStringContainsString('class="lg:col-span-5 sidebar-column space-y-4 lg:sticky lg:top-20"', $payment);
+        $this->assertStringContainsString('.public-order-status .sidebar-column,', $css);
+        $this->assertStringContainsString('.public-order-status .lg\:col-span-5 {', $css);
+        $this->assertStringContainsString('position: sticky;', $css);
+        $this->assertStringContainsString('top: 5rem;', $css);
+        $this->assertStringContainsString('align-self: start;', $css);
+
+        // 4. Live HTTP rendering verification of storefront index, cart actions, and order status layout
+        $product = $this->catalogProduct(['product_name' => 'Celebration Cake', 'price' => 1200, 'is_active' => true]);
+        $storeResponse = $this->get('/');
+        $storeResponse->assertOk()
+            ->assertSee('id="main-content" tabindex="-1" class="flex-grow max-w-7xl 2xl:max-w-[1600px] w-full mx-auto px-4 py-6 sm:px-6 lg:px-8 2xl:px-12"', false)
+            ->assertSee('class="bg-cocoa-700 text-cocoa-100 py-8 px-4 sm:px-6 lg:px-8 2xl:px-12 mt-6"', false)
+            ->assertSee('Select package');
+
+        // Add package to draft and verify quiet button ("Remove") and primary button ("Continue") in cart
+        $this->post(route('public.order.continue'), [
+            'items' => [[
+                'product_id' => $product->id,
+                'package_option_id' => $product->options()->first()->id,
+                'quantity' => 1,
+            ]],
+        ])->assertRedirect(route('public.order.details'));
+
+        $cartResponse = $this->get('/');
+        $cartResponse->assertOk()
+            ->assertSee('<button class="ui-button quiet">Remove</button>', false)
+            ->assertSee('Add another package')
+            ->assertSee('Continue to contact and pickup');
+
+        // Create order and verify order status page HTTP rendering
+        $customer = Customer::create(['first_name' => 'Elena', 'last_name' => 'Reyes', 'phone_number' => '09171234567']);
+        $order = app(OrderService::class)->createPublicOrder([
+            'customer_id' => $customer->id,
+            'pickup_date' => now()->addDays(2)->toDateString(),
+            'pickup_time' => '15:00',
+            'items' => [[
+                'product_id' => $product->id,
+                'package_option_id' => $product->options()->first()->id,
+                'quantity' => 1,
+            ]],
+        ]);
+
+        $paymentResponse = $this->get(route('public.order.payment', $order->private_token));
+        $paymentResponse->assertOk()
+            ->assertSee('public-order-status max-w-5xl mx-auto space-y-4', false)
+            ->assertSee('lg:col-span-7 space-y-4', false)
+            ->assertSee('lg:col-span-5 sidebar-column space-y-4 lg:sticky lg:top-20', false)
+            ->assertSee('mt-6', false);
+    }
 }
+

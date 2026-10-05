@@ -1,0 +1,5 @@
+
+   INFO  Running migrations.  
+
+  2026_10_05_000002_bind_receipts_to_order_identity ..................................................... 58.06ms DONE
+

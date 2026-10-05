@@ -1,0 +1,51 @@
+{
+    "database": "aling_chona_db",
+    "existing_rows_preserved": {
+        "add_on_product": true,
+        "add_ons": true,
+        "cache": true,
+        "cache_locks": true,
+        "customers": true,
+        "expense_audits": true,
+        "expenses": true,
+        "failed_jobs": true,
+        "gcash_references": true,
+        "inventory_baselines": true,
+        "inventory_operations": true,
+        "inventory_transactions": true,
+        "job_batches": true,
+        "jobs": true,
+        "migrations": true,
+        "order_add_ons": true,
+        "order_details": true,
+        "order_images": true,
+        "orders": true,
+        "package_option_inclusions": true,
+        "package_options": true,
+        "password_reset_tokens": true,
+        "payment_proofs": true,
+        "payment_settings": true,
+        "payments": true,
+        "products": true,
+        "refunds": true,
+        "sessions": true,
+        "supplies": true,
+        "users": true
+    },
+    "receipt_records_preserved": 7,
+    "unbound_receipts": 7,
+    "active_receipts": 0,
+    "receipt_files_preserved": true,
+    "staff_pages": [
+        {
+            "order_id": 2,
+            "visible_receipts": 0,
+            "receipt_image_in_staff_html": false
+        },
+        {
+            "order_id": 3,
+            "visible_receipts": 0,
+            "receipt_image_in_staff_html": false
+        }
+    ]
+}

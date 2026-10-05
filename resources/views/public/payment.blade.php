@@ -2,7 +2,7 @@
 @section('title', 'Your order · Aling Chona')
 @section('content')
 @php($proof = $order->paymentProofs->first())
-<div class="public-order-status max-w-5xl mx-auto space-y-6">
+<div class="public-order-status max-w-5xl mx-auto space-y-4">
     {{-- Progress Navigation --}}
     <nav aria-label="Progress" class="mb-5">
         <div class="flex items-center text-xs tracking-wide">
@@ -108,7 +108,7 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {{-- Left Column: Order Items & Pricing Summary + Bookmark Link --}}
-        <div class="lg:col-span-7 space-y-6">
+        <div class="lg:col-span-7 space-y-4">
             {{-- Order Items & Total Summary --}}
             <section class="checkout-card p-6 space-y-4" aria-labelledby="fixed-total">
                 <div class="flex items-center justify-between border-b border-cocoa-100 pb-3">
@@ -182,7 +182,7 @@
         </div>
 
         {{-- Right Column: Payment Actions (or Order Link when no payment needed) --}}
-        <div class="lg:col-span-5 space-y-6">
+        <div class="lg:col-span-5 sidebar-column space-y-4 lg:sticky lg:top-20">
             @if ($needsPayment)
                 {{-- Unified 2-Step Deposit Payment Card --}}
                 <div class="checkout-card p-6 space-y-5">
