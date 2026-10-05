@@ -1,0 +1,1688 @@
+[
+  {
+    "suite": "public",
+    "screen": "catalog",
+    "viewport": 360,
+    "status": "pass",
+    "screenshot": "public-catalog-360px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/",
+      "title": "Choose a cake package · Aling Chona",
+      "docScrollWidth": 360,
+      "docClientWidth": 360,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [],
+      "catalogCols": "158.797px 158.812px",
+      "smallTargetsCount": 0,
+      "smallTargetsSample": [],
+      "hasSkipLink": true,
+      "h1": "Find your perfect package"
+    }
+  },
+  {
+    "suite": "public",
+    "screen": "catalog",
+    "viewport": 390,
+    "status": "pass",
+    "screenshot": "public-catalog-390px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/",
+      "title": "Choose a cake package · Aling Chona",
+      "docScrollWidth": 390,
+      "docClientWidth": 390,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [],
+      "catalogCols": "173.797px 173.812px",
+      "smallTargetsCount": 0,
+      "smallTargetsSample": [],
+      "hasSkipLink": true,
+      "h1": "Find your perfect package"
+    }
+  },
+  {
+    "suite": "public",
+    "screen": "catalog",
+    "viewport": 430,
+    "status": "pass",
+    "screenshot": "public-catalog-430px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/",
+      "title": "Choose a cake package · Aling Chona",
+      "docScrollWidth": 430,
+      "docClientWidth": 430,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [],
+      "catalogCols": "193.797px 193.812px",
+      "smallTargetsCount": 0,
+      "smallTargetsSample": [],
+      "hasSkipLink": true,
+      "h1": "Find your perfect package"
+    }
+  },
+  {
+    "suite": "public",
+    "screen": "catalog",
+    "viewport": 768,
+    "status": "pass",
+    "screenshot": "public-catalog-768px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/",
+      "title": "Choose a cake package · Aling Chona",
+      "docScrollWidth": 768,
+      "docClientWidth": 768,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [],
+      "catalogCols": "229.328px 229.328px 229.328px",
+      "smallTargetsCount": 0,
+      "smallTargetsSample": [],
+      "hasSkipLink": true,
+      "h1": "Find your perfect package"
+    }
+  },
+  {
+    "suite": "public",
+    "screen": "catalog",
+    "viewport": 1024,
+    "status": "pass",
+    "screenshot": "public-catalog-1024px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/",
+      "title": "Choose a cake package · Aling Chona",
+      "docScrollWidth": 1009,
+      "docClientWidth": 1009,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [],
+      "catalogCols": "304.328px 304.328px 304.344px",
+      "smallTargetsCount": 0,
+      "smallTargetsSample": [],
+      "hasSkipLink": true,
+      "h1": "Find your perfect package"
+    }
+  },
+  {
+    "suite": "public",
+    "screen": "catalog",
+    "viewport": 1440,
+    "status": "pass",
+    "screenshot": "public-catalog-1440px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/",
+      "title": "Choose a cake package · Aling Chona",
+      "docScrollWidth": 1425,
+      "docClientWidth": 1425,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [],
+      "catalogCols": "292px 292px 292px 292px",
+      "smallTargetsCount": 0,
+      "smallTargetsSample": [],
+      "hasSkipLink": true,
+      "h1": "Find your perfect package"
+    }
+  },
+  {
+    "suite": "public",
+    "screen": "catalog_enlarged_text",
+    "viewport": 360,
+    "status": "pass",
+    "screenshot": "public-catalog-360px-enlarged-text.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/",
+      "title": "Choose a cake package · Aling Chona",
+      "docScrollWidth": 360,
+      "docClientWidth": 360,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [],
+      "catalogCols": "296px",
+      "smallTargetsCount": 0,
+      "smallTargetsSample": [],
+      "hasSkipLink": true,
+      "h1": "Find your perfect package"
+    }
+  },
+  {
+    "suite": "public",
+    "screen": "customize",
+    "viewport": 390,
+    "status": "pass",
+    "screenshot": "public-customize-390px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/packages/1/customize/qa-line-1",
+      "title": "Not Found",
+      "docScrollWidth": 390,
+      "docClientWidth": 390,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [],
+      "catalogCols": null,
+      "smallTargetsCount": 0,
+      "smallTargetsSample": [],
+      "hasSkipLink": false,
+      "h1": "404"
+    }
+  },
+  {
+    "suite": "public",
+    "screen": "customize",
+    "viewport": 1440,
+    "status": "pass",
+    "screenshot": "public-customize-1440px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/packages/1/customize/qa-line-1",
+      "title": "Not Found",
+      "docScrollWidth": 1440,
+      "docClientWidth": 1440,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [],
+      "catalogCols": null,
+      "smallTargetsCount": 0,
+      "smallTargetsSample": [],
+      "hasSkipLink": false,
+      "h1": "404"
+    }
+  },
+  {
+    "suite": "public",
+    "screen": "order_details",
+    "viewport": 390,
+    "status": "pass",
+    "screenshot": "public-details-390px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/",
+      "title": "Choose a cake package · Aling Chona",
+      "docScrollWidth": 390,
+      "docClientWidth": 390,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [],
+      "catalogCols": "173.797px 173.812px",
+      "smallTargetsCount": 0,
+      "smallTargetsSample": [],
+      "hasSkipLink": true,
+      "h1": "Find your perfect package"
+    }
+  },
+  {
+    "suite": "public",
+    "screen": "order_details",
+    "viewport": 1440,
+    "status": "pass",
+    "screenshot": "public-details-1440px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/",
+      "title": "Choose a cake package · Aling Chona",
+      "docScrollWidth": 1425,
+      "docClientWidth": 1425,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [],
+      "catalogCols": "292px 292px 292px 292px",
+      "smallTargetsCount": 0,
+      "smallTargetsSample": [],
+      "hasSkipLink": true,
+      "h1": "Find your perfect package"
+    }
+  },
+  {
+    "suite": "public",
+    "screen": "payment_pending",
+    "viewport": 390,
+    "status": "pass",
+    "screenshot": "public-payment-pending-390px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/order/payment/3e8d5c9cbf805ead8efe320e18647bea4601046368a675d7459361b68dab0327",
+      "title": "Your order · Aling Chona",
+      "docScrollWidth": 390,
+      "docClientWidth": 390,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [],
+      "catalogCols": null,
+      "smallTargetsCount": 0,
+      "smallTargetsSample": [],
+      "hasSkipLink": true,
+      "h1": "Your order ORD-20260928-53B4D1BB90"
+    }
+  },
+  {
+    "suite": "public",
+    "screen": "payment_pending",
+    "viewport": 1440,
+    "status": "pass",
+    "screenshot": "public-payment-pending-1440px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/order/payment/3e8d5c9cbf805ead8efe320e18647bea4601046368a675d7459361b68dab0327",
+      "title": "Your order · Aling Chona",
+      "docScrollWidth": 1425,
+      "docClientWidth": 1425,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [],
+      "catalogCols": null,
+      "smallTargetsCount": 0,
+      "smallTargetsSample": [],
+      "hasSkipLink": true,
+      "h1": "Your order ORD-20260928-53B4D1BB90"
+    }
+  },
+  {
+    "suite": "public",
+    "screen": "login",
+    "viewport": 390,
+    "status": "pass",
+    "screenshot": "public-login-390px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/login",
+      "title": "Staff Login - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 390,
+      "docClientWidth": 390,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [],
+      "catalogCols": null,
+      "smallTargetsCount": 0,
+      "smallTargetsSample": [],
+      "hasSkipLink": true,
+      "h1": "Aling Chona"
+    }
+  },
+  {
+    "suite": "public",
+    "screen": "login",
+    "viewport": 1440,
+    "status": "pass",
+    "screenshot": "public-login-1440px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/login",
+      "title": "Staff Login - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 1440,
+      "docClientWidth": 1440,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [],
+      "catalogCols": null,
+      "smallTargetsCount": 0,
+      "smallTargetsSample": [],
+      "hasSkipLink": true,
+      "h1": "Aling Chona"
+    }
+  },
+  {
+    "suite": "staff_owner",
+    "screen": "dashboard",
+    "viewport": 360,
+    "status": "pass",
+    "screenshot": "staff-owner-dashboard-360px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/dashboard",
+      "title": "Dashboard - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 360,
+      "docClientWidth": 360,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [
+        {
+          "className": "table-scroll",
+          "scrollWidth": 680,
+          "clientWidth": 326,
+          "isScrollable": true
+        }
+      ],
+      "catalogCols": null,
+      "smallTargetsCount": 1,
+      "smallTargetsSample": [
+        {
+          "text": "",
+          "w": 36,
+          "h": 44
+        }
+      ],
+      "hasSkipLink": true,
+      "h1": "Welcome back, Chona"
+    }
+  },
+  {
+    "suite": "staff_owner",
+    "screen": "dashboard",
+    "viewport": 390,
+    "status": "pass",
+    "screenshot": "staff-owner-dashboard-390px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/dashboard",
+      "title": "Dashboard - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 390,
+      "docClientWidth": 390,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [
+        {
+          "className": "table-scroll",
+          "scrollWidth": 680,
+          "clientWidth": 356,
+          "isScrollable": true
+        }
+      ],
+      "catalogCols": null,
+      "smallTargetsCount": 1,
+      "smallTargetsSample": [
+        {
+          "text": "",
+          "w": 36,
+          "h": 44
+        }
+      ],
+      "hasSkipLink": true,
+      "h1": "Welcome back, Chona"
+    }
+  },
+  {
+    "suite": "staff_owner",
+    "screen": "dashboard",
+    "viewport": 430,
+    "status": "pass",
+    "screenshot": "staff-owner-dashboard-430px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/dashboard",
+      "title": "Dashboard - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 430,
+      "docClientWidth": 430,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [
+        {
+          "className": "table-scroll",
+          "scrollWidth": 680,
+          "clientWidth": 396,
+          "isScrollable": true
+        }
+      ],
+      "catalogCols": null,
+      "smallTargetsCount": 1,
+      "smallTargetsSample": [
+        {
+          "text": "",
+          "w": 36,
+          "h": 44
+        }
+      ],
+      "hasSkipLink": true,
+      "h1": "Welcome back, Chona"
+    }
+  },
+  {
+    "suite": "staff_owner",
+    "screen": "dashboard",
+    "viewport": 768,
+    "status": "pass",
+    "screenshot": "staff-owner-dashboard-768px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/dashboard",
+      "title": "Dashboard - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 768,
+      "docClientWidth": 768,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [
+        {
+          "className": "table-scroll",
+          "scrollWidth": 718,
+          "clientWidth": 718,
+          "isScrollable": false
+        }
+      ],
+      "catalogCols": null,
+      "smallTargetsCount": 1,
+      "smallTargetsSample": [
+        {
+          "text": "",
+          "w": 36,
+          "h": 44
+        }
+      ],
+      "hasSkipLink": true,
+      "h1": "Welcome back, Chona"
+    }
+  },
+  {
+    "suite": "staff_owner",
+    "screen": "dashboard",
+    "viewport": 1024,
+    "status": "pass",
+    "screenshot": "staff-owner-dashboard-1024px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/dashboard",
+      "title": "Dashboard - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 1009,
+      "docClientWidth": 1009,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [
+        {
+          "className": "table-scroll",
+          "scrollWidth": 680,
+          "clientWidth": 460,
+          "isScrollable": true
+        }
+      ],
+      "catalogCols": null,
+      "smallTargetsCount": 0,
+      "smallTargetsSample": [],
+      "hasSkipLink": true,
+      "h1": "Welcome back, Chona"
+    }
+  },
+  {
+    "suite": "staff_owner",
+    "screen": "dashboard",
+    "viewport": 1440,
+    "status": "pass",
+    "screenshot": "staff-owner-dashboard-1440px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/dashboard",
+      "title": "Dashboard - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 1440,
+      "docClientWidth": 1440,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [
+        {
+          "className": "table-scroll",
+          "scrollWidth": 747,
+          "clientWidth": 747,
+          "isScrollable": false
+        }
+      ],
+      "catalogCols": null,
+      "smallTargetsCount": 0,
+      "smallTargetsSample": [],
+      "hasSkipLink": true,
+      "h1": "Welcome back, Chona"
+    }
+  },
+  {
+    "suite": "staff_owner",
+    "screen": "mobile_drawer_escape",
+    "viewport": 390,
+    "status": "pass",
+    "screenshot": "staff-owner-mobile-drawer-open-390px.png",
+    "drawerMetrics": {
+      "open": {
+        "isOpen": true,
+        "activeElement": "BUTTON",
+        "bodyOverflow": "hidden"
+      },
+      "closed": {
+        "isOpen": false,
+        "activeElement": "BODY",
+        "bodyOverflow": ""
+      }
+    }
+  },
+  {
+    "suite": "staff_owner",
+    "screen": "schedule",
+    "viewport": 390,
+    "status": "pass",
+    "screenshot": "staff-owner-schedule-390px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/pickup-schedule",
+      "title": "Pickup Schedule - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 390,
+      "docClientWidth": 390,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [],
+      "catalogCols": null,
+      "smallTargetsCount": 1,
+      "smallTargetsSample": [
+        {
+          "text": "",
+          "w": 36,
+          "h": 44
+        }
+      ],
+      "hasSkipLink": true,
+      "h1": "Pickup Schedule"
+    }
+  },
+  {
+    "suite": "staff_owner",
+    "screen": "schedule",
+    "viewport": 1440,
+    "status": "pass",
+    "screenshot": "staff-owner-schedule-1440px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/pickup-schedule",
+      "title": "Pickup Schedule - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 1440,
+      "docClientWidth": 1440,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [],
+      "catalogCols": null,
+      "smallTargetsCount": 0,
+      "smallTargetsSample": [],
+      "hasSkipLink": true,
+      "h1": "Pickup Schedule"
+    }
+  },
+  {
+    "suite": "staff_owner",
+    "screen": "orders_index",
+    "viewport": 360,
+    "status": "pass",
+    "screenshot": "staff-owner-orders-360px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/orders",
+      "title": "Manage Orders - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 360,
+      "docClientWidth": 360,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [
+        {
+          "className": "table-scroll",
+          "scrollWidth": 1160,
+          "clientWidth": 326,
+          "isScrollable": true
+        }
+      ],
+      "catalogCols": null,
+      "smallTargetsCount": 1,
+      "smallTargetsSample": [
+        {
+          "text": "",
+          "w": 36,
+          "h": 44
+        }
+      ],
+      "hasSkipLink": true,
+      "h1": "Order Management"
+    }
+  },
+  {
+    "suite": "staff_owner",
+    "screen": "orders_index",
+    "viewport": 390,
+    "status": "pass",
+    "screenshot": "staff-owner-orders-390px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/orders",
+      "title": "Manage Orders - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 390,
+      "docClientWidth": 390,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [
+        {
+          "className": "table-scroll",
+          "scrollWidth": 1160,
+          "clientWidth": 356,
+          "isScrollable": true
+        }
+      ],
+      "catalogCols": null,
+      "smallTargetsCount": 1,
+      "smallTargetsSample": [
+        {
+          "text": "",
+          "w": 36,
+          "h": 44
+        }
+      ],
+      "hasSkipLink": true,
+      "h1": "Order Management"
+    }
+  },
+  {
+    "suite": "staff_owner",
+    "screen": "orders_index",
+    "viewport": 430,
+    "status": "pass",
+    "screenshot": "staff-owner-orders-430px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/orders",
+      "title": "Manage Orders - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 430,
+      "docClientWidth": 430,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [
+        {
+          "className": "table-scroll",
+          "scrollWidth": 1160,
+          "clientWidth": 396,
+          "isScrollable": true
+        }
+      ],
+      "catalogCols": null,
+      "smallTargetsCount": 1,
+      "smallTargetsSample": [
+        {
+          "text": "",
+          "w": 36,
+          "h": 44
+        }
+      ],
+      "hasSkipLink": true,
+      "h1": "Order Management"
+    }
+  },
+  {
+    "suite": "staff_owner",
+    "screen": "orders_index",
+    "viewport": 768,
+    "status": "pass",
+    "screenshot": "staff-owner-orders-768px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/orders",
+      "title": "Manage Orders - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 768,
+      "docClientWidth": 768,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [
+        {
+          "className": "table-scroll",
+          "scrollWidth": 1160,
+          "clientWidth": 718,
+          "isScrollable": true
+        }
+      ],
+      "catalogCols": null,
+      "smallTargetsCount": 1,
+      "smallTargetsSample": [
+        {
+          "text": "",
+          "w": 36,
+          "h": 44
+        }
+      ],
+      "hasSkipLink": true,
+      "h1": "Order Management"
+    }
+  },
+  {
+    "suite": "staff_owner",
+    "screen": "orders_index",
+    "viewport": 1024,
+    "status": "pass",
+    "screenshot": "staff-owner-orders-1024px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/orders",
+      "title": "Manage Orders - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 1009,
+      "docClientWidth": 1009,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [
+        {
+          "className": "table-scroll",
+          "scrollWidth": 1160,
+          "clientWidth": 703,
+          "isScrollable": true
+        }
+      ],
+      "catalogCols": null,
+      "smallTargetsCount": 0,
+      "smallTargetsSample": [],
+      "hasSkipLink": true,
+      "h1": "Order Management"
+    }
+  },
+  {
+    "suite": "staff_owner",
+    "screen": "orders_index",
+    "viewport": 1440,
+    "status": "pass",
+    "screenshot": "staff-owner-orders-1440px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/orders",
+      "title": "Manage Orders - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 1425,
+      "docClientWidth": 1425,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [
+        {
+          "className": "table-scroll",
+          "scrollWidth": 1160,
+          "clientWidth": 1119,
+          "isScrollable": true
+        }
+      ],
+      "catalogCols": null,
+      "smallTargetsCount": 0,
+      "smallTargetsSample": [],
+      "hasSkipLink": true,
+      "h1": "Order Management"
+    }
+  },
+  {
+    "suite": "staff_owner",
+    "screen": "order_show",
+    "viewport": 390,
+    "status": "pass",
+    "screenshot": "staff-owner-order-show-390px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/orders/1",
+      "title": "Order ORD-20260928-46FE04DC62 - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 390,
+      "docClientWidth": 390,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [
+        {
+          "className": "table-scroll",
+          "scrollWidth": 680,
+          "clientWidth": 308,
+          "isScrollable": true
+        }
+      ],
+      "catalogCols": null,
+      "smallTargetsCount": 1,
+      "smallTargetsSample": [
+        {
+          "text": "",
+          "w": 36,
+          "h": 44
+        }
+      ],
+      "hasSkipLink": true,
+      "h1": "ORD-20260928-46FE04DC62"
+    }
+  },
+  {
+    "suite": "staff_owner",
+    "screen": "order_show",
+    "viewport": 1440,
+    "status": "pass",
+    "screenshot": "staff-owner-order-show-1440px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/orders/1",
+      "title": "Order ORD-20260928-46FE04DC62 - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 1425,
+      "docClientWidth": 1425,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [
+        {
+          "className": "table-scroll",
+          "scrollWidth": 681,
+          "clientWidth": 681,
+          "isScrollable": false
+        }
+      ],
+      "catalogCols": null,
+      "smallTargetsCount": 0,
+      "smallTargetsSample": [],
+      "hasSkipLink": true,
+      "h1": "ORD-20260928-46FE04DC62"
+    }
+  },
+  {
+    "suite": "staff_owner",
+    "screen": "customers_index",
+    "viewport": 390,
+    "status": "pass",
+    "screenshot": "staff-owner-customers-390px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/customers",
+      "title": "Manage Customers - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 390,
+      "docClientWidth": 390,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [
+        {
+          "className": "table-scroll",
+          "scrollWidth": 680,
+          "clientWidth": 356,
+          "isScrollable": true
+        }
+      ],
+      "catalogCols": null,
+      "smallTargetsCount": 1,
+      "smallTargetsSample": [
+        {
+          "text": "",
+          "w": 36,
+          "h": 44
+        }
+      ],
+      "hasSkipLink": true,
+      "h1": "Customer Management"
+    }
+  },
+  {
+    "suite": "staff_owner",
+    "screen": "customers_index",
+    "viewport": 1440,
+    "status": "pass",
+    "screenshot": "staff-owner-customers-1440px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/customers",
+      "title": "Manage Customers - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 1440,
+      "docClientWidth": 1440,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [
+        {
+          "className": "table-scroll",
+          "scrollWidth": 1134,
+          "clientWidth": 1134,
+          "isScrollable": false
+        }
+      ],
+      "catalogCols": null,
+      "smallTargetsCount": 0,
+      "smallTargetsSample": [],
+      "hasSkipLink": true,
+      "h1": "Customer Management"
+    }
+  },
+  {
+    "suite": "staff_owner",
+    "screen": "products_index",
+    "viewport": 390,
+    "status": "pass",
+    "screenshot": "staff-owner-products-390px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/products",
+      "title": "Catalog - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 390,
+      "docClientWidth": 390,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [],
+      "catalogCols": null,
+      "smallTargetsCount": 1,
+      "smallTargetsSample": [
+        {
+          "text": "",
+          "w": 36,
+          "h": 44
+        }
+      ],
+      "hasSkipLink": true,
+      "h1": "Cake packages and add-ons"
+    }
+  },
+  {
+    "suite": "staff_owner",
+    "screen": "products_index",
+    "viewport": 1440,
+    "status": "pass",
+    "screenshot": "staff-owner-products-1440px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/products",
+      "title": "Catalog - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 1425,
+      "docClientWidth": 1425,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [],
+      "catalogCols": null,
+      "smallTargetsCount": 0,
+      "smallTargetsSample": [],
+      "hasSkipLink": true,
+      "h1": "Cake packages and add-ons"
+    }
+  },
+  {
+    "suite": "staff_owner",
+    "screen": "supplies_index",
+    "viewport": 360,
+    "status": "pass",
+    "screenshot": "staff-owner-inventory-360px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/supplies",
+      "title": "Inventory & supplies - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 360,
+      "docClientWidth": 360,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [
+        {
+          "className": "workspace-table table-scroll",
+          "scrollWidth": 780,
+          "clientWidth": 326,
+          "isScrollable": true
+        }
+      ],
+      "catalogCols": null,
+      "smallTargetsCount": 1,
+      "smallTargetsSample": [
+        {
+          "text": "",
+          "w": 36,
+          "h": 44
+        }
+      ],
+      "hasSkipLink": true,
+      "h1": "Inventory & supplies"
+    }
+  },
+  {
+    "suite": "staff_owner",
+    "screen": "supplies_index",
+    "viewport": 390,
+    "status": "pass",
+    "screenshot": "staff-owner-inventory-390px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/supplies",
+      "title": "Inventory & supplies - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 390,
+      "docClientWidth": 390,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [
+        {
+          "className": "workspace-table table-scroll",
+          "scrollWidth": 780,
+          "clientWidth": 356,
+          "isScrollable": true
+        }
+      ],
+      "catalogCols": null,
+      "smallTargetsCount": 1,
+      "smallTargetsSample": [
+        {
+          "text": "",
+          "w": 36,
+          "h": 44
+        }
+      ],
+      "hasSkipLink": true,
+      "h1": "Inventory & supplies"
+    }
+  },
+  {
+    "suite": "staff_owner",
+    "screen": "supplies_index",
+    "viewport": 430,
+    "status": "pass",
+    "screenshot": "staff-owner-inventory-430px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/supplies",
+      "title": "Inventory & supplies - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 430,
+      "docClientWidth": 430,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [
+        {
+          "className": "workspace-table table-scroll",
+          "scrollWidth": 780,
+          "clientWidth": 396,
+          "isScrollable": true
+        }
+      ],
+      "catalogCols": null,
+      "smallTargetsCount": 1,
+      "smallTargetsSample": [
+        {
+          "text": "",
+          "w": 36,
+          "h": 44
+        }
+      ],
+      "hasSkipLink": true,
+      "h1": "Inventory & supplies"
+    }
+  },
+  {
+    "suite": "staff_owner",
+    "screen": "supplies_index",
+    "viewport": 768,
+    "status": "pass",
+    "screenshot": "staff-owner-inventory-768px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/supplies",
+      "title": "Inventory & supplies - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 768,
+      "docClientWidth": 768,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [
+        {
+          "className": "workspace-table table-scroll",
+          "scrollWidth": 780,
+          "clientWidth": 718,
+          "isScrollable": true
+        }
+      ],
+      "catalogCols": null,
+      "smallTargetsCount": 1,
+      "smallTargetsSample": [
+        {
+          "text": "",
+          "w": 36,
+          "h": 44
+        }
+      ],
+      "hasSkipLink": true,
+      "h1": "Inventory & supplies"
+    }
+  },
+  {
+    "suite": "staff_owner",
+    "screen": "supplies_index",
+    "viewport": 1024,
+    "status": "pass",
+    "screenshot": "staff-owner-inventory-1024px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/supplies",
+      "title": "Inventory & supplies - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 1009,
+      "docClientWidth": 1009,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [
+        {
+          "className": "workspace-table table-scroll",
+          "scrollWidth": 780,
+          "clientWidth": 703,
+          "isScrollable": true
+        }
+      ],
+      "catalogCols": null,
+      "smallTargetsCount": 0,
+      "smallTargetsSample": [],
+      "hasSkipLink": true,
+      "h1": "Inventory & supplies"
+    }
+  },
+  {
+    "suite": "staff_owner",
+    "screen": "supplies_index",
+    "viewport": 1440,
+    "status": "pass",
+    "screenshot": "staff-owner-inventory-1440px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/supplies",
+      "title": "Inventory & supplies - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 1425,
+      "docClientWidth": 1425,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [
+        {
+          "className": "workspace-table table-scroll",
+          "scrollWidth": 1119,
+          "clientWidth": 1119,
+          "isScrollable": false
+        }
+      ],
+      "catalogCols": null,
+      "smallTargetsCount": 0,
+      "smallTargetsSample": [],
+      "hasSkipLink": true,
+      "h1": "Inventory & supplies"
+    }
+  },
+  {
+    "suite": "staff_owner",
+    "screen": "inventory_receipt",
+    "viewport": 1440,
+    "status": "pass",
+    "screenshot": "staff-owner-inventory-receipt-1440px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/inventory/create/receipt",
+      "title": "Receive stock - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 1440,
+      "docClientWidth": 1440,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [
+        {
+          "className": "workspace-table table-scroll",
+          "scrollWidth": 1092,
+          "clientWidth": 1092,
+          "isScrollable": false
+        }
+      ],
+      "catalogCols": null,
+      "smallTargetsCount": 0,
+      "smallTargetsSample": [],
+      "hasSkipLink": true,
+      "h1": "Receive stock"
+    }
+  },
+  {
+    "suite": "staff_owner",
+    "screen": "inventory_usage",
+    "viewport": 1440,
+    "status": "pass",
+    "screenshot": "staff-owner-inventory-usage-1440px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/inventory/create/usage",
+      "title": "Record usage / waste - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 1440,
+      "docClientWidth": 1440,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [
+        {
+          "className": "workspace-table table-scroll",
+          "scrollWidth": 1092,
+          "clientWidth": 1092,
+          "isScrollable": false
+        }
+      ],
+      "catalogCols": null,
+      "smallTargetsCount": 0,
+      "smallTargetsSample": [],
+      "hasSkipLink": true,
+      "h1": "Record usage / waste"
+    }
+  },
+  {
+    "suite": "staff_owner",
+    "screen": "inventory_stocktake",
+    "viewport": 1440,
+    "status": "pass",
+    "screenshot": "staff-owner-inventory-stocktake-1440px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/inventory/create/stocktake",
+      "title": "Stocktake - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 1440,
+      "docClientWidth": 1440,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [
+        {
+          "className": "workspace-table table-scroll",
+          "scrollWidth": 1092,
+          "clientWidth": 1092,
+          "isScrollable": false
+        }
+      ],
+      "catalogCols": null,
+      "smallTargetsCount": 0,
+      "smallTargetsSample": [],
+      "hasSkipLink": true,
+      "h1": "Stocktake"
+    }
+  },
+  {
+    "suite": "staff_owner",
+    "screen": "expenses_index",
+    "viewport": 360,
+    "status": "pass",
+    "screenshot": "staff-owner-expenses-360px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/expenses",
+      "title": "Expenses - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 360,
+      "docClientWidth": 360,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [
+        {
+          "className": "workspace-table table-scroll",
+          "scrollWidth": 780,
+          "clientWidth": 326,
+          "isScrollable": true
+        }
+      ],
+      "catalogCols": null,
+      "smallTargetsCount": 1,
+      "smallTargetsSample": [
+        {
+          "text": "",
+          "w": 36,
+          "h": 44
+        }
+      ],
+      "hasSkipLink": true,
+      "h1": "Expenses"
+    }
+  },
+  {
+    "suite": "staff_owner",
+    "screen": "expenses_index",
+    "viewport": 390,
+    "status": "pass",
+    "screenshot": "staff-owner-expenses-390px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/expenses",
+      "title": "Expenses - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 390,
+      "docClientWidth": 390,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [
+        {
+          "className": "workspace-table table-scroll",
+          "scrollWidth": 780,
+          "clientWidth": 356,
+          "isScrollable": true
+        }
+      ],
+      "catalogCols": null,
+      "smallTargetsCount": 1,
+      "smallTargetsSample": [
+        {
+          "text": "",
+          "w": 36,
+          "h": 44
+        }
+      ],
+      "hasSkipLink": true,
+      "h1": "Expenses"
+    }
+  },
+  {
+    "suite": "staff_owner",
+    "screen": "expenses_index",
+    "viewport": 430,
+    "status": "pass",
+    "screenshot": "staff-owner-expenses-430px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/expenses",
+      "title": "Expenses - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 430,
+      "docClientWidth": 430,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [
+        {
+          "className": "workspace-table table-scroll",
+          "scrollWidth": 780,
+          "clientWidth": 396,
+          "isScrollable": true
+        }
+      ],
+      "catalogCols": null,
+      "smallTargetsCount": 1,
+      "smallTargetsSample": [
+        {
+          "text": "",
+          "w": 36,
+          "h": 44
+        }
+      ],
+      "hasSkipLink": true,
+      "h1": "Expenses"
+    }
+  },
+  {
+    "suite": "staff_owner",
+    "screen": "expenses_index",
+    "viewport": 768,
+    "status": "pass",
+    "screenshot": "staff-owner-expenses-768px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/expenses",
+      "title": "Expenses - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 768,
+      "docClientWidth": 768,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [
+        {
+          "className": "workspace-table table-scroll",
+          "scrollWidth": 780,
+          "clientWidth": 718,
+          "isScrollable": true
+        }
+      ],
+      "catalogCols": null,
+      "smallTargetsCount": 1,
+      "smallTargetsSample": [
+        {
+          "text": "",
+          "w": 36,
+          "h": 44
+        }
+      ],
+      "hasSkipLink": true,
+      "h1": "Expenses"
+    }
+  },
+  {
+    "suite": "staff_owner",
+    "screen": "expenses_index",
+    "viewport": 1024,
+    "status": "pass",
+    "screenshot": "staff-owner-expenses-1024px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/expenses",
+      "title": "Expenses - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 1024,
+      "docClientWidth": 1024,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [
+        {
+          "className": "workspace-table table-scroll",
+          "scrollWidth": 780,
+          "clientWidth": 718,
+          "isScrollable": true
+        }
+      ],
+      "catalogCols": null,
+      "smallTargetsCount": 0,
+      "smallTargetsSample": [],
+      "hasSkipLink": true,
+      "h1": "Expenses"
+    }
+  },
+  {
+    "suite": "staff_owner",
+    "screen": "expenses_index",
+    "viewport": 1440,
+    "status": "pass",
+    "screenshot": "staff-owner-expenses-1440px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/expenses",
+      "title": "Expenses - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 1440,
+      "docClientWidth": 1440,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [
+        {
+          "className": "workspace-table table-scroll",
+          "scrollWidth": 1134,
+          "clientWidth": 1134,
+          "isScrollable": false
+        }
+      ],
+      "catalogCols": null,
+      "smallTargetsCount": 0,
+      "smallTargetsSample": [],
+      "hasSkipLink": true,
+      "h1": "Expenses"
+    }
+  },
+  {
+    "suite": "staff_owner",
+    "screen": "reports_index",
+    "viewport": 360,
+    "status": "pass",
+    "screenshot": "staff-owner-reports-360px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/reports?mode=month&month=2026-09",
+      "title": "Reports - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 360,
+      "docClientWidth": 360,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [
+        {
+          "className": "table-scroll",
+          "scrollWidth": 1160,
+          "clientWidth": 294,
+          "isScrollable": true
+        },
+        {
+          "className": "workspace-table table-scroll",
+          "scrollWidth": 933,
+          "clientWidth": 292,
+          "isScrollable": true
+        },
+        {
+          "className": "workspace-table table-scroll",
+          "scrollWidth": 360,
+          "clientWidth": 326,
+          "isScrollable": true
+        },
+        {
+          "className": "workspace-table table-scroll",
+          "scrollWidth": 360,
+          "clientWidth": 326,
+          "isScrollable": true
+        },
+        {
+          "className": "workspace-table table-scroll",
+          "scrollWidth": 780,
+          "clientWidth": 326,
+          "isScrollable": true
+        }
+      ],
+      "catalogCols": null,
+      "smallTargetsCount": 1,
+      "smallTargetsSample": [
+        {
+          "text": "",
+          "w": 36,
+          "h": 44
+        }
+      ],
+      "hasSkipLink": true,
+      "h1": "Reports"
+    }
+  },
+  {
+    "suite": "staff_owner",
+    "screen": "reports_index",
+    "viewport": 390,
+    "status": "pass",
+    "screenshot": "staff-owner-reports-390px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/reports?mode=month&month=2026-09",
+      "title": "Reports - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 390,
+      "docClientWidth": 390,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [
+        {
+          "className": "table-scroll",
+          "scrollWidth": 1160,
+          "clientWidth": 324,
+          "isScrollable": true
+        },
+        {
+          "className": "workspace-table table-scroll",
+          "scrollWidth": 933,
+          "clientWidth": 322,
+          "isScrollable": true
+        },
+        {
+          "className": "workspace-table table-scroll",
+          "scrollWidth": 360,
+          "clientWidth": 356,
+          "isScrollable": true
+        },
+        {
+          "className": "workspace-table table-scroll",
+          "scrollWidth": 360,
+          "clientWidth": 356,
+          "isScrollable": true
+        },
+        {
+          "className": "workspace-table table-scroll",
+          "scrollWidth": 780,
+          "clientWidth": 356,
+          "isScrollable": true
+        }
+      ],
+      "catalogCols": null,
+      "smallTargetsCount": 1,
+      "smallTargetsSample": [
+        {
+          "text": "",
+          "w": 36,
+          "h": 44
+        }
+      ],
+      "hasSkipLink": true,
+      "h1": "Reports"
+    }
+  },
+  {
+    "suite": "staff_owner",
+    "screen": "reports_index",
+    "viewport": 430,
+    "status": "pass",
+    "screenshot": "staff-owner-reports-430px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/reports?mode=month&month=2026-09",
+      "title": "Reports - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 430,
+      "docClientWidth": 430,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [
+        {
+          "className": "table-scroll",
+          "scrollWidth": 1160,
+          "clientWidth": 364,
+          "isScrollable": true
+        },
+        {
+          "className": "workspace-table table-scroll",
+          "scrollWidth": 933,
+          "clientWidth": 362,
+          "isScrollable": true
+        },
+        {
+          "className": "workspace-table table-scroll",
+          "scrollWidth": 396,
+          "clientWidth": 396,
+          "isScrollable": false
+        },
+        {
+          "className": "workspace-table table-scroll",
+          "scrollWidth": 396,
+          "clientWidth": 396,
+          "isScrollable": false
+        },
+        {
+          "className": "workspace-table table-scroll",
+          "scrollWidth": 780,
+          "clientWidth": 396,
+          "isScrollable": true
+        }
+      ],
+      "catalogCols": null,
+      "smallTargetsCount": 1,
+      "smallTargetsSample": [
+        {
+          "text": "",
+          "w": 36,
+          "h": 44
+        }
+      ],
+      "hasSkipLink": true,
+      "h1": "Reports"
+    }
+  },
+  {
+    "suite": "staff_owner",
+    "screen": "reports_index",
+    "viewport": 768,
+    "status": "pass",
+    "screenshot": "staff-owner-reports-768px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/reports?mode=month&month=2026-09",
+      "title": "Reports - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 768,
+      "docClientWidth": 768,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [
+        {
+          "className": "table-scroll",
+          "scrollWidth": 1160,
+          "clientWidth": 678,
+          "isScrollable": true
+        },
+        {
+          "className": "workspace-table table-scroll",
+          "scrollWidth": 933,
+          "clientWidth": 676,
+          "isScrollable": true
+        },
+        {
+          "className": "workspace-table table-scroll",
+          "scrollWidth": 718,
+          "clientWidth": 718,
+          "isScrollable": false
+        },
+        {
+          "className": "workspace-table table-scroll",
+          "scrollWidth": 718,
+          "clientWidth": 718,
+          "isScrollable": false
+        },
+        {
+          "className": "workspace-table table-scroll",
+          "scrollWidth": 780,
+          "clientWidth": 718,
+          "isScrollable": true
+        }
+      ],
+      "catalogCols": null,
+      "smallTargetsCount": 1,
+      "smallTargetsSample": [
+        {
+          "text": "",
+          "w": 36,
+          "h": 44
+        }
+      ],
+      "hasSkipLink": true,
+      "h1": "Reports"
+    }
+  },
+  {
+    "suite": "staff_owner",
+    "screen": "reports_index",
+    "viewport": 1024,
+    "status": "pass",
+    "screenshot": "staff-owner-reports-1024px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/reports?mode=month&month=2026-09",
+      "title": "Reports - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 1009,
+      "docClientWidth": 1009,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [
+        {
+          "className": "table-scroll",
+          "scrollWidth": 1160,
+          "clientWidth": 663,
+          "isScrollable": true
+        },
+        {
+          "className": "workspace-table table-scroll",
+          "scrollWidth": 933,
+          "clientWidth": 661,
+          "isScrollable": true
+        },
+        {
+          "className": "workspace-table table-scroll",
+          "scrollWidth": 360,
+          "clientWidth": 298,
+          "isScrollable": true
+        },
+        {
+          "className": "workspace-table table-scroll",
+          "scrollWidth": 387,
+          "clientWidth": 387,
+          "isScrollable": false
+        },
+        {
+          "className": "workspace-table table-scroll",
+          "scrollWidth": 780,
+          "clientWidth": 703,
+          "isScrollable": true
+        }
+      ],
+      "catalogCols": null,
+      "smallTargetsCount": 0,
+      "smallTargetsSample": [],
+      "hasSkipLink": true,
+      "h1": "Reports"
+    }
+  },
+  {
+    "suite": "staff_owner",
+    "screen": "reports_index",
+    "viewport": 1440,
+    "status": "pass",
+    "screenshot": "staff-owner-reports-1440px.png",
+    "metrics": {
+      "url": "http://127.0.0.1:8000/reports?mode=month&month=2026-09",
+      "title": "Reports - Aling Chona Cakes & Cupcakes",
+      "docScrollWidth": 1425,
+      "docClientWidth": 1425,
+      "hasHorizontalScroll": false,
+      "tableScrolls": [
+        {
+          "className": "table-scroll",
+          "scrollWidth": 1160,
+          "clientWidth": 1079,
+          "isScrollable": true
+        },
+        {
+          "className": "workspace-table table-scroll",
+          "scrollWidth": 1077,
+          "clientWidth": 1077,
+          "isScrollable": false
+        },
+        {
+          "className": "workspace-table table-scroll",
+          "scrollWidth": 478,
+          "clientWidth": 478,
+          "isScrollable": false
+        },
+        {
+          "className": "workspace-table table-scroll",
+          "scrollWidth": 623,
+          "clientWidth": 623,
+          "isScrollable": false
+        },
+        {
+          "className": "workspace-table table-scroll",
+          "scrollWidth": 1119,
+          "clientWidth": 1119,
+          "isScrollable": false
+        }
+      ],
+      "catalogCols": null,
+      "smallTargetsCount": 0,
+      "smallTargetsSample": [],
+      "hasSkipLink": true,
+      "h1": "Reports"
+    }
+  }
+]

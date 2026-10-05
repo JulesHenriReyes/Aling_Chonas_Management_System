@@ -2,13 +2,15 @@
 
 namespace App\Http\Requests;
 
+use App\Support\PhilippineContact;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
 class CustomerRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return $this->user() !== null;
+        return Gate::allows('manage-customers');
     }
 
     public function rules(): array
@@ -17,7 +19,7 @@ class CustomerRequest extends FormRequest
             'first_name' => ['required', 'string', 'max:100'],
             'middle_name' => ['nullable', 'string', 'max:100'],
             'last_name' => ['required', 'string', 'max:100'],
-            'phone_number' => ['required', 'string', 'max:20'],
+            'phone_number' => PhilippineContact::rules(),
         ];
     }
 }

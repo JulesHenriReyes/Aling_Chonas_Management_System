@@ -1,0 +1,1 @@
+PASS: 8 contention cases, 16 independently guarded workers; stock, payment and refund amounts/history reconciled.

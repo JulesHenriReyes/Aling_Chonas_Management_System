@@ -1,0 +1,27 @@
+{
+    "status": "verified_pass",
+    "verified_tables": [
+        "users",
+        "customers",
+        "products",
+        "package_options",
+        "add_ons",
+        "orders",
+        "order_details",
+        "payments",
+        "payment_proofs",
+        "refunds",
+        "supplies",
+        "inventory_operations",
+        "inventory_transactions",
+        "expenses",
+        "expense_audits"
+    ],
+    "additive_columns_checked": [
+        "supplies.stock_version",
+        "orders.submission_key",
+        "expenses.deleted_at",
+        "expenses.edited_by",
+        "expenses.deletion_reason"
+    ]
+}

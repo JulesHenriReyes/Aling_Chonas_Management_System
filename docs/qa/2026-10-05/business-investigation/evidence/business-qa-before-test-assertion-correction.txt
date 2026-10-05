@@ -1,0 +1,45 @@
+PHPUnit 11.5.56 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.2.12
+Configuration: C:\Users\User\Desktop\IT12_Project\docs\qa\2026-10-05\business-investigation\phpunit-business.xml
+
+...FFF.....F                                                      12 / 12 (100%)
+
+Time: 00:01.124, Memory: 52.00 MB
+
+There were 4 failures:
+
+1) Qa\Business\BusinessInvestigationTest::test_fully_paid_customer_cancellation_recognizes_all_verified_retained_money
+Owner-approved retention includes the final payment.
+Failed asserting that 500.0 matches expected 1000.
+
+C:\Users\User\Desktop\IT12_Project\docs\qa\2026-10-05\business-investigation\tests\BusinessInvestigationTest.php:73
+
+2) Qa\Business\BusinessInvestigationTest::test_required_customer_contact_cannot_normalize_to_empty
+Session is missing expected key [errors].
+Failed asserting that false is true.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponseAssert.php:45
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:1547
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:1634
+C:\Users\User\Desktop\IT12_Project\docs\qa\2026-10-05\business-investigation\tests\BusinessInvestigationTest.php:81
+
+3) Qa\Business\BusinessInvestigationTest::test_public_contact_cannot_normalize_to_empty
+Session is missing expected key [errors].
+Failed asserting that false is true.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponseAssert.php:45
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:1547
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:1634
+C:\Users\User\Desktop\IT12_Project\docs\qa\2026-10-05\business-investigation\tests\BusinessInvestigationTest.php:90
+
+4) Qa\Business\BusinessInvestigationTest::test_ordinary_package_line_add_edit_remove_and_checkout
+Failed asserting that the value at [quote] fulfills the expectations defined by the closure.
+Failed asserting that false is true.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponseAssert.php:45
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:1308
+C:\Users\User\Desktop\IT12_Project\docs\qa\2026-10-05\business-investigation\tests\BusinessInvestigationTest.php:178
+
+FAILURES!
+Tests: 12, Assertions: 81, Failures: 4.

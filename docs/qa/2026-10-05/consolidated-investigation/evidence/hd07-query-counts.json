@@ -1,0 +1,9 @@
+{
+    "dashboard_query_count": 8,
+    "orders_query_count": 5,
+    "supplies_query_count": 2,
+    "expenses_query_count": 2,
+    "reports_query_count": 4,
+    "status": "verified_pass",
+    "evaluation": "Eager loading is used on orders (customer, user, orderDetails.product, payments) preventing N+1 explosion."
+}

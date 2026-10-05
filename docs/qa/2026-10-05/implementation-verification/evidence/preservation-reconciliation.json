@@ -1,0 +1,90 @@
+{
+  "regular_engine": "mysql",
+  "regular_database": "aling_chona_db",
+  "business_tables_checked": 24,
+  "business_differences": {},
+  "framework_differences": {
+    "sessions": {
+      "before": {
+        "count": 15,
+        "sha256": "4a7f7d09d88b2f937edaf5768176b5cd36f89c17ff4af623c14ab18303bc112a"
+      },
+      "after": {
+        "count": 16,
+        "sha256": "12fa18b2d25affc5a582fc1f1f72fa63b1a68d1b3c8fb4f74044a789ea39206b"
+      }
+    }
+  },
+  "env_hash_unchanged": true,
+  "tracked_source_changes": [
+    "app/Http/Controllers/CustomerController.php",
+    "app/Http/Controllers/DashboardController.php",
+    "app/Http/Controllers/OrderController.php",
+    "app/Http/Controllers/PaymentController.php",
+    "app/Http/Controllers/PaymentReviewController.php",
+    "app/Http/Controllers/PickupScheduleController.php",
+    "app/Http/Controllers/PublicOrderController.php",
+    "app/Http/Controllers/RefundController.php",
+    "app/Http/Requests/CatalogOrderRules.php",
+    "app/Http/Requests/CustomerRequest.php",
+    "app/Http/Requests/OrderImageRequest.php",
+    "app/Http/Requests/OrderRequest.php",
+    "app/Http/Requests/PaymentRequest.php",
+    "app/Models/Customer.php",
+    "app/Providers/AppServiceProvider.php",
+    "app/Services/OrderDraftService.php",
+    "app/Services/OrderService.php",
+    "app/Services/PaymentReviewService.php",
+    "app/Services/RefundService.php",
+    "app/Services/StaffAccess.php",
+    "composer.json",
+    "composer.lock",
+    "public/css/bakery-ui.css",
+    "public/js/bakery-ui.js",
+    "public/js/staff-customer-picker.js",
+    "resources/views/admin/customers/create.blade.php",
+    "resources/views/admin/customers/edit.blade.php",
+    "resources/views/admin/customers/index.blade.php",
+    "resources/views/admin/customers/show.blade.php",
+    "resources/views/admin/dashboard.blade.php",
+    "resources/views/admin/orders/index.blade.php",
+    "resources/views/admin/orders/proof-review.blade.php",
+    "resources/views/admin/orders/refund.blade.php",
+    "resources/views/admin/orders/show.blade.php",
+    "resources/views/layouts/admin.blade.php",
+    "resources/views/partials/catalog-order-details.blade.php",
+    "resources/views/public/payment.blade.php",
+    "routes/web.php",
+    "tests/Feature/FinancialReportingTest.php",
+    "tests/Feature/FixedCatalogAndPaymentReviewTest.php",
+    "tests/Feature/InventoryAndAuthorizationBusinessRulesTest.php",
+    "tests/Feature/OrderAndPaymentBusinessRulesTest.php",
+    "tests/Feature/OrderReviewAndPricingTest.php",
+    "tests/Feature/Phase3QAFixesTest.php",
+    "tests/Feature/UiPresentationTest.php",
+    "tests/Support/stock-concurrency-worker.php",
+    "tests/TestCase.php"
+  ],
+  "new_source_files": [
+    "app/Rules/PhilippinePhoneNumber.php",
+    "app/Support/PhilippineContact.php",
+    "app/Support/PickupCalendar.php",
+    "tests/Feature/ApprovedWorkflowReportAcceptanceTest.php",
+    "tests/Feature/ContactAndPickupCalendarTest.php",
+    "tests/Feature/ImplementationPolicyTest.php",
+    "tests/Feature/OperationalReliabilityAcceptanceTest.php",
+    "tests/Support/DisposableDatabase.php",
+    "tests/Support/DisposableMariaDb.php",
+    "tests/Support/mariadb-bootstrap.php",
+    "tests/Support/mariadb-concurrency-worker.php"
+  ],
+  "dependency_version_changes": {
+    "giggsey/libphonenumber-for-php-lite": {
+      "before": null,
+      "after": "9.0.40"
+    }
+  },
+  "dependency_removals": [],
+  "historical_cancellation_exceptions": [],
+  "historical_overpayments": []
+}

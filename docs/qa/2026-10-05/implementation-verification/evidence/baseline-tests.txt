@@ -1,0 +1,1707 @@
+PHPUnit 11.5.56 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.2.12
+Configuration: C:\Users\User\Desktop\IT12_Project\phpunit.xml
+
+.EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE  63 / 100 ( 63%)
+EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE                           100 / 100 (100%)
+
+Time: 00:02.346, Memory: 32.00 MB
+
+There were 99 errors:
+
+1) Tests\Feature\CatalogMigrationSafetyTest::test_upgrade_and_rollback_preserve_historical_orders_payments_and_catalog
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+
+2) Tests\Feature\ExampleTest::test_the_application_returns_a_successful_response
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+
+3) Tests\Feature\FinancialReportingTest::test_financial_summary_and_operational_net_income
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\FinancialReportingTest.php:30
+
+4) Tests\Feature\FinancialReportingTest::test_low_stock_supplies_query
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\FinancialReportingTest.php:30
+
+5) Tests\Feature\FinancialReportingTest::test_cancellation_income_only_includes_retained_down_payments
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\FinancialReportingTest.php:30
+
+6) Tests\Feature\FinancialReportingTest::test_cancellation_income_excludes_a_final_payment_recorded_before_cancellation
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\FinancialReportingTest.php:30
+
+7) Tests\Feature\FixedCatalogAndPaymentReviewTest::test_both_paths_use_catalog_prices_and_keep_inclusions_separate_from_extras
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php:33
+
+8) Tests\Feature\FixedCatalogAndPaymentReviewTest::test_snapshots_survive_catalog_changes_and_manual_price_changes_are_rejected
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php:33
+
+9) Tests\Feature\FixedCatalogAndPaymentReviewTest::test_invalid_option_unavailable_product_inapplicable_extra_and_fractional_quantity_are_rejected
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php:33
+
+10) Tests\Feature\FixedCatalogAndPaymentReviewTest::test_proof_is_private_and_does_not_count_as_payment_until_exact_verification
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php:33
+
+11) Tests\Feature\FixedCatalogAndPaymentReviewTest::test_rejection_retains_history_and_allows_replacement_but_pending_proof_blocks_replacement
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php:33
+
+12) Tests\Feature\FixedCatalogAndPaymentReviewTest::test_duplicates_across_orders_and_deactivated_staff_are_rejected
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php:33
+
+13) Tests\Feature\FixedCatalogAndPaymentReviewTest::test_cash_workflow_and_readiness_before_collection_are_preserved
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php:33
+
+14) Tests\Feature\FixedCatalogAndPaymentReviewTest::test_bakery_failure_refunds_all_verified_money_only_after_transfer_confirmation
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php:33
+
+15) Tests\Feature\FixedCatalogAndPaymentReviewTest::test_receipts_reject_non_images_and_oversized_images
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php:33
+
+16) Tests\Feature\FixedCatalogAndPaymentReviewTest::test_http_public_flow_has_persistent_token_access_and_private_receipt_authorization
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php:33
+
+17) Tests\Feature\FixedCatalogAndPaymentReviewTest::test_catalog_and_settings_management_is_owner_only_and_photos_are_separate
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php:33
+
+18) Tests\Feature\FixedCatalogAndPaymentReviewTest::test_http_price_changes_require_review_again_and_do_not_create_partial_records
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php:33
+
+19) Tests\Feature\FixedCatalogAndPaymentReviewTest::test_owner_can_manage_add_on_photos_applicability_and_options_without_repricing_orders
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php:33
+
+20) Tests\Feature\FixedCatalogAndPaymentReviewTest::test_public_receipt_submission_is_rate_limited_and_inactive_staff_cannot_read_receipts
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php:33
+
+21) Tests\Feature\FixedCatalogAndPaymentReviewTest::test_late_readiness_allows_full_refund_and_private_page_keeps_refund_history
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php:33
+
+22) Tests\Feature\FixedCatalogAndPaymentReviewTest::test_historical_readiness_is_not_inferred_but_staff_can_declare_documented_bakery_failure
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php:33
+
+23) Tests\Feature\InventoryAndAuthorizationBusinessRulesTest::test_inventory_stock_in_increases_stock_and_creates_transaction
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\InventoryAndAuthorizationBusinessRulesTest.php:24
+
+24) Tests\Feature\InventoryAndAuthorizationBusinessRulesTest::test_inventory_stock_out_decreases_stock
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\InventoryAndAuthorizationBusinessRulesTest.php:24
+
+25) Tests\Feature\InventoryAndAuthorizationBusinessRulesTest::test_negative_stock_rejected_on_stock_out
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\InventoryAndAuthorizationBusinessRulesTest.php:24
+
+26) Tests\Feature\InventoryAndAuthorizationBusinessRulesTest::test_positive_adjustment_increases_stock
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\InventoryAndAuthorizationBusinessRulesTest.php:24
+
+27) Tests\Feature\InventoryAndAuthorizationBusinessRulesTest::test_negative_adjustment_decreases_stock
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\InventoryAndAuthorizationBusinessRulesTest.php:24
+
+28) Tests\Feature\InventoryAndAuthorizationBusinessRulesTest::test_negative_adjustment_below_zero_rejected
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\InventoryAndAuthorizationBusinessRulesTest.php:24
+
+29) Tests\Feature\InventoryAndAuthorizationBusinessRulesTest::test_inventory_transaction_and_stock_quantity_stay_synchronized
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\InventoryAndAuthorizationBusinessRulesTest.php:24
+
+30) Tests\Feature\InventoryAndAuthorizationBusinessRulesTest::test_owner_access_gates
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\InventoryAndAuthorizationBusinessRulesTest.php:24
+
+31) Tests\Feature\InventoryAndAuthorizationBusinessRulesTest::test_assistant_access_restrictions
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\InventoryAndAuthorizationBusinessRulesTest.php:24
+
+32) Tests\Feature\InventoryAndAuthorizationBusinessRulesTest::test_assistant_can_access_all_business_modules_but_not_user_management
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\InventoryAndAuthorizationBusinessRulesTest.php:24
+
+33) Tests\Feature\InventoryAndAuthorizationBusinessRulesTest::test_owner_can_access_user_management
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\InventoryAndAuthorizationBusinessRulesTest.php:24
+
+34) Tests\Feature\OrderAndPaymentBusinessRulesTest::test_50_percent_down_payment_accepted_and_confirms_order
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderAndPaymentBusinessRulesTest.php:31
+
+35) Tests\Feature\OrderAndPaymentBusinessRulesTest::test_incorrect_down_payment_rejected
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderAndPaymentBusinessRulesTest.php:31
+
+36) Tests\Feature\OrderAndPaymentBusinessRulesTest::test_duplicate_down_payment_rejected
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderAndPaymentBusinessRulesTest.php:31
+
+37) Tests\Feature\OrderAndPaymentBusinessRulesTest::test_confirmation_without_deposit_rejected
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderAndPaymentBusinessRulesTest.php:31
+
+38) Tests\Feature\OrderAndPaymentBusinessRulesTest::test_final_payment_accepted_when_exact_balance_is_paid
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderAndPaymentBusinessRulesTest.php:31
+
+39) Tests\Feature\OrderAndPaymentBusinessRulesTest::test_payment_exceeding_balance_rejected
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderAndPaymentBusinessRulesTest.php:31
+
+40) Tests\Feature\OrderAndPaymentBusinessRulesTest::test_cancelled_order_preserves_payment_and_rejects_further_payment
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderAndPaymentBusinessRulesTest.php:31
+
+41) Tests\Feature\OrderAndPaymentBusinessRulesTest::test_completed_at_is_recorded_and_not_overwritten
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderAndPaymentBusinessRulesTest.php:31
+
+42) Tests\Feature\OrderAndPaymentBusinessRulesTest::test_cancelled_at_is_recorded_and_not_overwritten
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderAndPaymentBusinessRulesTest.php:31
+
+43) Tests\Feature\OrderReviewAndPricingTest::test_public_and_staff_creation_paths_preserve_the_correct_creator_intent
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderReviewAndPricingTest.php:27
+
+44) Tests\Feature\OrderReviewAndPricingTest::test_pending_public_prices_are_fixed_immediately_and_cannot_be_manually_adjusted
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderReviewAndPricingTest.php:27
+
+45) Tests\Feature\OrderReviewAndPricingTest::test_confirmed_order_retains_option_price_after_catalog_price_changes
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderReviewAndPricingTest.php:27
+
+46) Tests\Feature\OrderReviewAndPricingTest::test_invalid_status_transitions_and_terminal_state_changes_are_rejected
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderReviewAndPricingTest.php:27
+
+47) Tests\Feature\OrderReviewAndPricingTest::test_cancelled_orders_are_terminal
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderReviewAndPricingTest.php:27
+
+48) Tests\Feature\PackageInclusionsTest::test_owner_can_add_edit_and_remove_multiple_included_items_without_changing_paid_applicability
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\PackageInclusionsTest.php:25
+
+49) Tests\Feature\PackageInclusionsTest::test_invalid_and_duplicate_rows_are_rejected_atomically_and_input_is_preserved
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\PackageInclusionsTest.php:25
+
+50) Tests\Feature\PackageInclusionsTest::test_new_layer_option_can_have_only_structured_items_and_keeps_other_options_unchanged
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\PackageInclusionsTest.php:25
+
+51) Tests\Feature\PackageInclusionsTest::test_paid_extra_selection_is_independent_of_package_visibility_and_included_items
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\PackageInclusionsTest.php:25
+
+52) Tests\Feature\PackageInclusionsTest::test_public_and_staff_orders_use_included_quantities_per_package_and_paid_extras_once_per_line
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\PackageInclusionsTest.php:25
+
+53) Tests\Feature\PackageInclusionsTest::test_catalog_changes_do_not_rewrite_saved_inclusions_or_prices
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\PackageInclusionsTest.php:25
+
+54) Tests\Feature\PackageInclusionsTest::test_migration_does_not_parse_legacy_text_or_backfill_order_inclusions
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\PackageInclusionsTest.php:25
+
+55) Tests\Feature\Phase3QAFixesTest::test_product_update_accepts_both_put_and_patch_methods
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\Phase3QAFixesTest.php:30
+
+56) Tests\Feature\Phase3QAFixesTest::test_supply_update_via_patch_updates_master_item
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\Phase3QAFixesTest.php:30
+
+57) Tests\Feature\Phase3QAFixesTest::test_customer_phone_normalization_handles_various_philippine_formats
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\Phase3QAFixesTest.php:30
+
+58) Tests\Feature\Phase3QAFixesTest::test_payment_controller_requires_reference_number_for_gcash_payments
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\Phase3QAFixesTest.php:30
+
+59) Tests\Feature\Phase3QAFixesTest::test_internal_staff_order_creation_handles_per_item_image_uploads
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\Phase3QAFixesTest.php:30
+
+60) Tests\Feature\Phase3QAFixesTest::test_public_storage_symlink_is_established
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\Phase3QAFixesTest.php:30
+
+61) Tests\Feature\PublicOrderingTest::test_guest_can_view_active_products_but_not_inactive_products
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\PublicOrderingTest.php:27
+
+62) Tests\Feature\PublicOrderingTest::test_guest_can_submit_multiple_customized_products_as_a_pending_public_order
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\PublicOrderingTest.php:27
+
+63) Tests\Feature\PublicOrderingTest::test_customer_matching_uses_normalized_phone_and_exact_names
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\PublicOrderingTest.php:27
+
+64) Tests\Feature\PublicOrderingTest::test_public_submission_creates_a_new_normalized_customer_when_no_exact_match_exists
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\PublicOrderingTest.php:27
+
+65) Tests\Feature\PublicOrderingTest::test_public_image_upload_is_saved_against_its_matching_order_detail
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\PublicOrderingTest.php:27
+
+66) Tests\Feature\PublicOrderingTest::test_cross_order_image_association_is_rejected
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\PublicOrderingTest.php:27
+
+67) Tests\Feature\PublicOrderingTest::test_old_success_url_redirects_and_guests_cannot_reach_internal_routes
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\PublicOrderingTest.php:27
+
+68) Tests\Feature\PublicOrderingTest::test_internal_order_lookup_is_not_available_to_a_public_guest
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\PublicOrderingTest.php:27
+
+69) Tests\Feature\PublicOrderingTest::test_public_order_submissions_are_rate_limited
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\PublicOrderingTest.php:27
+
+70) Tests\Feature\PublicPackageWorkspaceTest::test_catalog_navigates_to_dedicated_customization_and_multiline_edit_is_idempotent
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+
+71) Tests\Feature\PublicPackageWorkspaceTest::test_validation_keeps_uploads_and_submitted_order_associates_images_and_extras_with_each_line
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+
+72) Tests\Feature\PublicPackageWorkspaceTest::test_autosaved_upload_is_deduplicated_and_catalog_availability_revalidated
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+
+73) Tests\Feature\PublicPackageWorkspaceTest::test_removing_an_uncommitted_reference_cleans_its_file
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+
+74) Tests\Feature\ReportPeriodsAndReconciliationTest::test_periods_resolve_month_range_year_boundary_and_leap_day
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+
+75) Tests\Feature\ReportPeriodsAndReconciliationTest::test_invalid_or_incomplete_periods_produce_validation_errors
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+
+76) Tests\Feature\ReportPeriodsAndReconciliationTest::test_business_timezone_inclusive_end_and_fractional_datetime_boundaries
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+
+77) Tests\Feature\ReportPeriodsAndReconciliationTest::test_summaries_chart_breakdowns_drilldowns_exports_and_saved_package_prices_reconcile
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+
+78) Tests\Feature\ReportPeriodsAndReconciliationTest::test_empty_reports_zero_fill_and_use_monthly_trends_for_long_periods
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+
+79) Tests\Feature\StockConcurrencyAndMigrationTest::test_concurrent_receipts_have_no_lost_update
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\StockConcurrencyAndMigrationTest.php:17
+
+80) Tests\Feature\StockConcurrencyAndMigrationTest::test_concurrent_usage_cannot_overspend_stock
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\StockConcurrencyAndMigrationTest.php:17
+
+81) Tests\Feature\StockConcurrencyAndMigrationTest::test_concurrent_duplicate_receipt_posts_once
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\StockConcurrencyAndMigrationTest.php:17
+
+82) Tests\Feature\StockConcurrencyAndMigrationTest::test_real_additive_migration_preserves_preexisting_records
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\StockConcurrencyAndMigrationTest.php:17
+
+83) Tests\Feature\StockOperationsAndExpensesTest::test_receipt_is_atomic_grouped_idempotent_and_reconcilable_without_expenses
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+
+84) Tests\Feature\StockOperationsAndExpensesTest::test_invalid_or_duplicate_line_rolls_back_entire_receipt
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+
+85) Tests\Feature\StockOperationsAndExpensesTest::test_usage_waste_negative_stock_and_stale_count
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+
+86) Tests\Feature\StockOperationsAndExpensesTest::test_reversal_preserves_original_and_cannot_be_posted_twice
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+
+87) Tests\Feature\StockOperationsAndExpensesTest::test_supply_opening_balance_unit_guard_search_filters_and_pagination
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+
+88) Tests\Feature\StockOperationsAndExpensesTest::test_legacy_movement_can_be_corrected_once_without_rewriting_history
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+
+89) Tests\Feature\StockOperationsAndExpensesTest::test_expense_creation_edit_and_void_audit_preserve_creator_and_report_effect
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+
+90) Tests\Feature\StockOperationsAndExpensesTest::test_expense_total_covers_all_pages_and_authorization_is_server_enforced
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+
+91) Tests\Feature\StockOperationsAndExpensesTest::test_additive_migration_creates_truthful_legacy_baselines_without_modifying_records
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+
+92) Tests\Feature\TwoStepOrderingAndReceiptScreenTest::test_public_draft_keeps_package_and_uploaded_image_while_moving_back_and_forth
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\TwoStepOrderingAndReceiptScreenTest.php:24
+
+93) Tests\Feature\TwoStepOrderingAndReceiptScreenTest::test_price_is_checked_again_when_submitting_draft_and_fields_survive_validation
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\TwoStepOrderingAndReceiptScreenTest.php:24
+
+94) Tests\Feature\TwoStepOrderingAndReceiptScreenTest::test_staff_uses_two_steps_and_can_create_and_select_customer_inline
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\TwoStepOrderingAndReceiptScreenTest.php:24
+
+95) Tests\Feature\TwoStepOrderingAndReceiptScreenTest::test_rejection_state_and_authenticated_screenshot_remain_separate_from_payment
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\TwoStepOrderingAndReceiptScreenTest.php:24
+
+96) Tests\Feature\TwoStepOrderingAndReceiptScreenTest::test_buyer_can_replace_a_rejected_receipt_and_prior_history_remains_visible
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\TwoStepOrderingAndReceiptScreenTest.php:24
+
+97) Tests\Feature\TwoStepOrderingAndReceiptScreenTest::test_buyer_can_remove_saved_reference_without_leaving_an_orphaned_upload
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+C:\Users\User\Desktop\IT12_Project\tests\Feature\TwoStepOrderingAndReceiptScreenTest.php:24
+
+98) Tests\Feature\UiPresentationTest::test_order_pages_preserve_actions_and_price_locking_in_every_lifecycle_state
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+
+99) Tests\Feature\UiPresentationTest::test_public_receipt_remains_unpaid_and_validation_preserves_selected_items
+Exception: The C:\Users\User\Desktop\IT12_Project\C:\Users\User\AppData\Local\Temp/bakery-implementation-tests-26292 directory must be present and writable.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:179
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:132
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:108
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:90
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\PackageManifest.php:79
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\RegisterFacades.php:26
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:342
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:494
+C:\Users\User\Desktop\IT12_Project\tests\TestCase.php:14
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:73
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\Concerns\InteractsWithTestCaseLifecycle.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Testing\TestCase.php:63
+
+--
+
+There were 4 risky tests:
+
+1) Tests\Feature\StockConcurrencyAndMigrationTest::test_concurrent_receipts_have_no_lost_update
+* Test code or tested code did not remove its own error handlers
+
+* Test code or tested code did not remove its own exception handlers
+
+C:\Users\User\Desktop\IT12_Project\tests\Feature\StockConcurrencyAndMigrationTest.php:56
+
+2) Tests\Feature\StockConcurrencyAndMigrationTest::test_concurrent_usage_cannot_overspend_stock
+* Test code or tested code did not remove its own error handlers
+
+* Test code or tested code did not remove its own exception handlers
+
+C:\Users\User\Desktop\IT12_Project\tests\Feature\StockConcurrencyAndMigrationTest.php:65
+
+3) Tests\Feature\StockConcurrencyAndMigrationTest::test_concurrent_duplicate_receipt_posts_once
+* Test code or tested code did not remove its own error handlers
+
+* Test code or tested code did not remove its own exception handlers
+
+C:\Users\User\Desktop\IT12_Project\tests\Feature\StockConcurrencyAndMigrationTest.php:74
+
+4) Tests\Feature\StockConcurrencyAndMigrationTest::test_real_additive_migration_preserves_preexisting_records
+* Test code or tested code did not remove its own error handlers
+
+* Test code or tested code did not remove its own exception handlers
+
+C:\Users\User\Desktop\IT12_Project\tests\Feature\StockConcurrencyAndMigrationTest.php:82
+
+ERRORS!
+Tests: 100, Assertions: 1, Errors: 99, Risky: 4.

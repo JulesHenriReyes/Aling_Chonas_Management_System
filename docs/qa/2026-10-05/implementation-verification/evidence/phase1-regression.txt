@@ -1,0 +1,588 @@
+PHPUnit 11.5.56 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.2.12
+Configuration: C:\Users\User\Desktop\IT12_Project\phpunit.xml
+
+...E..E...F..EE......EE.................FF.EFE.EEEEE...E.......  63 / 109 ( 57%)
+....F.......................................F.                  109 / 109 (100%)
+
+Time: 00:34.094, Memory: 62.00 MB
+
+There were 14 errors:
+
+1) Tests\Feature\FinancialReportingTest::test_financial_summary_and_operational_net_income
+Illuminate\Validation\ValidationException: The remaining balance is collected only at actual pickup after Ready for pickup.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Validation\ValidationException.php:70
+C:\Users\User\Desktop\IT12_Project\app\Services\OrderService.php:304
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Concerns\ManagesTransactions.php:35
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\DatabaseManager.php:491
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\Facades\Facade.php:363
+C:\Users\User\Desktop\IT12_Project\app\Services\OrderService.php:287
+C:\Users\User\Desktop\IT12_Project\tests\Feature\FinancialReportingTest.php:74
+
+2) Tests\Feature\FinancialReportingTest::test_cancellation_income_excludes_a_final_payment_recorded_before_cancellation
+Illuminate\Validation\ValidationException: The remaining balance is collected only at actual pickup after Ready for pickup.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Validation\ValidationException.php:70
+C:\Users\User\Desktop\IT12_Project\app\Services\OrderService.php:304
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Concerns\ManagesTransactions.php:35
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\DatabaseManager.php:491
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\Facades\Facade.php:363
+C:\Users\User\Desktop\IT12_Project\app\Services\OrderService.php:287
+C:\Users\User\Desktop\IT12_Project\tests\Feature\FinancialReportingTest.php:183
+
+3) Tests\Feature\FixedCatalogAndPaymentReviewTest::test_cash_workflow_and_readiness_before_collection_are_preserved
+Illuminate\Validation\ValidationException: Confirm actual collection and verification of the remaining payment.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Validation\ValidationException.php:70
+C:\Users\User\Desktop\IT12_Project\app\Services\OrderService.php:309
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Concerns\ManagesTransactions.php:35
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\DatabaseManager.php:491
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\Facades\Facade.php:363
+C:\Users\User\Desktop\IT12_Project\app\Services\OrderService.php:287
+C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php:178
+
+4) Tests\Feature\FixedCatalogAndPaymentReviewTest::test_bakery_failure_refunds_all_verified_money_only_after_transfer_confirmation
+Illuminate\Validation\ValidationException: The remaining balance is collected only at actual pickup after Ready for pickup.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Validation\ValidationException.php:70
+C:\Users\User\Desktop\IT12_Project\app\Services\OrderService.php:304
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Concerns\ManagesTransactions.php:35
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\DatabaseManager.php:491
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\Facades\Facade.php:363
+C:\Users\User\Desktop\IT12_Project\app\Services\OrderService.php:287
+C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php:189
+
+5) Tests\Feature\FixedCatalogAndPaymentReviewTest::test_late_readiness_allows_full_refund_and_private_page_keeps_refund_history
+Illuminate\Validation\ValidationException: Confirm the bakery cannot fulfil the order. Late customer collection alone is not a bakery failure.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Validation\ValidationException.php:70
+C:\Users\User\Desktop\IT12_Project\app\Services\RefundService.php:20
+C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php:336
+
+6) Tests\Feature\FixedCatalogAndPaymentReviewTest::test_historical_readiness_is_not_inferred_but_staff_can_declare_documented_bakery_failure
+Illuminate\Validation\ValidationException: The remaining balance is collected only at actual pickup after Ready for pickup.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Validation\ValidationException.php:70
+C:\Users\User\Desktop\IT12_Project\app\Services\OrderService.php:304
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Concerns\ManagesTransactions.php:35
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\DatabaseManager.php:491
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\Facades\Facade.php:363
+C:\Users\User\Desktop\IT12_Project\app\Services\OrderService.php:287
+C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php:354
+
+7) Tests\Feature\OrderAndPaymentBusinessRulesTest::test_50_percent_down_payment_accepted_and_confirms_order
+Illuminate\Auth\Access\AuthorizationException: This action requires an active Owner.
+
+C:\Users\User\Desktop\IT12_Project\app\Services\StaffAccess.php:14
+C:\Users\User\Desktop\IT12_Project\app\Services\OrderService.php:197
+C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderAndPaymentBusinessRulesTest.php:90
+
+8) Tests\Feature\OrderAndPaymentBusinessRulesTest::test_duplicate_down_payment_rejected
+Illuminate\Auth\Access\AuthorizationException: This action requires an active Owner.
+
+C:\Users\User\Desktop\IT12_Project\app\Services\StaffAccess.php:14
+C:\Users\User\Desktop\IT12_Project\app\Services\OrderService.php:197
+C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderAndPaymentBusinessRulesTest.php:124
+
+9) Tests\Feature\OrderAndPaymentBusinessRulesTest::test_final_payment_accepted_when_exact_balance_is_paid
+Illuminate\Auth\Access\AuthorizationException: This action requires an active Owner.
+
+C:\Users\User\Desktop\IT12_Project\app\Services\StaffAccess.php:14
+C:\Users\User\Desktop\IT12_Project\app\Services\OrderService.php:197
+C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderAndPaymentBusinessRulesTest.php:157
+
+10) Tests\Feature\OrderAndPaymentBusinessRulesTest::test_payment_exceeding_balance_rejected
+Illuminate\Auth\Access\AuthorizationException: This action requires an active Owner.
+
+C:\Users\User\Desktop\IT12_Project\app\Services\StaffAccess.php:14
+C:\Users\User\Desktop\IT12_Project\app\Services\OrderService.php:197
+C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderAndPaymentBusinessRulesTest.php:179
+
+11) Tests\Feature\OrderAndPaymentBusinessRulesTest::test_cancelled_order_preserves_payment_and_rejects_further_payment
+Illuminate\Auth\Access\AuthorizationException: This action requires an active Owner.
+
+C:\Users\User\Desktop\IT12_Project\app\Services\StaffAccess.php:14
+C:\Users\User\Desktop\IT12_Project\app\Services\OrderService.php:197
+C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderAndPaymentBusinessRulesTest.php:195
+
+12) Tests\Feature\OrderAndPaymentBusinessRulesTest::test_completed_at_is_recorded_and_not_overwritten
+Illuminate\Auth\Access\AuthorizationException: This action requires an active Owner.
+
+C:\Users\User\Desktop\IT12_Project\app\Services\StaffAccess.php:14
+C:\Users\User\Desktop\IT12_Project\app\Services\OrderService.php:197
+C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderAndPaymentBusinessRulesTest.php:214
+
+13) Tests\Feature\OrderAndPaymentBusinessRulesTest::test_cancelled_at_is_recorded_and_not_overwritten
+Illuminate\Auth\Access\AuthorizationException: This action requires an active Owner.
+
+C:\Users\User\Desktop\IT12_Project\app\Services\StaffAccess.php:14
+C:\Users\User\Desktop\IT12_Project\app\Services\OrderService.php:436
+C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderAndPaymentBusinessRulesTest.php:246
+
+14) Tests\Feature\OrderReviewAndPricingTest::test_invalid_status_transitions_and_terminal_state_changes_are_rejected
+Illuminate\Validation\ValidationException: The remaining balance is collected only at actual pickup after Ready for pickup.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Validation\ValidationException.php:70
+C:\Users\User\Desktop\IT12_Project\app\Services\OrderService.php:304
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Concerns\ManagesTransactions.php:35
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\DatabaseManager.php:491
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\Facades\Facade.php:363
+C:\Users\User\Desktop\IT12_Project\app\Services\OrderService.php:287
+C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderReviewAndPricingTest.php:104
+
+--
+
+There were 6 failures:
+
+1) Tests\Feature\FixedCatalogAndPaymentReviewTest::test_proof_is_private_and_does_not_count_as_payment_until_exact_verification
+Failed asserting that 0.0 is identical to 1350.0.
+
+C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php:137
+
+2) Tests\Feature\InventoryAndAuthorizationBusinessRulesTest::test_assistant_access_restrictions
+Failed asserting that false is true.
+
+C:\Users\User\Desktop\IT12_Project\tests\Feature\InventoryAndAuthorizationBusinessRulesTest.php:181
+
+3) Tests\Feature\InventoryAndAuthorizationBusinessRulesTest::test_assistant_can_access_all_business_modules_but_not_user_management
+Expected response status code [200] but received 403.
+Failed asserting that 403 is identical to 200.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponseAssert.php:45
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:175
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\Concerns\AssertsStatusCodes.php:16
+C:\Users\User\Desktop\IT12_Project\tests\Feature\InventoryAndAuthorizationBusinessRulesTest.php:195
+
+4) Tests\Feature\OrderAndPaymentBusinessRulesTest::test_incorrect_down_payment_rejected
+Failed asserting that exception of type "Illuminate\Auth\Access\AuthorizationException" matches expected exception "Illuminate\Validation\ValidationException". Message was: "This action requires an active Owner." at
+C:\Users\User\Desktop\IT12_Project\app\Services\StaffAccess.php:14
+C:\Users\User\Desktop\IT12_Project\app\Services\OrderService.php:197
+C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderAndPaymentBusinessRulesTest.php:111
+.
+
+5) Tests\Feature\Phase3QAFixesTest::test_payment_controller_requires_reference_number_for_gcash_payments
+Expected response status code [201, 301, 302, 303, 307, 308] but received 403.
+Failed asserting that false is true.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponseAssert.php:45
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:200
+C:\Users\User\Desktop\IT12_Project\tests\Feature\Phase3QAFixesTest.php:163
+
+6) Tests\Feature\UiPresentationTest::test_order_pages_preserve_actions_and_price_locking_in_every_lifecycle_state
+Failed asserting that '<!DOCTYPE html>\n
+<html lang="en">\n
+<head>\n
+    <meta charset="UTF-8">\n
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n
+    <title>Order ORD-20261004-FA10E67E19 - Aling Chona Cakes & Cupcakes</title>\n
+    <script src="https://cdn.tailwindcss.com"></script>\n
+    <script>\n
+        tailwind.config = {\n
+            theme: {\n
+                extend: {\n
+                    fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },\n
+                    colors: {\n
+                        cream: { 50: '#FDFBF7', 100: '#F5F1EB' },\n
+                        cocoa: { 50: '#F5F1EB', 100: '#E8E0D4', 200: '#D4C4B0', 300: '#C2956B', 400: '#716153', 500: '#5C4A3A', 600: '#3C2415', 700: '#2C1810', 800: '#1A0E08' },\n
+                    }\n
+                }\n
+            }\n
+        }\n
+    </script>\n
+    <link rel="preconnect" href="https://fonts.googleapis.com">\n
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">\n
+    <script defer src="http://127.0.0.1:8000/js/alpine.min.js"></script>\n
+    <style>\n
+        [x-cloak] { display: none !important; }\n
+        /* Custom scrollbar for sidebar */\n
+        .sidebar-scroll::-webkit-scrollbar { width: 4px; }\n
+        .sidebar-scroll::-webkit-scrollbar-track { background: transparent; }\n
+        .sidebar-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }\n
+    </style>\n
+    <link rel="stylesheet" href="http://127.0.0.1:8000/css/bakery-ui.css?v=1790948038">\n
+<script defer src="http://127.0.0.1:8000/js/bakery-ui.js?v=1790947304"></script>\n
+</head>\n
+<body class="bg-cream-50 text-cocoa-500 font-sans min-h-screen" x-data="{ sidebarOpen: false }">\n
+    <a class="skip-link" href="#main-content">Skip to main content</a>\n
+\n
+    \n
+    <div x-show="sidebarOpen" x-transition:enter="transition-opacity ease-out duration-200" x-transition:leave="transition-opacity ease-in duration-150"\n
+         data-sidebar-backdrop class="fixed inset-0 z-40 bg-black/40 lg:hidden" @click="sidebarOpen = false" x-cloak></div>\n
+\n
+    \n
+    <aside id="staff-navigation" data-sidebar :data-open="sidebarOpen.toString()" aria-label="Staff navigation" :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"\n
+           class="fixed top-0 left-0 z-50 h-full w-60 bg-cocoa-700 text-cocoa-200 flex flex-col transition-transform duration-200 lg:translate-x-0">\n
+\n
+        <button type="button" data-sidebar-close @click="sidebarOpen = false" aria-label="Close navigation" class="sidebar-close self-end p-3 text-white"><svg class="ui-icon" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m6 6 12 12M6 18 18 6" /></svg>\n
+</button>\n
+        \n
+        <div class="px-5 py-5 border-b border-white/10">\n
+            <a href="http://127.0.0.1:8000/dashboard" class="flex items-center gap-3">\n
+                <span class="w-9 h-9 rounded-lg bg-cocoa-300 flex items-center justify-center text-white text-lg font-bold">A</span>\n
+                <div>\n
+                    <span class="font-bold text-white text-sm tracking-tight block leading-tight">Aling Chona</span>\n
+                    <span class="text-xs text-cocoa-200  leading-tight">Cakes & Cupcakes</span>\n
+                </div>\n
+            </a>\n
+        </div>\n
+\n
+        \n
+        <nav class="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto sidebar-scroll">\n
+            <a href="http://127.0.0.1:8000/dashboard"\n
+               class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition\n
+                      text-cocoa-200 hover:bg-white/5 hover:text-white">\n
+                <svg class="ui-icon w-[18px] h-[18px] flex-shrink-0" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" /></svg>\n
+                Dashboard\n
+            </a>\n
+\n
+            <a href="http://127.0.0.1:8000/orders"\n
+               class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition\n
+                      bg-white/10 text-white font-semibold">\n
+                <svg class="ui-icon w-[18px] h-[18px] flex-shrink-0" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15a2.25 2.25 0 012.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25z" /></svg>\n
+                Orders\n
+            </a>\n
+\n
+            <a href="http://127.0.0.1:8000/pickup-schedule"\n
+               class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition\n
+                      text-cocoa-200 hover:bg-white/5 hover:text-white">\n
+                <svg class="ui-icon w-[18px] h-[18px] flex-shrink-0" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" /></svg>\n
+                Pickup Schedule\n
+            </a>\n
+\n
+            <div class="pt-4 pb-1.5 px-3">\n
+                <span class="text-xs font-semibold  text-cocoa-200">Manage</span>\n
+            </div>\n
+\n
+            <a href="http://127.0.0.1:8000/customers"\n
+               class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition\n
+                      text-cocoa-200 hover:bg-white/5 hover:text-white">\n
+                <svg class="ui-icon w-[18px] h-[18px] flex-shrink-0" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" /></svg>\n
+                Customers\n
+            </a>\n
+\n
+            <a href="http://127.0.0.1:8000/products"\n
+               class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition\n
+                      text-cocoa-200 hover:bg-white/5 hover:text-white">\n
+                <svg class="ui-icon w-[18px] h-[18px] flex-shrink-0" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" /></svg>\n
+                Products\n
+            </a>\n
+\n
+            <a href="http://127.0.0.1:8000/supplies"\n
+               class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition\n
+                      text-cocoa-200 hover:bg-white/5 hover:text-white">\n
+                <svg class="ui-icon w-[18px] h-[18px] flex-shrink-0" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-2.25-1.313M21 7.5v2.25m0-2.25l-2.25 1.313M3 7.5l2.25-1.313M3 7.5l2.25 1.313M3 7.5v2.25m9 3l2.25-1.313M12 12.75l-2.25-1.313M12 12.75V15m0 6.75l2.25-1.313M12 21.75V19.5m0 2.25l-2.25-1.313m0-16.875L12 2.25l2.25 1.313M21 14.25v2.25l-2.25 1.313m-13.5 0L3 16.5v-2.25" /></svg>\n
+                Inventory\n
+            </a>\n
+\n
+            <div class="pt-4 pb-1.5 px-3">\n
+                <span class="text-xs font-semibold  text-cocoa-200">Finance</span>\n
+            </div>\n
+\n
+            <a href="http://127.0.0.1:8000/expenses"\n
+               class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition\n
+                      text-cocoa-200 hover:bg-white/5 hover:text-white">\n
+                <svg class="ui-icon w-[18px] h-[18px] flex-shrink-0" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" /></svg>\n
+                Expenses\n
+            </a>\n
+\n
+                        <a href="http://127.0.0.1:8000/reports"\n
+               class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition\n
+                      text-cocoa-200 hover:bg-white/5 hover:text-white">\n
+                <svg class="ui-icon w-[18px] h-[18px] flex-shrink-0" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" /></svg>\n
+                Reports\n
+            </a>\n
+            \n
+                            <div class="pt-4 pb-1.5 px-3">\n
+                    <span class="text-xs font-semibold  text-cocoa-200">Admin</span>\n
+                </div>\n
+\n
+                <a href="http://127.0.0.1:8000/users"\n
+                   class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition\n
+                          text-cocoa-200 hover:bg-white/5 hover:text-white">\n
+                    <svg class="ui-icon w-[18px] h-[18px] flex-shrink-0" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" /></svg>\n
+                    <span>Users (Owner)</span>\n
+                </a>\n
+                    </nav>\n
+\n
+    </aside>\n
+\n
+    \n
+    <div class="lg:pl-60 min-h-screen flex flex-col">\n
+        \n
+        <header class="sticky top-0 z-30 bg-white border-b border-cocoa-100">\n
+            <div class="flex items-center justify-between px-4 sm:px-6 lg:px-8 h-14">\n
+                \n
+                <button type="button" aria-label="Open navigation" aria-controls="staff-navigation" :aria-expanded="sidebarOpen.toString()" @click="sidebarOpen = true" class="lg:hidden p-2 -ml-2 rounded-lg text-cocoa-400 hover:text-cocoa-600 hover:bg-cream-100 transition">\n
+                    <svg class="ui-icon w-5 h-5" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>\n
+                </button>\n
+\n
+                \n
+                <span class="hidden lg:block text-sm text-cocoa-500">Staff workspace</span>\n
+\n
+                \n
+                <div class="flex items-center gap-3 text-sm min-w-0">\n
+                    <span class="text-cocoa-400 text-xs min-w-0">Review  Owner <span class="text-cocoa-500">&middot;</span> <span class="capitalize">owner</span></span>\n
+                    <form action="http://127.0.0.1:8000/logout" method="POST" class="inline">\n
+                        <input type="hidden" name="_token" value="uIlSPsz57Zw7uTmYoLOGhX89eF8tbdIbNeXJHC9Q" autocomplete="off">                        <button type="submit" class="px-3 py-1.5 text-xs font-medium text-cocoa-400 hover:text-cocoa-600 border border-cocoa-100 rounded-lg hover:bg-cream-100 transition">\n
+                            Sign Out\n
+                        </button>\n
+                    </form>\n
+                </div>\n
+            </div>\n
+        </header>\n
+\n
+        \n
+        <main id="main-content" tabindex="-1" class="flex-grow px-4 sm:px-6 lg:px-8 py-6">\n
+            \n
+            \n
+            \n
+            <div class="space-y-4">\n
+    \n
+    <div class="page-heading">\n
+        <div class="flex items-center gap-2 text-sm">\n
+            <a href="http://127.0.0.1:8000/orders" class="text-cocoa-500 hover:text-cocoa-600 font-medium transition"><svg class="ui-icon mr-1" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" /></svg>\n
+ Orders</a>\n
+            <span class="text-cocoa-200">/</span>\n
+            <span class="text-cocoa-400 font-mono">ORD-20261004-FA10E67E19</span>\n
+        </div>\n
+        <span class="px-3 py-1 rounded-full text-xs font-semibold\n
+            bg-cocoa-50 text-cocoa-500 ">\n
+            Staff Created (Review)\n
+        </span>\n
+    </div>\n
+\n
+    \n
+    <div class="bg-white border border-cocoa-100 rounded-xl p-6">\n
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">\n
+            <div>\n
+                <div class="flex items-center gap-3 flex-wrap">\n
+                    <h1 class="text-2xl font-bold text-cocoa-600 font-mono">ORD-20261004-FA10E67E19</h1>\n
+                    <span class="status">Confirmed</span>\n
+                    <span class="status status-attention">Partially paid</span>\n
+                </div>\n
+                <div class="text-xs text-cocoa-400 mt-2 flex flex-wrap gap-x-4 gap-y-1">\n
+                    <span>Submitted: <strong class="text-cocoa-500">Oct 04, 2026 08:57 PM</strong></span>\n
+                                                        </div>\n
+            </div>\n
+\n
+            \n
+            <div class="order-money border-t md:border-t-0 md:border-l border-cocoa-100 md:pl-6 pt-4 md:pt-0">\n
+                <div>\n
+                    <span class="text-xs text-cocoa-500  font-bold block">Total</span>\n
+                    <span class="text-xl font-bold text-cocoa-600">₱123,456.78</span>\n
+                </div>\n
+                <div>\n
+                    <span class="text-xs text-cocoa-500  font-bold block">Paid</span>\n
+                    <span class="text-base font-bold text-emerald-700">₱61,728.39</span>\n
+                </div>\n
+                <div>\n
+                    <span class="text-xs text-cocoa-500  font-bold block">Balance</span>\n
+                    <span class="text-base font-bold text-red-600">\n
+                        ₱61,728.39\n
+                    </span>\n
+                </div>\n
+            </div>\n
+        </div>\n
+    </div>\n
+\n
+    \n
+    <div class="review-layout">\n
+        \n
+        <div class="review-main space-y-4">\n
+            \n
+            <div class="bg-white border border-cocoa-100 rounded-xl p-4">\n
+                <div class="flex items-center justify-between border-b border-cocoa-100 pb-4 mb-5">\n
+                    <h2 class="text-sm font-semibold text-cocoa-600">Order Items & Customizations</h2>\n
+                    <span class="text-sm text-cocoa-500">Saved prices</span>\n
+                </div>\n
+\n
+                <div class="space-y-5">\n
+                                            <div class="item-section space-y-3">\n
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-cocoa-100/60 pb-3">\n
+                                <div>\n
+                                    <h3 class="font-semibold text-cocoa-600 text-sm">Custom celebration cake with buttercream flowers and a very long design description</h3>\n
+                                    <span class="text-xs text-cocoa-400">Saved package price: ₱123,456.78</span>\n
+                                </div>\n
+                                <div class="text-right">\n
+                                    <span class="text-xs text-cocoa-400 block">Subtotal (1 qty)</span>\n
+                                    <span class="text-base font-bold text-cocoa-600">₱123,456.78</span>\n
+                                </div>\n
+                            </div>\n
+\n
+                            \n
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">\n
+                                <div>\n
+                                    <span class="text-cocoa-500 font-bold block text-xs ">Layers</span>\n
+                                    <span class="text-cocoa-700 font-medium">2</span>\n
+                                </div>\n
+                                <div>\n
+                                    <span class="text-cocoa-500 font-bold block text-xs ">Theme / Colors</span>\n
+                                    <span class="text-cocoa-700 font-medium">Pastel blue and gold floral celebration</span>\n
+                                </div>\n
+                                <div>\n
+                                    <span class="text-cocoa-500 font-bold block text-xs ">Special Requests</span>\n
+                                    <span class="text-cocoa-700 font-medium">Happy birthday, Maria! Please keep the inscription and every design detail visible.</span>\n
+                                </div>\n
+                            </div>\n
+\n
+                            \n
+                            \n
+                            \n
+                            <div class="included-items text-sm space-y-1">\n
+        <p class="font-semibold">Included per package · ₱0 extra</p>\n
+                <p class="whitespace-pre-line">Two-layer cake and 8 included cupcakes</p>    </div>\n
+                                                    </div>\n
+                                    </div>\n
+            </div>\n
+\n
+            \n
+            <div class="bg-white border border-cocoa-100 rounded-xl p-4">\n
+                <div class="flex items-center justify-between border-b border-cocoa-100 pb-4 mb-4">\n
+                    <h2 class="text-sm font-semibold text-cocoa-600">All Reference Images</h2>\n
+                    <span class="text-xs text-cocoa-400">0 image(s)</span>\n
+                </div>\n
+\n
+                                    <p class="text-sm text-cocoa-400 py-4 text-center">No images uploaded for this order.</p>\n
+                \n
+            </div>\n
+\n
+            \n
+            \n
+            <div class="bg-white border border-cocoa-100 rounded-xl p-6 space-y-4">\n
+                <div class="flex items-center justify-between border-b border-cocoa-100 pb-4">\n
+                    <h2 class="text-sm font-semibold text-cocoa-600">Payments</h2>\n
+                    <span class="text-xs font-mono font-semibold text-emerald-700">\n
+                        Paid: ₱61,728.39 / ₱123,456.78\n
+                    </span>\n
+                </div>\n
+\n
+                \n
+                \n
+                \n
+                                                    <p class="text-sm text-cocoa-500">Exactly 50% is collected at booking. The remaining balance is collected at actual pickup after the order is Ready for pickup.</p>\n
+                \n
+                \n
+                <div class="table-scroll" role="region" aria-label="Scrollable data table" tabindex="0">\n
+                    <table class="w-full text-left">\n
+                        <thead>\n
+                            <tr class="bg-cream-100 text-cocoa-600 text-xs  font-bold">\n
+                                <th class="px-4 py-3">Date</th>\n
+                                <th class="px-4 py-3">Type</th>\n
+                                <th class="px-4 py-3">Method</th>\n
+                                <th class="px-4 py-3">Ref #</th>\n
+                                <th class="px-4 py-3">Recorded By</th>\n
+                                <th class="px-4 py-3 text-right">Amount</th>\n
+                            </tr>\n
+                        </thead>\n
+                        <tbody class="divide-y divide-cocoa-100/60">\n
+                                                            <tr class="text-sm hover:bg-cream-50 transition">\n
+                                    <td class="px-4 py-3 text-xs text-cocoa-500">Oct 04, 2026 08:57 PM</td>\n
+                                    <td class="px-4 py-3">\n
+                                        <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold\n
+                                            bg-amber-50 text-cocoa-500 ring-1 ring-amber-200">\n
+                                            down payment\n
+                                        </span>\n
+                                    </td>\n
+                                    <td class="px-4 py-3 font-medium text-cocoa-500 text-xs">gcash</td>\n
+                                    <td class="px-4 py-3 font-mono text-cocoa-400 text-xs">TEST-REF-123</td>\n
+                                    <td class="px-4 py-3 text-cocoa-400 text-xs">Review</td>\n
+                                    <td class="px-4 py-3 text-right font-semibold text-cocoa-600">₱61,728.39</td>\n
+                                </tr>\n
+                                                    </tbody>\n
+                    </table>\n
+                </div>\n
+            </div>\n
+        </div>\n
+        \n
+        <div class="review-context space-y-6">\n
+            \n
+            <div class="bg-white border border-cocoa-100 rounded-xl p-5">\n
+                <h2 class="text-sm font-semibold text-cocoa-600 mb-3">Customer and pickup</h2>\n
+                <div class="space-y-2.5 text-sm">\n
+                    <div>\n
+                        <span class="text-xs text-cocoa-400 block font-medium">Name</span>\n
+                        <a href="http://127.0.0.1:8000/customers/1" class="font-semibold text-cocoa-600 hover:text-cocoa-500 transition">\n
+                            Maria Alexandra De la Cruz Santiago\n
+                        </a>\n
+                    </div>\n
+                    <div>\n
+                        <span class="text-xs text-cocoa-400 block font-medium">Phone</span>\n
+                        <span class="font-mono font-medium text-cocoa-600">09171234567</span>\n
+                    </div>\n
+                </div>\n
+                <div class="border-t border-cocoa-100 my-4"></div>\n
+                <h3 class="text-xs font-semibold text-cocoa-500 mb-3">Pickup Schedule</h3>\n
+                <div class="space-y-2.5 text-sm">\n
+                    <div>\n
+                        <span class="text-xs text-cocoa-400 block font-medium">Pickup Date</span>\n
+                        <span class="font-semibold text-cocoa-600">October 07, 2026 (Wednesday)</span>\n
+                    </div>\n
+                    <div>\n
+                        <span class="text-xs text-cocoa-400 block font-medium">Pickup Time</span>\n
+                        <span class="font-semibold text-cocoa-600">02:00 PM</span>\n
+                    </div>\n
+                                            <div class="pt-2 border-t border-cocoa-100 mt-2">\n
+                            <span class="text-xs text-cocoa-400 block font-medium">Order Notes</span>\n
+                            <p class="text-cocoa-600 italic mt-0.5 text-xs">Keep the cake level. Customer will call before pickup.</p>\n
+                        </div>\n
+                                    </div>\n
+            </div>\n
+\n
+            <section class="section-form space-y-4" aria-labelledby="readiness-deadline">\n
+    <h2 id="readiness-deadline" class="font-semibold text-cocoa-600">Readiness and refunds</h2>\n
+    <p class="text-sm">Ready for pickup deadline: <strong>Oct 7, 2026 2:00 PM</strong> (Asia/Manila). Completion happens after collection and final payment.</p>\n
+                <details><summary class="cursor-pointer py-2 font-medium text-red-800">Bakery cannot fulfil this order</summary>\n
+            <form action="http://127.0.0.1:8000/orders/1/bakery-failure" method="POST" class="space-y-3 mt-3" onsubmit="return confirm('Cancel for bakery failure and request a full refund of all verified payments?');"><input type="hidden" name="_token" value="uIlSPsz57Zw7uTmYoLOGhX89eF8tbdIbNeXJHC9Q" autocomplete="off">                <p class="text-sm">This cancels the order for bakery failure. All verified payments (₱61,728.39) must be returned, including any final payment.</p>\n
+                <p class="text-sm">Use this for an actual bakery failure, including one after the order was marked ready. A customer collecting late alone is not a bakery failure.</p>\n
+                <div><label for="failure-reason">Reason shown to the buyer</label><textarea id="failure-reason" name="reason" rows="3" maxlength="1000" required class="w-full"></textarea></div>\n
+                <label class="flex items-start gap-3"><input type="checkbox" name="bakery_failure_confirmed" value="1" required ><span>I confirm the bakery cannot fulfil this order. This is not solely a late customer collection.</span></label>\n
+                                <button class="w-full px-4 py-2 border border-red-200 text-red-800 rounded-lg">Mark bakery failure</button>\n
+            </form>\n
+        </details>\n
+    </section>\n
+\n
+            \n
+            <div class="bg-white border border-cocoa-100 rounded-xl p-5 space-y-3">\n
+                <h2 class="text-sm font-semibold text-cocoa-600">Order actions</h2>\n
+\n
+                                    <form action="http://127.0.0.1:8000/orders/1/status" method="POST">\n
+                        <input type="hidden" name="_token" value="uIlSPsz57Zw7uTmYoLOGhX89eF8tbdIbNeXJHC9Q" autocomplete="off">                        <input type="hidden" name="_method" value="PATCH">                        <input type="hidden" name="status" value="preparing">\n
+                        <button type="submit" class="w-full py-2.5 bg-cocoa-600 hover:bg-cocoa-700 text-white font-semibold text-sm rounded-lg transition flex items-center justify-center gap-2 ">\n
+                            <span>Start Preparing (Baking)</span>\n
+                        </button>\n
+                    </form>\n
+                \n
+                                    <form action="http://127.0.0.1:8000/orders/1/cancel" method="POST" onsubmit="return confirm('Are you sure you want to cancel this order? The deposit is retained under the customer-cancellation policy. For bakery failure, use the full-refund action instead.');">\n
+                        <input type="hidden" name="_token" value="uIlSPsz57Zw7uTmYoLOGhX89eF8tbdIbNeXJHC9Q" autocomplete="off">                        <button type="submit" class="w-full py-2 bg-white hover:bg-red-50 text-red-600 font-medium text-sm rounded-lg border border-red-200 transition">\n
+                            <span>Customer cancellation</span>\n
+                        </button>\n
+                    </form>\n
+                            </div>\n
+        </div>\n
+\n
+    </div>\n
+</div>\n
+        </main>\n
+\n
+        \n
+        <footer class="border-t border-cocoa-100 px-4 sm:px-6 lg:px-8 py-3 mt-auto">\n
+            <div class="text-xs text-cocoa-400 flex items-center justify-between">\n
+                <span>Aling Chona Cakes & Cupcakes — Staff System</span>\n
+                \n
+            </div>\n
+        </footer>\n
+    </div>\n
+\n
+    <script type="application/json" id="validation-errors">[]</script>\n
+</body>\n
+</html>\n
+' [UTF-8](length: 28414) contains "value="final_payment"" [ASCII](length: 21).
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponseAssert.php:45
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:710
+C:\Users\User\Desktop\IT12_Project\tests\Feature\UiPresentationTest.php:45
+
+ERRORS!
+Tests: 109, Assertions: 1008, Errors: 14, Failures: 6.

@@ -1,0 +1,679 @@
+[
+  {
+    "url": "/orders",
+    "width": 390,
+    "overflow": 0,
+    "controls": [
+      {
+        "tag": "BUTTON",
+        "text": "",
+        "label": "Open navigation",
+        "class": "lg:hidden p-2 -ml-2 rounded-lg text-cocoa-400 hover:text-cocoa-600 hover:bg-cream-100 transition",
+        "width": 34,
+        "height": 44
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Sign Out",
+        "label": null,
+        "class": "px-3 py-1.5 text-xs font-medium text-cocoa-400 hover:text-cocoa-600 border border-cocoa-100 rounded-lg hover:bg-cream-100 transition",
+        "width": 66.59375,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "New Staff Order",
+        "label": null,
+        "class": "bg-cocoa-600 hover:bg-cocoa-700 text-white font-semibold text-sm px-4 py-2 rounded-lg transition self-start sm:self-auto",
+        "width": 124.34375,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "All Statuses",
+        "label": null,
+        "class": "px-3 py-1.5 rounded-lg font-medium transition bg-cocoa-600 text-white",
+        "width": 76.890625,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "Pending Review",
+        "label": null,
+        "class": "px-3 py-1.5 rounded-lg font-medium transition text-cocoa-500 hover:bg-cream-100",
+        "width": 105.328125,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "Confirmed",
+        "label": null,
+        "class": "px-3 py-1.5 rounded-lg font-medium transition text-cocoa-500 hover:bg-cream-100",
+        "width": 69.328125,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "Preparing",
+        "label": null,
+        "class": "px-3 py-1.5 rounded-lg font-medium transition text-cocoa-500 hover:bg-cream-100",
+        "width": 62.203125,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "Ready for Pickup",
+        "label": null,
+        "class": "px-3 py-1.5 rounded-lg font-medium transition text-cocoa-500 hover:bg-cream-100",
+        "width": 111.984375,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "Completed",
+        "label": null,
+        "class": "px-3 py-1.5 rounded-lg font-medium transition text-cocoa-500 hover:bg-cream-100",
+        "width": 70.21875,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "Cancelled",
+        "label": null,
+        "class": "px-3 py-1.5 rounded-lg font-medium transition text-cocoa-500 hover:bg-cream-100",
+        "width": 63.96875,
+        "height": 44
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Filter",
+        "label": null,
+        "class": "bg-white border border-cocoa-100 text-cocoa-500 hover:bg-cream-100 font-medium text-sm px-4 py-2 rounded-lg transition",
+        "width": 45.625,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "ORD-20261004-09FDB4CEF4",
+        "label": null,
+        "class": "hover:underline",
+        "width": 200.90625,
+        "height": 17
+      },
+      {
+        "tag": "A",
+        "text": "Review",
+        "label": null,
+        "class": "bg-white border border-cocoa-100 text-cocoa-500 hover:bg-cream-100 font-medium text-sm px-3 py-1.5 rounded-lg transition inline-block",
+        "width": 48.875,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "ORD-20261004-E349AEAFF3",
+        "label": null,
+        "class": "hover:underline",
+        "width": 200.890625,
+        "height": 17
+      },
+      {
+        "tag": "A",
+        "text": "Review",
+        "label": null,
+        "class": "bg-white border border-cocoa-100 text-cocoa-500 hover:bg-cream-100 font-medium text-sm px-3 py-1.5 rounded-lg transition inline-block",
+        "width": 48.875,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "ORD-20261004-A5C0DA0CD1",
+        "label": null,
+        "class": "hover:underline",
+        "width": 108.4375,
+        "height": 41.796875
+      },
+      {
+        "tag": "A",
+        "text": "Review",
+        "label": null,
+        "class": "bg-white border border-cocoa-100 text-cocoa-500 hover:bg-cream-100 font-medium text-sm px-3 py-1.5 rounded-lg transition inline-block",
+        "width": 48.875,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "ORD-20261004-3EECC3C6B6",
+        "label": null,
+        "class": "hover:underline",
+        "width": 202.671875,
+        "height": 17
+      },
+      {
+        "tag": "A",
+        "text": "View",
+        "label": null,
+        "class": "bg-white border border-cocoa-100 text-cocoa-500 hover:bg-cream-100 font-medium text-sm px-3 py-1.5 rounded-lg transition inline-block",
+        "width": 33.703125,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "ORD-20261004-0031CC6CDE",
+        "label": null,
+        "class": "hover:underline",
+        "width": 201.78125,
+        "height": 17
+      },
+      {
+        "tag": "A",
+        "text": "View",
+        "label": null,
+        "class": "bg-white border border-cocoa-100 text-cocoa-500 hover:bg-cream-100 font-medium text-sm px-3 py-1.5 rounded-lg transition inline-block",
+        "width": 33.703125,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "ORD-20261004-87CC55C817",
+        "label": null,
+        "class": "hover:underline",
+        "width": 196.453125,
+        "height": 17
+      },
+      {
+        "tag": "A",
+        "text": "View",
+        "label": null,
+        "class": "bg-white border border-cocoa-100 text-cocoa-500 hover:bg-cream-100 font-medium text-sm px-3 py-1.5 rounded-lg transition inline-block",
+        "width": 33.703125,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "ORD-20261004-A9718E74BD",
+        "label": null,
+        "class": "hover:underline",
+        "width": 200,
+        "height": 17
+      },
+      {
+        "tag": "A",
+        "text": "View",
+        "label": null,
+        "class": "bg-white border border-cocoa-100 text-cocoa-500 hover:bg-cream-100 font-medium text-sm px-3 py-1.5 rounded-lg transition inline-block",
+        "width": 33.703125,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "ORD-20261004-DB4FAF6D83",
+        "label": null,
+        "class": "hover:underline",
+        "width": 202.390625,
+        "height": 17
+      },
+      {
+        "tag": "A",
+        "text": "Review",
+        "label": null,
+        "class": "bg-white border border-cocoa-100 text-cocoa-500 hover:bg-cream-100 font-medium text-sm px-3 py-1.5 rounded-lg transition inline-block",
+        "width": 48.875,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "ORD-20261004-450D5C3EFA",
+        "label": null,
+        "class": "hover:underline",
+        "width": 199.703125,
+        "height": 17
+      },
+      {
+        "tag": "A",
+        "text": "View",
+        "label": null,
+        "class": "bg-white border border-cocoa-100 text-cocoa-500 hover:bg-cream-100 font-medium text-sm px-3 py-1.5 rounded-lg transition inline-block",
+        "width": 33.703125,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "ORD-20261004-022988FF0E",
+        "label": null,
+        "class": "hover:underline",
+        "width": 192.015625,
+        "height": 17
+      },
+      {
+        "tag": "A",
+        "text": "View",
+        "label": null,
+        "class": "bg-white border border-cocoa-100 text-cocoa-500 hover:bg-cream-100 font-medium text-sm px-3 py-1.5 rounded-lg transition inline-block",
+        "width": 33.703125,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "ORD-20261004-5CECBFEBB2",
+        "label": null,
+        "class": "hover:underline",
+        "width": 206.25,
+        "height": 17
+      },
+      {
+        "tag": "A",
+        "text": "View",
+        "label": null,
+        "class": "bg-white border border-cocoa-100 text-cocoa-500 hover:bg-cream-100 font-medium text-sm px-3 py-1.5 rounded-lg transition inline-block",
+        "width": 33.703125,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "ORD-20261004-69D7992D17",
+        "label": null,
+        "class": "hover:underline",
+        "width": 195.546875,
+        "height": 17
+      },
+      {
+        "tag": "A",
+        "text": "View",
+        "label": null,
+        "class": "bg-white border border-cocoa-100 text-cocoa-500 hover:bg-cream-100 font-medium text-sm px-3 py-1.5 rounded-lg transition inline-block",
+        "width": 33.703125,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "ORD-20261004-69E179118D",
+        "label": null,
+        "class": "hover:underline",
+        "width": 193.171875,
+        "height": 17
+      },
+      {
+        "tag": "A",
+        "text": "View",
+        "label": null,
+        "class": "bg-white border border-cocoa-100 text-cocoa-500 hover:bg-cream-100 font-medium text-sm px-3 py-1.5 rounded-lg transition inline-block",
+        "width": 33.703125,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "ORD-20261004-960189AA4D",
+        "label": null,
+        "class": "hover:underline",
+        "width": 199.109375,
+        "height": 17
+      },
+      {
+        "tag": "A",
+        "text": "View",
+        "label": null,
+        "class": "bg-white border border-cocoa-100 text-cocoa-500 hover:bg-cream-100 font-medium text-sm px-3 py-1.5 rounded-lg transition inline-block",
+        "width": 33.703125,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "ORD-20261004-9888D168FC",
+        "label": null,
+        "class": "hover:underline",
+        "width": 195.5625,
+        "height": 17
+      },
+      {
+        "tag": "A",
+        "text": "View",
+        "label": null,
+        "class": "bg-white border border-cocoa-100 text-cocoa-500 hover:bg-cream-100 font-medium text-sm px-3 py-1.5 rounded-lg transition inline-block",
+        "width": 33.703125,
+        "height": 44
+      }
+    ]
+  },
+  {
+    "url": "/supplies",
+    "width": 390,
+    "overflow": 0,
+    "controls": [
+      {
+        "tag": "BUTTON",
+        "text": "",
+        "label": "Open navigation",
+        "class": "lg:hidden p-2 -ml-2 rounded-lg text-cocoa-400 hover:text-cocoa-600 hover:bg-cream-100 transition",
+        "width": 34,
+        "height": 44
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Sign Out",
+        "label": null,
+        "class": "px-3 py-1.5 text-xs font-medium text-cocoa-400 hover:text-cocoa-600 border border-cocoa-100 rounded-lg hover:bg-cream-100 transition",
+        "width": 66.59375,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "Receive stock",
+        "label": null,
+        "class": "ui-button primary",
+        "width": 111.25,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "Record usage / waste",
+        "label": null,
+        "class": "ui-button",
+        "width": 155.59375,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "Stocktake",
+        "label": null,
+        "class": "ui-button",
+        "width": 89.90625,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "Add supply",
+        "label": null,
+        "class": "ui-button",
+        "width": 99.671875,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "Movement history",
+        "label": null,
+        "class": "ui-button quiet",
+        "width": 140.046875,
+        "height": 44
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Apply",
+        "label": null,
+        "class": "ui-button",
+        "width": 69.671875,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "Reset",
+        "label": null,
+        "class": "ui-button quiet",
+        "width": 63.4375,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "Supply ↕",
+        "label": "Sort by Supply",
+        "class": "sort-heading",
+        "width": 51.140625,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "Category ↕",
+        "label": "Sort by Category",
+        "class": "sort-heading",
+        "width": 63.359375,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "Unit ↕",
+        "label": "Sort by Unit",
+        "class": "sort-heading",
+        "width": 36.65625,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "On hand ↕",
+        "label": "Sort by On hand",
+        "class": "sort-heading",
+        "width": 60.890625,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "Reorder at ↕",
+        "label": "Sort by Reorder at",
+        "class": "sort-heading",
+        "width": 72.140625,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "Butter",
+        "label": null,
+        "class": "record-link",
+        "width": 38.890625,
+        "height": 15
+      },
+      {
+        "tag": "SUMMARY",
+        "text": "Actions",
+        "label": null,
+        "class": "",
+        "width": 113.890625,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "Details",
+        "label": null,
+        "class": "",
+        "width": 113.890625,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "Edit",
+        "label": null,
+        "class": "",
+        "width": 113.890625,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "History",
+        "label": null,
+        "class": "",
+        "width": 113.890625,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "Cake boxes",
+        "label": null,
+        "class": "record-link",
+        "width": 68.0625,
+        "height": 15
+      },
+      {
+        "tag": "SUMMARY",
+        "text": "Actions",
+        "label": null,
+        "class": "",
+        "width": 113.890625,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "Details",
+        "label": null,
+        "class": "",
+        "width": 113.890625,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "Edit",
+        "label": null,
+        "class": "",
+        "width": 113.890625,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "History",
+        "label": null,
+        "class": "",
+        "width": 113.890625,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "Flour",
+        "label": null,
+        "class": "record-link",
+        "width": 33.453125,
+        "height": 15
+      },
+      {
+        "tag": "SUMMARY",
+        "text": "Actions",
+        "label": null,
+        "class": "",
+        "width": 113.890625,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "Details",
+        "label": null,
+        "class": "",
+        "width": 113.890625,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "Edit",
+        "label": null,
+        "class": "",
+        "width": 113.890625,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "History",
+        "label": null,
+        "class": "",
+        "width": 113.890625,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "Sugar",
+        "label": null,
+        "class": "record-link",
+        "width": 35.796875,
+        "height": 15
+      },
+      {
+        "tag": "SUMMARY",
+        "text": "Actions",
+        "label": null,
+        "class": "",
+        "width": 113.890625,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "Details",
+        "label": null,
+        "class": "",
+        "width": 113.890625,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "Edit",
+        "label": null,
+        "class": "",
+        "width": 113.890625,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "History",
+        "label": null,
+        "class": "",
+        "width": 113.890625,
+        "height": 44
+      }
+    ]
+  },
+  {
+    "url": "/customers",
+    "width": 390,
+    "overflow": 0,
+    "controls": [
+      {
+        "tag": "BUTTON",
+        "text": "",
+        "label": "Open navigation",
+        "class": "lg:hidden p-2 -ml-2 rounded-lg text-cocoa-400 hover:text-cocoa-600 hover:bg-cream-100 transition",
+        "width": 34,
+        "height": 44
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Sign Out",
+        "label": null,
+        "class": "px-3 py-1.5 text-xs font-medium text-cocoa-400 hover:text-cocoa-600 border border-cocoa-100 rounded-lg hover:bg-cream-100 transition",
+        "width": 66.59375,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "Add Customer",
+        "label": null,
+        "class": "bg-cocoa-600 hover:bg-cocoa-700 text-white font-semibold text-sm px-4 py-2 rounded-lg transition",
+        "width": 111.78125,
+        "height": 44
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Search",
+        "label": null,
+        "class": "bg-white border border-cocoa-100 text-cocoa-500 hover:bg-cream-100 font-medium text-sm px-4 py-2 rounded-lg transition",
+        "width": 58.25,
+        "height": 44
+      },
+      {
+        "tag": "A",
+        "text": "Maria Alexandra De la Cruz",
+        "label": null,
+        "class": "hover:text-cocoa-700 hover:underline",
+        "width": 181.265625,
+        "height": 17
+      },
+      {
+        "tag": "A",
+        "text": "View",
+        "label": null,
+        "class": "text-cocoa-600 font-medium hover:underline",
+        "width": 33.703125,
+        "height": 17
+      },
+      {
+        "tag": "A",
+        "text": "Edit",
+        "label": null,
+        "class": "text-cocoa-400 hover:text-cocoa-600 transition hover:underline",
+        "width": 26.671875,
+        "height": 17
+      }
+    ]
+  }
+]

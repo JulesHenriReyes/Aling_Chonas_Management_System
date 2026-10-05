@@ -182,7 +182,7 @@
                 </div>
 
                 {{-- Down Payment Form --}}
-                @if ($order->status === 'pending' && $order->user_id !== null)
+                @if (Gate::allows('record-payments') && $order->status === 'pending' && $order->user_id !== null)
                     <div class="bg-cream-50 border border-cocoa-100 rounded-lg p-5 space-y-3">
                         <div class="page-heading">
                             <h3 class="font-semibold text-cocoa-600 text-xs ">
@@ -230,30 +230,31 @@
                 @endif
 
                 {{-- Final Payment Form --}}
-                @if ($order->status !== 'pending' && $order->status !== 'cancelled' && $order->status !== 'completed' && $order->remaining_balance > 0)
+                @if (Gate::allows('record-payments') && $order->status === 'ready_for_pickup' && $order->remaining_balance > 0)
                     <div class="bg-cream-50 border border-cocoa-100 rounded-lg p-5 space-y-3">
                         <div class="page-heading">
                             <h3 class="font-semibold text-cocoa-600 text-xs ">
-                                Record Final Payment
+                                Complete pickup
                             </h3>
                             <span class="font-bold text-sm text-cocoa-600">
                                 Balance: ₱{{ number_format($order->remaining_balance, 2) }}
                             </span>
                         </div>
 
-                        <form action="{{ route('orders.payments.store', $order) }}" method="POST" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3 pt-2">
+                        <p class="text-sm text-cocoa-600">Collect the exact remaining balance only while the customer picks up this Ready for pickup order. Verify the cash or incoming GCash transaction before completing pickup.</p>
+                        <form action="{{ route('orders.completePickup', $order) }}" method="POST" data-action-form data-validation-active="{{ old('_workflow') === 'pickup' ? 'true' : 'false' }}" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3 pt-2" x-data="{ method: {{ Js::from(old('payment_method', 'cash')) }} }">
+                            <input type="hidden" name="_workflow" value="pickup">
                             @csrf
-                            <input type="hidden" name="payment_type" value="final_payment">
 
                             <div>
                                 <label class="block text-xs font-bold text-cocoa-600 mb-1" for="field-admin-orders-show-blade-php-5-{{ $detail->id ?? 0 }}">amount (₱)</label>
-                                <input id="field-admin-orders-show-blade-php-5-{{ $detail->id ?? 0 }}" type="number" step="0.01" name="amount" value="{{ $order->remaining_balance }}" readonly
+                                <input id="field-admin-orders-show-blade-php-5-{{ $detail->id ?? 0 }}" type="number" step="0.01" value="{{ $order->remaining_balance }}" readonly
                                        class="w-full text-xs rounded-lg border-cocoa-100 bg-cream-100 font-semibold text-cocoa-600">
                             </div>
 
                             <div>
                                 <label class="block text-xs font-bold text-cocoa-600 mb-1" for="field-admin-orders-show-blade-php-6-{{ $detail->id ?? 0 }}">method</label>
-                                <select id="field-admin-orders-show-blade-php-6-{{ $detail->id ?? 0 }}" name="payment_method" required class="w-full text-xs rounded-lg border-cocoa-100 focus:border-cocoa-300 focus:ring-cocoa-300">
+                                <select id="field-admin-orders-show-blade-php-6-{{ $detail->id ?? 0 }}" name="payment_method" x-model="method" required class="w-full text-xs rounded-lg border-cocoa-100 focus:border-cocoa-300 focus:ring-cocoa-300">
                                     <option value="cash">Cash</option>
                                     <option value="gcash">GCash</option>
                                 </select>
@@ -261,17 +262,26 @@
 
                             <div>
                                 <label class="block text-xs font-bold text-cocoa-600 mb-1" for="field-admin-orders-show-blade-php-7-{{ $detail->id ?? 0 }}">GCash Ref #</label>
-                                <input id="field-admin-orders-show-blade-php-7-{{ $detail->id ?? 0 }}" type="text" name="reference_number" placeholder="Required if GCash"
+                                <input id="field-admin-orders-show-blade-php-7-{{ $detail->id ?? 0 }}" type="text" name="reference_number" value="{{ old('reference_number') }}" :required="method === 'gcash'" placeholder="Required if GCash" maxlength="100"
                                        class="w-full text-xs rounded-lg border-cocoa-100 focus:border-cocoa-300 focus:ring-cocoa-300 placeholder-cocoa-400/50">
+                                @error('reference_number')<p role="alert" data-error-for="reference_number" class="text-sm text-red-700">{{ $message }}</p>@enderror
                             </div>
 
                             <div class="flex items-end">
                                 <button type="submit" class="w-full py-2 bg-cocoa-600 hover:bg-cocoa-700 text-white font-semibold text-xs rounded-lg transition ">
-                                    Record Final Payment
+                                    Complete pickup
                                 </button>
+                            </div>
+                            <div class="sm:col-span-2 xl:col-span-4">
+                                <label class="flex items-start gap-3 text-sm text-cocoa-600"><input type="checkbox" name="pickup_confirmed" value="1" required {{ old('pickup_confirmed') ? 'checked' : '' }}><span>The customer is collecting this order now. I verified the exact remaining payment in cash or in the business GCash account.</span></label>
+                                @error('pickup_confirmed')<p role="alert" data-error-for="pickup_confirmed" class="text-sm text-red-700">{{ $message }}</p>@enderror
+                                <span role="status" data-submit-status></span>
                             </div>
                         </form>
                     </div>
+                @endif
+                @if (in_array($order->status, ['pending', 'confirmed', 'preparing'], true))
+                    <p class="text-sm text-cocoa-500">Exactly 50% is collected at booking. The remaining balance is collected at actual pickup after the order is Ready for pickup.</p>
                 @endif
 
                 {{-- Payment History Table --}}
@@ -376,7 +386,7 @@
                 @elseif ($order->status === 'ready_for_pickup')
                     @if ($order->remaining_balance > 0)
                         <div class="p-3 bg-amber-50 border border-amber-200 rounded-lg text-xs text-cocoa-600">
-                            <strong>Payment required:</strong> Please settle ₱{{ number_format($order->remaining_balance, 2) }} before completing.
+                            <strong>At pickup:</strong> The Owner verifies ₱{{ number_format($order->remaining_balance, 2) }} and completes pickup when the customer collects the order.
                         </div>
                     @else
                         <form action="{{ route('orders.updateStatus', $order) }}" method="POST">
@@ -398,7 +408,7 @@
                     </div>
                 @endif
 
-                @if ($order->status !== 'completed' && $order->status !== 'cancelled')
+                @if (Gate::allows('cancel-orders') && $order->status !== 'completed' && $order->status !== 'cancelled')
                     <form action="{{ route('orders.cancel', $order) }}" method="POST" onsubmit="return confirm('Are you sure you want to cancel this order? The deposit is retained under the customer-cancellation policy. For bakery failure, use the full-refund action instead.');">
                         @csrf
                         <button type="submit" class="w-full py-2 bg-white hover:bg-red-50 text-red-600 font-medium text-sm rounded-lg border border-red-200 transition">

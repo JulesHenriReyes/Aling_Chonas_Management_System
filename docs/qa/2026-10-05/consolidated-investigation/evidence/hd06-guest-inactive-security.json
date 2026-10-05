@@ -1,0 +1,6 @@
+{
+    "guest_dashboard_redirect": "http://127.0.0.1:8000/login",
+    "inactive_staff_status": 403,
+    "guest_receipt_download_redirect": "http://127.0.0.1:8000/login",
+    "status": "verified_pass"
+}

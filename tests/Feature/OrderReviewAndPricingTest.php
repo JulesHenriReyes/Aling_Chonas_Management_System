@@ -101,7 +101,6 @@ class OrderReviewAndPricingTest extends TestCase
         }
 
         $this->orderService->updateStatus($order, 'preparing', $this->owner);
-        $this->orderService->recordFinalPayment($order, 750.00, 'cash', null, $this->owner);
 
         try {
             $this->orderService->updateStatus($order, 'completed', $this->owner);
@@ -111,7 +110,7 @@ class OrderReviewAndPricingTest extends TestCase
         }
 
         $this->orderService->updateStatus($order, 'ready_for_pickup', $this->owner);
-        $this->orderService->updateStatus($order, 'completed', $this->owner);
+        $this->orderService->completePickup($order, 'cash', null, $this->owner, true);
 
         $this->expectException(ValidationException::class);
         $this->orderService->updateStatus($order, 'preparing', $this->owner);

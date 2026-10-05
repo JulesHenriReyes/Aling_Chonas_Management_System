@@ -1,0 +1,3419 @@
+{
+  "records": [
+    {
+      "role": "guest",
+      "state": "catalog",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/guest-catalog-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Select Chocolate birthday cake package",
+          "tag": "A",
+          "width": 171.015625,
+          "height": 44
+        },
+        {
+          "name": "Select Classic family celebration package",
+          "tag": "A",
+          "width": 171.03125,
+          "height": 44
+        },
+        {
+          "name": "Select Floral celebration cake package",
+          "tag": "A",
+          "width": 171.015625,
+          "height": 44
+        },
+        {
+          "name": "Select Pastel cake and cupcakes package",
+          "tag": "A",
+          "width": 171.03125,
+          "height": 44
+        }
+      ],
+      "tables": [],
+      "catalogColumns": 2,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "guest",
+      "state": "customize",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/packages/2/customize/[draft-key]",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/guest-customize-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Save package to order",
+          "tag": "BUTTON",
+          "width": 356,
+          "height": 44
+        },
+        {
+          "name": "Back to packages",
+          "tag": "A",
+          "width": 356,
+          "height": 44
+        }
+      ],
+      "tables": [],
+      "catalogColumns": null,
+      "activeElement": "request-1",
+      "phoneErrors": []
+    },
+    {
+      "role": "guest",
+      "state": "catalog-multiline",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/?saved_line=[draft-key]",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/guest-catalog-multiline-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Your order · 2",
+          "tag": "A",
+          "width": 122.171875,
+          "height": 44
+        },
+        {
+          "name": "Select Chocolate birthday cake package",
+          "tag": "A",
+          "width": 171.015625,
+          "height": 44
+        },
+        {
+          "name": "Select Classic family celebration package",
+          "tag": "A",
+          "width": 171.03125,
+          "height": 44
+        },
+        {
+          "name": "Select Floral celebration cake package",
+          "tag": "A",
+          "width": 171.015625,
+          "height": 44
+        },
+        {
+          "name": "Select Pastel cake and cupcakes package",
+          "tag": "A",
+          "width": 171.03125,
+          "height": 44
+        },
+        {
+          "name": "Add another package",
+          "tag": "A",
+          "width": 175.90625,
+          "height": 44
+        },
+        {
+          "name": "Edit",
+          "tag": "A",
+          "width": 56.609375,
+          "height": 44
+        },
+        {
+          "name": "Remove",
+          "tag": "BUTTON",
+          "width": 85.125,
+          "height": 44
+        },
+        {
+          "name": "Edit",
+          "tag": "A",
+          "width": 56.609375,
+          "height": 44
+        },
+        {
+          "name": "Remove",
+          "tag": "BUTTON",
+          "width": 85.125,
+          "height": 44
+        },
+        {
+          "name": "Continue to contact and pickup",
+          "tag": "A",
+          "width": 242.21875,
+          "height": 44
+        }
+      ],
+      "tables": [],
+      "catalogColumns": 2,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "guest",
+      "state": "contact-landline",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/order/details",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/guest-contact-landline-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Submit order & continue",
+          "tag": "BUTTON",
+          "width": 348,
+          "height": 48
+        },
+        {
+          "name": "Back to packages",
+          "tag": "BUTTON",
+          "width": 348,
+          "height": 44
+        }
+      ],
+      "tables": [],
+      "catalogColumns": null,
+      "activeElement": "pickup-time",
+      "phoneErrors": []
+    },
+    {
+      "role": "guest",
+      "state": "contact-error",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/order/details",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/guest-contact-error-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Submit order & continue",
+          "tag": "BUTTON",
+          "width": 348,
+          "height": 48
+        },
+        {
+          "name": "Back to packages",
+          "tag": "BUTTON",
+          "width": 348,
+          "height": 44
+        }
+      ],
+      "tables": [],
+      "catalogColumns": null,
+      "activeElement": "phone",
+      "phoneErrors": [
+        "Enter a valid Philippine mobile or landline number. Include the area code for a landline."
+      ]
+    },
+    {
+      "role": "guest",
+      "width": 430,
+      "state": "contact-draft-interaction",
+      "refresh": true,
+      "invalidInput": true,
+      "back": true,
+      "packageLines": 2,
+      "dateMinimum": "2026-10-05"
+    },
+    {
+      "role": "guest",
+      "state": "payment-pending",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/order/payment/[synthetic-token-redacted]",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/guest-payment-pending-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Copy order link",
+          "tag": "BUTTON",
+          "width": 118.140625,
+          "height": 44
+        },
+        {
+          "name": "Submit receipt for verification",
+          "tag": "BUTTON",
+          "width": 348,
+          "height": 44
+        }
+      ],
+      "tables": [],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "guest",
+      "state": "payment-awaiting",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/order/payment/[synthetic-token-redacted]",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/guest-payment-awaiting-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Copy order link",
+          "tag": "BUTTON",
+          "width": 118.140625,
+          "height": 44
+        }
+      ],
+      "tables": [],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "guest",
+      "state": "payment-rejected",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/order/payment/[synthetic-token-redacted]",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/guest-payment-rejected-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Copy order link",
+          "tag": "BUTTON",
+          "width": 118.140625,
+          "height": 44
+        },
+        {
+          "name": "Submit replacement receipt",
+          "tag": "BUTTON",
+          "width": 348,
+          "height": 44
+        }
+      ],
+      "tables": [],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "guest",
+      "state": "payment-verified",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/order/payment/[synthetic-token-redacted]",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/guest-payment-verified-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Copy order link",
+          "tag": "BUTTON",
+          "width": 118.140625,
+          "height": 44
+        }
+      ],
+      "tables": [],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "guest",
+      "state": "payment-cancelled",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/order/payment/[synthetic-token-redacted]",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/guest-payment-cancelled-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Copy order link",
+          "tag": "BUTTON",
+          "width": 118.140625,
+          "height": 44
+        }
+      ],
+      "tables": [],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "guest",
+      "state": "payment-failure-pending",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/order/payment/[synthetic-token-redacted]",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/guest-payment-failure-pending-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Copy order link",
+          "tag": "BUTTON",
+          "width": 118.140625,
+          "height": 44
+        }
+      ],
+      "tables": [],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "guest",
+      "state": "payment-failure-completed",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/order/payment/[synthetic-token-redacted]",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/guest-payment-failure-completed-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Copy order link",
+          "tag": "BUTTON",
+          "width": 118.140625,
+          "height": 44
+        }
+      ],
+      "tables": [],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "owner",
+      "state": "dashboard",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/dashboard",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/owner-dashboard-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        }
+      ],
+      "tables": [
+        {
+          "width": 396,
+          "content": 680,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "owner",
+      "state": "pickups",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/pickup-schedule",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/owner-pickups-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Filter Date",
+          "tag": "BUTTON",
+          "width": 102.421875,
+          "height": 44
+        }
+      ],
+      "tables": [],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "owner",
+      "state": "pickups-empty",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/pickup-schedule?date=2026-11-30",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/owner-pickups-empty-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Filter Date",
+          "tag": "BUTTON",
+          "width": 102.421875,
+          "height": 44
+        }
+      ],
+      "tables": [],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "owner",
+      "state": "orders",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/orders",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/owner-orders-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Filter",
+          "tag": "BUTTON",
+          "width": 398,
+          "height": 44
+        }
+      ],
+      "tables": [
+        {
+          "width": 396,
+          "content": 1160,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "owner",
+      "state": "customers",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/customers",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/owner-customers-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Search",
+          "tag": "BUTTON",
+          "width": 81.015625,
+          "height": 44.390625
+        },
+        {
+          "name": "View",
+          "tag": "A",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Edit",
+          "tag": "A",
+          "width": 44,
+          "height": 44
+        }
+      ],
+      "tables": [
+        {
+          "width": 396,
+          "content": 680,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "owner",
+      "state": "customer-detail",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/customers/1",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/owner-customer-detail-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        }
+      ],
+      "tables": [
+        {
+          "width": 398,
+          "content": 684,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "owner",
+      "state": "supplies",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/supplies",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/owner-supplies-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Receive stock",
+          "tag": "A",
+          "width": 125.03125,
+          "height": 44
+        },
+        {
+          "name": "Record usage / waste",
+          "tag": "A",
+          "width": 176.453125,
+          "height": 44
+        },
+        {
+          "name": "Stocktake",
+          "tag": "A",
+          "width": 98.328125,
+          "height": 44
+        },
+        {
+          "name": "Add supply",
+          "tag": "A",
+          "width": 107.515625,
+          "height": 44
+        },
+        {
+          "name": "Movement history",
+          "tag": "A",
+          "width": 153.390625,
+          "height": 44
+        },
+        {
+          "name": "Apply",
+          "tag": "BUTTON",
+          "width": 70.46875,
+          "height": 44
+        },
+        {
+          "name": "Reset",
+          "tag": "A",
+          "width": 68.9375,
+          "height": 44
+        },
+        {
+          "name": "Sort by Supply",
+          "tag": "A",
+          "width": 55.90625,
+          "height": 44
+        },
+        {
+          "name": "Sort by Category",
+          "tag": "A",
+          "width": 70.359375,
+          "height": 44
+        },
+        {
+          "name": "Sort by Unit",
+          "tag": "A",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Sort by On hand",
+          "tag": "A",
+          "width": 65.03125,
+          "height": 44
+        },
+        {
+          "name": "Sort by Reorder at",
+          "tag": "A",
+          "width": 77.40625,
+          "height": 44
+        },
+        {
+          "name": "Actions",
+          "tag": "SUMMARY",
+          "width": 103.859375,
+          "height": 44
+        },
+        {
+          "name": "Actions",
+          "tag": "SUMMARY",
+          "width": 103.859375,
+          "height": 44
+        },
+        {
+          "name": "Actions",
+          "tag": "SUMMARY",
+          "width": 103.859375,
+          "height": 44
+        },
+        {
+          "name": "Actions",
+          "tag": "SUMMARY",
+          "width": 103.859375,
+          "height": 44
+        }
+      ],
+      "tables": [
+        {
+          "width": 396,
+          "content": 780,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "owner",
+      "state": "supply-detail",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/supplies/1",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/owner-supply-detail-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Edit supply",
+          "tag": "A",
+          "width": 105.890625,
+          "height": 44
+        }
+      ],
+      "tables": [
+        {
+          "width": 396,
+          "content": 780,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "owner",
+      "state": "stock-history",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/inventory/history",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/owner-stock-history-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Apply",
+          "tag": "BUTTON",
+          "width": 70.46875,
+          "height": 44
+        },
+        {
+          "name": "Reset",
+          "tag": "A",
+          "width": 68.9375,
+          "height": 44
+        }
+      ],
+      "tables": [
+        {
+          "width": 396,
+          "content": 780,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "owner",
+      "state": "stock-receipt",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/inventory/create/receipt",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/owner-stock-receipt-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Search supplies",
+          "tag": "BUTTON",
+          "width": 138.890625,
+          "height": 44
+        },
+        {
+          "name": "Cancel",
+          "tag": "A",
+          "width": 77.8125,
+          "height": 44
+        },
+        {
+          "name": "Post stock operation",
+          "tag": "BUTTON",
+          "width": 169.78125,
+          "height": 44
+        }
+      ],
+      "tables": [
+        {
+          "width": 362,
+          "content": 780,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "owner",
+      "state": "stock-usage",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/inventory/create/usage",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/owner-stock-usage-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Search supplies",
+          "tag": "BUTTON",
+          "width": 138.890625,
+          "height": 44
+        },
+        {
+          "name": "Cancel",
+          "tag": "A",
+          "width": 77.8125,
+          "height": 44
+        },
+        {
+          "name": "Post stock operation",
+          "tag": "BUTTON",
+          "width": 169.78125,
+          "height": 44
+        }
+      ],
+      "tables": [
+        {
+          "width": 362,
+          "content": 780,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "owner",
+      "state": "stocktake",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/inventory/create/stocktake",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/owner-stocktake-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Search supplies",
+          "tag": "BUTTON",
+          "width": 138.890625,
+          "height": 44
+        },
+        {
+          "name": "Cancel",
+          "tag": "A",
+          "width": 77.8125,
+          "height": 44
+        },
+        {
+          "name": "Post stock operation",
+          "tag": "BUTTON",
+          "width": 169.78125,
+          "height": 44
+        }
+      ],
+      "tables": [
+        {
+          "width": 362,
+          "content": 780,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "owner",
+      "state": "expenses",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/expenses",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/owner-expenses-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Audit history",
+          "tag": "A",
+          "width": 117.6875,
+          "height": 44
+        },
+        {
+          "name": "Add expense",
+          "tag": "A",
+          "width": 119.265625,
+          "height": 44
+        },
+        {
+          "name": "Apply",
+          "tag": "BUTTON",
+          "width": 70.46875,
+          "height": 44
+        },
+        {
+          "name": "Reset",
+          "tag": "A",
+          "width": 68.9375,
+          "height": 44
+        },
+        {
+          "name": "Sort by Expense date",
+          "tag": "A",
+          "width": 92.15625,
+          "height": 44
+        },
+        {
+          "name": "Sort by Description",
+          "tag": "A",
+          "width": 84.515625,
+          "height": 44
+        },
+        {
+          "name": "Sort by Category",
+          "tag": "A",
+          "width": 70.359375,
+          "height": 44
+        },
+        {
+          "name": "Sort by Amount",
+          "tag": "A",
+          "width": 61.6875,
+          "height": 44
+        },
+        {
+          "name": "Actions",
+          "tag": "SUMMARY",
+          "width": 90.03125,
+          "height": 44
+        },
+        {
+          "name": "Actions",
+          "tag": "SUMMARY",
+          "width": 90.03125,
+          "height": 44
+        },
+        {
+          "name": "Actions",
+          "tag": "SUMMARY",
+          "width": 90.03125,
+          "height": 44
+        },
+        {
+          "name": "Actions",
+          "tag": "SUMMARY",
+          "width": 90.03125,
+          "height": 44
+        },
+        {
+          "name": "Actions",
+          "tag": "SUMMARY",
+          "width": 90.03125,
+          "height": 44
+        },
+        {
+          "name": "Actions",
+          "tag": "SUMMARY",
+          "width": 90.03125,
+          "height": 44
+        }
+      ],
+      "tables": [
+        {
+          "width": 396,
+          "content": 780,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "owner",
+      "state": "expense-create",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/expenses/create",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/owner-expense-create-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Cancel",
+          "tag": "A",
+          "width": 77.8125,
+          "height": 44
+        },
+        {
+          "name": "Record expense",
+          "tag": "BUTTON",
+          "width": 139.71875,
+          "height": 44
+        }
+      ],
+      "tables": [],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "owner",
+      "state": "expense-edit",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/expenses/1/edit",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/owner-expense-edit-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Cancel",
+          "tag": "A",
+          "width": 77.8125,
+          "height": 44
+        },
+        {
+          "name": "Save changes",
+          "tag": "BUTTON",
+          "width": 125.53125,
+          "height": 44
+        }
+      ],
+      "tables": [],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "owner",
+      "state": "expense-detail",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/expenses/1",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/owner-expense-detail-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Audit history",
+          "tag": "A",
+          "width": 117.6875,
+          "height": 44
+        },
+        {
+          "name": "Edit expense",
+          "tag": "A",
+          "width": 117.640625,
+          "height": 44
+        },
+        {
+          "name": "Delete expense",
+          "tag": "SUMMARY",
+          "width": 364,
+          "height": 44
+        },
+        {
+          "name": "",
+          "tag": "BUTTON",
+          "width": 364,
+          "height": 44
+        }
+      ],
+      "tables": [],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "owner",
+      "state": "expense-history",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/expenses/history",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/owner-expense-history-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Apply",
+          "tag": "BUTTON",
+          "width": 70.46875,
+          "height": 44
+        },
+        {
+          "name": "Reset",
+          "tag": "A",
+          "width": 68.9375,
+          "height": 44
+        },
+        {
+          "name": "Before / after values",
+          "tag": "SUMMARY",
+          "width": 136.765625,
+          "height": 61.1875
+        },
+        {
+          "name": "Before / after values",
+          "tag": "SUMMARY",
+          "width": 136.765625,
+          "height": 61.1875
+        },
+        {
+          "name": "Before / after values",
+          "tag": "SUMMARY",
+          "width": 136.765625,
+          "height": 61.1875
+        },
+        {
+          "name": "Before / after values",
+          "tag": "SUMMARY",
+          "width": 136.765625,
+          "height": 61.1875
+        },
+        {
+          "name": "Before / after values",
+          "tag": "SUMMARY",
+          "width": 136.765625,
+          "height": 61.1875
+        },
+        {
+          "name": "Before / after values",
+          "tag": "SUMMARY",
+          "width": 136.765625,
+          "height": 61.1875
+        }
+      ],
+      "tables": [
+        {
+          "width": 396,
+          "content": 780,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "owner",
+      "state": "customer-create",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/customers/create",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/owner-customer-create-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Save Customer",
+          "tag": "BUTTON",
+          "width": 135.03125,
+          "height": 44
+        }
+      ],
+      "tables": [],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "owner",
+      "state": "customer-edit",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/customers/1/edit",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/owner-customer-edit-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Update Details",
+          "tag": "BUTTON",
+          "width": 130.890625,
+          "height": 44
+        }
+      ],
+      "tables": [],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "owner",
+      "state": "order-create",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/orders/create",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/owner-order-create-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Add Chocolate birthday cake",
+          "tag": "BUTTON",
+          "width": 134.125,
+          "height": 44
+        },
+        {
+          "name": "Add Classic family celebration",
+          "tag": "BUTTON",
+          "width": 134.125,
+          "height": 44
+        },
+        {
+          "name": "Add Floral celebration cake",
+          "tag": "BUTTON",
+          "width": 134.125,
+          "height": 44
+        },
+        {
+          "name": "Add Pastel cake and cupcakes",
+          "tag": "BUTTON",
+          "width": 134.125,
+          "height": 44
+        },
+        {
+          "name": "Continue to contact and pickup",
+          "tag": "BUTTON",
+          "width": 364,
+          "height": 48
+        }
+      ],
+      "tables": [],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "owner",
+      "state": "reports",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/reports?mode=month&month=2026-10",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/owner-reports-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Export CSV",
+          "tag": "A",
+          "width": 108.375,
+          "height": 44
+        },
+        {
+          "name": "Apply period",
+          "tag": "BUTTON",
+          "width": 117.578125,
+          "height": 44
+        },
+        {
+          "name": "View chart values",
+          "tag": "SUMMARY",
+          "width": 364,
+          "height": 44
+        },
+        {
+          "name": "View completed orders",
+          "tag": "A",
+          "width": 187.328125,
+          "height": 44
+        }
+      ],
+      "tables": [
+        {
+          "width": 364,
+          "content": 1196,
+          "localScroll": "auto"
+        },
+        {
+          "width": 362,
+          "content": 943,
+          "localScroll": "auto"
+        },
+        {
+          "width": 396,
+          "content": 396,
+          "localScroll": "auto"
+        },
+        {
+          "width": 396,
+          "content": 396,
+          "localScroll": "auto"
+        },
+        {
+          "width": 396,
+          "content": 780,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "owner",
+      "state": "reports-empty",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/reports?mode=month&month=2026-08",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/owner-reports-empty-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Export CSV",
+          "tag": "A",
+          "width": 108.375,
+          "height": 44
+        },
+        {
+          "name": "Apply period",
+          "tag": "BUTTON",
+          "width": 117.578125,
+          "height": 44
+        },
+        {
+          "name": "View chart values",
+          "tag": "SUMMARY",
+          "width": 364,
+          "height": 44
+        },
+        {
+          "name": "View completed orders",
+          "tag": "A",
+          "width": 187.328125,
+          "height": 44
+        }
+      ],
+      "tables": [
+        {
+          "width": 364,
+          "content": 1196,
+          "localScroll": "auto"
+        },
+        {
+          "width": 362,
+          "content": 905,
+          "localScroll": "auto"
+        },
+        {
+          "width": 396,
+          "content": 396,
+          "localScroll": "auto"
+        },
+        {
+          "width": 396,
+          "content": 396,
+          "localScroll": "auto"
+        },
+        {
+          "width": 396,
+          "content": 780,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "owner",
+      "state": "report-records",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/reports/records?mode=month&month=2026-10&metric=cancellation_income",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/owner-report-records-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        }
+      ],
+      "tables": [
+        {
+          "width": 396,
+          "content": 780,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "owner",
+      "state": "order-pending",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/orders/1",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/owner-order-pending-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Record deposit & confirm",
+          "tag": "BUTTON",
+          "width": 306,
+          "height": 44
+        },
+        {
+          "name": "Bakery cannot fulfil this order",
+          "tag": "SUMMARY",
+          "width": 364,
+          "height": 44
+        },
+        {
+          "name": "",
+          "tag": "BUTTON",
+          "width": 364,
+          "height": 44
+        },
+        {
+          "name": "Customer cancellation",
+          "tag": "BUTTON",
+          "width": 356,
+          "height": 44
+        }
+      ],
+      "tables": [
+        {
+          "width": 348,
+          "content": 680,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "owner",
+      "state": "order-confirmed",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/orders/2",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/owner-order-confirmed-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Bakery cannot fulfil this order",
+          "tag": "SUMMARY",
+          "width": 364,
+          "height": 44
+        },
+        {
+          "name": "",
+          "tag": "BUTTON",
+          "width": 364,
+          "height": 44
+        },
+        {
+          "name": "Start Preparing (Baking)",
+          "tag": "BUTTON",
+          "width": 356,
+          "height": 44
+        },
+        {
+          "name": "Customer cancellation",
+          "tag": "BUTTON",
+          "width": 356,
+          "height": 44
+        }
+      ],
+      "tables": [
+        {
+          "width": 348,
+          "content": 680,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "owner",
+      "state": "order-preparing",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/orders/3",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/owner-order-preparing-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Bakery cannot fulfil this order",
+          "tag": "SUMMARY",
+          "width": 364,
+          "height": 44
+        },
+        {
+          "name": "",
+          "tag": "BUTTON",
+          "width": 364,
+          "height": 44
+        },
+        {
+          "name": "Mark Ready for Pickup",
+          "tag": "BUTTON",
+          "width": 356,
+          "height": 44
+        },
+        {
+          "name": "Customer cancellation",
+          "tag": "BUTTON",
+          "width": 356,
+          "height": 44
+        }
+      ],
+      "tables": [
+        {
+          "width": 348,
+          "content": 680,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "owner",
+      "state": "order-ready",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/orders/4",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/owner-order-ready-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Complete pickup",
+          "tag": "BUTTON",
+          "width": 306,
+          "height": 44
+        },
+        {
+          "name": "Bakery cannot fulfil this order",
+          "tag": "SUMMARY",
+          "width": 364,
+          "height": 44
+        },
+        {
+          "name": "",
+          "tag": "BUTTON",
+          "width": 364,
+          "height": 44
+        },
+        {
+          "name": "Customer cancellation",
+          "tag": "BUTTON",
+          "width": 356,
+          "height": 44
+        }
+      ],
+      "tables": [
+        {
+          "width": 348,
+          "content": 680,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "owner",
+      "state": "order-completed",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/orders/5",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/owner-order-completed-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        }
+      ],
+      "tables": [
+        {
+          "width": 348,
+          "content": 680,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "owner",
+      "state": "order-cancelled",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/orders/6",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/owner-order-cancelled-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        }
+      ],
+      "tables": [
+        {
+          "width": 348,
+          "content": 680,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "owner",
+      "state": "order-failure-pending",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/orders/7",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/owner-order-failure-pending-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Confirm completed refund",
+          "tag": "BUTTON",
+          "width": 364,
+          "height": 48
+        }
+      ],
+      "tables": [
+        {
+          "width": 348,
+          "content": 680,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "owner",
+      "state": "order-failure-completed",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/orders/8",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/owner-order-failure-completed-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        }
+      ],
+      "tables": [
+        {
+          "width": 348,
+          "content": 680,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "owner",
+      "state": "navigation-open",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/supplies",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/owner-navigation-open-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Receive stock",
+          "tag": "A",
+          "width": 125.03125,
+          "height": 44
+        },
+        {
+          "name": "Record usage / waste",
+          "tag": "A",
+          "width": 176.453125,
+          "height": 44
+        },
+        {
+          "name": "Stocktake",
+          "tag": "A",
+          "width": 98.328125,
+          "height": 44
+        },
+        {
+          "name": "Add supply",
+          "tag": "A",
+          "width": 107.515625,
+          "height": 44
+        },
+        {
+          "name": "Movement history",
+          "tag": "A",
+          "width": 153.390625,
+          "height": 44
+        },
+        {
+          "name": "Apply",
+          "tag": "BUTTON",
+          "width": 70.46875,
+          "height": 44
+        },
+        {
+          "name": "Reset",
+          "tag": "A",
+          "width": 68.9375,
+          "height": 44
+        },
+        {
+          "name": "Sort by Supply",
+          "tag": "A",
+          "width": 55.90625,
+          "height": 44
+        },
+        {
+          "name": "Sort by Category",
+          "tag": "A",
+          "width": 70.359375,
+          "height": 44
+        },
+        {
+          "name": "Sort by Unit",
+          "tag": "A",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Sort by On hand",
+          "tag": "A",
+          "width": 65.03125,
+          "height": 44
+        },
+        {
+          "name": "Sort by Reorder at",
+          "tag": "A",
+          "width": 77.40625,
+          "height": 44
+        },
+        {
+          "name": "Actions",
+          "tag": "SUMMARY",
+          "width": 103.859375,
+          "height": 44
+        },
+        {
+          "name": "Actions",
+          "tag": "SUMMARY",
+          "width": 103.859375,
+          "height": 44
+        },
+        {
+          "name": "Actions",
+          "tag": "SUMMARY",
+          "width": 103.859375,
+          "height": 44
+        },
+        {
+          "name": "Actions",
+          "tag": "SUMMARY",
+          "width": 103.859375,
+          "height": 44
+        }
+      ],
+      "tables": [
+        {
+          "width": 396,
+          "content": 780,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "owner",
+      "width": 430,
+      "state": "drawer-keyboard",
+      "entryFocus": true,
+      "tabWrap": true,
+      "reverseTabWrap": true,
+      "escape": true,
+      "focusRestored": true,
+      "scrollRestored": true
+    },
+    {
+      "role": "assistant",
+      "state": "dashboard",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/dashboard",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/assistant-dashboard-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        }
+      ],
+      "tables": [
+        {
+          "width": 396,
+          "content": 680,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "assistant",
+      "state": "pickups",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/pickup-schedule",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/assistant-pickups-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Filter Date",
+          "tag": "BUTTON",
+          "width": 102.421875,
+          "height": 44
+        }
+      ],
+      "tables": [],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "assistant",
+      "state": "pickups-empty",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/pickup-schedule?date=2026-11-30",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/assistant-pickups-empty-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Filter Date",
+          "tag": "BUTTON",
+          "width": 102.421875,
+          "height": 44
+        }
+      ],
+      "tables": [],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "assistant",
+      "state": "orders",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/orders",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/assistant-orders-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Filter",
+          "tag": "BUTTON",
+          "width": 398,
+          "height": 44
+        }
+      ],
+      "tables": [
+        {
+          "width": 396,
+          "content": 1160,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "assistant",
+      "state": "customers",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/customers",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/assistant-customers-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Search",
+          "tag": "BUTTON",
+          "width": 81.015625,
+          "height": 44.390625
+        },
+        {
+          "name": "View",
+          "tag": "A",
+          "width": 44,
+          "height": 44
+        }
+      ],
+      "tables": [
+        {
+          "width": 396,
+          "content": 680,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "assistant",
+      "state": "customer-detail",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/customers/1",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/assistant-customer-detail-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        }
+      ],
+      "tables": [
+        {
+          "width": 398,
+          "content": 684,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "assistant",
+      "state": "supplies",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/supplies",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/assistant-supplies-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Receive stock",
+          "tag": "A",
+          "width": 125.03125,
+          "height": 44
+        },
+        {
+          "name": "Record usage / waste",
+          "tag": "A",
+          "width": 176.453125,
+          "height": 44
+        },
+        {
+          "name": "Stocktake",
+          "tag": "A",
+          "width": 98.328125,
+          "height": 44
+        },
+        {
+          "name": "Add supply",
+          "tag": "A",
+          "width": 107.515625,
+          "height": 44
+        },
+        {
+          "name": "Movement history",
+          "tag": "A",
+          "width": 153.390625,
+          "height": 44
+        },
+        {
+          "name": "Apply",
+          "tag": "BUTTON",
+          "width": 70.46875,
+          "height": 44
+        },
+        {
+          "name": "Reset",
+          "tag": "A",
+          "width": 68.9375,
+          "height": 44
+        },
+        {
+          "name": "Sort by Supply",
+          "tag": "A",
+          "width": 55.90625,
+          "height": 44
+        },
+        {
+          "name": "Sort by Category",
+          "tag": "A",
+          "width": 70.359375,
+          "height": 44
+        },
+        {
+          "name": "Sort by Unit",
+          "tag": "A",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Sort by On hand",
+          "tag": "A",
+          "width": 65.03125,
+          "height": 44
+        },
+        {
+          "name": "Sort by Reorder at",
+          "tag": "A",
+          "width": 77.40625,
+          "height": 44
+        },
+        {
+          "name": "Actions",
+          "tag": "SUMMARY",
+          "width": 103.859375,
+          "height": 44
+        },
+        {
+          "name": "Actions",
+          "tag": "SUMMARY",
+          "width": 103.859375,
+          "height": 44
+        },
+        {
+          "name": "Actions",
+          "tag": "SUMMARY",
+          "width": 103.859375,
+          "height": 44
+        },
+        {
+          "name": "Actions",
+          "tag": "SUMMARY",
+          "width": 103.859375,
+          "height": 44
+        }
+      ],
+      "tables": [
+        {
+          "width": 396,
+          "content": 780,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "assistant",
+      "state": "supply-detail",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/supplies/1",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/assistant-supply-detail-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Edit supply",
+          "tag": "A",
+          "width": 105.890625,
+          "height": 44
+        }
+      ],
+      "tables": [
+        {
+          "width": 396,
+          "content": 780,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "assistant",
+      "state": "stock-history",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/inventory/history",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/assistant-stock-history-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Apply",
+          "tag": "BUTTON",
+          "width": 70.46875,
+          "height": 44
+        },
+        {
+          "name": "Reset",
+          "tag": "A",
+          "width": 68.9375,
+          "height": 44
+        }
+      ],
+      "tables": [
+        {
+          "width": 396,
+          "content": 780,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "assistant",
+      "state": "stock-receipt",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/inventory/create/receipt",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/assistant-stock-receipt-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Search supplies",
+          "tag": "BUTTON",
+          "width": 138.890625,
+          "height": 44
+        },
+        {
+          "name": "Cancel",
+          "tag": "A",
+          "width": 77.8125,
+          "height": 44
+        },
+        {
+          "name": "Post stock operation",
+          "tag": "BUTTON",
+          "width": 169.78125,
+          "height": 44
+        }
+      ],
+      "tables": [
+        {
+          "width": 362,
+          "content": 780,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "assistant",
+      "state": "stock-usage",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/inventory/create/usage",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/assistant-stock-usage-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Search supplies",
+          "tag": "BUTTON",
+          "width": 138.890625,
+          "height": 44
+        },
+        {
+          "name": "Cancel",
+          "tag": "A",
+          "width": 77.8125,
+          "height": 44
+        },
+        {
+          "name": "Post stock operation",
+          "tag": "BUTTON",
+          "width": 169.78125,
+          "height": 44
+        }
+      ],
+      "tables": [
+        {
+          "width": 362,
+          "content": 780,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "assistant",
+      "state": "stocktake",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/inventory/create/stocktake",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/assistant-stocktake-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Search supplies",
+          "tag": "BUTTON",
+          "width": 138.890625,
+          "height": 44
+        },
+        {
+          "name": "Cancel",
+          "tag": "A",
+          "width": 77.8125,
+          "height": 44
+        },
+        {
+          "name": "Post stock operation",
+          "tag": "BUTTON",
+          "width": 169.78125,
+          "height": 44
+        }
+      ],
+      "tables": [
+        {
+          "width": 362,
+          "content": 780,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "assistant",
+      "state": "expenses",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/expenses",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/assistant-expenses-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Audit history",
+          "tag": "A",
+          "width": 117.6875,
+          "height": 44
+        },
+        {
+          "name": "Add expense",
+          "tag": "A",
+          "width": 119.265625,
+          "height": 44
+        },
+        {
+          "name": "Apply",
+          "tag": "BUTTON",
+          "width": 70.46875,
+          "height": 44
+        },
+        {
+          "name": "Reset",
+          "tag": "A",
+          "width": 68.9375,
+          "height": 44
+        },
+        {
+          "name": "Sort by Expense date",
+          "tag": "A",
+          "width": 92.15625,
+          "height": 44
+        },
+        {
+          "name": "Sort by Description",
+          "tag": "A",
+          "width": 84.515625,
+          "height": 44
+        },
+        {
+          "name": "Sort by Category",
+          "tag": "A",
+          "width": 70.359375,
+          "height": 44
+        },
+        {
+          "name": "Sort by Amount",
+          "tag": "A",
+          "width": 61.6875,
+          "height": 44
+        },
+        {
+          "name": "Actions",
+          "tag": "SUMMARY",
+          "width": 90.03125,
+          "height": 44
+        },
+        {
+          "name": "Actions",
+          "tag": "SUMMARY",
+          "width": 90.03125,
+          "height": 44
+        },
+        {
+          "name": "Actions",
+          "tag": "SUMMARY",
+          "width": 90.03125,
+          "height": 44
+        },
+        {
+          "name": "Actions",
+          "tag": "SUMMARY",
+          "width": 90.03125,
+          "height": 44
+        },
+        {
+          "name": "Actions",
+          "tag": "SUMMARY",
+          "width": 90.03125,
+          "height": 44
+        },
+        {
+          "name": "Actions",
+          "tag": "SUMMARY",
+          "width": 90.03125,
+          "height": 44
+        }
+      ],
+      "tables": [
+        {
+          "width": 396,
+          "content": 780,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "assistant",
+      "state": "expense-create",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/expenses/create",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/assistant-expense-create-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Cancel",
+          "tag": "A",
+          "width": 77.8125,
+          "height": 44
+        },
+        {
+          "name": "Record expense",
+          "tag": "BUTTON",
+          "width": 139.71875,
+          "height": 44
+        }
+      ],
+      "tables": [],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "assistant",
+      "state": "expense-edit",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/expenses/1/edit",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/assistant-expense-edit-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Cancel",
+          "tag": "A",
+          "width": 77.8125,
+          "height": 44
+        },
+        {
+          "name": "Save changes",
+          "tag": "BUTTON",
+          "width": 125.53125,
+          "height": 44
+        }
+      ],
+      "tables": [],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "assistant",
+      "state": "expense-detail",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/expenses/1",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/assistant-expense-detail-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Audit history",
+          "tag": "A",
+          "width": 117.6875,
+          "height": 44
+        },
+        {
+          "name": "Edit expense",
+          "tag": "A",
+          "width": 117.640625,
+          "height": 44
+        },
+        {
+          "name": "Delete expense",
+          "tag": "SUMMARY",
+          "width": 364,
+          "height": 44
+        },
+        {
+          "name": "",
+          "tag": "BUTTON",
+          "width": 364,
+          "height": 44
+        }
+      ],
+      "tables": [],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "assistant",
+      "state": "expense-history",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/expenses/history",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/assistant-expense-history-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Apply",
+          "tag": "BUTTON",
+          "width": 70.46875,
+          "height": 44
+        },
+        {
+          "name": "Reset",
+          "tag": "A",
+          "width": 68.9375,
+          "height": 44
+        },
+        {
+          "name": "Before / after values",
+          "tag": "SUMMARY",
+          "width": 136.765625,
+          "height": 61.1875
+        },
+        {
+          "name": "Before / after values",
+          "tag": "SUMMARY",
+          "width": 136.765625,
+          "height": 61.1875
+        },
+        {
+          "name": "Before / after values",
+          "tag": "SUMMARY",
+          "width": 136.765625,
+          "height": 61.1875
+        },
+        {
+          "name": "Before / after values",
+          "tag": "SUMMARY",
+          "width": 136.765625,
+          "height": 61.1875
+        },
+        {
+          "name": "Before / after values",
+          "tag": "SUMMARY",
+          "width": 136.765625,
+          "height": 61.1875
+        },
+        {
+          "name": "Before / after values",
+          "tag": "SUMMARY",
+          "width": 136.765625,
+          "height": 61.1875
+        }
+      ],
+      "tables": [
+        {
+          "width": 396,
+          "content": 780,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "assistant",
+      "state": "order-pending",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/orders/1",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/assistant-order-pending-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        }
+      ],
+      "tables": [
+        {
+          "width": 348,
+          "content": 680,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "assistant",
+      "state": "order-confirmed",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/orders/2",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/assistant-order-confirmed-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Start Preparing (Baking)",
+          "tag": "BUTTON",
+          "width": 356,
+          "height": 44
+        }
+      ],
+      "tables": [
+        {
+          "width": 348,
+          "content": 680,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "assistant",
+      "state": "order-preparing",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/orders/3",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/assistant-order-preparing-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Mark Ready for Pickup",
+          "tag": "BUTTON",
+          "width": 356,
+          "height": 44
+        }
+      ],
+      "tables": [
+        {
+          "width": 348,
+          "content": 680,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "assistant",
+      "state": "order-ready",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/orders/4",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/assistant-order-ready-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        }
+      ],
+      "tables": [
+        {
+          "width": 348,
+          "content": 680,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "assistant",
+      "state": "order-completed",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/orders/5",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/assistant-order-completed-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        }
+      ],
+      "tables": [
+        {
+          "width": 348,
+          "content": 680,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "assistant",
+      "state": "order-cancelled",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/orders/6",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/assistant-order-cancelled-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        }
+      ],
+      "tables": [
+        {
+          "width": 348,
+          "content": 680,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "assistant",
+      "state": "order-failure-pending",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/orders/7",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/assistant-order-failure-pending-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        }
+      ],
+      "tables": [
+        {
+          "width": 348,
+          "content": 680,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "assistant",
+      "state": "order-failure-completed",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/orders/8",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/assistant-order-failure-completed-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        }
+      ],
+      "tables": [
+        {
+          "width": 348,
+          "content": 680,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "assistant",
+      "state": "reports-denied",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/reports",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/assistant-reports-denied-430.png",
+      "pageOverflow": 0,
+      "controls": [],
+      "tables": [],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "assistant",
+      "state": "customer-create-denied",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/customers/create",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/assistant-customer-create-denied-430.png",
+      "pageOverflow": 0,
+      "controls": [],
+      "tables": [],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "assistant",
+      "state": "order-create-denied",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/orders/create",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/assistant-order-create-denied-430.png",
+      "pageOverflow": 0,
+      "controls": [],
+      "tables": [],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "assistant",
+      "state": "navigation-open",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "url": "http://127.0.0.1:8124/supplies",
+      "environment": "Synthetic isolated SQLite preview",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "screenshot": "screenshots/assistant-navigation-open-430.png",
+      "pageOverflow": 0,
+      "controls": [
+        {
+          "name": "Open navigation",
+          "tag": "BUTTON",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Receive stock",
+          "tag": "A",
+          "width": 125.03125,
+          "height": 44
+        },
+        {
+          "name": "Record usage / waste",
+          "tag": "A",
+          "width": 176.453125,
+          "height": 44
+        },
+        {
+          "name": "Stocktake",
+          "tag": "A",
+          "width": 98.328125,
+          "height": 44
+        },
+        {
+          "name": "Add supply",
+          "tag": "A",
+          "width": 107.515625,
+          "height": 44
+        },
+        {
+          "name": "Movement history",
+          "tag": "A",
+          "width": 153.390625,
+          "height": 44
+        },
+        {
+          "name": "Apply",
+          "tag": "BUTTON",
+          "width": 70.46875,
+          "height": 44
+        },
+        {
+          "name": "Reset",
+          "tag": "A",
+          "width": 68.9375,
+          "height": 44
+        },
+        {
+          "name": "Sort by Supply",
+          "tag": "A",
+          "width": 55.90625,
+          "height": 44
+        },
+        {
+          "name": "Sort by Category",
+          "tag": "A",
+          "width": 70.359375,
+          "height": 44
+        },
+        {
+          "name": "Sort by Unit",
+          "tag": "A",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "Sort by On hand",
+          "tag": "A",
+          "width": 65.03125,
+          "height": 44
+        },
+        {
+          "name": "Sort by Reorder at",
+          "tag": "A",
+          "width": 77.40625,
+          "height": 44
+        },
+        {
+          "name": "Actions",
+          "tag": "SUMMARY",
+          "width": 103.859375,
+          "height": 44
+        },
+        {
+          "name": "Actions",
+          "tag": "SUMMARY",
+          "width": 103.859375,
+          "height": 44
+        },
+        {
+          "name": "Actions",
+          "tag": "SUMMARY",
+          "width": 103.859375,
+          "height": 44
+        },
+        {
+          "name": "Actions",
+          "tag": "SUMMARY",
+          "width": 103.859375,
+          "height": 44
+        }
+      ],
+      "tables": [
+        {
+          "width": 396,
+          "content": 780,
+          "localScroll": "auto"
+        }
+      ],
+      "catalogColumns": null,
+      "activeElement": "",
+      "phoneErrors": []
+    },
+    {
+      "role": "assistant",
+      "width": 430,
+      "state": "drawer-keyboard",
+      "entryFocus": true,
+      "tabWrap": true,
+      "reverseTabWrap": true,
+      "escape": true,
+      "focusRestored": true,
+      "scrollRestored": true
+    }
+  ],
+  "failures": []
+}

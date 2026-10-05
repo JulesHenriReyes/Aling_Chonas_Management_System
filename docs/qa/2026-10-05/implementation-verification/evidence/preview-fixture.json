@@ -1,0 +1,29 @@
+{
+    "environment": "Synthetic isolated SQLite preview",
+    "url": "http:\/\/127.0.0.1:8124",
+    "database": "C:\\Users\\User\\AppData\\Local\\Temp\/workflow-concurrency-implementation-preview-77063513f712\/workflow-concurrency-preview.sqlite",
+    "storage": "C:\\Users\\User\\AppData\\Local\\Temp\/workflow-concurrency-implementation-preview-77063513f712\/storage",
+    "orders": {
+        "pending": 1,
+        "confirmed": 2,
+        "preparing": 3,
+        "ready": 4,
+        "completed": 5,
+        "cancelled": 6,
+        "failure-pending": 7,
+        "failure-completed": 8
+    },
+    "public": {
+        "pending": "\/order\/payment\/b9c34f7bc7fdc0faf4ce8d7c4b13da002943aa550127885578aad1f2d9ea7d8b",
+        "awaiting": "\/order\/payment\/114cc5bb3a00ded4fade54f60746f3c3f48039f59d861eb8f0c6ec924357fb93",
+        "rejected": "\/order\/payment\/41ac56d51ccae7bc040ba5ef372ea3b5e28b4c34ccaed785602937c17d5510e9",
+        "verified": "\/order\/payment\/76fdbb1f1840ecf797f9802461616c639b05885aa24daed3baf0da6eb81f9e22",
+        "cancelled": "\/order\/payment\/60644c456d83d0e8f7525b7af0125540b0e0cb881f75271868e1670e2ae46b6a",
+        "failure-pending": "\/order\/payment\/105691ba8059510213221f50ca6ab314352b8ba9983749510713c7e4fd1664fd",
+        "failure-completed": "\/order\/payment\/a99b8a9607ccd36efeaf6bfdfea58f6ac7d9bfd43a2affc147c7cba7900def58"
+    },
+    "product": 1,
+    "customer": 1,
+    "supply": 1,
+    "expense": 1
+}

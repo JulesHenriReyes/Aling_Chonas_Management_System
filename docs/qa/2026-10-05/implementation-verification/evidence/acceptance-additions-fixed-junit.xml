@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="CLI Arguments" tests="4" assertions="249" errors="0" failures="0" skipped="0" time="3.093972">
+    <testsuite name="Tests\Feature\OperationalReliabilityAcceptanceTest" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\OperationalReliabilityAcceptanceTest.php" tests="3" assertions="19" errors="0" failures="0" skipped="0" time="0.621888">
+      <testcase name="test_missing_stocktake_reason_preserves_every_record_and_old_count_input" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\OperationalReliabilityAcceptanceTest.php" line="31" class="Tests\Feature\OperationalReliabilityAcceptanceTest" classname="Tests.Feature.OperationalReliabilityAcceptanceTest" assertions="7" time="0.540230"/>
+      <testcase name="test_failure_after_first_stock_quantity_write_rolls_back_batch_baselines_and_history" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\OperationalReliabilityAcceptanceTest.php" line="44" class="Tests\Feature\OperationalReliabilityAcceptanceTest" classname="Tests.Feature.OperationalReliabilityAcceptanceTest" assertions="3" time="0.030635"/>
+      <testcase name="test_product_toggle_is_owner_only_and_inactive_actor_cannot_toggle_or_create_stock" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\OperationalReliabilityAcceptanceTest.php" line="71" class="Tests\Feature\OperationalReliabilityAcceptanceTest" classname="Tests.Feature.OperationalReliabilityAcceptanceTest" assertions="9" time="0.051023"/>
+    </testsuite>
+    <testsuite name="Tests\Feature\ApprovedWorkflowReportAcceptanceTest" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ApprovedWorkflowReportAcceptanceTest.php" tests="1" assertions="230" errors="0" failures="0" skipped="0" time="2.472084">
+      <testcase name="test_ordinary_workflows_reconcile_independent_centavo_oracle_across_all_outputs_and_event_periods" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ApprovedWorkflowReportAcceptanceTest.php" line="16" class="Tests\Feature\ApprovedWorkflowReportAcceptanceTest" classname="Tests.Feature.ApprovedWorkflowReportAcceptanceTest" assertions="230" time="2.472084"/>
+    </testsuite>
+  </testsuite>
+</testsuites>

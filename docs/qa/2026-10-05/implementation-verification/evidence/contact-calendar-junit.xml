@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="C:\Users\User\Desktop\IT12_Project\phpunit.xml" tests="26" assertions="290" errors="6" failures="2" skipped="0" time="9.035151">
+    <testsuite name="Feature" tests="26" assertions="290" errors="6" failures="2" skipped="0" time="9.035151">
+      <testsuite name="Tests\Feature\ContactAndPickupCalendarTest" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php" tests="10" assertions="105" errors="6" failures="2" skipped="0" time="4.850575">
+        <testcase name="test_invalid_contacts_are_rejected_at_every_entry_without_changing_customer_or_order_records" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php" line="41" class="Tests\Feature\ContactAndPickupCalendarTest" classname="Tests.Feature.ContactAndPickupCalendarTest" assertions="13" time="0.541402">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Feature\ContactAndPickupCalendarTest::test_invalid_contacts_are_rejected_at_every_entry_without_changing_customer_or_order_records&#13;
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+ Array &amp;0 [
++    'id' =&gt; 1,
+     'first_name' =&gt; 'Saved',
++    'middle_name' =&gt; null,
+     'last_name' =&gt; 'Buyer',
+     'phone_number' =&gt; '09171234567',
++    'created_at' =&gt; '2026-10-04 21:07:14',
+     'updated_at' =&gt; '2026-10-04 21:07:14',
+-    'created_at' =&gt; '2026-10-04 21:07:14',
+-    'id' =&gt; 1,
+ ]
+&#13;
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:53</failure>
+        </testcase>
+        <testcase name="test_mobile_and_complete_manila_and_provincial_landlines_normalize_and_match_across_entry_points" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php" line="57" class="Tests\Feature\ContactAndPickupCalendarTest" classname="Tests.Feature.ContactAndPickupCalendarTest" assertions="30" time="0.112368"/>
+        <testcase name="test_equivalent_historical_international_landline_matches_without_rewriting_or_guessing_an_old_contact" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php" line="75" class="Tests\Feature\ContactAndPickupCalendarTest" classname="Tests.Feature.ContactAndPickupCalendarTest" assertions="2" time="0.019224">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Feature\ContactAndPickupCalendarTest::test_equivalent_historical_international_landline_matches_without_rewriting_or_guessing_an_old_contact&#13;
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+ Array &amp;0 [
++    'id' =&gt; 2,
+     'first_name' =&gt; 'Legacy',
++    'middle_name' =&gt; null,
+     'last_name' =&gt; 'Landline',
+     'phone_number' =&gt; '+63 (32) 234-5678',
++    'created_at' =&gt; '2026-10-04 21:07:14',
+     'updated_at' =&gt; '2026-10-04 21:07:14',
+-    'created_at' =&gt; '2026-10-04 21:07:14',
+-    'id' =&gt; 2,
+ ]
+&#13;
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:81</failure>
+        </testcase>
+        <testcase name="test_invalid_contact_keeps_draft_details_and_per_line_staged_image_associations" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php" line="89" class="Tests\Feature\ContactAndPickupCalendarTest" classname="Tests.Feature.ContactAndPickupCalendarTest" assertions="12" time="0.389722"/>
+        <testsuite name="Tests\Feature\ContactAndPickupCalendarTest::test_pickup_local_today_matches_dashboard_schedule_http_service_and_date_inputs" tests="6" assertions="48" errors="6" failures="0" skipped="0" time="3.787859">
+          <testcase name="test_pickup_local_today_matches_dashboard_schedule_http_service_and_date_inputs with data set #0" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php" line="115" class="Tests\Feature\ContactAndPickupCalendarTest" classname="Tests.Feature.ContactAndPickupCalendarTest" assertions="8" time="3.249399">
+            <error type="BadMethodCallException">Tests\Feature\ContactAndPickupCalendarTest::test_pickup_local_today_matches_dashboard_schedule_http_service_and_date_inputs with data set #0&#13;
+BadMethodCallException: Method Illuminate\Support\Collection::modelKeys does not exist.
+&#13;
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Macroable\Traits\Macroable.php:117
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:134
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:1308
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:134</error>
+          </testcase>
+          <testcase name="test_pickup_local_today_matches_dashboard_schedule_http_service_and_date_inputs with data set #1" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php" line="115" class="Tests\Feature\ContactAndPickupCalendarTest" classname="Tests.Feature.ContactAndPickupCalendarTest" assertions="8" time="0.109579">
+            <error type="BadMethodCallException">Tests\Feature\ContactAndPickupCalendarTest::test_pickup_local_today_matches_dashboard_schedule_http_service_and_date_inputs with data set #1&#13;
+BadMethodCallException: Method Illuminate\Support\Collection::modelKeys does not exist.
+&#13;
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Macroable\Traits\Macroable.php:117
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:134
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:1308
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:134</error>
+          </testcase>
+          <testcase name="test_pickup_local_today_matches_dashboard_schedule_http_service_and_date_inputs with data set #2" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php" line="115" class="Tests\Feature\ContactAndPickupCalendarTest" classname="Tests.Feature.ContactAndPickupCalendarTest" assertions="8" time="0.110000">
+            <error type="BadMethodCallException">Tests\Feature\ContactAndPickupCalendarTest::test_pickup_local_today_matches_dashboard_schedule_http_service_and_date_inputs with data set #2&#13;
+BadMethodCallException: Method Illuminate\Support\Collection::modelKeys does not exist.
+&#13;
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Macroable\Traits\Macroable.php:117
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:134
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:1308
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:134</error>
+          </testcase>
+          <testcase name="test_pickup_local_today_matches_dashboard_schedule_http_service_and_date_inputs with data set #3" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php" line="115" class="Tests\Feature\ContactAndPickupCalendarTest" classname="Tests.Feature.ContactAndPickupCalendarTest" assertions="8" time="0.114173">
+            <error type="BadMethodCallException">Tests\Feature\ContactAndPickupCalendarTest::test_pickup_local_today_matches_dashboard_schedule_http_service_and_date_inputs with data set #3&#13;
+BadMethodCallException: Method Illuminate\Support\Collection::modelKeys does not exist.
+&#13;
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Macroable\Traits\Macroable.php:117
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:134
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:1308
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:134</error>
+          </testcase>
+          <testcase name="test_pickup_local_today_matches_dashboard_schedule_http_service_and_date_inputs with data set #4" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php" line="115" class="Tests\Feature\ContactAndPickupCalendarTest" classname="Tests.Feature.ContactAndPickupCalendarTest" assertions="8" time="0.102533">
+            <error type="BadMethodCallException">Tests\Feature\ContactAndPickupCalendarTest::test_pickup_local_today_matches_dashboard_schedule_http_service_and_date_inputs with data set #4&#13;
+BadMethodCallException: Method Illuminate\Support\Collection::modelKeys does not exist.
+&#13;
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Macroable\Traits\Macroable.php:117
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:134
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:1308
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:134</error>
+          </testcase>
+          <testcase name="test_pickup_local_today_matches_dashboard_schedule_http_service_and_date_inputs with data set #5" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php" line="115" class="Tests\Feature\ContactAndPickupCalendarTest" classname="Tests.Feature.ContactAndPickupCalendarTest" assertions="8" time="0.102175">
+            <error type="BadMethodCallException">Tests\Feature\ContactAndPickupCalendarTest::test_pickup_local_today_matches_dashboard_schedule_http_service_and_date_inputs with data set #5&#13;
+BadMethodCallException: Method Illuminate\Support\Collection::modelKeys does not exist.
+&#13;
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Macroable\Traits\Macroable.php:117
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:134
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:1308
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:134</error>
+          </testcase>
+        </testsuite>
+      </testsuite>
+      <testsuite name="Tests\Feature\FixedCatalogAndPaymentReviewTest" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php" tests="16" assertions="185" errors="0" failures="0" skipped="0" time="4.184576">
+        <testcase name="test_both_paths_use_catalog_prices_and_keep_inclusions_separate_from_extras" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php" line="69" class="Tests\Feature\FixedCatalogAndPaymentReviewTest" classname="Tests.Feature.FixedCatalogAndPaymentReviewTest" assertions="22" time="0.061807"/>
+        <testcase name="test_snapshots_survive_catalog_changes_and_manual_price_changes_are_rejected" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php" line="88" class="Tests\Feature\FixedCatalogAndPaymentReviewTest" classname="Tests.Feature.FixedCatalogAndPaymentReviewTest" assertions="5" time="0.063598"/>
+        <testcase name="test_invalid_option_unavailable_product_inapplicable_extra_and_fractional_quantity_are_rejected" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php" line="102" class="Tests\Feature\FixedCatalogAndPaymentReviewTest" classname="Tests.Feature.FixedCatalogAndPaymentReviewTest" assertions="5" time="0.048507"/>
+        <testcase name="test_proof_is_private_and_does_not_count_as_payment_until_exact_verification" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php" line="117" class="Tests\Feature\FixedCatalogAndPaymentReviewTest" classname="Tests.Feature.FixedCatalogAndPaymentReviewTest" assertions="16" time="0.090969"/>
+        <testcase name="test_rejection_retains_history_and_allows_replacement_but_pending_proof_blocks_replacement" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php" line="141" class="Tests\Feature\FixedCatalogAndPaymentReviewTest" classname="Tests.Feature.FixedCatalogAndPaymentReviewTest" assertions="6" time="0.082448"/>
+        <testcase name="test_duplicates_across_orders_and_deactivated_staff_are_rejected" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php" line="155" class="Tests\Feature\FixedCatalogAndPaymentReviewTest" classname="Tests.Feature.FixedCatalogAndPaymentReviewTest" assertions="4" time="0.095743"/>
+        <testcase name="test_cash_workflow_and_readiness_before_collection_are_preserved" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php" line="169" class="Tests\Feature\FixedCatalogAndPaymentReviewTest" classname="Tests.Feature.FixedCatalogAndPaymentReviewTest" assertions="5" time="0.091857"/>
+        <testcase name="test_bakery_failure_refunds_all_verified_money_only_after_transfer_confirmation" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php" line="185" class="Tests\Feature\FixedCatalogAndPaymentReviewTest" classname="Tests.Feature.FixedCatalogAndPaymentReviewTest" assertions="11" time="0.088043"/>
+        <testcase name="test_receipts_reject_non_images_and_oversized_images" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php" line="209" class="Tests\Feature\FixedCatalogAndPaymentReviewTest" classname="Tests.Feature.FixedCatalogAndPaymentReviewTest" assertions="4" time="0.058132"/>
+        <testcase name="test_http_public_flow_has_persistent_token_access_and_private_receipt_authorization" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php" line="218" class="Tests\Feature\FixedCatalogAndPaymentReviewTest" classname="Tests.Feature.FixedCatalogAndPaymentReviewTest" assertions="41" time="2.091646"/>
+        <testcase name="test_catalog_and_settings_management_is_owner_only_and_photos_are_separate" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php" line="249" class="Tests\Feature\FixedCatalogAndPaymentReviewTest" classname="Tests.Feature.FixedCatalogAndPaymentReviewTest" assertions="22" time="0.918809"/>
+        <testcase name="test_http_price_changes_require_review_again_and_do_not_create_partial_records" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php" line="278" class="Tests\Feature\FixedCatalogAndPaymentReviewTest" classname="Tests.Feature.FixedCatalogAndPaymentReviewTest" assertions="4" time="0.066605"/>
+        <testcase name="test_owner_can_manage_add_on_photos_applicability_and_options_without_repricing_orders" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php" line="286" class="Tests\Feature\FixedCatalogAndPaymentReviewTest" classname="Tests.Feature.FixedCatalogAndPaymentReviewTest" assertions="9" time="0.100037"/>
+        <testcase name="test_public_receipt_submission_is_rate_limited_and_inactive_staff_cannot_read_receipts" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php" line="308" class="Tests\Feature\FixedCatalogAndPaymentReviewTest" classname="Tests.Feature.FixedCatalogAndPaymentReviewTest" assertions="14" time="0.120441"/>
+        <testcase name="test_late_readiness_allows_full_refund_and_private_page_keeps_refund_history" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php" line="324" class="Tests\Feature\FixedCatalogAndPaymentReviewTest" classname="Tests.Feature.FixedCatalogAndPaymentReviewTest" assertions="11" time="0.139392"/>
+        <testcase name="test_historical_completed_pickup_remains_terminal_even_without_readiness_timestamp" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php" line="351" class="Tests\Feature\FixedCatalogAndPaymentReviewTest" classname="Tests.Feature.FixedCatalogAndPaymentReviewTest" assertions="6" time="0.066542"/>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>

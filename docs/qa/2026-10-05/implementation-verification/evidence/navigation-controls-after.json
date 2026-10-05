@@ -1,0 +1,530 @@
+[
+  {
+    "role": "owner",
+    "width": 360,
+    "height": 844,
+    "textScale": 1,
+    "state": "open-navigation",
+    "engine": "isolated SQLite",
+    "browser": "154.0.8037.97",
+    "url": "http://127.0.0.1:8124/dashboard",
+    "controls": [
+      {
+        "name": "Close navigation",
+        "width": 44,
+        "height": 44
+      },
+      {
+        "name": "A Aling Chona Cakes & Cupcakes",
+        "width": 200,
+        "height": 44
+      },
+      {
+        "name": "Dashboard",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Orders",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Pickup Schedule",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Customers",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Products",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Inventory",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Expenses",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Reports",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Users (Owner)",
+        "width": 216,
+        "height": 44
+      }
+    ],
+    "small": [],
+    "escapeFocusRestored": true,
+    "pageOverflow": 0,
+    "screenshot": "screenshots/navigation-controls-after-owner-360.png"
+  },
+  {
+    "role": "owner",
+    "width": 390,
+    "height": 844,
+    "textScale": 1,
+    "state": "open-navigation",
+    "engine": "isolated SQLite",
+    "browser": "154.0.8037.97",
+    "url": "http://127.0.0.1:8124/dashboard",
+    "controls": [
+      {
+        "name": "Close navigation",
+        "width": 44,
+        "height": 44
+      },
+      {
+        "name": "A Aling Chona Cakes & Cupcakes",
+        "width": 200,
+        "height": 44
+      },
+      {
+        "name": "Dashboard",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Orders",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Pickup Schedule",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Customers",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Products",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Inventory",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Expenses",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Reports",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Users (Owner)",
+        "width": 216,
+        "height": 44
+      }
+    ],
+    "small": [],
+    "escapeFocusRestored": true,
+    "pageOverflow": 0,
+    "screenshot": "screenshots/navigation-controls-after-owner-390.png"
+  },
+  {
+    "role": "owner",
+    "width": 430,
+    "height": 844,
+    "textScale": 1,
+    "state": "open-navigation",
+    "engine": "isolated SQLite",
+    "browser": "154.0.8037.97",
+    "url": "http://127.0.0.1:8124/dashboard",
+    "controls": [
+      {
+        "name": "Close navigation",
+        "width": 44,
+        "height": 44
+      },
+      {
+        "name": "A Aling Chona Cakes & Cupcakes",
+        "width": 200,
+        "height": 44
+      },
+      {
+        "name": "Dashboard",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Orders",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Pickup Schedule",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Customers",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Products",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Inventory",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Expenses",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Reports",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Users (Owner)",
+        "width": 216,
+        "height": 44
+      }
+    ],
+    "small": [],
+    "escapeFocusRestored": true,
+    "pageOverflow": 0,
+    "screenshot": "screenshots/navigation-controls-after-owner-430.png"
+  },
+  {
+    "role": "owner",
+    "width": 768,
+    "height": 844,
+    "textScale": 1,
+    "state": "open-navigation",
+    "engine": "isolated SQLite",
+    "browser": "154.0.8037.97",
+    "url": "http://127.0.0.1:8124/dashboard",
+    "controls": [
+      {
+        "name": "Close navigation",
+        "width": 44,
+        "height": 44
+      },
+      {
+        "name": "A Aling Chona Cakes & Cupcakes",
+        "width": 200,
+        "height": 44
+      },
+      {
+        "name": "Dashboard",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Orders",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Pickup Schedule",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Customers",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Products",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Inventory",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Expenses",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Reports",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Users (Owner)",
+        "width": 216,
+        "height": 44
+      }
+    ],
+    "small": [],
+    "escapeFocusRestored": true,
+    "pageOverflow": 0,
+    "screenshot": "screenshots/navigation-controls-after-owner-768.png"
+  },
+  {
+    "role": "assistant",
+    "width": 360,
+    "height": 844,
+    "textScale": 1,
+    "state": "open-navigation",
+    "engine": "isolated SQLite",
+    "browser": "154.0.8037.97",
+    "url": "http://127.0.0.1:8124/dashboard",
+    "controls": [
+      {
+        "name": "Close navigation",
+        "width": 44,
+        "height": 44
+      },
+      {
+        "name": "A Aling Chona Cakes & Cupcakes",
+        "width": 200,
+        "height": 44
+      },
+      {
+        "name": "Dashboard",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Orders",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Pickup Schedule",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Customers",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Products",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Inventory",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Expenses",
+        "width": 216,
+        "height": 44
+      }
+    ],
+    "small": [],
+    "escapeFocusRestored": true,
+    "pageOverflow": 0,
+    "screenshot": "screenshots/navigation-controls-after-assistant-360.png"
+  },
+  {
+    "role": "assistant",
+    "width": 390,
+    "height": 844,
+    "textScale": 1,
+    "state": "open-navigation",
+    "engine": "isolated SQLite",
+    "browser": "154.0.8037.97",
+    "url": "http://127.0.0.1:8124/dashboard",
+    "controls": [
+      {
+        "name": "Close navigation",
+        "width": 44,
+        "height": 44
+      },
+      {
+        "name": "A Aling Chona Cakes & Cupcakes",
+        "width": 200,
+        "height": 44
+      },
+      {
+        "name": "Dashboard",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Orders",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Pickup Schedule",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Customers",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Products",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Inventory",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Expenses",
+        "width": 216,
+        "height": 44
+      }
+    ],
+    "small": [],
+    "escapeFocusRestored": true,
+    "pageOverflow": 0,
+    "screenshot": "screenshots/navigation-controls-after-assistant-390.png"
+  },
+  {
+    "role": "assistant",
+    "width": 430,
+    "height": 844,
+    "textScale": 1,
+    "state": "open-navigation",
+    "engine": "isolated SQLite",
+    "browser": "154.0.8037.97",
+    "url": "http://127.0.0.1:8124/dashboard",
+    "controls": [
+      {
+        "name": "Close navigation",
+        "width": 44,
+        "height": 44
+      },
+      {
+        "name": "A Aling Chona Cakes & Cupcakes",
+        "width": 200,
+        "height": 44
+      },
+      {
+        "name": "Dashboard",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Orders",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Pickup Schedule",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Customers",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Products",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Inventory",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Expenses",
+        "width": 216,
+        "height": 44
+      }
+    ],
+    "small": [],
+    "escapeFocusRestored": true,
+    "pageOverflow": 0,
+    "screenshot": "screenshots/navigation-controls-after-assistant-430.png"
+  },
+  {
+    "role": "assistant",
+    "width": 768,
+    "height": 844,
+    "textScale": 1,
+    "state": "open-navigation",
+    "engine": "isolated SQLite",
+    "browser": "154.0.8037.97",
+    "url": "http://127.0.0.1:8124/dashboard",
+    "controls": [
+      {
+        "name": "Close navigation",
+        "width": 44,
+        "height": 44
+      },
+      {
+        "name": "A Aling Chona Cakes & Cupcakes",
+        "width": 200,
+        "height": 44
+      },
+      {
+        "name": "Dashboard",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Orders",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Pickup Schedule",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Customers",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Products",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Inventory",
+        "width": 216,
+        "height": 44
+      },
+      {
+        "name": "Expenses",
+        "width": 216,
+        "height": 44
+      }
+    ],
+    "small": [],
+    "escapeFocusRestored": true,
+    "pageOverflow": 0,
+    "screenshot": "screenshots/navigation-controls-after-assistant-768.png"
+  }
+]

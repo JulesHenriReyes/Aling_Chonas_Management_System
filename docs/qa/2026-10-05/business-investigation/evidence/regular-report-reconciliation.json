@@ -1,0 +1,66 @@
+[
+    {
+        "business_period": [
+            "2026-09-01",
+            "2026-09-30"
+        ],
+        "independent_storage_bounds": [
+            "2026-08-31 16:00:00",
+            "2026-09-30 16:00:00"
+        ],
+        "expected": {
+            "sales": 3400,
+            "gross_collections": 3875,
+            "refunds_completed": 0,
+            "payment_collections": 3875,
+            "cancellation_income": 0,
+            "expenses": 100,
+            "operational_net_income": 3300,
+            "completed_order_count": 2
+        },
+        "actual": {
+            "sales": 3400,
+            "gross_collections": 3875,
+            "refunds_completed": 0,
+            "cancellation_income": 0,
+            "expenses": 100,
+            "completed_order_count": 2,
+            "payment_collections": 3875,
+            "operational_net_income": 3300
+        },
+        "differences": [],
+        "scope": "Read-only regular MariaDB service calculation; no browser/controller authorization verification"
+    },
+    {
+        "business_period": [
+            "2026-10-01",
+            "2026-10-05"
+        ],
+        "independent_storage_bounds": [
+            "2026-09-30 16:00:00",
+            "2026-10-05 16:00:00"
+        ],
+        "expected": {
+            "sales": 0,
+            "gross_collections": 0,
+            "refunds_completed": 0,
+            "payment_collections": 0,
+            "cancellation_income": 0,
+            "expenses": 0,
+            "operational_net_income": 0,
+            "completed_order_count": 0
+        },
+        "actual": {
+            "sales": 0,
+            "gross_collections": 0,
+            "refunds_completed": 0,
+            "cancellation_income": 0,
+            "expenses": 0,
+            "completed_order_count": 0,
+            "payment_collections": 0,
+            "operational_net_income": 0
+        },
+        "differences": [],
+        "scope": "Read-only regular MariaDB service calculation; no browser/controller authorization verification"
+    }
+]

@@ -6,10 +6,12 @@ if (!str_contains(basename($database),'workflow-concurrency-') || !is_file($data
 putenv('APP_ENV=testing'); putenv('DB_CONNECTION=sqlite'); putenv('DB_URL='); putenv('DB_DATABASE='.$database);
 putenv('CACHE_STORE=array'); putenv('SESSION_DRIVER=array');
 require dirname(__DIR__,2).'/vendor/autoload.php';
+$storage=Tests\Support\DisposableDatabase::storage();
 $app=require dirname(__DIR__,2).'/bootstrap/app.php';
+$app->addAbsoluteCachePathPrefix('C:');
+$app->useStoragePath($storage);
 $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
-config(['database.default'=>'sqlite','database.connections.sqlite.database'=>$database,'database.connections.sqlite.url'=>null]);
-Illuminate\Support\Facades\DB::purge('sqlite');
+Tests\Support\DisposableDatabase::guard($app,$database);
 $actor=App\Models\User::findOrFail($actorId);
 file_put_contents($directory.'/ready-'.$number,'ready');
 $deadline=microtime(true)+10;

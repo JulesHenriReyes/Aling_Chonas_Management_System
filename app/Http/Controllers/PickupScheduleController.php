@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Support\PickupCalendar;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -19,7 +20,7 @@ class PickupScheduleController extends Controller
             ->when(
                 $validated['pickup_date'] ?? null,
                 fn ($query, $date) => $query->whereDate('pickup_date', $date),
-                fn ($query) => $query->whereDate('pickup_date', '>=', today())
+                fn ($query) => $query->whereDate('pickup_date', '>=', PickupCalendar::todayString())
             )
             ->orderBy('pickup_date')
             ->orderBy('pickup_time')

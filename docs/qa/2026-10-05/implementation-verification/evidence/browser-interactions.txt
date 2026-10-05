@@ -1,0 +1,16 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+locator.inputValue: Error: strict mode violation: locator('[name=_token]') resolved to 2 elements:
+    1) <input type="hidden" name="_token" autocomplete="off" value="mUhZ3WoCg9bsZnoWezLbEAzIB1oABCqNhFfurX4m"/> aka getByRole('banner').locator('input[name="_token"]')
+    2) <input type="hidden" name="_token" autocomplete="off" value="mUhZ3WoCg9bsZnoWezLbEAzIB1oABCqNhFfurX4m"/> aka locator('#main-content input[name="_token"]')
+
+Call log:
+  - waiting for locator('[name=_token]')
+
+    at C:\Users\User\Desktop\IT12_Project\docs\qa\2026-10-05\implementation-verification\browser-interactions.mjs:69:53 {
+  log: [ "  - waiting for locator('[name=_token]')" ]
+}
+
+Node.js v24.19.0

@@ -22,7 +22,15 @@
                 <span>Pickup: {{ $order->pickup_date->format('F j, Y') }} at {{ \Carbon\Carbon::parse($order->pickup_time)->format('g:i A') }} ({{ config('bakery.pickup_timezone') }})</span>
             </div>
         </div>
-        <p class="text-xs text-cocoa-400">This is the bakery’s deadline to have your order ready. Final payment and collection complete the order.</p>
+        <p class="text-xs text-cocoa-400">
+            @if ($order->status === 'cancelled')
+                This order is cancelled. See the payment and refund status below.
+            @elseif ($order->status === 'completed')
+                Pickup is complete. No further payment is due.
+            @else
+                Pay exactly 50% at booking. The remaining balance is due only when you collect your order after it is Ready for pickup.
+            @endif
+        </p>
     </header>
 
     @if (session('success'))
@@ -58,7 +66,7 @@
             @elseif ($order->status === 'completed')
                 <p>Your order has been collected and paid in full. Thank you for ordering with Aling Chona.</p>
             @elseif ($order->cancellation_kind === 'bakery_failure')
-                <p>The bakery could not fulfill your order by the agreed pickup deadline. {{ $order->cancellation_reason }}</p>
+                <p>The bakery could not fulfil your order. {{ $order->cancellation_reason }}</p>
                 @unless ($order->refund)<p>No verified payment was recorded, so no refund is due.</p>@endunless
             @else
                 <p>Your order was cancelled. The existing customer-cancellation policy retains the deposit.</p>
@@ -134,7 +142,7 @@
                     @endif
 
                     <p class="text-xs text-cocoa-400 pt-2 border-t border-cocoa-100">
-                        Customer cancellations retain the deposit. If the bakery misses the pickup deadline, all verified payments are refundable.
+                        Customer cancellations retain the verified booking deposit. If the bakery cannot fulfil your order, all verified payments are due for a full refund. A refund is marked completed only after the money is returned.
                     </p>
                 </div>
             </section>

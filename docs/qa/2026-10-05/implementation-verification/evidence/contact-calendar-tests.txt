@@ -1,0 +1,103 @@
+PHPUnit 11.5.56 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.2.12
+Configuration: C:\Users\User\Desktop\IT12_Project\phpunit.xml
+
+F.F.EEEEEE................                                        26 / 26 (100%)
+
+Time: 00:09.072, Memory: 58.00 MB
+
+There were 6 errors:
+
+1) Tests\Feature\ContactAndPickupCalendarTest::test_pickup_local_today_matches_dashboard_schedule_http_service_and_date_inputs with data set #0 ('2026-10-04 15:59:59', '2026-10-04')
+BadMethodCallException: Method Illuminate\Support\Collection::modelKeys does not exist.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Macroable\Traits\Macroable.php:117
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:134
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:1308
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:134
+
+2) Tests\Feature\ContactAndPickupCalendarTest::test_pickup_local_today_matches_dashboard_schedule_http_service_and_date_inputs with data set #1 ('2026-10-04 16:00:00', '2026-10-05')
+BadMethodCallException: Method Illuminate\Support\Collection::modelKeys does not exist.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Macroable\Traits\Macroable.php:117
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:134
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:1308
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:134
+
+3) Tests\Feature\ContactAndPickupCalendarTest::test_pickup_local_today_matches_dashboard_schedule_http_service_and_date_inputs with data set #2 ('2026-10-04 17:00:00', '2026-10-05')
+BadMethodCallException: Method Illuminate\Support\Collection::modelKeys does not exist.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Macroable\Traits\Macroable.php:117
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:134
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:1308
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:134
+
+4) Tests\Feature\ContactAndPickupCalendarTest::test_pickup_local_today_matches_dashboard_schedule_http_service_and_date_inputs with data set #3 ('2026-10-04 16:00:01', '2026-10-05')
+BadMethodCallException: Method Illuminate\Support\Collection::modelKeys does not exist.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Macroable\Traits\Macroable.php:117
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:134
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:1308
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:134
+
+5) Tests\Feature\ContactAndPickupCalendarTest::test_pickup_local_today_matches_dashboard_schedule_http_service_and_date_inputs with data set #4 ('2026-10-31 16:00:00', '2026-11-01')
+BadMethodCallException: Method Illuminate\Support\Collection::modelKeys does not exist.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Macroable\Traits\Macroable.php:117
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:134
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:1308
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:134
+
+6) Tests\Feature\ContactAndPickupCalendarTest::test_pickup_local_today_matches_dashboard_schedule_http_service_and_date_inputs with data set #5 ('2026-12-31 16:00:00', '2027-01-01')
+BadMethodCallException: Method Illuminate\Support\Collection::modelKeys does not exist.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Macroable\Traits\Macroable.php:117
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:134
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:1308
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:134
+
+--
+
+There were 2 failures:
+
+1) Tests\Feature\ContactAndPickupCalendarTest::test_invalid_contacts_are_rejected_at_every_entry_without_changing_customer_or_order_records
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+ Array &0 [
++    'id' => 1,
+     'first_name' => 'Saved',
++    'middle_name' => null,
+     'last_name' => 'Buyer',
+     'phone_number' => '09171234567',
++    'created_at' => '2026-10-04 21:07:14',
+     'updated_at' => '2026-10-04 21:07:14',
+-    'created_at' => '2026-10-04 21:07:14',
+-    'id' => 1,
+ ]
+
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:53
+
+2) Tests\Feature\ContactAndPickupCalendarTest::test_equivalent_historical_international_landline_matches_without_rewriting_or_guessing_an_old_contact
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+ Array &0 [
++    'id' => 2,
+     'first_name' => 'Legacy',
++    'middle_name' => null,
+     'last_name' => 'Landline',
+     'phone_number' => '+63 (32) 234-5678',
++    'created_at' => '2026-10-04 21:07:14',
+     'updated_at' => '2026-10-04 21:07:14',
+-    'created_at' => '2026-10-04 21:07:14',
+-    'id' => 2,
+ ]
+
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:81
+
+ERRORS!
+Tests: 26, Assertions: 290, Errors: 6, Failures: 2.

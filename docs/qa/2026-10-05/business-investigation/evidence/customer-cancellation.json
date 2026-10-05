@@ -1,0 +1,21 @@
+{
+    "owner_decision": "Retain all verified payments",
+    "verified_paid": 1000,
+    "refund_count": 0,
+    "expected_retained": 1000,
+    "actual_summary": {
+        "sales": 0,
+        "gross_collections": 1000,
+        "refunds_completed": 0,
+        "cancellation_income": 500,
+        "expenses": 0,
+        "completed_order_count": 0,
+        "payment_collections": 1000,
+        "operational_net_income": 500,
+        "period_start": "2026-09-01",
+        "period_end": "2026-09-30",
+        "refunds_pending": 0
+    },
+    "actual_trend_retention_sum": 500,
+    "actual_drilldown_total": 500
+}

@@ -1,0 +1,4 @@
+./composer.json is valid, but with a few warnings
+See https://getcomposer.org/doc/04-schema.md for details on the schema
+# General warnings
+- require.giggsey/libphonenumber-for-php-lite : exact version constraints (9.0.40) should be avoided if the package follows semantic versioning

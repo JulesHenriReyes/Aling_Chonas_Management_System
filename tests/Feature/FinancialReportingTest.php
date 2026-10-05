@@ -71,11 +71,11 @@ class FinancialReportingTest extends TestCase
         // Down payment: ₱1000 cash
         $this->orderService->recordDownPayment($order1, 1000.00, 'cash', null, $this->owner, $today);
         // Final payment: ₱1000 gcash
-        $this->orderService->recordFinalPayment($order1, 1000.00, 'gcash', 'REF-1000', $this->owner, $today);
         $this->orderService->updateStatus($order1, 'preparing', $this->owner);
         $this->orderService->updateStatus($order1, 'ready_for_pickup', $this->owner);
         // Complete order after it is ready for pickup.
-        $this->orderService->updateStatus($order1, 'completed', $this->owner);
+$this->orderService->recordFinalPayment($order1, 1000.00, 'gcash', 'REF-1000', $this->owner, $today, true);
+
 
         // 2. Order 2: ₱2000 cake, paid 50% deposit (₱1000) then cancelled today
         $order2 = $this->orderService->createInternalOrder([
@@ -167,7 +167,7 @@ class FinancialReportingTest extends TestCase
         $this->assertSame(1000.00, $this->reportService->getCancellationIncome($today, $today));
     }
 
-    public function test_cancellation_income_excludes_a_final_payment_recorded_before_cancellation(): void
+    public function test_legacy_cancellation_preserves_existing_deposit_reporting_and_full_ledger(): void
     {
         $today = Carbon::parse('2026-09-22 10:00:00');
         Carbon::setTestNow($today);
@@ -180,9 +180,12 @@ class FinancialReportingTest extends TestCase
         ], $this->owner);
 
         $this->orderService->recordDownPayment($order, 1000.00, 'cash', null, $this->owner, $today);
-        $this->orderService->recordFinalPayment($order, 1000.00, 'cash', null, $this->owner, $today);
+        // Explicit historical fixture; preserve existing classification, not a new retention decision.
+        $order->payments()->create(['user_id' => $this->owner->id, 'amount' => 1000, 'payment_type' => 'final_payment', 'payment_method' => 'cash', 'payment_date' => $today]);
         $this->orderService->cancelOrder($order, $this->owner);
 
         $this->assertSame(1000.00, $this->reportService->getCancellationIncome($today, $today));
+        $this->assertSame(2000.00, $order->fresh()->amount_paid);
+        $this->assertDatabaseCount('payments', 2);
     }
 }

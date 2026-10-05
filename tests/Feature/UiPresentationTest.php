@@ -42,7 +42,7 @@ class UiPresentationTest extends TestCase
         $this->snapshot('order-pending', $pending);
         $service->recordDownPayment($order, $order->required_down_payment, 'gcash', 'TEST-REF-123', $owner);
         $confirmed = $this->get('/orders/'.$order->id);
-        $confirmed->assertDontSee('name="unit_price"', false)->assertSee('value="preparing"', false)->assertSee('value="final_payment"', false);
+        $confirmed->assertDontSee('name="unit_price"', false)->assertSee('value="preparing"', false)->assertDontSee('name="pickup_confirmed"', false);
         $this->snapshot('order-confirmed', $confirmed);
         $service->updateStatus($order, 'preparing', $owner);
         $preparing = $this->get('/orders/'.$order->id);
@@ -50,9 +50,10 @@ class UiPresentationTest extends TestCase
         $this->snapshot('order-preparing', $preparing);
         $service->updateStatus($order, 'ready_for_pickup', $owner);
         $ready = $this->get('/orders/'.$order->id);
-        $ready->assertDontSee('value="completed"', false)->assertSee('Payment required:');
+        $ready->assertDontSee('value="completed"', false)->assertSee('At pickup:')->assertSee('name="pickup_confirmed"', false);
         $this->snapshot('order-ready-unpaid', $ready);
-        $service->recordFinalPayment($order, $order->remaining_balance, 'cash', null, $owner);
+        // Explicit fully paid legacy state for normal status completion coverage.
+        $order->payments()->create(['user_id' => $owner->id, 'amount' => $order->remaining_balance, 'payment_type' => 'final_payment', 'payment_method' => 'cash', 'payment_date' => now()]);
         $paid = $this->get('/orders/'.$order->id);
         $paid->assertSee('value="completed"', false)->assertDontSee('value="final_payment"', false);
         $this->snapshot('order-ready-paid', $paid);

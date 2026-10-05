@@ -1,0 +1,16 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for getByRole('button', { name: 'Add package', exact: true }).first()
+
+    at C:\Users\User\Desktop\IT12_Project\docs\qa\2026-10-05\implementation-verification\browser-interactions.mjs:96:109 {
+  log: [
+    "  - waiting for getByRole('button', { name: 'Add package', exact: true }).first()"
+  ],
+  name: 'TimeoutError'
+}
+
+Node.js v24.19.0

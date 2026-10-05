@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\PaymentProof;
 use App\Services\PaymentReviewService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
 class PaymentReviewController extends Controller
@@ -18,6 +19,7 @@ class PaymentReviewController extends Controller
 
     public function accept(Request $request, PaymentProof $proof, PaymentReviewService $reviews)
     {
+        Gate::authorize('review-proofs');
         $data = $request->validate([
             'amount' => ['required', 'numeric', 'decimal:0,2', 'min:0.01'],
             'reference_number' => ['required', 'string', 'max:100'],
@@ -30,6 +32,7 @@ class PaymentReviewController extends Controller
 
     public function reject(Request $request, PaymentProof $proof, PaymentReviewService $reviews)
     {
+        Gate::authorize('review-proofs');
         $data = $request->validate(['reason' => ['required', 'string', 'max:1000']]);
         $reviews->reject($proof, $data['reason'], $request->user());
 

@@ -1,0 +1,3 @@
+Creating my.ini file
+Creation of the database was successful
+C:\Users\User\AppData\Local\Temp\bakery-implementation-mysql-d8c4fa4f384746889202c310935608a7

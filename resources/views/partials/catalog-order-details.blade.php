@@ -48,7 +48,7 @@
                         <div><label for="new-first" class="block text-xs font-semibold text-cocoa-600 mb-1">First name</label><input id="new-first" x-model="newCustomer.first_name" maxlength="100" class="form-input-custom"></div>
                         <div><label for="new-last" class="block text-xs font-semibold text-cocoa-600 mb-1">Last name</label><input id="new-last" x-model="newCustomer.last_name" maxlength="100" class="form-input-custom"></div>
                         <div><label for="new-middle" class="block text-xs font-semibold text-cocoa-600 mb-1">Middle name (optional)</label><input id="new-middle" x-model="newCustomer.middle_name" maxlength="100" class="form-input-custom"></div>
-                        <div><label for="new-phone" class="block text-xs font-semibold text-cocoa-600 mb-1">Phone number</label><input id="new-phone" type="tel" x-model="newCustomer.phone_number" maxlength="20" class="form-input-custom"></div>
+                        <div><label for="new-phone" class="block text-xs font-semibold text-cocoa-600 mb-1">Mobile or landline number</label><input id="new-phone" type="tel" x-model="newCustomer.phone_number" maxlength="40" aria-describedby="new-phone-help new-phone-error" :aria-invalid="Boolean(fieldErrors.phone_number)" class="form-input-custom"><p id="new-phone-help" class="text-xs text-cocoa-500 mt-1">For landlines, include the area code, e.g. 032 234 5678.</p><p id="new-phone-error" role="alert" x-show="fieldErrors.phone_number" x-text="fieldErrors.phone_number?.[0]" class="text-sm text-red-700" x-cloak></p></div>
                     </div>
                     <button type="button" @click="createCustomer()" :disabled="creating" class="px-4 py-2 bg-cocoa-600 hover:bg-cocoa-700 text-white text-xs font-semibold rounded-lg disabled:opacity-60 transition" x-text="creating ? 'Saving customer…' : 'Save and select customer'"></button>
                 </div>
@@ -75,9 +75,11 @@
                     </div>
                     <div>
                         <label for="phone" class="block text-xs font-semibold text-cocoa-700 uppercase tracking-wider mb-1.5">
-                            Phone number <span class="text-red-500">*</span>
+                            Mobile or landline number <span class="text-red-500">*</span>
                         </label>
-                        <input id="phone" name="phone_number" type="tel" autocomplete="tel" required minlength="7" maxlength="20" value="{{ old('phone_number', $draft['details']['phone_number'] ?? '') }}" class="form-input-custom" placeholder="0917 123 4567">
+                        <input id="phone" name="phone_number" type="tel" autocomplete="tel" required maxlength="40" aria-describedby="phone-help phone-error" @error('phone_number') aria-invalid="true" @enderror value="{{ old('phone_number', $draft['details']['phone_number'] ?? '') }}" class="form-input-custom" placeholder="0917 123 4567">
+                        <p id="phone-help" class="text-xs text-cocoa-500 mt-1">For landlines, include the area code, e.g. 02 8123 4567 or 032 234 5678. +63 numbers are accepted.</p>
+                        @error('phone_number')<p id="phone-error" role="alert" class="text-sm text-red-700">{{ $message }}</p>@enderror
                     </div>
                 </div>
             @endif
@@ -97,7 +99,7 @@
                     <label for="pickup-date" class="block text-xs font-semibold text-cocoa-700 uppercase tracking-wider mb-1.5">
                         Pickup date <span class="text-red-500">*</span>
                     </label>
-                    <input id="pickup-date" name="pickup_date" type="date" min="{{ today()->toDateString() }}" required value="{{ old('pickup_date', $draft['details']['pickup_date'] ?? '') }}" class="form-input-custom">
+                    <input id="pickup-date" name="pickup_date" type="date" min="{{ \App\Support\PickupCalendar::todayString() }}" required value="{{ old('pickup_date', $draft['details']['pickup_date'] ?? '') }}" class="form-input-custom">
                 </div>
                 <div>
                     <label for="pickup-time" class="block text-xs font-semibold text-cocoa-700 uppercase tracking-wider mb-1.5">

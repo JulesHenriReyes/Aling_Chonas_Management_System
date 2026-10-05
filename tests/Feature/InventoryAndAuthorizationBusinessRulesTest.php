@@ -178,20 +178,20 @@ class InventoryAndAuthorizationBusinessRulesTest extends TestCase
         
         // Permitted business/operational features for Assistant
         $this->assertFalse(Gate::forUser($this->assistant)->allows('manage-products'));
-        $this->assertTrue(Gate::forUser($this->assistant)->allows('view-reports'));
+        $this->assertFalse(Gate::forUser($this->assistant)->allows('view-reports'));
         $this->assertTrue(Gate::forUser($this->assistant)->allows('manage-expenses'));
-        $this->assertTrue(Gate::forUser($this->assistant)->allows('manage-customers'));
-        $this->assertTrue(Gate::forUser($this->assistant)->allows('manage-orders'));
-        $this->assertTrue(Gate::forUser($this->assistant)->allows('cancel-orders'));
-        $this->assertTrue(Gate::forUser($this->assistant)->allows('record-payments'));
+        $this->assertFalse(Gate::forUser($this->assistant)->allows('manage-customers'));
+        $this->assertFalse(Gate::forUser($this->assistant)->allows('manage-orders'));
+        $this->assertFalse(Gate::forUser($this->assistant)->allows('cancel-orders'));
+        $this->assertFalse(Gate::forUser($this->assistant)->allows('record-payments'));
         $this->assertTrue(Gate::forUser($this->assistant)->allows('manage-inventory'));
     }
 
-    public function test_assistant_can_access_all_business_modules_but_not_user_management(): void
+    public function test_assistant_can_access_approved_daily_work_and_cannot_access_reports_or_administration(): void
     {
         $this->actingAs($this->assistant);
 
-        foreach (['/dashboard', '/customers', '/products', '/orders', '/supplies', '/expenses', '/reports', '/pickup-schedule'] as $path) {
+        foreach (['/dashboard', '/customers', '/products', '/orders', '/supplies', '/expenses', '/pickup-schedule'] as $path) {
             $this->get($path)->assertOk();
         }
 
@@ -211,6 +211,8 @@ class InventoryAndAuthorizationBusinessRulesTest extends TestCase
         $this->assertDatabaseMissing('products', ['product_name' => 'Assistant-added Cake']);
         $this->assertDatabaseHas('expenses', ['description' => 'Assistant-recorded packaging purchase', 'user_id' => $this->assistant->id]);
         $this->get('/users')->assertForbidden();
+        $this->get('/reports')->assertForbidden();
+        $this->assertTrue(Gate::forUser($this->assistant)->allows('update-order-status'));
     }
 
     public function test_owner_can_access_user_management(): void

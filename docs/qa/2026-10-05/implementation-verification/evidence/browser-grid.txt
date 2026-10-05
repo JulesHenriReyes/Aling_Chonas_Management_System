@@ -1,0 +1,7 @@
+{"width":360,"screenshots":73,"failures":0}
+{"width":390,"screenshots":80,"failures":0}
+{"width":430,"screenshots":73,"failures":0}
+{"width":768,"screenshots":73,"failures":0}
+{"width":1024,"screenshots":71,"failures":0}
+{"width":1440,"screenshots":71,"failures":0}
+{"records":455,"failures":0}

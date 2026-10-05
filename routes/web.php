@@ -1,21 +1,20 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderPaymentPageController;
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\PublicOrderController;
-use App\Http\Controllers\ReportsController;
+use App\Http\Controllers\PaymentReviewController;
 use App\Http\Controllers\PickupScheduleController;
+use App\Http\Controllers\PublicOrderController;
+use App\Http\Controllers\RefundController;
+use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\SupplyController;
 use App\Http\Controllers\UserManagementController;
-use App\Http\Controllers\OrderPaymentPageController;
-use App\Http\Controllers\PaymentReviewController;
-use App\Http\Controllers\RefundController;
-use App\Http\Controllers\CatalogController;
 use App\Http\Middleware\PrivateOrderResponse;
 use Illuminate\Support\Facades\Route;
 
@@ -49,7 +48,8 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->n
 Route::middleware(['auth', 'role:owner,assistant'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::resource('customers', CustomerController::class)->except(['destroy']);
+    Route::resource('customers', CustomerController::class)->only(['create', 'store', 'edit', 'update'])->middleware('can:manage-customers');
+    Route::resource('customers', CustomerController::class)->only(['index', 'show']);
 
     Route::get('/products', [CatalogController::class, 'index'])->name('products.index');
     Route::middleware('role:owner')->group(function () {
@@ -69,22 +69,23 @@ Route::middleware(['auth', 'role:owner,assistant'])->group(function () {
     });
 
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
-    Route::get('/orders/create', [OrderController::class, 'create'])->name('orders.create');
-    Route::post('/orders/create/details', [OrderController::class, 'saveSelection'])->name('orders.continue');
-    Route::get('/orders/create/details', [OrderController::class, 'details'])->name('orders.details');
-    Route::post('/orders/create/details/back', [OrderController::class, 'backToSelection'])->name('orders.back');
-    Route::post('/orders/create/customer', [OrderController::class, 'inlineCustomer'])->name('orders.inlineCustomer');
-    Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
+    Route::get('/orders/create', [OrderController::class, 'create'])->middleware('can:manage-orders')->name('orders.create');
+    Route::post('/orders/create/details', [OrderController::class, 'saveSelection'])->middleware('can:manage-orders')->name('orders.continue');
+    Route::get('/orders/create/details', [OrderController::class, 'details'])->middleware('can:manage-orders')->name('orders.details');
+    Route::post('/orders/create/details/back', [OrderController::class, 'backToSelection'])->middleware('can:manage-orders')->name('orders.back');
+    Route::post('/orders/create/customer', [OrderController::class, 'inlineCustomer'])->middleware('can:manage-customers')->name('orders.inlineCustomer');
+    Route::post('/orders', [OrderController::class, 'store'])->middleware('can:manage-orders')->name('orders.store');
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
-    Route::patch('/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
-    Route::post('/orders/{order}/cancel', [OrderController::class, 'cancel'])->name('orders.cancel');
-    Route::post('/orders/{order}/images', [OrderController::class, 'attachImage'])->name('orders.attachImage');
-    Route::post('/orders/{order}/payments', [PaymentController::class, 'store'])->name('orders.payments.store');
+    Route::patch('/orders/{order}/status', [OrderController::class, 'updateStatus'])->middleware('can:update-order-status')->name('orders.updateStatus');
+    Route::post('/orders/{order}/cancel', [OrderController::class, 'cancel'])->middleware('can:cancel-orders')->name('orders.cancel');
+    Route::post('/orders/{order}/images', [OrderController::class, 'attachImage'])->middleware('can:manage-orders')->name('orders.attachImage');
+    Route::post('/orders/{order}/payments', [PaymentController::class, 'store'])->middleware('can:record-payments')->name('orders.payments.store');
+    Route::post('/orders/{order}/complete-pickup', [PaymentController::class, 'completePickup'])->middleware('can:record-payments')->name('orders.completePickup');
     Route::get('/payment-proofs/{proof}/receipt', [PaymentReviewController::class, 'receipt'])->middleware(PrivateOrderResponse::class)->name('proofs.receipt');
-    Route::post('/payment-proofs/{proof}/accept', [PaymentReviewController::class, 'accept'])->name('proofs.accept');
-    Route::post('/payment-proofs/{proof}/reject', [PaymentReviewController::class, 'reject'])->name('proofs.reject');
-    Route::post('/orders/{order}/bakery-failure', [RefundController::class, 'store'])->name('orders.bakeryFailure');
-    Route::post('/refunds/{refund}/complete', [RefundController::class, 'complete'])->name('refunds.complete');
+    Route::post('/payment-proofs/{proof}/accept', [PaymentReviewController::class, 'accept'])->middleware('can:review-proofs')->name('proofs.accept');
+    Route::post('/payment-proofs/{proof}/reject', [PaymentReviewController::class, 'reject'])->middleware('can:review-proofs')->name('proofs.reject');
+    Route::post('/orders/{order}/bakery-failure', [RefundController::class, 'store'])->middleware('can:manage-refunds')->name('orders.bakeryFailure');
+    Route::post('/refunds/{refund}/complete', [RefundController::class, 'complete'])->middleware('can:manage-refunds')->name('refunds.complete');
 
     Route::get('/supplies', [SupplyController::class, 'index'])->name('supplies.index');
     Route::get('/supplies/create', [SupplyController::class, 'create'])->name('supplies.create');
@@ -111,9 +112,9 @@ Route::middleware(['auth', 'role:owner,assistant'])->group(function () {
     Route::delete('/expenses/{expense}', [ExpenseController::class, 'destroy'])->name('expenses.destroy');
     Route::post('/expenses', [ExpenseController::class, 'store'])->name('expenses.store');
 
-    Route::get('/reports', [ReportsController::class, 'index'])->name('reports.index');
-    Route::get('/reports/records', [ReportsController::class, 'records'])->name('reports.records');
-    Route::get('/reports/export', [ReportsController::class, 'export'])->name('reports.export');
+    Route::get('/reports', [ReportsController::class, 'index'])->middleware('can:view-reports')->name('reports.index');
+    Route::get('/reports/records', [ReportsController::class, 'records'])->middleware('can:view-reports')->name('reports.records');
+    Route::get('/reports/export', [ReportsController::class, 'export'])->middleware('can:view-reports')->name('reports.export');
     Route::get('/pickup-schedule', [PickupScheduleController::class, 'index'])->name('schedule.index');
 
     Route::middleware(['can:manage-users', 'role:owner'])->group(function () {

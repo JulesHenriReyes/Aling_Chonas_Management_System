@@ -1,7 +1,7 @@
 window.staffCustomerPicker = function (customers, initialId, createUrl, csrfToken) {
     return {
         customers, selectedId: initialId ? String(initialId) : '', search: '', open: false,
-        showAdd: false, creating: false, error: '',
+        showAdd: false, creating: false, error: '', fieldErrors: {},
         newCustomer: { first_name: '', middle_name: '', last_name: '', phone_number: '' },
         init() {
             const selected = this.customers.find(customer => String(customer.id) === this.selectedId);
@@ -21,13 +21,17 @@ window.staffCustomerPicker = function (customers, initialId, createUrl, csrfToke
             if (this.creating) return;
             this.creating = true;
             this.error = '';
+            this.fieldErrors = {};
             try {
                 const response = await fetch(createUrl, {
                     method: 'POST', credentials: 'same-origin',
                     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-TOKEN': csrfToken },
                     body: JSON.stringify(this.newCustomer),
                 });
-                const data = await response.json();
+                const data = await response.json().catch(() => ({}));
+                this.fieldErrors = data.errors || {};
+                if (response.status === 419) throw new Error('Your session expired. Reload this page before saving. Copy the new customer details first.');
+                if (response.status === 403) throw new Error('Only the Owner can add customers. Your entered details are still here.');
                 if (!response.ok) throw new Error(Object.values(data.errors || {}).flat().join(' ') || data.message || 'Could not save customer.');
                 const customer = { id: data.id, name: data.full_name, phone: data.phone_number };
                 this.customers.push(customer);

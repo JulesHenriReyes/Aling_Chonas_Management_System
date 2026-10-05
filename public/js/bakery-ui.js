@@ -66,13 +66,21 @@ document.addEventListener('DOMContentLoaded', () => {
         const fields = [...validationRoot.querySelectorAll('input,select,textarea')].filter(field =>
             field.name === name || field.name === `${name}[]` || (field.type === 'file' && name.startsWith(field.name.replace(/\[\]$/, '') + '[')));
         fields.forEach((field,index) => {
-            const error = document.createElement('p');
-            error.id = `${field.id || 'field'}-error-${key.replaceAll('.', '-')}-${index}`;
-            error.className = 'field-error';
-            error.textContent = messages.join(' ');
+            const disclosure = field.closest('details');
+            if (disclosure) disclosure.open = true;
+            const associated = (field.getAttribute('aria-describedby') || '').split(/\s+/)
+                .map(id => document.getElementById(id)).find(element => element?.matches('[role="alert"], .field-error'));
+            const rendered = [...validationRoot.querySelectorAll('[data-error-for]')]
+                .find(element => element.dataset.errorFor === field.name || element.dataset.errorFor === key);
+            const error = associated || rendered || document.createElement('p');
+            error.id ||= `${field.id || 'field'}-error-${key.replaceAll('.', '-')}-${index}`;
+            if (!associated && !rendered) {
+                error.className = 'field-error';
+                error.textContent = messages.join(' ');
+                field.after(error);
+            }
             field.setAttribute('aria-invalid','true');
-            field.setAttribute('aria-describedby', [field.getAttribute('aria-describedby'),error.id].filter(Boolean).join(' '));
-            field.after(error);
+            field.setAttribute('aria-describedby', [...new Set([...(field.getAttribute('aria-describedby') || '').split(/\s+/),error.id].filter(Boolean))].join(' '));
             if (!firstInvalid && visible(field) && !field.disabled && field.type !== 'hidden') firstInvalid = field;
         });
     }
@@ -81,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Dedicated editing pages retain old input on errors and warn before discarding edits.
 document.addEventListener('DOMContentLoaded', () => {
-    const forms = [...document.querySelectorAll('form[data-safe-form]')];
+    const forms = [...document.querySelectorAll('form[data-safe-form], form[data-action-form]')];
     for (const form of forms) {
         let dirty = false, submitting = false;
         const disabledBeforeSubmit = new Map();
@@ -97,8 +105,14 @@ document.addEventListener('DOMContentLoaded', () => {
             form.querySelectorAll('button[type=submit], button:not([type])').forEach(button => disabledBeforeSubmit.set(button,button.disabled));
             setTimeout(() => form.querySelectorAll('button[type=submit], button:not([type])').forEach(button => button.disabled = true), 0);
         });
-        window.addEventListener('beforeunload', event => { if (dirty && !submitting) { event.preventDefault(); event.returnValue = ''; } });
-        window.addEventListener('pageshow', () => { submitting = false; for (const [button,disabled] of disabledBeforeSubmit) button.disabled=disabled; disabledBeforeSubmit.clear(); });
+        if (form.hasAttribute('data-safe-form')) window.addEventListener('beforeunload', event => { if (dirty && !submitting) { event.preventDefault(); event.returnValue = ''; } });
+        window.addEventListener('pageshow', () => {
+            submitting = false;
+            for (const [button,disabled] of disabledBeforeSubmit) button.disabled=disabled;
+            disabledBeforeSubmit.clear();
+            const status = form.querySelector('[data-submit-status]');
+            if (status) status.textContent = '';
+        });
     }
     const target = location.hash && document.getElementById(location.hash.slice(1));
     if (target?.tagName === 'DETAILS') target.open = true;

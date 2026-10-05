@@ -1,0 +1,17 @@
+{
+    "environment": "Synthetic isolated SQLite future-period fixture",
+    "period": "2027-01",
+    "summary": {
+        "sales": 0,
+        "gross_collections": 0,
+        "refunds_completed": 1000,
+        "cancellation_income": 0,
+        "expenses": 0,
+        "completed_order_count": 0,
+        "payment_collections": -1000,
+        "operational_net_income": 0,
+        "period_start": "2027-01-01",
+        "period_end": "2027-01-31",
+        "refunds_pending": 2000
+    }
+}

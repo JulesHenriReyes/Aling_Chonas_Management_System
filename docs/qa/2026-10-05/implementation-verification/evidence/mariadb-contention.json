@@ -1,0 +1,122 @@
+{
+    "engine": "10.4.32-MariaDB",
+    "cases": {
+        "additive-receipts": {
+            "held_lock_blocked_both_workers": true,
+            "results": [
+                {
+                    "status": "posted",
+                    "id": 3
+                },
+                {
+                    "status": "posted",
+                    "id": 2
+                }
+            ]
+        },
+        "usage-overdraw": {
+            "held_lock_blocked_both_workers": true,
+            "results": [
+                {
+                    "status": "posted",
+                    "id": 4
+                },
+                {
+                    "status": "rejected",
+                    "fields": [
+                        "lines.0.quantity"
+                    ]
+                }
+            ]
+        },
+        "duplicate-receipt": {
+            "held_lock_blocked_both_workers": true,
+            "results": [
+                {
+                    "status": "posted",
+                    "id": 6
+                },
+                {
+                    "status": "posted",
+                    "id": 6
+                }
+            ]
+        },
+        "stale-stocktake": {
+            "held_lock_blocked_both_workers": true,
+            "results": [
+                {
+                    "status": "posted",
+                    "id": 8
+                },
+                {
+                    "status": "rejected",
+                    "fields": [
+                        "lines.0.quantity"
+                    ]
+                }
+            ]
+        },
+        "duplicate-booking": {
+            "held_lock_blocked_both_workers": true,
+            "results": [
+                {
+                    "status": "posted",
+                    "id": 21
+                },
+                {
+                    "status": "rejected",
+                    "fields": [
+                        "status"
+                    ]
+                }
+            ]
+        },
+        "duplicate-pickup": {
+            "held_lock_blocked_both_workers": true,
+            "results": [
+                {
+                    "status": "posted",
+                    "id": 37
+                },
+                {
+                    "status": "rejected",
+                    "fields": [
+                        "status"
+                    ]
+                }
+            ]
+        },
+        "duplicate-bakery-failure": {
+            "held_lock_blocked_both_workers": true,
+            "results": [
+                {
+                    "status": "posted",
+                    "id": 7
+                },
+                {
+                    "status": "rejected",
+                    "fields": [
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        "duplicate-refund-completion": {
+            "held_lock_blocked_both_workers": true,
+            "results": [
+                {
+                    "status": "posted",
+                    "id": 7
+                },
+                {
+                    "status": "rejected",
+                    "fields": [
+                        "refund"
+                    ]
+                }
+            ]
+        }
+    },
+    "outcome": "All held-lock, amount, state, history and replay assertions passed"
+}

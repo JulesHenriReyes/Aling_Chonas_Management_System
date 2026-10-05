@@ -1,0 +1,6 @@
+{
+  "port": 33317,
+  "database": "bakery_implementation_qa",
+  "datadir": "C:\\Users\\User\\AppData\\Local\\Temp\\bakery-implementation-mysql-d8c4fa4f384746889202c310935608a7",
+  "environment": "Disposable local MariaDB, separate from regular port 3306"
+}

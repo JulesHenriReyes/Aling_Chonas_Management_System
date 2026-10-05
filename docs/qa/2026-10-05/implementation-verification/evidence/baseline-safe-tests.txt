@@ -1,0 +1,29 @@
+PHPUnit 11.5.56 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.2.12
+Configuration: C:\Users\User\Desktop\IT12_Project\phpunit.xml
+
+..........F..FF................................................  63 / 100 ( 63%)
+.....................................                           100 / 100 (100%)
+
+Time: 00:31.972, Memory: 62.00 MB
+
+There were 3 failures:
+
+1) Tests\Feature\FixedCatalogAndPaymentReviewTest::test_proof_is_private_and_does_not_count_as_payment_until_exact_verification
+Failed asserting that 0.0 is identical to 1350.0.
+
+C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php:137
+
+2) Tests\Feature\FixedCatalogAndPaymentReviewTest::test_cash_workflow_and_readiness_before_collection_are_preserved
+Failed asserting that 0.0 is identical to 2700.0.
+
+C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php:182
+
+3) Tests\Feature\FixedCatalogAndPaymentReviewTest::test_bakery_failure_refunds_all_verified_money_only_after_transfer_confirmation
+Failed asserting that 0.0 is identical to 2700.0.
+
+C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php:196
+
+FAILURES!
+Tests: 100, Assertions: 933, Failures: 3.

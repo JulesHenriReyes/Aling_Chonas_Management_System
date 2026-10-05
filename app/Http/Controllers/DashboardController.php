@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Supply;
-use Illuminate\Support\Facades\DB;
+use App\Support\PickupCalendar;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
@@ -25,7 +25,7 @@ class DashboardController extends Controller
 
         // Pickups today
         $todayPickups = Order::with('customer')
-            ->whereDate('pickup_date', today())
+            ->whereDate('pickup_date', PickupCalendar::todayString())
             ->whereNotIn('status', ['completed', 'cancelled'])
             ->orderBy('pickup_time')
             ->get();

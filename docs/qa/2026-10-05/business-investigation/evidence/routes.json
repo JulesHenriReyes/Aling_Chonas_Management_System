@@ -1,0 +1,1195 @@
+[
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "/",
+        "name": "public.order.index",
+        "action": "App\\Http\\Controllers\\PublicOrderController@index",
+        "middleware": [
+            "web"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "packages/{product}/customize/{line}",
+        "name": "public.package.customize",
+        "action": "App\\Http\\Controllers\\PublicOrderController@customize",
+        "middleware": [
+            "web",
+            "App\\Http\\Middleware\\PrivateOrderResponse"
+        ]
+    },
+    {
+        "methods": [
+            "POST"
+        ],
+        "uri": "packages/{product}/customize/{line}",
+        "name": "public.package.save",
+        "action": "App\\Http\\Controllers\\PublicOrderController@savePackage",
+        "middleware": [
+            "web",
+            "App\\Http\\Middleware\\PrivateOrderResponse"
+        ]
+    },
+    {
+        "methods": [
+            "POST"
+        ],
+        "uri": "packages/{product}/draft/{line}",
+        "name": "public.package.draft",
+        "action": "App\\Http\\Controllers\\PublicOrderController@saveEditor",
+        "middleware": [
+            "web",
+            "throttle:60,1",
+            "App\\Http\\Middleware\\PrivateOrderResponse"
+        ]
+    },
+    {
+        "methods": [
+            "POST"
+        ],
+        "uri": "order/packages/{line}/remove",
+        "name": "public.package.remove",
+        "action": "App\\Http\\Controllers\\PublicOrderController@removePackage",
+        "middleware": [
+            "web"
+        ]
+    },
+    {
+        "methods": [
+            "POST"
+        ],
+        "uri": "order",
+        "name": "public.order.store",
+        "action": "App\\Http\\Controllers\\PublicOrderController@store",
+        "middleware": [
+            "web",
+            "throttle:public-orders"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "order/success",
+        "name": "public.order.success",
+        "action": "App\\Http\\Controllers\\PublicOrderController@success",
+        "middleware": [
+            "web"
+        ]
+    },
+    {
+        "methods": [
+            "POST"
+        ],
+        "uri": "order/quote",
+        "name": "public.order.quote",
+        "action": "App\\Http\\Controllers\\PublicOrderController@quote",
+        "middleware": [
+            "web",
+            "throttle:public-quotes"
+        ]
+    },
+    {
+        "methods": [
+            "POST"
+        ],
+        "uri": "order/details",
+        "name": "public.order.continue",
+        "action": "App\\Http\\Controllers\\PublicOrderController@saveSelection",
+        "middleware": [
+            "web",
+            "throttle:public-orders"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "order/details",
+        "name": "public.order.details",
+        "action": "App\\Http\\Controllers\\PublicOrderController@details",
+        "middleware": [
+            "web"
+        ]
+    },
+    {
+        "methods": [
+            "POST"
+        ],
+        "uri": "order/details/back",
+        "name": "public.order.back",
+        "action": "App\\Http\\Controllers\\PublicOrderController@backToSelection",
+        "middleware": [
+            "web"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "order/payment/{token}",
+        "name": "public.order.payment",
+        "action": "App\\Http\\Controllers\\OrderPaymentPageController@show",
+        "middleware": [
+            "web",
+            "App\\Http\\Middleware\\PrivateOrderResponse"
+        ]
+    },
+    {
+        "methods": [
+            "POST"
+        ],
+        "uri": "order/payment/{token}/receipt",
+        "name": "public.order.receipt",
+        "action": "App\\Http\\Controllers\\OrderPaymentPageController@submit",
+        "middleware": [
+            "web",
+            "App\\Http\\Middleware\\PrivateOrderResponse",
+            "throttle:public-receipts"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "order/payment/{token}/qr",
+        "name": "public.order.qr",
+        "action": "App\\Http\\Controllers\\OrderPaymentPageController@qr",
+        "middleware": [
+            "web",
+            "App\\Http\\Middleware\\PrivateOrderResponse"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "order/payment/{token}/save-link",
+        "name": "public.order.saveLink",
+        "action": "App\\Http\\Controllers\\OrderPaymentPageController@saveLink",
+        "middleware": [
+            "web",
+            "App\\Http\\Middleware\\PrivateOrderResponse"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "login",
+        "name": "login",
+        "action": "App\\Http\\Controllers\\AuthController@showLoginForm",
+        "middleware": [
+            "web"
+        ]
+    },
+    {
+        "methods": [
+            "POST"
+        ],
+        "uri": "login",
+        "name": "login.store",
+        "action": "App\\Http\\Controllers\\AuthController@login",
+        "middleware": [
+            "web"
+        ]
+    },
+    {
+        "methods": [
+            "POST"
+        ],
+        "uri": "logout",
+        "name": "logout",
+        "action": "App\\Http\\Controllers\\AuthController@logout",
+        "middleware": [
+            "web",
+            "auth"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "dashboard",
+        "name": "dashboard",
+        "action": "App\\Http\\Controllers\\DashboardController@index",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "customers",
+        "name": "customers.index",
+        "action": "App\\Http\\Controllers\\CustomerController@index",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "customers/create",
+        "name": "customers.create",
+        "action": "App\\Http\\Controllers\\CustomerController@create",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "POST"
+        ],
+        "uri": "customers",
+        "name": "customers.store",
+        "action": "App\\Http\\Controllers\\CustomerController@store",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "customers/{customer}",
+        "name": "customers.show",
+        "action": "App\\Http\\Controllers\\CustomerController@show",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "customers/{customer}/edit",
+        "name": "customers.edit",
+        "action": "App\\Http\\Controllers\\CustomerController@edit",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "PUT",
+            "PATCH"
+        ],
+        "uri": "customers/{customer}",
+        "name": "customers.update",
+        "action": "App\\Http\\Controllers\\CustomerController@update",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "products",
+        "name": "products.index",
+        "action": "App\\Http\\Controllers\\CatalogController@index",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "products/create",
+        "name": "products.create",
+        "action": "App\\Http\\Controllers\\CatalogController@editProduct",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant",
+            "role:owner"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "products/{product}/edit",
+        "name": "products.edit",
+        "action": "App\\Http\\Controllers\\CatalogController@editProduct",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant",
+            "role:owner"
+        ]
+    },
+    {
+        "methods": [
+            "POST"
+        ],
+        "uri": "products",
+        "name": "products.store",
+        "action": "App\\Http\\Controllers\\CatalogController@saveProduct",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant",
+            "role:owner"
+        ]
+    },
+    {
+        "methods": [
+            "PUT",
+            "PATCH"
+        ],
+        "uri": "products/{product}",
+        "name": "products.update",
+        "action": "App\\Http\\Controllers\\CatalogController@saveProduct",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant",
+            "role:owner"
+        ]
+    },
+    {
+        "methods": [
+            "PATCH"
+        ],
+        "uri": "products/{product}/toggle-status",
+        "name": "products.toggleStatus",
+        "action": "App\\Http\\Controllers\\CatalogController@toggleProduct",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant",
+            "role:owner"
+        ]
+    },
+    {
+        "methods": [
+            "POST"
+        ],
+        "uri": "products/{product}/options",
+        "name": "options.store",
+        "action": "App\\Http\\Controllers\\CatalogController@saveOption",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant",
+            "role:owner"
+        ]
+    },
+    {
+        "methods": [
+            "PATCH"
+        ],
+        "uri": "products/{product}/options/{option}",
+        "name": "options.update",
+        "action": "App\\Http\\Controllers\\CatalogController@saveOption",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant",
+            "role:owner"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "add-ons/create",
+        "name": "add-ons.create",
+        "action": "App\\Http\\Controllers\\CatalogController@editAddOn",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant",
+            "role:owner"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "add-ons/{addOn}/edit",
+        "name": "add-ons.edit",
+        "action": "App\\Http\\Controllers\\CatalogController@editAddOn",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant",
+            "role:owner"
+        ]
+    },
+    {
+        "methods": [
+            "POST"
+        ],
+        "uri": "add-ons",
+        "name": "add-ons.store",
+        "action": "App\\Http\\Controllers\\CatalogController@saveAddOn",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant",
+            "role:owner"
+        ]
+    },
+    {
+        "methods": [
+            "PATCH"
+        ],
+        "uri": "add-ons/{addOn}",
+        "name": "add-ons.update",
+        "action": "App\\Http\\Controllers\\CatalogController@saveAddOn",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant",
+            "role:owner"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "payment-settings",
+        "name": "payment-settings.edit",
+        "action": "App\\Http\\Controllers\\CatalogController@settings",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant",
+            "role:owner"
+        ]
+    },
+    {
+        "methods": [
+            "POST"
+        ],
+        "uri": "payment-settings",
+        "name": "payment-settings.update",
+        "action": "App\\Http\\Controllers\\CatalogController@saveSettings",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant",
+            "role:owner"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "orders",
+        "name": "orders.index",
+        "action": "App\\Http\\Controllers\\OrderController@index",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "orders/create",
+        "name": "orders.create",
+        "action": "App\\Http\\Controllers\\OrderController@create",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "POST"
+        ],
+        "uri": "orders/create/details",
+        "name": "orders.continue",
+        "action": "App\\Http\\Controllers\\OrderController@saveSelection",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "orders/create/details",
+        "name": "orders.details",
+        "action": "App\\Http\\Controllers\\OrderController@details",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "POST"
+        ],
+        "uri": "orders/create/details/back",
+        "name": "orders.back",
+        "action": "App\\Http\\Controllers\\OrderController@backToSelection",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "POST"
+        ],
+        "uri": "orders/create/customer",
+        "name": "orders.inlineCustomer",
+        "action": "App\\Http\\Controllers\\OrderController@inlineCustomer",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "POST"
+        ],
+        "uri": "orders",
+        "name": "orders.store",
+        "action": "App\\Http\\Controllers\\OrderController@store",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "orders/{order}",
+        "name": "orders.show",
+        "action": "App\\Http\\Controllers\\OrderController@show",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "PATCH"
+        ],
+        "uri": "orders/{order}/status",
+        "name": "orders.updateStatus",
+        "action": "App\\Http\\Controllers\\OrderController@updateStatus",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "POST"
+        ],
+        "uri": "orders/{order}/cancel",
+        "name": "orders.cancel",
+        "action": "App\\Http\\Controllers\\OrderController@cancel",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "POST"
+        ],
+        "uri": "orders/{order}/images",
+        "name": "orders.attachImage",
+        "action": "App\\Http\\Controllers\\OrderController@attachImage",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "POST"
+        ],
+        "uri": "orders/{order}/payments",
+        "name": "orders.payments.store",
+        "action": "App\\Http\\Controllers\\PaymentController@store",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "payment-proofs/{proof}/receipt",
+        "name": "proofs.receipt",
+        "action": "App\\Http\\Controllers\\PaymentReviewController@receipt",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant",
+            "App\\Http\\Middleware\\PrivateOrderResponse"
+        ]
+    },
+    {
+        "methods": [
+            "POST"
+        ],
+        "uri": "payment-proofs/{proof}/accept",
+        "name": "proofs.accept",
+        "action": "App\\Http\\Controllers\\PaymentReviewController@accept",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "POST"
+        ],
+        "uri": "payment-proofs/{proof}/reject",
+        "name": "proofs.reject",
+        "action": "App\\Http\\Controllers\\PaymentReviewController@reject",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "POST"
+        ],
+        "uri": "orders/{order}/bakery-failure",
+        "name": "orders.bakeryFailure",
+        "action": "App\\Http\\Controllers\\RefundController@store",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "POST"
+        ],
+        "uri": "refunds/{refund}/complete",
+        "name": "refunds.complete",
+        "action": "App\\Http\\Controllers\\RefundController@complete",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "supplies",
+        "name": "supplies.index",
+        "action": "App\\Http\\Controllers\\SupplyController@index",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "supplies/create",
+        "name": "supplies.create",
+        "action": "App\\Http\\Controllers\\SupplyController@create",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "supplies/lookup",
+        "name": "supplies.lookup",
+        "action": "App\\Http\\Controllers\\SupplyController@lookup",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "supplies/{supply}/edit",
+        "name": "supplies.edit",
+        "action": "App\\Http\\Controllers\\SupplyController@edit",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "supplies/{supply}",
+        "name": "supplies.show",
+        "action": "App\\Http\\Controllers\\SupplyController@show",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "inventory/history",
+        "name": "inventory.history",
+        "action": "App\\Http\\Controllers\\SupplyController@history",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "inventory/create/{type}",
+        "name": "inventory.create",
+        "action": "App\\Http\\Controllers\\SupplyController@operationForm",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "inventory/movements/{movement}",
+        "name": "inventory.movement",
+        "action": "App\\Http\\Controllers\\SupplyController@legacyMovement",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "POST"
+        ],
+        "uri": "inventory/movements/{movement}/reverse",
+        "name": "inventory.movement.reverse",
+        "action": "App\\Http\\Controllers\\SupplyController@reverseLegacy",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "POST"
+        ],
+        "uri": "inventory",
+        "name": "inventory.store",
+        "action": "App\\Http\\Controllers\\SupplyController@postOperation",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "inventory/{operation}",
+        "name": "inventory.show",
+        "action": "App\\Http\\Controllers\\SupplyController@operation",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "POST"
+        ],
+        "uri": "inventory/{operation}/reverse",
+        "name": "inventory.reverse",
+        "action": "App\\Http\\Controllers\\SupplyController@reverse",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "POST"
+        ],
+        "uri": "supplies",
+        "name": "supplies.store",
+        "action": "App\\Http\\Controllers\\SupplyController@store",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "PUT",
+            "PATCH"
+        ],
+        "uri": "supplies/{supply}",
+        "name": "supplies.update",
+        "action": "App\\Http\\Controllers\\SupplyController@update",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "POST"
+        ],
+        "uri": "supplies/{supply}/transactions",
+        "name": "supplies.transactions.store",
+        "action": "App\\Http\\Controllers\\SupplyController@recordTransaction",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "expenses",
+        "name": "expenses.index",
+        "action": "App\\Http\\Controllers\\ExpenseController@index",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "expenses/create",
+        "name": "expenses.create",
+        "action": "App\\Http\\Controllers\\ExpenseController@create",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "expenses/history",
+        "name": "expenses.history",
+        "action": "App\\Http\\Controllers\\ExpenseController@history",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "expenses/{expense}",
+        "name": "expenses.show",
+        "action": "App\\Http\\Controllers\\ExpenseController@show",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "expenses/{expense}/edit",
+        "name": "expenses.edit",
+        "action": "App\\Http\\Controllers\\ExpenseController@edit",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "PATCH"
+        ],
+        "uri": "expenses/{expense}",
+        "name": "expenses.update",
+        "action": "App\\Http\\Controllers\\ExpenseController@update",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "DELETE"
+        ],
+        "uri": "expenses/{expense}",
+        "name": "expenses.destroy",
+        "action": "App\\Http\\Controllers\\ExpenseController@destroy",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "POST"
+        ],
+        "uri": "expenses",
+        "name": "expenses.store",
+        "action": "App\\Http\\Controllers\\ExpenseController@store",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "reports",
+        "name": "reports.index",
+        "action": "App\\Http\\Controllers\\ReportsController@index",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "reports/records",
+        "name": "reports.records",
+        "action": "App\\Http\\Controllers\\ReportsController@records",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "reports/export",
+        "name": "reports.export",
+        "action": "App\\Http\\Controllers\\ReportsController@export",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "pickup-schedule",
+        "name": "schedule.index",
+        "action": "App\\Http\\Controllers\\PickupScheduleController@index",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "users",
+        "name": "users.index",
+        "action": "App\\Http\\Controllers\\UserManagementController@index",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant",
+            "can:manage-users",
+            "role:owner"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "users/create",
+        "name": "users.create",
+        "action": "App\\Http\\Controllers\\UserManagementController@create",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant",
+            "can:manage-users",
+            "role:owner"
+        ]
+    },
+    {
+        "methods": [
+            "POST"
+        ],
+        "uri": "users",
+        "name": "users.store",
+        "action": "App\\Http\\Controllers\\UserManagementController@store",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant",
+            "can:manage-users",
+            "role:owner"
+        ]
+    },
+    {
+        "methods": [
+            "GET",
+            "HEAD"
+        ],
+        "uri": "users/{user}/edit",
+        "name": "users.edit",
+        "action": "App\\Http\\Controllers\\UserManagementController@edit",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant",
+            "can:manage-users",
+            "role:owner"
+        ]
+    },
+    {
+        "methods": [
+            "PATCH"
+        ],
+        "uri": "users/{user}",
+        "name": "users.update",
+        "action": "App\\Http\\Controllers\\UserManagementController@update",
+        "middleware": [
+            "web",
+            "auth",
+            "role:owner,assistant",
+            "can:manage-users",
+            "role:owner"
+        ]
+    }
+]

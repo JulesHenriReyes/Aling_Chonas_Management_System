@@ -5,15 +5,15 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CatalogOrderRules;
 use App\Models\Customer;
 use App\Models\Order;
-use App\Models\OrderDetail;
 use App\Models\Product;
-use App\Services\OrderService;
-use App\Services\OrderDraftService;
 use App\Services\CatalogPricingService;
-use Carbon\Carbon;
+use App\Services\OrderDraftService;
+use App\Services\OrderService;
+use App\Support\PhilippineContact;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
@@ -71,29 +71,33 @@ class OrderController extends Controller
             ->orderBy('product_name')->get();
 
         $draft = $drafts->get($request, true);
+
         return view('admin.orders.create', compact('customers', 'products', 'draft'));
     }
 
     public function saveSelection(Request $request, OrderDraftService $drafts, CatalogPricingService $pricing): RedirectResponse
     {
         $drafts->save($request, true, $pricing);
+
         return redirect()->route('orders.details');
     }
 
     public function details(Request $request, OrderDraftService $drafts, CatalogPricingService $pricing)
     {
         $draft = $drafts->get($request, true);
-        if (!$draft || empty($draft['items'])) {
+        if (! $draft || empty($draft['items'])) {
             return redirect()->route('orders.create');
         }
         $quote = $pricing->quote($draft['items']);
         $customers = Customer::orderBy('last_name')->get();
+
         return view('admin.orders.details', compact('draft', 'quote', 'customers'));
     }
 
     public function backToSelection(Request $request, OrderDraftService $drafts): RedirectResponse
     {
         $drafts->saveDetails($request, true);
+
         return redirect()->route('orders.create');
     }
 
@@ -103,9 +107,10 @@ class OrderController extends Controller
             'first_name' => ['required', 'string', 'max:100'],
             'middle_name' => ['nullable', 'string', 'max:100'],
             'last_name' => ['required', 'string', 'max:100'],
-            'phone_number' => ['required', 'string', 'min:7', 'max:20'],
+            'phone_number' => PhilippineContact::rules(),
         ]);
         $customer = Customer::findOrCreateMatching($data);
+
         return response()->json(['id' => $customer->id, 'full_name' => $customer->full_name, 'phone_number' => $customer->phone_number]);
     }
 
@@ -123,7 +128,7 @@ class OrderController extends Controller
 
         // Internal staff order must strictly assign user_id = Auth::id()
         $staffUser = Auth::user();
-        if (!$staffUser) {
+        if (! $staffUser) {
             abort(403, 'Unauthorized staff action.');
         }
 
@@ -185,7 +190,7 @@ class OrderController extends Controller
 
         $this->orderService->updateStatus($order, $request->status, Auth::user());
 
-        return back()->with('success', "Order status transitioned to " . str_replace('_', ' ', $request->status) . ".");
+        return back()->with('success', 'Order status transitioned to '.str_replace('_', ' ', $request->status).'.');
     }
 
     /**
@@ -203,6 +208,7 @@ class OrderController extends Controller
      */
     public function attachImage(Request $request, Order $order): RedirectResponse
     {
+        Gate::authorize('manage-orders');
         $request->validate([
             'image' => ['required', 'image', 'max:5120'],
             'order_detail_id' => ['nullable', 'exists:order_details,id'],
@@ -210,7 +216,7 @@ class OrderController extends Controller
 
         $orderDetail = null;
         if ($request->filled('order_detail_id')) {
-            $orderDetail = OrderDetail::findOrFail($request->order_detail_id);
+            $orderDetail = $order->orderDetails()->findOrFail($request->order_detail_id);
         }
 
         $imageFile = $request->file('image');

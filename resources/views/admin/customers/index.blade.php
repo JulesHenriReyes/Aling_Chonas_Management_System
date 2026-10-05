@@ -9,8 +9,10 @@
             <h1 class="text-xl font-bold text-cocoa-600">Customer Management</h1>
             <p class="text-sm text-cocoa-400 mt-1">Directory of customers, order history, and contact details.</p>
         </div>
-        <a href="{{ route('customers.create') }}" class="bg-cocoa-600 hover:bg-cocoa-700 text-white font-semibold text-sm px-4 py-2 rounded-lg transition"><x-icon name="plus" class="mr-1" /> Add Customer
+        @can('manage-customers')
+<a href="{{ route('customers.create') }}" class="bg-cocoa-600 hover:bg-cocoa-700 text-white font-semibold text-sm px-4 py-2 rounded-lg transition"><x-icon name="plus" class="mr-1" /> Add Customer
         </a>
+@endcan
     </div>
 
     <!-- Search Form -->
@@ -59,10 +61,12 @@
                                     </span>
                                 </td>
                                 <td class="p-4 text-cocoa-400">{{ $c->created_at->format('M d, Y') }}</td>
-                                <td class="p-4 text-right space-x-2">
+                                <td class="p-4 text-right"><div class="customer-row-actions">
                                     <a href="{{ route('customers.show', $c) }}" class="text-cocoa-600 font-medium hover:underline">View</a>
-                                    <a href="{{ route('customers.edit', $c) }}" class="text-cocoa-400 hover:text-cocoa-600 transition hover:underline">Edit</a>
-                                </td>
+                                    @can('manage-customers')
+<a href="{{ route('customers.edit', $c) }}" class="text-cocoa-400 hover:text-cocoa-600 transition hover:underline">Edit</a>
+@endcan
+                                </div></td>
                             </tr>
                         @endforeach
                     </tbody>

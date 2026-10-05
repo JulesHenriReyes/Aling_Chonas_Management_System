@@ -1,0 +1,25 @@
+./composer.json has been updated
+Running composer update giggsey/libphonenumber-for-php-lite
+Loading composer repositories with package information
+Updating dependencies
+Lock file operations: 1 install, 0 updates, 0 removals
+  - Locking giggsey/libphonenumber-for-php-lite (9.0.40)
+Writing lock file
+Installing dependencies from lock file (including require-dev)
+Package operations: 2 installs, 0 updates, 0 removals
+  - Downloading giggsey/libphonenumber-for-php-lite (9.0.40)
+  - Downloading laravel/pint (v1.30.4)
+ 0/2 [>---------------------------]   0%
+ 1/2 [==============>-------------]  50%
+ 2/2 [============================] 100%
+  - Installing giggsey/libphonenumber-for-php-lite (9.0.40): Extracting archive
+  - Installing laravel/pint (v1.30.4): Extracting archive
+ 0/2 [>---------------------------]   0%
+ 1/2 [==============>-------------]  50%
+ 2/2 [============================] 100%
+1 package suggestions were added by new dependencies, use `composer suggest` to see details.
+Generating optimized autoload files
+81 packages you are using are looking for funding.
+Use the `composer fund` command to find out more!
+Found 2 security vulnerability advisories affecting 1 package.
+Run "composer audit" for a full list of advisories.

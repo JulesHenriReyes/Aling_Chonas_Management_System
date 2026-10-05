@@ -35,9 +35,11 @@
             </div>
 
             <div>
-                <label class="block text-xs font-semibold text-cocoa-500 mb-1.5" for="field-admin-customers-edit-blade-php-4">phone number <span class="text-red-500">*</span></label>
-                <input autocomplete="tel" id="field-admin-customers-edit-blade-php-4" type="tel" name="phone_number" value="{{ old('phone_number', $customer->phone_number) }}" required 
+                <label class="block text-xs font-semibold text-cocoa-500 mb-1.5" for="field-admin-customers-edit-blade-php-4">Mobile or landline number <span class="text-red-500">*</span></label>
+                <input autocomplete="tel" id="field-admin-customers-edit-blade-php-4" type="tel" name="phone_number" maxlength="40" aria-describedby="customer-phone-help customer-phone-error" value="{{ old('phone_number', $customer->phone_number) }}" required
                        class="w-full text-sm rounded-lg border-cocoa-100 bg-white focus:border-cocoa-300 focus:ring-cocoa-300 placeholder-cocoa-400/50">
+                <p id="customer-phone-help" class="text-xs text-cocoa-500 mt-1">For landlines, include the area code, e.g. 02 8123 4567 or 032 234 5678. +63 numbers are accepted.</p>
+                @error('phone_number')<p id="customer-phone-error" role="alert" class="text-sm text-red-700">{{ $message }}</p>@enderror
             </div>
 
             <div class="pt-4 flex items-center justify-end gap-3">

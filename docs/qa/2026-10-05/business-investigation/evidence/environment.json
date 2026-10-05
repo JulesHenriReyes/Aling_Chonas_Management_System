@@ -1,0 +1,18 @@
+{
+    "date": "2026-10-05",
+    "regular_url": "http://127.0.0.1:8000",
+    "environment": "local",
+    "laravel": "12.69.2",
+    "php": "8.2.12",
+    "driver": "mysql",
+    "connection_name": "mysql",
+    "database": "aling_chona_db",
+    "session_driver": "database",
+    "business_timezone": "Asia/Manila",
+    "storage_timezone": "UTC",
+    "route_count": 88,
+    "ui_browser_checks": "Deferred A",
+    "reliability_checks": "Deferred D",
+    "actual_database": "aling_chona_db",
+    "database_server": "10.4.32-MariaDB"
+}

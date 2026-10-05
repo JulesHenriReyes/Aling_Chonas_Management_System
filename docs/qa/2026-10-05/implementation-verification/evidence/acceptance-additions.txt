@@ -1,0 +1,41 @@
+PHPUnit 11.5.56 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.2.12
+Configuration: C:\Users\User\Desktop\IT12_Project\phpunit.xml
+
+..FF                                                                4 / 4 (100%)
+
+Time: 00:02.991, Memory: 50.00 MB
+
+There were 2 failures:
+
+1) Tests\Feature\OperationalReliabilityAcceptanceTest::test_product_toggle_is_owner_only_and_inactive_actor_cannot_toggle_or_create_stock
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+ Array &0 [
++    'id' => 1,
+     'product_name' => 'Toggle fixture',
+     'price' => 2000,
+-    'is_active' => true,
++    'is_active' => 1,
++    'created_at' => '2026-10-04 21:22:55',
+     'updated_at' => '2026-10-04 21:22:55',
+-    'created_at' => '2026-10-04 21:22:55',
+-    'id' => 1,
++    'description' => null,
++    'photo_path' => null,
+ ]
+
+C:\Users\User\Desktop\IT12_Project\tests\Feature\OperationalReliabilityAcceptanceTest.php:78
+
+2) Tests\Feature\ApprovedWorkflowReportAcceptanceTest::test_ordinary_workflows_reconcile_independent_centavo_oracle_across_all_outputs_and_event_periods
+2026-09 summary cancellation_income
+Failed asserting that 0 is identical to 400000.
+
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ApprovedWorkflowReportAcceptanceTest.php:68
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ApprovedWorkflowReportAcceptanceTest.php:48
+
+FAILURES!
+Tests: 4, Assertions: 73, Failures: 2.

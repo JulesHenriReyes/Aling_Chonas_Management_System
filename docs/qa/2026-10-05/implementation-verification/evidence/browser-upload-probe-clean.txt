@@ -1,0 +1,3 @@
+{"status":200,"body":"{\"staged_images\":[{\"staged_path\":\"order_drafts\\/8sF4jSTlBGEwfP1KrRoB80tfhKOQP8SHe3VXKbJQ\\/wrQ7SA09Vp1m08j37Apzd8bjC7D5IGTIftWFPlFi.png\",\"original_filename\":\"design-reference.png\",\"digest\":\"c054eec0ca71070d8406b12c9e0b1745c861d337f4818c5fe8334e1b4c0dc425\"}]}"}
+{"uploading":false,"error":"","uploadStatus":"Reference photos saved with this package draft.","images":1}
+{"baselineStatus":200,"body":"Skip to main content\nA\nAling Chona\n\nCakes & Cupcakes\n\nStaff Sign In\n\nAccess restricted to authorized staff only.\n\nEmail address\npassword\nRemember me\n Public Site\nSign In to Staff System"}

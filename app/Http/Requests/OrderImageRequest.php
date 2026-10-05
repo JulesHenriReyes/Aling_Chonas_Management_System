@@ -3,12 +3,13 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
 class OrderImageRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return $this->user() !== null;
+        return Gate::allows('manage-orders');
     }
 
     public function rules(): array

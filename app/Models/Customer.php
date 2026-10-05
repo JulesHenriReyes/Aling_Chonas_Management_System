@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Support\PhilippineContact;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Validation\ValidationException;
 
 class Customer extends Model
 {
@@ -38,20 +40,7 @@ class Customer extends Model
      */
     public static function normalizePhoneNumber(?string $phone): string
     {
-        if (!$phone) {
-            return '';
-        }
-
-        $digits = preg_replace('/\D+/', '', $phone);
-
-        // Convert standard Philippine country code (639xxxxxxxxx) to 09xxxxxxxxx
-        if (str_starts_with($digits, '63') && strlen($digits) === 12) {
-            $digits = '0' . substr($digits, 2);
-        } elseif (str_starts_with($digits, '9') && strlen($digits) === 10) {
-            $digits = '0' . $digits;
-        }
-
-        return $digits;
+        return PhilippineContact::normalize($phone) ?? '';
     }
 
     /**
@@ -61,9 +50,12 @@ class Customer extends Model
     public static function findOrCreateMatching(array $data): Customer
     {
         $normalizedPhone = static::normalizePhoneNumber($data['phone_number'] ?? '');
+        if ($normalizedPhone === '') {
+            throw ValidationException::withMessages(['phone_number' => 'Enter a valid Philippine mobile or landline number, including its area code.']);
+        }
         $firstName = trim($data['first_name'] ?? '');
         $lastName = trim($data['last_name'] ?? '');
-        $middleName = !empty($data['middle_name']) ? trim($data['middle_name']) : null;
+        $middleName = ! empty($data['middle_name']) ? trim($data['middle_name']) : null;
 
         $query = static::where('first_name', $firstName)
             ->where('last_name', $lastName);

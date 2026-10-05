@@ -1,0 +1,12 @@
+warning: in the working copy of 'public/css/bakery-ui.css', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'public/js/bakery-ui.js', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'resources/views/admin/customers/index.blade.php', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'resources/views/admin/customers/show.blade.php', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'resources/views/admin/dashboard.blade.php', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'resources/views/admin/orders/index.blade.php', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'tests/Feature/FinancialReportingTest.php', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'tests/Feature/FixedCatalogAndPaymentReviewTest.php', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'tests/Feature/InventoryAndAuthorizationBusinessRulesTest.php', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'tests/Feature/OrderAndPaymentBusinessRulesTest.php', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'tests/Feature/OrderReviewAndPricingTest.php', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'tests/Feature/UiPresentationTest.php', CRLF will be replaced by LF the next time Git touches it

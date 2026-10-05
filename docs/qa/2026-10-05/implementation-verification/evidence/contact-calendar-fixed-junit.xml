@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="C:\Users\User\Desktop\IT12_Project\phpunit.xml" tests="10" assertions="159" errors="0" failures="1" skipped="0" time="5.133168">
+    <testsuite name="Feature" tests="10" assertions="159" errors="0" failures="1" skipped="0" time="5.133168">
+      <testsuite name="Tests\Feature\ContactAndPickupCalendarTest" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php" tests="10" assertions="159" errors="0" failures="1" skipped="0" time="5.133168">
+        <testcase name="test_invalid_contacts_are_rejected_at_every_entry_without_changing_customer_or_order_records" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php" line="41" class="Tests\Feature\ContactAndPickupCalendarTest" classname="Tests.Feature.ContactAndPickupCalendarTest" assertions="16" time="0.559128">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Feature\ContactAndPickupCalendarTest::test_invalid_contacts_are_rejected_at_every_entry_without_changing_customer_or_order_records&#13;
+Session is missing expected key [phone_number].
+Failed asserting that false is true.&#13;
+&#13;
+The following errors occurred during the last request:
+
+The phone number field is required.
+&#13;
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponseAssert.php:45
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:1611
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:47</failure>
+        </testcase>
+        <testcase name="test_mobile_and_complete_manila_and_provincial_landlines_normalize_and_match_across_entry_points" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php" line="57" class="Tests\Feature\ContactAndPickupCalendarTest" classname="Tests.Feature.ContactAndPickupCalendarTest" assertions="30" time="0.102328"/>
+        <testcase name="test_equivalent_historical_international_landline_matches_without_rewriting_or_guessing_an_old_contact" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php" line="75" class="Tests\Feature\ContactAndPickupCalendarTest" classname="Tests.Feature.ContactAndPickupCalendarTest" assertions="5" time="0.019842"/>
+        <testcase name="test_invalid_contact_keeps_draft_details_and_per_line_staged_image_associations" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php" line="89" class="Tests\Feature\ContactAndPickupCalendarTest" classname="Tests.Feature.ContactAndPickupCalendarTest" assertions="12" time="0.361619"/>
+        <testsuite name="Tests\Feature\ContactAndPickupCalendarTest::test_pickup_local_today_matches_dashboard_schedule_http_service_and_date_inputs" tests="6" assertions="96" errors="0" failures="0" skipped="0" time="4.090252">
+          <testcase name="test_pickup_local_today_matches_dashboard_schedule_http_service_and_date_inputs with data set #0" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php" line="115" class="Tests\Feature\ContactAndPickupCalendarTest" classname="Tests.Feature.ContactAndPickupCalendarTest" assertions="16" time="3.311427"/>
+          <testcase name="test_pickup_local_today_matches_dashboard_schedule_http_service_and_date_inputs with data set #1" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php" line="115" class="Tests\Feature\ContactAndPickupCalendarTest" classname="Tests.Feature.ContactAndPickupCalendarTest" assertions="16" time="0.155153"/>
+          <testcase name="test_pickup_local_today_matches_dashboard_schedule_http_service_and_date_inputs with data set #2" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php" line="115" class="Tests\Feature\ContactAndPickupCalendarTest" classname="Tests.Feature.ContactAndPickupCalendarTest" assertions="16" time="0.140392"/>
+          <testcase name="test_pickup_local_today_matches_dashboard_schedule_http_service_and_date_inputs with data set #3" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php" line="115" class="Tests\Feature\ContactAndPickupCalendarTest" classname="Tests.Feature.ContactAndPickupCalendarTest" assertions="16" time="0.157341"/>
+          <testcase name="test_pickup_local_today_matches_dashboard_schedule_http_service_and_date_inputs with data set #4" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php" line="115" class="Tests\Feature\ContactAndPickupCalendarTest" classname="Tests.Feature.ContactAndPickupCalendarTest" assertions="16" time="0.163783"/>
+          <testcase name="test_pickup_local_today_matches_dashboard_schedule_http_service_and_date_inputs with data set #5" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php" line="115" class="Tests\Feature\ContactAndPickupCalendarTest" classname="Tests.Feature.ContactAndPickupCalendarTest" assertions="16" time="0.162156"/>
+        </testsuite>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>

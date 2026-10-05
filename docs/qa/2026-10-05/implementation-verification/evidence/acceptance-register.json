@@ -1,0 +1,23 @@
+{
+  "outcome": "PASS",
+  "tests": {
+    "final-regression-junit.xml": {
+      "tests": 123,
+      "assertions": 1620
+    },
+    "final-presentation-junit.xml": {
+      "tests": 11,
+      "assertions": 236
+    },
+    "mariadb-acceptance-junit.xml": {
+      "tests": 23,
+      "assertions": 675
+    }
+  },
+  "browser_capture_records": 722,
+  "unique_registered_screenshots": 638,
+  "regular_business_tables_unchanged": 24,
+  "mariadb_contention_cases": 8,
+  "mariadb_worker_count": 16,
+  "scope": "IP-00 through IP-17 accepted; IP-07 deliberately deferred; limitations recorded in report.md"
+}

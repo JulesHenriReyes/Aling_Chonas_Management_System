@@ -1,0 +1,25 @@
+PHPUnit 11.5.56 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.2.12
+Configuration: C:\Users\User\Desktop\IT12_Project\phpunit.xml
+
+F.........                                                        10 / 10 (100%)
+
+Time: 00:05.151, Memory: 56.00 MB
+
+There was 1 failure:
+
+1) Tests\Feature\ContactAndPickupCalendarTest::test_invalid_contacts_are_rejected_at_every_entry_without_changing_customer_or_order_records
+Session is missing expected key [phone_number].
+Failed asserting that false is true.
+
+The following errors occurred during the last request:
+
+The phone number field is required.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponseAssert.php:45
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:1611
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:47
+
+FAILURES!
+Tests: 10, Assertions: 159, Failures: 1.

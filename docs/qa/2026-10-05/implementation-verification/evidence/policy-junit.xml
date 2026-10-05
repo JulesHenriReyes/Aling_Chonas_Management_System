@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="C:\Users\User\Desktop\IT12_Project\phpunit.xml" tests="9" assertions="179" errors="0" failures="0" skipped="0" time="10.337073">
+    <testsuite name="Feature" tests="9" assertions="179" errors="0" failures="0" skipped="0" time="10.337073">
+      <testsuite name="Tests\Feature\ImplementationPolicyTest" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ImplementationPolicyTest.php" tests="9" assertions="179" errors="0" failures="0" skipped="0" time="10.337073">
+        <testcase name="test_assistant_valid_direct_requests_and_bookmarks_are_denied_without_record_file_or_draft_writes" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ImplementationPolicyTest.php" line="79" class="Tests\Feature\ImplementationPolicyTest" classname="Tests.Feature.ImplementationPolicyTest" assertions="78" time="9.429282"/>
+        <testcase name="test_assistant_service_bypasses_include_indirect_cancellation_and_financial_operations" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ImplementationPolicyTest.php" line="117" class="Tests\Feature\ImplementationPolicyTest" classname="Tests.Feature.ImplementationPolicyTest" assertions="22" time="0.212431"/>
+        <testcase name="test_exact_deposit_and_early_final_payment_rejections_leave_ledger_and_references_unchanged" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ImplementationPolicyTest.php" line="142" class="Tests\Feature\ImplementationPolicyTest" classname="Tests.Feature.ImplementationPolicyTest" assertions="28" time="0.226290"/>
+        <testcase name="test_ready_pickup_requires_acknowledgment_uses_saved_balance_and_completes_atomically" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ImplementationPolicyTest.php" line="163" class="Tests\Feature\ImplementationPolicyTest" classname="Tests.Feature.ImplementationPolicyTest" assertions="17" time="0.114205"/>
+        <testcase name="test_a_post_payment_write_failure_rolls_back_payment_reference_and_completion" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ImplementationPolicyTest.php" line="182" class="Tests\Feature\ImplementationPolicyTest" classname="Tests.Feature.ImplementationPolicyTest" assertions="4" time="0.061002"/>
+        <testcase name="test_full_refund_uses_received_money_and_allows_genuine_failure_after_on_time_readiness" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ImplementationPolicyTest.php" line="198" class="Tests\Feature\ImplementationPolicyTest" classname="Tests.Feature.ImplementationPolicyTest" assertions="16" time="0.097657"/>
+        <testcase name="test_legacy_fully_paid_orders_are_preserved_refunded_fully_or_collected_without_another_charge" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ImplementationPolicyTest.php" line="223" class="Tests\Feature\ImplementationPolicyTest" classname="Tests.Feature.ImplementationPolicyTest" assertions="4" time="0.069791"/>
+        <testcase name="test_excessive_public_proof_is_not_accepted_as_a_deposit_or_refund" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ImplementationPolicyTest.php" line="243" class="Tests\Feature\ImplementationPolicyTest" classname="Tests.Feature.ImplementationPolicyTest" assertions="5" time="0.066145"/>
+        <testcase name="test_guest_and_inactive_staff_do_not_mutate_internal_records" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ImplementationPolicyTest.php" line="254" class="Tests\Feature\ImplementationPolicyTest" classname="Tests.Feature.ImplementationPolicyTest" assertions="5" time="0.060270"/>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>

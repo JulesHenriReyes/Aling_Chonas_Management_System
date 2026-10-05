@@ -4,17 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CatalogOrderRules;
 use App\Models\Customer;
+use App\Models\Order;
 use App\Models\Product;
 use App\Services\CatalogPricingService;
-use App\Services\OrderService;
 use App\Services\OrderDraftService;
+use App\Services\OrderService;
 use App\Services\PublicPackageDraftService;
-use App\Models\Order;
-use Illuminate\Support\Str;
-use Illuminate\Validation\ValidationException;
+use App\Support\PhilippineContact;
 use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 
 class PublicOrderController extends Controller
 {
@@ -27,21 +29,30 @@ class PublicOrderController extends Controller
         $draft = $drafts->get($request, false);
         $draftLines = [];
         foreach ($draft['items'] ?? [] as $item) {
-            try { $quote = app(CatalogPricingService::class)->quote([$item]); $error = null; }
-            catch (ValidationException $exception) { $quote = null; $error = collect($exception->errors())->flatten()->first(); }
+            try {
+                $quote = app(CatalogPricingService::class)->quote([$item]);
+                $error = null;
+            } catch (ValidationException $exception) {
+                $quote = null;
+                $error = collect($exception->errors())->flatten()->first();
+            }
             $draftLines[] = ['item' => $item, 'quote' => $quote, 'error' => $error,
                 'product' => $products->firstWhere('id', $item['product_id']) ?? Product::find($item['product_id'])];
         }
+
         return view('public.index', compact('products', 'draft', 'draftLines'));
     }
 
     public function customize(Request $request, Product $product, string $line, PublicPackageDraftService $editors)
     {
-        if ($request->session()->has('public_removed_lines.'.$line)) return redirect()->route('public.order.index')->with('success', 'This package line was removed. Select a package to add a new line.');
+        if ($request->session()->has('public_removed_lines.'.$line)) {
+            return redirect()->route('public.order.index')->with('success', 'This package line was removed. Select a package to add a new line.');
+        }
         abort_unless($product->is_active, 404);
         $product->load(['options' => fn ($q) => $q->where('is_active', true)->with('includedItems'), 'addOns' => fn ($q) => $q->where('is_active', true)]);
         abort_if($product->options->isEmpty(), 404);
         $editor = $editors->editor($request, $product, $line);
+
         return view('public.customize', ['products' => collect([$product]), 'product' => $product, 'line' => $line, 'editor' => $editor]);
     }
 
@@ -49,6 +60,7 @@ class PublicOrderController extends Controller
     {
         $product->load('options');
         $editors->save($request, $product, $line, $pricing);
+
         return redirect()->route('public.order.index', ['saved_line' => $line])->with('success', 'Package saved to your order.');
     }
 
@@ -56,35 +68,43 @@ class PublicOrderController extends Controller
     {
         $product->load('options');
         $editor = $editors->remember($request, $product, $line);
+
         return response()->json(['staged_images' => $editor['staged_images']]);
     }
 
     public function removePackage(Request $request, string $line, PublicPackageDraftService $editors)
     {
         $editors->remove($request, $line);
+
         return redirect()->route('public.order.index')->with('success', 'Package removed.');
     }
 
     public function saveSelection(Request $request, OrderDraftService $drafts, CatalogPricingService $pricing)
     {
         $drafts->save($request, false, $pricing);
+
         return redirect()->route('public.order.details');
     }
 
     public function details(Request $request, OrderDraftService $drafts, CatalogPricingService $pricing)
     {
         $draft = $drafts->get($request, false);
-        if (!$draft || empty($draft['items'])) {
+        if (! $draft || empty($draft['items'])) {
             return redirect()->route('public.order.index');
         }
-        try { $quote = $pricing->quote($draft['items']); }
-        catch (ValidationException $exception) { return redirect()->route('public.order.index')->withErrors($exception->errors()); }
+        try {
+            $quote = $pricing->quote($draft['items']);
+        } catch (ValidationException $exception) {
+            return redirect()->route('public.order.index')->withErrors($exception->errors());
+        }
+
         return view('public.details', compact('draft', 'quote'));
     }
 
     public function backToSelection(Request $request, OrderDraftService $drafts)
     {
         $drafts->saveDetails($request, false);
+
         return redirect()->route('public.order.index');
     }
 
@@ -111,7 +131,7 @@ class PublicOrderController extends Controller
             'first_name' => ['required', 'string', 'max:100'],
             'middle_name' => ['nullable', 'string', 'max:100'],
             'last_name' => ['required', 'string', 'max:100'],
-            'phone_number' => ['required', 'string', 'min:7', 'max:20'],
+            'phone_number' => PhilippineContact::rules(),
         ];
         if ($draft) {
             $data = $request->validate(array_diff_key(CatalogOrderRules::order(), CatalogOrderRules::items()) + $contactRules);
@@ -120,20 +140,26 @@ class PublicOrderController extends Controller
             $data = $request->validate(CatalogOrderRules::order() + $contactRules);
         }
         $data['submission_key'] = $submissionKey;
-        try { $order = DB::transaction(function () use ($data, $orders) {
-            $customer = Customer::findOrCreateMatching($data);
-            $data['customer_id'] = $customer->id;
+        try {
+            $order = DB::transaction(function () use ($data, $orders) {
+                $customer = Customer::findOrCreateMatching($data);
+                $data['customer_id'] = $customer->id;
 
-            return $orders->createPublicOrder($data);
-        }); } catch (UniqueConstraintViolationException $exception) {
+                return $orders->createPublicOrder($data);
+            });
+        } catch (UniqueConstraintViolationException $exception) {
             $order = Order::where('submission_key', $submissionKey)->first();
-            if (!$order) throw $exception;
+            if (! $order) {
+                throw $exception;
+            }
         }
 
         if ($draft) {
             $drafts->finish($request, false);
             foreach ($request->session()->get('public_package_editors', []) as $editor) {
-                foreach ($editor['staged_images'] ?? [] as $image) \Illuminate\Support\Facades\Storage::disk('local')->delete($image['staged_path']);
+                foreach ($editor['staged_images'] ?? [] as $image) {
+                    Storage::disk('local')->delete($image['staged_path']);
+                }
             }
             $request->session()->forget('public_package_editors');
         }

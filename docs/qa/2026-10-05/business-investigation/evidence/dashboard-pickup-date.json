@@ -1,0 +1,11 @@
+{
+    "frozen_utc": "2026-10-04 17:00:00",
+    "bakery_date": "2026-10-05",
+    "app_today": "2026-10-04",
+    "expected": [
+        "SYNTHETIC-TODAY"
+    ],
+    "actual": [
+        "SYNTHETIC-YESTERDAY"
+    ]
+}

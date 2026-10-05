@@ -1,0 +1,37 @@
+{
+  "records": 83,
+  "failures": [
+    {
+      "filename": "owner-order-pending-390.png",
+      "issue": "touch-target",
+      "name": "Bakery cannot fulfil this order",
+      "tag": "SUMMARY",
+      "width": 324,
+      "height": 40
+    },
+    {
+      "filename": "owner-order-confirmed-390.png",
+      "issue": "touch-target",
+      "name": "Bakery cannot fulfil this order",
+      "tag": "SUMMARY",
+      "width": 324,
+      "height": 40
+    },
+    {
+      "filename": "owner-order-preparing-390.png",
+      "issue": "touch-target",
+      "name": "Bakery cannot fulfil this order",
+      "tag": "SUMMARY",
+      "width": 324,
+      "height": 40
+    },
+    {
+      "filename": "owner-order-ready-390.png",
+      "issue": "touch-target",
+      "name": "Bakery cannot fulfil this order",
+      "tag": "SUMMARY",
+      "width": 324,
+      "height": 40
+    }
+  ]
+}

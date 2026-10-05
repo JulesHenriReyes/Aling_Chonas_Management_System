@@ -1,0 +1,41 @@
+{
+  "dataset": "Synthetic 1000 verified payment on a cancelled 1000 order; not company prices/records",
+  "metrics": {
+    "sales": {
+      "csv_summary": "0",
+      "csv_trend_sum": "0"
+    },
+    "gross_collections": {
+      "csv_summary": "1000",
+      "csv_trend_sum": "1000"
+    },
+    "refunds_completed": {
+      "csv_summary": "0",
+      "csv_trend_sum": "0"
+    },
+    "payment_collections": {
+      "csv_summary": "1000",
+      "csv_trend_sum": "1000"
+    },
+    "cancellation_income": {
+      "csv_summary": "500",
+      "csv_trend_sum": "500"
+    },
+    "expenses": {
+      "csv_summary": "0",
+      "csv_trend_sum": "0"
+    },
+    "operational_net_income": {
+      "csv_summary": "500",
+      "csv_trend_sum": "500"
+    },
+    "completed_order_count": {
+      "csv_summary": "0",
+      "csv_trend_sum": "0"
+    }
+  },
+  "internal_reconciliation": "pass",
+  "current_owner_policy_expected_retention": "1000",
+  "actual_retention": "500",
+  "business_policy_status": "Verified fail"
+}

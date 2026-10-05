@@ -1,0 +1,1078 @@
+{
+  "results": [
+    {
+      "state": "pickup-ack-error",
+      "width": 360,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/orders/4",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-pickup-ack-error-360.png"
+    },
+    {
+      "state": "pickup-ack-error",
+      "width": 390,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/orders/4",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-pickup-ack-error-390.png"
+    },
+    {
+      "state": "pickup-ack-error",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/orders/4",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-pickup-ack-error-430.png"
+    },
+    {
+      "state": "pickup-ack-error",
+      "width": 768,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/orders/4",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-pickup-ack-error-768.png"
+    },
+    {
+      "state": "pickup-ack-error",
+      "width": 1024,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/orders/4",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-pickup-ack-error-1024.png"
+    },
+    {
+      "state": "pickup-ack-error",
+      "width": 1440,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/orders/4",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-pickup-ack-error-1440.png"
+    },
+    {
+      "state": "failure-ack-error",
+      "width": 360,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/orders/4",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-failure-ack-error-360.png"
+    },
+    {
+      "state": "failure-ack-error",
+      "width": 390,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/orders/4",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-failure-ack-error-390.png"
+    },
+    {
+      "state": "failure-ack-error",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/orders/4",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-failure-ack-error-430.png"
+    },
+    {
+      "state": "failure-ack-error",
+      "width": 768,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/orders/4",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-failure-ack-error-768.png"
+    },
+    {
+      "state": "failure-ack-error",
+      "width": 1024,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/orders/4",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-failure-ack-error-1024.png"
+    },
+    {
+      "state": "failure-ack-error",
+      "width": 1440,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/orders/4",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-failure-ack-error-1440.png"
+    },
+    {
+      "state": "refund-ack-error",
+      "width": 360,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/orders/7",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-refund-ack-error-360.png"
+    },
+    {
+      "state": "refund-ack-error",
+      "width": 390,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/orders/7",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-refund-ack-error-390.png"
+    },
+    {
+      "state": "refund-ack-error",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/orders/7",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-refund-ack-error-430.png"
+    },
+    {
+      "state": "refund-ack-error",
+      "width": 768,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/orders/7",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-refund-ack-error-768.png"
+    },
+    {
+      "state": "refund-ack-error",
+      "width": 1024,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/orders/7",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-refund-ack-error-1024.png"
+    },
+    {
+      "state": "refund-ack-error",
+      "width": 1440,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/orders/7",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-refund-ack-error-1440.png"
+    },
+    {
+      "state": "stocktake-reason-error",
+      "width": 360,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/inventory/create/stocktake",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-stocktake-reason-error-360.png"
+    },
+    {
+      "state": "stocktake-reason-error",
+      "width": 390,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/inventory/create/stocktake",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-stocktake-reason-error-390.png"
+    },
+    {
+      "state": "stocktake-reason-error",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/inventory/create/stocktake",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-stocktake-reason-error-430.png"
+    },
+    {
+      "state": "stocktake-reason-error",
+      "width": 768,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/inventory/create/stocktake",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-stocktake-reason-error-768.png"
+    },
+    {
+      "state": "stocktake-reason-error",
+      "width": 1024,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/inventory/create/stocktake",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-stocktake-reason-error-1024.png"
+    },
+    {
+      "state": "stocktake-reason-error",
+      "width": 1440,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/inventory/create/stocktake",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-stocktake-reason-error-1440.png"
+    },
+    {
+      "state": "stocktake-stale-error",
+      "width": 360,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/inventory/create/stocktake",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-stocktake-stale-error-360.png"
+    },
+    {
+      "state": "stocktake-stale-error",
+      "width": 390,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/inventory/create/stocktake",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-stocktake-stale-error-390.png"
+    },
+    {
+      "state": "stocktake-stale-error",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/inventory/create/stocktake",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-stocktake-stale-error-430.png"
+    },
+    {
+      "state": "stocktake-stale-error",
+      "width": 768,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/inventory/create/stocktake",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-stocktake-stale-error-768.png"
+    },
+    {
+      "state": "stocktake-stale-error",
+      "width": 1024,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/inventory/create/stocktake",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-stocktake-stale-error-1024.png"
+    },
+    {
+      "state": "stocktake-stale-error",
+      "width": 1440,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/inventory/create/stocktake",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-stocktake-stale-error-1440.png"
+    },
+    {
+      "state": "stock-operation-history",
+      "width": 360,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/inventory/11",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-stock-operation-history-360.png"
+    },
+    {
+      "state": "stock-operation-history",
+      "width": 390,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/inventory/11",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-stock-operation-history-390.png"
+    },
+    {
+      "state": "stock-operation-history",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/inventory/11",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-stock-operation-history-430.png"
+    },
+    {
+      "state": "stock-operation-history",
+      "width": 768,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/inventory/11",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-stock-operation-history-768.png"
+    },
+    {
+      "state": "stock-operation-history",
+      "width": 1024,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/inventory/11",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-stock-operation-history-1024.png"
+    },
+    {
+      "state": "stock-operation-history",
+      "width": 1440,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/inventory/11",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-stock-operation-history-1440.png"
+    },
+    {
+      "state": "stock-runtime-effects",
+      "missingReasonNoWrites": true,
+      "staleNoWrites": true,
+      "reloadedCount": 8,
+      "duplicateNoWrites": true,
+      "before": {
+        "customers": {
+          "count": 4,
+          "sha256": "5175397836a8e9b5d1cafa8a599f678b01ac34bc04334cd81f1ab50ac79bd12f"
+        },
+        "orders": {
+          "count": 18,
+          "sha256": "65fd59c37c2d7a289fc0daa5d0d09f9ca872cb0e854116290e0e3ba49bfabc29"
+        },
+        "order_details": {
+          "count": 18,
+          "sha256": "7ec1426ec8594778815530ad3c1ae2a58f2c70a7e08ddc4bdf005562e51af2d1"
+        },
+        "order_images": {
+          "count": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        "payments": {
+          "count": 15,
+          "sha256": "472a8c8558df294b0b0099e24ad5a35c98049beff4a40a9fac03913195015579"
+        },
+        "payment_proofs": {
+          "count": 7,
+          "sha256": "ce6427b2e45cbe7177f1347cd57116e514e89a6c32a53fc372d721c9e87c1557"
+        },
+        "gcash_references": {
+          "count": 5,
+          "sha256": "312390dafc6f60627520bbfb82e87c85bbd306ba8f25c3c5b3166044435c3141"
+        },
+        "refunds": {
+          "count": 5,
+          "sha256": "829bf172ca5fb8346dcaa3ed066c36c90509d8f2680544b8492bd7df336112f5"
+        },
+        "supplies": {
+          "count": 4,
+          "sha256": "b65b48f15261352f356718a29f9291ac0eb75bc8fb9ce555fff3927ccfddce6a"
+        },
+        "inventory_operations": {
+          "count": 9,
+          "sha256": "8c985bead5c0c16cdcd08ac60d024e2351482512cc532411d250cecda915e1c1"
+        },
+        "inventory_baselines": {
+          "count": 4,
+          "sha256": "9da2eb60cdf7edfb9fcedb288e65eeb806481ea88229f2ad293845764e5d1868"
+        },
+        "inventory_transactions": {
+          "count": 9,
+          "sha256": "636046e13f6e64044bb8bfda18a9048b8e680390cc44226a0527d0130c1483ac"
+        },
+        "expenses": {
+          "count": 6,
+          "sha256": "427b14c72a0d407b80dc7c0aa37953483ed52e2b25fcfb52a1c7dccef75f63dc"
+        },
+        "expense_audits": {
+          "count": 6,
+          "sha256": "0a191725da482bb562f3f093768a8a82591ec865ef0ebcbef8205e0bc61dc018"
+        },
+        "supply-1": {
+          "current_quantity": 8,
+          "stock_version": 9
+        }
+      },
+      "after": {
+        "customers": {
+          "count": 4,
+          "sha256": "5175397836a8e9b5d1cafa8a599f678b01ac34bc04334cd81f1ab50ac79bd12f"
+        },
+        "orders": {
+          "count": 18,
+          "sha256": "65fd59c37c2d7a289fc0daa5d0d09f9ca872cb0e854116290e0e3ba49bfabc29"
+        },
+        "order_details": {
+          "count": 18,
+          "sha256": "7ec1426ec8594778815530ad3c1ae2a58f2c70a7e08ddc4bdf005562e51af2d1"
+        },
+        "order_images": {
+          "count": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        "payments": {
+          "count": 15,
+          "sha256": "472a8c8558df294b0b0099e24ad5a35c98049beff4a40a9fac03913195015579"
+        },
+        "payment_proofs": {
+          "count": 7,
+          "sha256": "ce6427b2e45cbe7177f1347cd57116e514e89a6c32a53fc372d721c9e87c1557"
+        },
+        "gcash_references": {
+          "count": 5,
+          "sha256": "312390dafc6f60627520bbfb82e87c85bbd306ba8f25c3c5b3166044435c3141"
+        },
+        "refunds": {
+          "count": 5,
+          "sha256": "829bf172ca5fb8346dcaa3ed066c36c90509d8f2680544b8492bd7df336112f5"
+        },
+        "supplies": {
+          "count": 4,
+          "sha256": "7d9de8caf0ab5c6124d801ab94434b8a4a2b390093b8792cfbd2840a5e4a5b1b"
+        },
+        "inventory_operations": {
+          "count": 11,
+          "sha256": "d15618a6e3cb1ddcc9a247b6d6e7ec3e1f2f4352594495e26a5f6dc121c0f931"
+        },
+        "inventory_baselines": {
+          "count": 4,
+          "sha256": "9da2eb60cdf7edfb9fcedb288e65eeb806481ea88229f2ad293845764e5d1868"
+        },
+        "inventory_transactions": {
+          "count": 11,
+          "sha256": "55fc6b27dc993c9b3adb4db8fca06be7189a421d4253cb69518617d4eada4af7"
+        },
+        "expenses": {
+          "count": 6,
+          "sha256": "427b14c72a0d407b80dc7c0aa37953483ed52e2b25fcfb52a1c7dccef75f63dc"
+        },
+        "expense_audits": {
+          "count": 6,
+          "sha256": "0a191725da482bb562f3f093768a8a82591ec865ef0ebcbef8205e0bc61dc018"
+        },
+        "supply-1": {
+          "current_quantity": 8,
+          "stock_version": 11
+        }
+      }
+    },
+    {
+      "state": "inline-phone-error",
+      "width": 360,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/orders/create/details",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-inline-phone-error-360.png"
+    },
+    {
+      "state": "inline-phone-error",
+      "width": 390,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/orders/create/details",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-inline-phone-error-390.png"
+    },
+    {
+      "state": "inline-phone-error",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/orders/create/details",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-inline-phone-error-430.png"
+    },
+    {
+      "state": "inline-phone-error",
+      "width": 768,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/orders/create/details",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-inline-phone-error-768.png"
+    },
+    {
+      "state": "inline-phone-error",
+      "width": 1024,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/orders/create/details",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-inline-phone-error-1024.png"
+    },
+    {
+      "state": "inline-phone-error",
+      "width": 1440,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/orders/create/details",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-inline-phone-error-1440.png"
+    },
+    {
+      "state": "inline-retry-error",
+      "width": 360,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/orders/create/details",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-inline-retry-error-360.png"
+    },
+    {
+      "state": "inline-retry-error",
+      "width": 390,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/orders/create/details",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-inline-retry-error-390.png"
+    },
+    {
+      "state": "inline-retry-error",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/orders/create/details",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-inline-retry-error-430.png"
+    },
+    {
+      "state": "inline-retry-error",
+      "width": 768,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/orders/create/details",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-inline-retry-error-768.png"
+    },
+    {
+      "state": "inline-retry-error",
+      "width": 1024,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/orders/create/details",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-inline-retry-error-1024.png"
+    },
+    {
+      "state": "inline-retry-error",
+      "width": 1440,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/orders/create/details",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-inline-retry-error-1440.png"
+    },
+    {
+      "state": "inline-retry-effects",
+      "invalidNoWrites": true,
+      "networkFailureNoWrites": true,
+      "busyDisabled": true,
+      "retryCreatedExactlyOne": true
+    },
+    {
+      "state": "inline-valid-landline",
+      "width": 360,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/orders/create/details",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-inline-valid-landline-360.png"
+    },
+    {
+      "state": "inline-valid-landline",
+      "width": 390,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/orders/create/details",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-inline-valid-landline-390.png"
+    },
+    {
+      "state": "inline-valid-landline",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/orders/create/details",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-inline-valid-landline-430.png"
+    },
+    {
+      "state": "inline-valid-landline",
+      "width": 768,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/orders/create/details",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-inline-valid-landline-768.png"
+    },
+    {
+      "state": "inline-valid-landline",
+      "width": 1024,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/orders/create/details",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-inline-valid-landline-1024.png"
+    },
+    {
+      "state": "inline-valid-landline",
+      "width": 1440,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner",
+      "url": "http://127.0.0.1:8124/orders/create/details",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-inline-valid-landline-1440.png"
+    },
+    {
+      "state": "inline-expired-session",
+      "width": 360,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner interface with expired authentication",
+      "url": "http://127.0.0.1:8124/orders/create/details",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-inline-expired-session-360.png"
+    },
+    {
+      "state": "inline-expired-session",
+      "width": 390,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner interface with expired authentication",
+      "url": "http://127.0.0.1:8124/orders/create/details",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-inline-expired-session-390.png"
+    },
+    {
+      "state": "inline-expired-session",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner interface with expired authentication",
+      "url": "http://127.0.0.1:8124/orders/create/details",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-inline-expired-session-430.png"
+    },
+    {
+      "state": "inline-expired-session",
+      "width": 768,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner interface with expired authentication",
+      "url": "http://127.0.0.1:8124/orders/create/details",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-inline-expired-session-768.png"
+    },
+    {
+      "state": "inline-expired-session",
+      "width": 1024,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner interface with expired authentication",
+      "url": "http://127.0.0.1:8124/orders/create/details",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-inline-expired-session-1024.png"
+    },
+    {
+      "state": "inline-expired-session",
+      "width": 1440,
+      "height": 844,
+      "textScale": 1,
+      "role": "owner interface with expired authentication",
+      "url": "http://127.0.0.1:8124/orders/create/details",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-inline-expired-session-1440.png"
+    },
+    {
+      "state": "public-upload-contact-error",
+      "width": 360,
+      "height": 844,
+      "textScale": 1,
+      "role": "guest",
+      "url": "http://127.0.0.1:8124/order/details",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-public-upload-contact-error-360.png"
+    },
+    {
+      "state": "public-upload-contact-error",
+      "width": 390,
+      "height": 844,
+      "textScale": 1,
+      "role": "guest",
+      "url": "http://127.0.0.1:8124/order/details",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-public-upload-contact-error-390.png"
+    },
+    {
+      "state": "public-upload-contact-error",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "role": "guest",
+      "url": "http://127.0.0.1:8124/order/details",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-public-upload-contact-error-430.png"
+    },
+    {
+      "state": "public-upload-contact-error",
+      "width": 768,
+      "height": 844,
+      "textScale": 1,
+      "role": "guest",
+      "url": "http://127.0.0.1:8124/order/details",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-public-upload-contact-error-768.png"
+    },
+    {
+      "state": "public-upload-contact-error",
+      "width": 1024,
+      "height": 844,
+      "textScale": 1,
+      "role": "guest",
+      "url": "http://127.0.0.1:8124/order/details",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-public-upload-contact-error-1024.png"
+    },
+    {
+      "state": "public-upload-contact-error",
+      "width": 1440,
+      "height": 844,
+      "textScale": 1,
+      "role": "guest",
+      "url": "http://127.0.0.1:8124/order/details",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-public-upload-contact-error-1440.png"
+    },
+    {
+      "state": "public-upload-association-preserved",
+      "width": 360,
+      "height": 844,
+      "textScale": 1,
+      "role": "guest",
+      "url": "http://127.0.0.1:8124/packages/2/customize/[draft-key]",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-public-upload-association-preserved-360.png"
+    },
+    {
+      "state": "public-upload-association-preserved",
+      "width": 390,
+      "height": 844,
+      "textScale": 1,
+      "role": "guest",
+      "url": "http://127.0.0.1:8124/packages/2/customize/[draft-key]",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-public-upload-association-preserved-390.png"
+    },
+    {
+      "state": "public-upload-association-preserved",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "role": "guest",
+      "url": "http://127.0.0.1:8124/packages/2/customize/[draft-key]",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-public-upload-association-preserved-430.png"
+    },
+    {
+      "state": "public-upload-association-preserved",
+      "width": 768,
+      "height": 844,
+      "textScale": 1,
+      "role": "guest",
+      "url": "http://127.0.0.1:8124/packages/2/customize/[draft-key]",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-public-upload-association-preserved-768.png"
+    },
+    {
+      "state": "public-upload-association-preserved",
+      "width": 1024,
+      "height": 844,
+      "textScale": 1,
+      "role": "guest",
+      "url": "http://127.0.0.1:8124/packages/2/customize/[draft-key]",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-public-upload-association-preserved-1024.png"
+    },
+    {
+      "state": "public-upload-association-preserved",
+      "width": 1440,
+      "height": 844,
+      "textScale": 1,
+      "role": "guest",
+      "url": "http://127.0.0.1:8124/packages/2/customize/[draft-key]",
+      "engine": "isolated SQLite",
+      "database": "workflow-concurrency-preview.sqlite",
+      "browser": "154.0.8037.97",
+      "overflow": 0,
+      "screenshot": "screenshots/interaction-public-upload-association-preserved-1440.png"
+    }
+  ]
+}

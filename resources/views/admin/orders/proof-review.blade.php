@@ -34,7 +34,7 @@
                     </div>
                     @if ($proof->reviewed_at)<p class="text-sm">Reviewed by {{ $proof->reviewer?->full_name }} on {{ $proof->reviewed_at->format('M j, Y g:i A') }}.</p>@endif
                     @if ($proof->rejection_reason)<p class="text-sm"><strong>Rejection reason:</strong> {{ $proof->rejection_reason }}</p>@endif
-                    @if ($proof->status === 'awaiting_verification' && $order->status === 'pending')
+                    @if (Gate::allows('review-proofs') && $proof->status === 'awaiting_verification' && $order->status === 'pending')
                         <form action="{{ route('proofs.accept', $proof) }}" method="POST" class="space-y-4">
                             @csrf
                             <p class="text-sm">Exact deposit required: <strong>₱{{ number_format($order->required_down_payment, 2) }}</strong></p>

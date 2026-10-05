@@ -1,0 +1,724 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="C:\Users\User\Desktop\IT12_Project\phpunit.xml" tests="109" assertions="1008" errors="14" failures="6" skipped="0" time="33.784207">
+    <testsuite name="Unit" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.004833">
+      <testsuite name="Tests\Unit\ExampleTest" file="C:\Users\User\Desktop\IT12_Project\tests\Unit\ExampleTest.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.004833">
+        <testcase name="test_that_true_is_true" file="C:\Users\User\Desktop\IT12_Project\tests\Unit\ExampleTest.php" line="12" class="Tests\Unit\ExampleTest" classname="Tests.Unit.ExampleTest" assertions="1" time="0.004833"/>
+      </testsuite>
+    </testsuite>
+    <testsuite name="Feature" tests="108" assertions="1007" errors="14" failures="6" skipped="0" time="33.779374">
+      <testsuite name="Tests\Feature\CatalogMigrationSafetyTest" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\CatalogMigrationSafetyTest.php" tests="1" assertions="18" errors="0" failures="0" skipped="0" time="0.325569">
+        <testcase name="test_upgrade_and_rollback_preserve_historical_orders_payments_and_catalog" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\CatalogMigrationSafetyTest.php" line="11" class="Tests\Feature\CatalogMigrationSafetyTest" classname="Tests.Feature.CatalogMigrationSafetyTest" assertions="18" time="0.325569"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\ExampleTest" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ExampleTest.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.343032">
+        <testcase name="test_the_application_returns_a_successful_response" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ExampleTest.php" line="15" class="Tests\Feature\ExampleTest" classname="Tests.Feature.ExampleTest" assertions="1" time="0.343032"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\FinancialReportingTest" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\FinancialReportingTest.php" tests="4" assertions="4" errors="2" failures="0" skipped="0" time="0.259969">
+        <testcase name="test_financial_summary_and_operational_net_income" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\FinancialReportingTest.php" line="56" class="Tests\Feature\FinancialReportingTest" classname="Tests.Feature.FinancialReportingTest" assertions="0" time="0.114407">
+          <error type="Illuminate\Validation\ValidationException">Tests\Feature\FinancialReportingTest::test_financial_summary_and_operational_net_income&#13;
+Illuminate\Validation\ValidationException: The remaining balance is collected only at actual pickup after Ready for pickup.
+&#13;
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Validation\ValidationException.php:70
+C:\Users\User\Desktop\IT12_Project\app\Services\OrderService.php:304
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Concerns\ManagesTransactions.php:35
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\DatabaseManager.php:491
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\Facades\Facade.php:363
+C:\Users\User\Desktop\IT12_Project\app\Services\OrderService.php:287
+C:\Users\User\Desktop\IT12_Project\tests\Feature\FinancialReportingTest.php:74</error>
+        </testcase>
+        <testcase name="test_low_stock_supplies_query" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\FinancialReportingTest.php" line="123" class="Tests\Feature\FinancialReportingTest" classname="Tests.Feature.FinancialReportingTest" assertions="3" time="0.039434"/>
+        <testcase name="test_cancellation_income_only_includes_retained_down_payments" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\FinancialReportingTest.php" line="152" class="Tests\Feature\FinancialReportingTest" classname="Tests.Feature.FinancialReportingTest" assertions="1" time="0.047259"/>
+        <testcase name="test_cancellation_income_excludes_a_final_payment_recorded_before_cancellation" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\FinancialReportingTest.php" line="170" class="Tests\Feature\FinancialReportingTest" classname="Tests.Feature.FinancialReportingTest" assertions="0" time="0.058869">
+          <error type="Illuminate\Validation\ValidationException">Tests\Feature\FinancialReportingTest::test_cancellation_income_excludes_a_final_payment_recorded_before_cancellation&#13;
+Illuminate\Validation\ValidationException: The remaining balance is collected only at actual pickup after Ready for pickup.
+&#13;
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Validation\ValidationException.php:70
+C:\Users\User\Desktop\IT12_Project\app\Services\OrderService.php:304
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Concerns\ManagesTransactions.php:35
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\DatabaseManager.php:491
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\Facades\Facade.php:363
+C:\Users\User\Desktop\IT12_Project\app\Services\OrderService.php:287
+C:\Users\User\Desktop\IT12_Project\tests\Feature\FinancialReportingTest.php:183</error>
+        </testcase>
+      </testsuite>
+      <testsuite name="Tests\Feature\FixedCatalogAndPaymentReviewTest" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php" tests="16" assertions="154" errors="4" failures="1" skipped="0" time="5.939687">
+        <testcase name="test_both_paths_use_catalog_prices_and_keep_inclusions_separate_from_extras" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php" line="68" class="Tests\Feature\FixedCatalogAndPaymentReviewTest" classname="Tests.Feature.FixedCatalogAndPaymentReviewTest" assertions="22" time="0.088913"/>
+        <testcase name="test_snapshots_survive_catalog_changes_and_manual_price_changes_are_rejected" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php" line="87" class="Tests\Feature\FixedCatalogAndPaymentReviewTest" classname="Tests.Feature.FixedCatalogAndPaymentReviewTest" assertions="5" time="0.055198"/>
+        <testcase name="test_invalid_option_unavailable_product_inapplicable_extra_and_fractional_quantity_are_rejected" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php" line="101" class="Tests\Feature\FixedCatalogAndPaymentReviewTest" classname="Tests.Feature.FixedCatalogAndPaymentReviewTest" assertions="5" time="0.037161"/>
+        <testcase name="test_proof_is_private_and_does_not_count_as_payment_until_exact_verification" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php" line="116" class="Tests\Feature\FixedCatalogAndPaymentReviewTest" classname="Tests.Feature.FixedCatalogAndPaymentReviewTest" assertions="16" time="0.064571">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Feature\FixedCatalogAndPaymentReviewTest::test_proof_is_private_and_does_not_count_as_payment_until_exact_verification&#13;
+Failed asserting that 0.0 is identical to 1350.0.
+&#13;
+C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php:137</failure>
+        </testcase>
+        <testcase name="test_rejection_retains_history_and_allows_replacement_but_pending_proof_blocks_replacement" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php" line="140" class="Tests\Feature\FixedCatalogAndPaymentReviewTest" classname="Tests.Feature.FixedCatalogAndPaymentReviewTest" assertions="6" time="0.063864"/>
+        <testcase name="test_duplicates_across_orders_and_deactivated_staff_are_rejected" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php" line="154" class="Tests\Feature\FixedCatalogAndPaymentReviewTest" classname="Tests.Feature.FixedCatalogAndPaymentReviewTest" assertions="4" time="0.099175"/>
+        <testcase name="test_cash_workflow_and_readiness_before_collection_are_preserved" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php" line="168" class="Tests\Feature\FixedCatalogAndPaymentReviewTest" classname="Tests.Feature.FixedCatalogAndPaymentReviewTest" assertions="2" time="0.093660">
+          <error type="Illuminate\Validation\ValidationException">Tests\Feature\FixedCatalogAndPaymentReviewTest::test_cash_workflow_and_readiness_before_collection_are_preserved&#13;
+Illuminate\Validation\ValidationException: Confirm actual collection and verification of the remaining payment.
+&#13;
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Validation\ValidationException.php:70
+C:\Users\User\Desktop\IT12_Project\app\Services\OrderService.php:309
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Concerns\ManagesTransactions.php:35
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\DatabaseManager.php:491
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\Facades\Facade.php:363
+C:\Users\User\Desktop\IT12_Project\app\Services\OrderService.php:287
+C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php:178</error>
+        </testcase>
+        <testcase name="test_bakery_failure_refunds_all_verified_money_only_after_transfer_confirmation" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php" line="185" class="Tests\Feature\FixedCatalogAndPaymentReviewTest" classname="Tests.Feature.FixedCatalogAndPaymentReviewTest" assertions="0" time="0.054633">
+          <error type="Illuminate\Validation\ValidationException">Tests\Feature\FixedCatalogAndPaymentReviewTest::test_bakery_failure_refunds_all_verified_money_only_after_transfer_confirmation&#13;
+Illuminate\Validation\ValidationException: The remaining balance is collected only at actual pickup after Ready for pickup.
+&#13;
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Validation\ValidationException.php:70
+C:\Users\User\Desktop\IT12_Project\app\Services\OrderService.php:304
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Concerns\ManagesTransactions.php:35
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\DatabaseManager.php:491
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\Facades\Facade.php:363
+C:\Users\User\Desktop\IT12_Project\app\Services\OrderService.php:287
+C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php:189</error>
+        </testcase>
+        <testcase name="test_receipts_reject_non_images_and_oversized_images" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php" line="208" class="Tests\Feature\FixedCatalogAndPaymentReviewTest" classname="Tests.Feature.FixedCatalogAndPaymentReviewTest" assertions="4" time="0.035960"/>
+        <testcase name="test_http_public_flow_has_persistent_token_access_and_private_receipt_authorization" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php" line="217" class="Tests\Feature\FixedCatalogAndPaymentReviewTest" classname="Tests.Feature.FixedCatalogAndPaymentReviewTest" assertions="41" time="3.877111"/>
+        <testcase name="test_catalog_and_settings_management_is_owner_only_and_photos_are_separate" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php" line="248" class="Tests\Feature\FixedCatalogAndPaymentReviewTest" classname="Tests.Feature.FixedCatalogAndPaymentReviewTest" assertions="22" time="0.992184"/>
+        <testcase name="test_http_price_changes_require_review_again_and_do_not_create_partial_records" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php" line="277" class="Tests\Feature\FixedCatalogAndPaymentReviewTest" classname="Tests.Feature.FixedCatalogAndPaymentReviewTest" assertions="4" time="0.067459"/>
+        <testcase name="test_owner_can_manage_add_on_photos_applicability_and_options_without_repricing_orders" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php" line="285" class="Tests\Feature\FixedCatalogAndPaymentReviewTest" classname="Tests.Feature.FixedCatalogAndPaymentReviewTest" assertions="9" time="0.103503"/>
+        <testcase name="test_public_receipt_submission_is_rate_limited_and_inactive_staff_cannot_read_receipts" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php" line="307" class="Tests\Feature\FixedCatalogAndPaymentReviewTest" classname="Tests.Feature.FixedCatalogAndPaymentReviewTest" assertions="14" time="0.119163"/>
+        <testcase name="test_late_readiness_allows_full_refund_and_private_page_keeps_refund_history" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php" line="323" class="Tests\Feature\FixedCatalogAndPaymentReviewTest" classname="Tests.Feature.FixedCatalogAndPaymentReviewTest" assertions="0" time="0.104911">
+          <error type="Illuminate\Validation\ValidationException">Tests\Feature\FixedCatalogAndPaymentReviewTest::test_late_readiness_allows_full_refund_and_private_page_keeps_refund_history&#13;
+Illuminate\Validation\ValidationException: Confirm the bakery cannot fulfil the order. Late customer collection alone is not a bakery failure.
+&#13;
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Validation\ValidationException.php:70
+C:\Users\User\Desktop\IT12_Project\app\Services\RefundService.php:20
+C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php:336</error>
+        </testcase>
+        <testcase name="test_historical_readiness_is_not_inferred_but_staff_can_declare_documented_bakery_failure" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php" line="350" class="Tests\Feature\FixedCatalogAndPaymentReviewTest" classname="Tests.Feature.FixedCatalogAndPaymentReviewTest" assertions="0" time="0.082220">
+          <error type="Illuminate\Validation\ValidationException">Tests\Feature\FixedCatalogAndPaymentReviewTest::test_historical_readiness_is_not_inferred_but_staff_can_declare_documented_bakery_failure&#13;
+Illuminate\Validation\ValidationException: The remaining balance is collected only at actual pickup after Ready for pickup.
+&#13;
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Validation\ValidationException.php:70
+C:\Users\User\Desktop\IT12_Project\app\Services\OrderService.php:304
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Concerns\ManagesTransactions.php:35
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\DatabaseManager.php:491
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\Facades\Facade.php:363
+C:\Users\User\Desktop\IT12_Project\app\Services\OrderService.php:287
+C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php:354</error>
+        </testcase>
+      </testsuite>
+      <testsuite name="Tests\Feature\ImplementationPolicyTest" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ImplementationPolicyTest.php" tests="9" assertions="179" errors="0" failures="0" skipped="0" time="6.244144">
+        <testcase name="test_assistant_valid_direct_requests_and_bookmarks_are_denied_without_record_file_or_draft_writes" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ImplementationPolicyTest.php" line="79" class="Tests\Feature\ImplementationPolicyTest" classname="Tests.Feature.ImplementationPolicyTest" assertions="78" time="5.356121"/>
+        <testcase name="test_assistant_service_bypasses_include_indirect_cancellation_and_financial_operations" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ImplementationPolicyTest.php" line="117" class="Tests\Feature\ImplementationPolicyTest" classname="Tests.Feature.ImplementationPolicyTest" assertions="22" time="0.152774"/>
+        <testcase name="test_exact_deposit_and_early_final_payment_rejections_leave_ledger_and_references_unchanged" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ImplementationPolicyTest.php" line="142" class="Tests\Feature\ImplementationPolicyTest" classname="Tests.Feature.ImplementationPolicyTest" assertions="28" time="0.205859"/>
+        <testcase name="test_ready_pickup_requires_acknowledgment_uses_saved_balance_and_completes_atomically" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ImplementationPolicyTest.php" line="163" class="Tests\Feature\ImplementationPolicyTest" classname="Tests.Feature.ImplementationPolicyTest" assertions="17" time="0.103711"/>
+        <testcase name="test_a_post_payment_write_failure_rolls_back_payment_reference_and_completion" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ImplementationPolicyTest.php" line="182" class="Tests\Feature\ImplementationPolicyTest" classname="Tests.Feature.ImplementationPolicyTest" assertions="4" time="0.072795"/>
+        <testcase name="test_full_refund_uses_received_money_and_allows_genuine_failure_after_on_time_readiness" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ImplementationPolicyTest.php" line="198" class="Tests\Feature\ImplementationPolicyTest" classname="Tests.Feature.ImplementationPolicyTest" assertions="16" time="0.117257"/>
+        <testcase name="test_legacy_fully_paid_orders_are_preserved_refunded_fully_or_collected_without_another_charge" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ImplementationPolicyTest.php" line="223" class="Tests\Feature\ImplementationPolicyTest" classname="Tests.Feature.ImplementationPolicyTest" assertions="4" time="0.089080"/>
+        <testcase name="test_excessive_public_proof_is_not_accepted_as_a_deposit_or_refund" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ImplementationPolicyTest.php" line="243" class="Tests\Feature\ImplementationPolicyTest" classname="Tests.Feature.ImplementationPolicyTest" assertions="5" time="0.084060"/>
+        <testcase name="test_guest_and_inactive_staff_do_not_mutate_internal_records" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ImplementationPolicyTest.php" line="254" class="Tests\Feature\ImplementationPolicyTest" classname="Tests.Feature.ImplementationPolicyTest" assertions="5" time="0.062486"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\InventoryAndAuthorizationBusinessRulesTest" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\InventoryAndAuthorizationBusinessRulesTest.php" tests="11" assertions="32" errors="0" failures="2" skipped="0" time="0.639836">
+        <testcase name="test_inventory_stock_in_increases_stock_and_creates_transaction" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\InventoryAndAuthorizationBusinessRulesTest.php" line="54" class="Tests\Feature\InventoryAndAuthorizationBusinessRulesTest" classname="Tests.Feature.InventoryAndAuthorizationBusinessRulesTest" assertions="5" time="0.046443"/>
+        <testcase name="test_inventory_stock_out_decreases_stock" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\InventoryAndAuthorizationBusinessRulesTest.php" line="78" class="Tests\Feature\InventoryAndAuthorizationBusinessRulesTest" classname="Tests.Feature.InventoryAndAuthorizationBusinessRulesTest" assertions="1" time="0.040657"/>
+        <testcase name="test_negative_stock_rejected_on_stock_out" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\InventoryAndAuthorizationBusinessRulesTest.php" line="92" class="Tests\Feature\InventoryAndAuthorizationBusinessRulesTest" classname="Tests.Feature.InventoryAndAuthorizationBusinessRulesTest" assertions="1" time="0.034250"/>
+        <testcase name="test_positive_adjustment_increases_stock" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\InventoryAndAuthorizationBusinessRulesTest.php" line="105" class="Tests\Feature\InventoryAndAuthorizationBusinessRulesTest" classname="Tests.Feature.InventoryAndAuthorizationBusinessRulesTest" assertions="1" time="0.044971"/>
+        <testcase name="test_negative_adjustment_decreases_stock" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\InventoryAndAuthorizationBusinessRulesTest.php" line="119" class="Tests\Feature\InventoryAndAuthorizationBusinessRulesTest" classname="Tests.Feature.InventoryAndAuthorizationBusinessRulesTest" assertions="1" time="0.045758"/>
+        <testcase name="test_negative_adjustment_below_zero_rejected" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\InventoryAndAuthorizationBusinessRulesTest.php" line="133" class="Tests\Feature\InventoryAndAuthorizationBusinessRulesTest" classname="Tests.Feature.InventoryAndAuthorizationBusinessRulesTest" assertions="1" time="0.043045"/>
+        <testcase name="test_inventory_transaction_and_stock_quantity_stay_synchronized" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\InventoryAndAuthorizationBusinessRulesTest.php" line="146" class="Tests\Feature\InventoryAndAuthorizationBusinessRulesTest" classname="Tests.Feature.InventoryAndAuthorizationBusinessRulesTest" assertions="2" time="0.059528"/>
+        <testcase name="test_owner_access_gates" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\InventoryAndAuthorizationBusinessRulesTest.php" line="161" class="Tests\Feature\InventoryAndAuthorizationBusinessRulesTest" classname="Tests.Feature.InventoryAndAuthorizationBusinessRulesTest" assertions="9" time="0.047254"/>
+        <testcase name="test_assistant_access_restrictions" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\InventoryAndAuthorizationBusinessRulesTest.php" line="174" class="Tests\Feature\InventoryAndAuthorizationBusinessRulesTest" classname="Tests.Feature.InventoryAndAuthorizationBusinessRulesTest" assertions="3" time="0.050205">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Feature\InventoryAndAuthorizationBusinessRulesTest::test_assistant_access_restrictions&#13;
+Failed asserting that false is true.
+&#13;
+C:\Users\User\Desktop\IT12_Project\tests\Feature\InventoryAndAuthorizationBusinessRulesTest.php:181</failure>
+        </testcase>
+        <testcase name="test_assistant_can_access_all_business_modules_but_not_user_management" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\InventoryAndAuthorizationBusinessRulesTest.php" line="190" class="Tests\Feature\InventoryAndAuthorizationBusinessRulesTest" classname="Tests.Feature.InventoryAndAuthorizationBusinessRulesTest" assertions="7" time="0.167552">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Feature\InventoryAndAuthorizationBusinessRulesTest::test_assistant_can_access_all_business_modules_but_not_user_management&#13;
+Expected response status code [200] but received 403.
+Failed asserting that 403 is identical to 200.
+&#13;
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponseAssert.php:45
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:175
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\Concerns\AssertsStatusCodes.php:16
+C:\Users\User\Desktop\IT12_Project\tests\Feature\InventoryAndAuthorizationBusinessRulesTest.php:195</failure>
+        </testcase>
+        <testcase name="test_owner_can_access_user_management" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\InventoryAndAuthorizationBusinessRulesTest.php" line="216" class="Tests\Feature\InventoryAndAuthorizationBusinessRulesTest" classname="Tests.Feature.InventoryAndAuthorizationBusinessRulesTest" assertions="1" time="0.060173"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\OrderAndPaymentBusinessRulesTest" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderAndPaymentBusinessRulesTest.php" tests="9" assertions="6" errors="7" failures="1" skipped="0" time="0.506006">
+        <testcase name="test_50_percent_down_payment_accepted_and_confirms_order" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderAndPaymentBusinessRulesTest.php" line="83" class="Tests\Feature\OrderAndPaymentBusinessRulesTest" classname="Tests.Feature.OrderAndPaymentBusinessRulesTest" assertions="3" time="0.062110">
+          <error type="Illuminate\Auth\Access\AuthorizationException">Tests\Feature\OrderAndPaymentBusinessRulesTest::test_50_percent_down_payment_accepted_and_confirms_order&#13;
+Illuminate\Auth\Access\AuthorizationException: This action requires an active Owner.
+&#13;
+C:\Users\User\Desktop\IT12_Project\app\Services\StaffAccess.php:14
+C:\Users\User\Desktop\IT12_Project\app\Services\OrderService.php:197
+C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderAndPaymentBusinessRulesTest.php:90</error>
+        </testcase>
+        <testcase name="test_incorrect_down_payment_rejected" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderAndPaymentBusinessRulesTest.php" line="106" class="Tests\Feature\OrderAndPaymentBusinessRulesTest" classname="Tests.Feature.OrderAndPaymentBusinessRulesTest" assertions="1" time="0.055602">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Feature\OrderAndPaymentBusinessRulesTest::test_incorrect_down_payment_rejected&#13;
+Failed asserting that exception of type "Illuminate\Auth\Access\AuthorizationException" matches expected exception "Illuminate\Validation\ValidationException". Message was: "This action requires an active Owner." at
+C:\Users\User\Desktop\IT12_Project\app\Services\StaffAccess.php:14
+C:\Users\User\Desktop\IT12_Project\app\Services\OrderService.php:197
+C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderAndPaymentBusinessRulesTest.php:111
+.</failure>
+        </testcase>
+        <testcase name="test_duplicate_down_payment_rejected" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderAndPaymentBusinessRulesTest.php" line="120" class="Tests\Feature\OrderAndPaymentBusinessRulesTest" classname="Tests.Feature.OrderAndPaymentBusinessRulesTest" assertions="0" time="0.052107">
+          <error type="Illuminate\Auth\Access\AuthorizationException">Tests\Feature\OrderAndPaymentBusinessRulesTest::test_duplicate_down_payment_rejected&#13;
+Illuminate\Auth\Access\AuthorizationException: This action requires an active Owner.
+&#13;
+C:\Users\User\Desktop\IT12_Project\app\Services\StaffAccess.php:14
+C:\Users\User\Desktop\IT12_Project\app\Services\OrderService.php:197
+C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderAndPaymentBusinessRulesTest.php:124</error>
+        </testcase>
+        <testcase name="test_confirmation_without_deposit_rejected" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderAndPaymentBusinessRulesTest.php" line="142" class="Tests\Feature\OrderAndPaymentBusinessRulesTest" classname="Tests.Feature.OrderAndPaymentBusinessRulesTest" assertions="2" time="0.057249"/>
+        <testcase name="test_final_payment_accepted_when_exact_balance_is_paid" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderAndPaymentBusinessRulesTest.php" line="152" class="Tests\Feature\OrderAndPaymentBusinessRulesTest" classname="Tests.Feature.OrderAndPaymentBusinessRulesTest" assertions="0" time="0.055061">
+          <error type="Illuminate\Auth\Access\AuthorizationException">Tests\Feature\OrderAndPaymentBusinessRulesTest::test_final_payment_accepted_when_exact_balance_is_paid&#13;
+Illuminate\Auth\Access\AuthorizationException: This action requires an active Owner.
+&#13;
+C:\Users\User\Desktop\IT12_Project\app\Services\StaffAccess.php:14
+C:\Users\User\Desktop\IT12_Project\app\Services\OrderService.php:197
+C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderAndPaymentBusinessRulesTest.php:157</error>
+        </testcase>
+        <testcase name="test_payment_exceeding_balance_rejected" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderAndPaymentBusinessRulesTest.php" line="176" class="Tests\Feature\OrderAndPaymentBusinessRulesTest" classname="Tests.Feature.OrderAndPaymentBusinessRulesTest" assertions="0" time="0.057567">
+          <error type="Illuminate\Auth\Access\AuthorizationException">Tests\Feature\OrderAndPaymentBusinessRulesTest::test_payment_exceeding_balance_rejected&#13;
+Illuminate\Auth\Access\AuthorizationException: This action requires an active Owner.
+&#13;
+C:\Users\User\Desktop\IT12_Project\app\Services\StaffAccess.php:14
+C:\Users\User\Desktop\IT12_Project\app\Services\OrderService.php:197
+C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderAndPaymentBusinessRulesTest.php:179</error>
+        </testcase>
+        <testcase name="test_cancelled_order_preserves_payment_and_rejects_further_payment" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderAndPaymentBusinessRulesTest.php" line="192" class="Tests\Feature\OrderAndPaymentBusinessRulesTest" classname="Tests.Feature.OrderAndPaymentBusinessRulesTest" assertions="0" time="0.057085">
+          <error type="Illuminate\Auth\Access\AuthorizationException">Tests\Feature\OrderAndPaymentBusinessRulesTest::test_cancelled_order_preserves_payment_and_rejects_further_payment&#13;
+Illuminate\Auth\Access\AuthorizationException: This action requires an active Owner.
+&#13;
+C:\Users\User\Desktop\IT12_Project\app\Services\StaffAccess.php:14
+C:\Users\User\Desktop\IT12_Project\app\Services\OrderService.php:197
+C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderAndPaymentBusinessRulesTest.php:195</error>
+        </testcase>
+        <testcase name="test_completed_at_is_recorded_and_not_overwritten" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderAndPaymentBusinessRulesTest.php" line="211" class="Tests\Feature\OrderAndPaymentBusinessRulesTest" classname="Tests.Feature.OrderAndPaymentBusinessRulesTest" assertions="0" time="0.050563">
+          <error type="Illuminate\Auth\Access\AuthorizationException">Tests\Feature\OrderAndPaymentBusinessRulesTest::test_completed_at_is_recorded_and_not_overwritten&#13;
+Illuminate\Auth\Access\AuthorizationException: This action requires an active Owner.
+&#13;
+C:\Users\User\Desktop\IT12_Project\app\Services\StaffAccess.php:14
+C:\Users\User\Desktop\IT12_Project\app\Services\OrderService.php:197
+C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderAndPaymentBusinessRulesTest.php:214</error>
+        </testcase>
+        <testcase name="test_cancelled_at_is_recorded_and_not_overwritten" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderAndPaymentBusinessRulesTest.php" line="239" class="Tests\Feature\OrderAndPaymentBusinessRulesTest" classname="Tests.Feature.OrderAndPaymentBusinessRulesTest" assertions="0" time="0.058663">
+          <error type="Illuminate\Auth\Access\AuthorizationException">Tests\Feature\OrderAndPaymentBusinessRulesTest::test_cancelled_at_is_recorded_and_not_overwritten&#13;
+Illuminate\Auth\Access\AuthorizationException: This action requires an active Owner.
+&#13;
+C:\Users\User\Desktop\IT12_Project\app\Services\StaffAccess.php:14
+C:\Users\User\Desktop\IT12_Project\app\Services\OrderService.php:436
+C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderAndPaymentBusinessRulesTest.php:246</error>
+        </testcase>
+      </testsuite>
+      <testsuite name="Tests\Feature\OrderReviewAndPricingTest" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderReviewAndPricingTest.php" tests="5" assertions="13" errors="1" failures="0" skipped="0" time="0.314297">
+        <testcase name="test_public_and_staff_creation_paths_preserve_the_correct_creator_intent" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderReviewAndPricingTest.php" line="46" class="Tests\Feature\OrderReviewAndPricingTest" classname="Tests.Feature.OrderReviewAndPricingTest" assertions="3" time="0.064020"/>
+        <testcase name="test_pending_public_prices_are_fixed_immediately_and_cannot_be_manually_adjusted" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderReviewAndPricingTest.php" line="58" class="Tests\Feature\OrderReviewAndPricingTest" classname="Tests.Feature.OrderReviewAndPricingTest" assertions="4" time="0.056258"/>
+        <testcase name="test_confirmed_order_retains_option_price_after_catalog_price_changes" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderReviewAndPricingTest.php" line="69" class="Tests\Feature\OrderReviewAndPricingTest" classname="Tests.Feature.OrderReviewAndPricingTest" assertions="3" time="0.064877"/>
+        <testcase name="test_invalid_status_transitions_and_terminal_state_changes_are_rejected" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderReviewAndPricingTest.php" line="83" class="Tests\Feature\OrderReviewAndPricingTest" classname="Tests.Feature.OrderReviewAndPricingTest" assertions="2" time="0.073013">
+          <error type="Illuminate\Validation\ValidationException">Tests\Feature\OrderReviewAndPricingTest::test_invalid_status_transitions_and_terminal_state_changes_are_rejected&#13;
+Illuminate\Validation\ValidationException: The remaining balance is collected only at actual pickup after Ready for pickup.
+&#13;
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Validation\ValidationException.php:70
+C:\Users\User\Desktop\IT12_Project\app\Services\OrderService.php:304
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Concerns\ManagesTransactions.php:35
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\DatabaseManager.php:491
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\Facades\Facade.php:363
+C:\Users\User\Desktop\IT12_Project\app\Services\OrderService.php:287
+C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderReviewAndPricingTest.php:104</error>
+        </testcase>
+        <testcase name="test_cancelled_orders_are_terminal" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderReviewAndPricingTest.php" line="120" class="Tests\Feature\OrderReviewAndPricingTest" classname="Tests.Feature.OrderReviewAndPricingTest" assertions="1" time="0.056129"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\PackageInclusionsTest" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\PackageInclusionsTest.php" tests="7" assertions="101" errors="0" failures="0" skipped="0" time="1.094210">
+        <testcase name="test_owner_can_add_edit_and_remove_multiple_included_items_without_changing_paid_applicability" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\PackageInclusionsTest.php" line="55" class="Tests\Feature\PackageInclusionsTest" classname="Tests.Feature.PackageInclusionsTest" assertions="13" time="0.098855"/>
+        <testcase name="test_invalid_and_duplicate_rows_are_rejected_atomically_and_input_is_preserved" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\PackageInclusionsTest.php" line="74" class="Tests\Feature\PackageInclusionsTest" classname="Tests.Feature.PackageInclusionsTest" assertions="18" time="0.116614"/>
+        <testcase name="test_new_layer_option_can_have_only_structured_items_and_keeps_other_options_unchanged" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\PackageInclusionsTest.php" line="90" class="Tests\Feature\PackageInclusionsTest" classname="Tests.Feature.PackageInclusionsTest" assertions="8" time="0.069750"/>
+        <testcase name="test_paid_extra_selection_is_independent_of_package_visibility_and_included_items" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\PackageInclusionsTest.php" line="106" class="Tests\Feature\PackageInclusionsTest" classname="Tests.Feature.PackageInclusionsTest" assertions="13" time="0.121960"/>
+        <testcase name="test_public_and_staff_orders_use_included_quantities_per_package_and_paid_extras_once_per_line" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\PackageInclusionsTest.php" line="125" class="Tests\Feature\PackageInclusionsTest" classname="Tests.Feature.PackageInclusionsTest" assertions="38" time="0.496835"/>
+        <testcase name="test_catalog_changes_do_not_rewrite_saved_inclusions_or_prices" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\PackageInclusionsTest.php" line="167" class="Tests\Feature\PackageInclusionsTest" classname="Tests.Feature.PackageInclusionsTest" assertions="6" time="0.104126"/>
+        <testcase name="test_migration_does_not_parse_legacy_text_or_backfill_order_inclusions" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\PackageInclusionsTest.php" line="182" class="Tests\Feature\PackageInclusionsTest" classname="Tests.Feature.PackageInclusionsTest" assertions="5" time="0.086069"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\Phase3QAFixesTest" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\Phase3QAFixesTest.php" tests="6" assertions="23" errors="0" failures="1" skipped="0" time="0.314283">
+        <testcase name="test_product_update_accepts_both_put_and_patch_methods" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\Phase3QAFixesTest.php" line="70" class="Tests\Feature\Phase3QAFixesTest" classname="Tests.Feature.Phase3QAFixesTest" assertions="7" time="0.057190"/>
+        <testcase name="test_supply_update_via_patch_updates_master_item" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\Phase3QAFixesTest.php" line="98" class="Tests\Feature\Phase3QAFixesTest" classname="Tests.Feature.Phase3QAFixesTest" assertions="3" time="0.047239"/>
+        <testcase name="test_customer_phone_normalization_handles_various_philippine_formats" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\Phase3QAFixesTest.php" line="116" class="Tests\Feature\Phase3QAFixesTest" classname="Tests.Feature.Phase3QAFixesTest" assertions="5" time="0.040895"/>
+        <testcase name="test_payment_controller_requires_reference_number_for_gcash_payments" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\Phase3QAFixesTest.php" line="143" class="Tests\Feature\Phase3QAFixesTest" classname="Tests.Feature.Phase3QAFixesTest" assertions="1" time="0.062871">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Feature\Phase3QAFixesTest::test_payment_controller_requires_reference_number_for_gcash_payments&#13;
+Expected response status code [201, 301, 302, 303, 307, 308] but received 403.
+Failed asserting that false is true.
+&#13;
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponseAssert.php:45
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:200
+C:\Users\User\Desktop\IT12_Project\tests\Feature\Phase3QAFixesTest.php:163</failure>
+        </testcase>
+        <testcase name="test_internal_staff_order_creation_handles_per_item_image_uploads" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\Phase3QAFixesTest.php" line="181" class="Tests\Feature\Phase3QAFixesTest" classname="Tests.Feature.Phase3QAFixesTest" assertions="6" time="0.063297"/>
+        <testcase name="test_public_storage_symlink_is_established" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\Phase3QAFixesTest.php" line="215" class="Tests\Feature\Phase3QAFixesTest" classname="Tests.Feature.Phase3QAFixesTest" assertions="1" time="0.042790"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\PublicOrderingTest" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\PublicOrderingTest.php" tests="9" assertions="68" errors="0" failures="0" skipped="0" time="0.558409">
+        <testcase name="test_guest_can_view_active_products_but_not_inactive_products" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\PublicOrderingTest.php" line="46" class="Tests\Feature\PublicOrderingTest" classname="Tests.Feature.PublicOrderingTest" assertions="4" time="0.052717"/>
+        <testcase name="test_guest_can_submit_multiple_customized_products_as_a_pending_public_order" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\PublicOrderingTest.php" line="55" class="Tests\Feature\PublicOrderingTest" classname="Tests.Feature.PublicOrderingTest" assertions="15" time="0.080530"/>
+        <testcase name="test_customer_matching_uses_normalized_phone_and_exact_names" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\PublicOrderingTest.php" line="94" class="Tests\Feature\PublicOrderingTest" classname="Tests.Feature.PublicOrderingTest" assertions="4" time="0.055775"/>
+        <testcase name="test_public_submission_creates_a_new_normalized_customer_when_no_exact_match_exists" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\PublicOrderingTest.php" line="111" class="Tests\Feature\PublicOrderingTest" classname="Tests.Feature.PublicOrderingTest" assertions="5" time="0.052118"/>
+        <testcase name="test_public_image_upload_is_saved_against_its_matching_order_detail" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\PublicOrderingTest.php" line="125" class="Tests\Feature\PublicOrderingTest" classname="Tests.Feature.PublicOrderingTest" assertions="6" time="0.074869"/>
+        <testcase name="test_cross_order_image_association_is_rejected" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\PublicOrderingTest.php" line="147" class="Tests\Feature\PublicOrderingTest" classname="Tests.Feature.PublicOrderingTest" assertions="1" time="0.060341"/>
+        <testcase name="test_old_success_url_redirects_and_guests_cannot_reach_internal_routes" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\PublicOrderingTest.php" line="160" class="Tests\Feature\PublicOrderingTest" classname="Tests.Feature.PublicOrderingTest" assertions="20" time="0.062596"/>
+        <testcase name="test_internal_order_lookup_is_not_available_to_a_public_guest" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\PublicOrderingTest.php" line="169" class="Tests\Feature\PublicOrderingTest" classname="Tests.Feature.PublicOrderingTest" assertions="2" time="0.046249"/>
+        <testcase name="test_public_order_submissions_are_rate_limited" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\PublicOrderingTest.php" line="177" class="Tests\Feature\PublicOrderingTest" classname="Tests.Feature.PublicOrderingTest" assertions="11" time="0.073213"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\PublicPackageWorkspaceTest" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\PublicPackageWorkspaceTest.php" tests="4" assertions="57" errors="0" failures="0" skipped="0" time="0.489526">
+        <testcase name="test_catalog_navigates_to_dedicated_customization_and_multiline_edit_is_idempotent" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\PublicPackageWorkspaceTest.php" line="22" class="Tests\Feature\PublicPackageWorkspaceTest" classname="Tests.Feature.PublicPackageWorkspaceTest" assertions="26" time="0.134947"/>
+        <testcase name="test_validation_keeps_uploads_and_submitted_order_associates_images_and_extras_with_each_line" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\PublicPackageWorkspaceTest.php" line="47" class="Tests\Feature\PublicPackageWorkspaceTest" classname="Tests.Feature.PublicPackageWorkspaceTest" assertions="18" time="0.173474"/>
+        <testcase name="test_autosaved_upload_is_deduplicated_and_catalog_availability_revalidated" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\PublicPackageWorkspaceTest.php" line="75" class="Tests\Feature\PublicPackageWorkspaceTest" classname="Tests.Feature.PublicPackageWorkspaceTest" assertions="9" time="0.113333"/>
+        <testcase name="test_removing_an_uncommitted_reference_cleans_its_file" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\PublicPackageWorkspaceTest.php" line="91" class="Tests\Feature\PublicPackageWorkspaceTest" classname="Tests.Feature.PublicPackageWorkspaceTest" assertions="4" time="0.067773"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\ReportPeriodsAndReconciliationTest" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ReportPeriodsAndReconciliationTest.php" tests="5" assertions="82" errors="0" failures="0" skipped="0" time="0.379877">
+        <testcase name="test_periods_resolve_month_range_year_boundary_and_leap_day" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ReportPeriodsAndReconciliationTest.php" line="17" class="Tests\Feature\ReportPeriodsAndReconciliationTest" classname="Tests.Feature.ReportPeriodsAndReconciliationTest" assertions="21" time="0.058623"/>
+        <testcase name="test_invalid_or_incomplete_periods_produce_validation_errors" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ReportPeriodsAndReconciliationTest.php" line="33" class="Tests\Feature\ReportPeriodsAndReconciliationTest" classname="Tests.Feature.ReportPeriodsAndReconciliationTest" assertions="5" time="0.044868"/>
+        <testcase name="test_business_timezone_inclusive_end_and_fractional_datetime_boundaries" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ReportPeriodsAndReconciliationTest.php" line="41" class="Tests\Feature\ReportPeriodsAndReconciliationTest" classname="Tests.Feature.ReportPeriodsAndReconciliationTest" assertions="4" time="0.045207"/>
+        <testcase name="test_summaries_chart_breakdowns_drilldowns_exports_and_saved_package_prices_reconcile" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ReportPeriodsAndReconciliationTest.php" line="53" class="Tests\Feature\ReportPeriodsAndReconciliationTest" classname="Tests.Feature.ReportPeriodsAndReconciliationTest" assertions="48" time="0.184849"/>
+        <testcase name="test_empty_reports_zero_fill_and_use_monthly_trends_for_long_periods" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ReportPeriodsAndReconciliationTest.php" line="91" class="Tests\Feature\ReportPeriodsAndReconciliationTest" classname="Tests.Feature.ReportPeriodsAndReconciliationTest" assertions="4" time="0.046329"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\StockConcurrencyAndMigrationTest" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\StockConcurrencyAndMigrationTest.php" tests="4" assertions="52" errors="0" failures="0" skipped="0" time="5.103702">
+        <testcase name="test_concurrent_receipts_have_no_lost_update" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\StockConcurrencyAndMigrationTest.php" line="56" class="Tests\Feature\StockConcurrencyAndMigrationTest" classname="Tests.Feature.StockConcurrencyAndMigrationTest" assertions="9" time="1.485028"/>
+        <testcase name="test_concurrent_usage_cannot_overspend_stock" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\StockConcurrencyAndMigrationTest.php" line="65" class="Tests\Feature\StockConcurrencyAndMigrationTest" classname="Tests.Feature.StockConcurrencyAndMigrationTest" assertions="7" time="1.636976"/>
+        <testcase name="test_concurrent_duplicate_receipt_posts_once" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\StockConcurrencyAndMigrationTest.php" line="74" class="Tests\Feature\StockConcurrencyAndMigrationTest" classname="Tests.Feature.StockConcurrencyAndMigrationTest" assertions="8" time="1.465433"/>
+        <testcase name="test_real_additive_migration_preserves_preexisting_records" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\StockConcurrencyAndMigrationTest.php" line="82" class="Tests\Feature\StockConcurrencyAndMigrationTest" classname="Tests.Feature.StockConcurrencyAndMigrationTest" assertions="28" time="0.516265"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\StockOperationsAndExpensesTest" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\StockOperationsAndExpensesTest.php" tests="9" assertions="113" errors="0" failures="0" skipped="0" time="10.340943">
+        <testcase name="test_receipt_is_atomic_grouped_idempotent_and_reconcilable_without_expenses" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\StockOperationsAndExpensesTest.php" line="32" class="Tests\Feature\StockOperationsAndExpensesTest" classname="Tests.Feature.StockOperationsAndExpensesTest" assertions="16" time="0.304590"/>
+        <testcase name="test_invalid_or_duplicate_line_rolls_back_entire_receipt" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\StockOperationsAndExpensesTest.php" line="52" class="Tests\Feature\StockOperationsAndExpensesTest" classname="Tests.Feature.StockOperationsAndExpensesTest" assertions="8" time="0.068734"/>
+        <testcase name="test_usage_waste_negative_stock_and_stale_count" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\StockOperationsAndExpensesTest.php" line="63" class="Tests\Feature\StockOperationsAndExpensesTest" classname="Tests.Feature.StockOperationsAndExpensesTest" assertions="13" time="0.090776"/>
+        <testcase name="test_reversal_preserves_original_and_cannot_be_posted_twice" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\StockOperationsAndExpensesTest.php" line="80" class="Tests\Feature\StockOperationsAndExpensesTest" classname="Tests.Feature.StockOperationsAndExpensesTest" assertions="8" time="0.074135"/>
+        <testcase name="test_supply_opening_balance_unit_guard_search_filters_and_pagination" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\StockOperationsAndExpensesTest.php" line="95" class="Tests\Feature\StockOperationsAndExpensesTest" classname="Tests.Feature.StockOperationsAndExpensesTest" assertions="15" time="0.189842"/>
+        <testcase name="test_legacy_movement_can_be_corrected_once_without_rewriting_history" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\StockOperationsAndExpensesTest.php" line="109" class="Tests\Feature\StockOperationsAndExpensesTest" classname="Tests.Feature.StockOperationsAndExpensesTest" assertions="13" time="0.131594"/>
+        <testcase name="test_expense_creation_edit_and_void_audit_preserve_creator_and_report_effect" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\StockOperationsAndExpensesTest.php" line="135" class="Tests\Feature\StockOperationsAndExpensesTest" classname="Tests.Feature.StockOperationsAndExpensesTest" assertions="23" time="9.261553"/>
+        <testcase name="test_expense_total_covers_all_pages_and_authorization_is_server_enforced" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\StockOperationsAndExpensesTest.php" line="157" class="Tests\Feature\StockOperationsAndExpensesTest" classname="Tests.Feature.StockOperationsAndExpensesTest" assertions="13" time="0.181807"/>
+        <testcase name="test_additive_migration_creates_truthful_legacy_baselines_without_modifying_records" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\StockOperationsAndExpensesTest.php" line="169" class="Tests\Feature\StockOperationsAndExpensesTest" classname="Tests.Feature.StockOperationsAndExpensesTest" assertions="4" time="0.037913"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\TwoStepOrderingAndReceiptScreenTest" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\TwoStepOrderingAndReceiptScreenTest.php" tests="6" assertions="80" errors="0" failures="0" skipped="0" time="0.681350">
+        <testcase name="test_public_draft_keeps_package_and_uploaded_image_while_moving_back_and_forth" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\TwoStepOrderingAndReceiptScreenTest.php" line="41" class="Tests\Feature\TwoStepOrderingAndReceiptScreenTest" classname="Tests.Feature.TwoStepOrderingAndReceiptScreenTest" assertions="21" time="0.144351"/>
+        <testcase name="test_price_is_checked_again_when_submitting_draft_and_fields_survive_validation" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\TwoStepOrderingAndReceiptScreenTest.php" line="71" class="Tests\Feature\TwoStepOrderingAndReceiptScreenTest" classname="Tests.Feature.TwoStepOrderingAndReceiptScreenTest" assertions="8" time="0.092645"/>
+        <testcase name="test_staff_uses_two_steps_and_can_create_and_select_customer_inline" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\TwoStepOrderingAndReceiptScreenTest.php" line="87" class="Tests\Feature\TwoStepOrderingAndReceiptScreenTest" classname="Tests.Feature.TwoStepOrderingAndReceiptScreenTest" assertions="14" time="0.105853"/>
+        <testcase name="test_rejection_state_and_authenticated_screenshot_remain_separate_from_payment" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\TwoStepOrderingAndReceiptScreenTest.php" line="107" class="Tests\Feature\TwoStepOrderingAndReceiptScreenTest" classname="Tests.Feature.TwoStepOrderingAndReceiptScreenTest" assertions="12" time="0.120763"/>
+        <testcase name="test_buyer_can_replace_a_rejected_receipt_and_prior_history_remains_visible" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\TwoStepOrderingAndReceiptScreenTest.php" line="124" class="Tests\Feature\TwoStepOrderingAndReceiptScreenTest" classname="Tests.Feature.TwoStepOrderingAndReceiptScreenTest" assertions="18" time="0.140776"/>
+        <testcase name="test_buyer_can_remove_saved_reference_without_leaving_an_orphaned_upload" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\TwoStepOrderingAndReceiptScreenTest.php" line="155" class="Tests\Feature\TwoStepOrderingAndReceiptScreenTest" classname="Tests.Feature.TwoStepOrderingAndReceiptScreenTest" assertions="7" time="0.076962"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\UiPresentationTest" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\UiPresentationTest.php" tests="2" assertions="24" errors="0" failures="1" skipped="0" time="0.244534">
+        <testcase name="test_order_pages_preserve_actions_and_price_locking_in_every_lifecycle_state" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\UiPresentationTest.php" line="31" class="Tests\Feature\UiPresentationTest" classname="Tests.Feature.UiPresentationTest" assertions="7" time="0.126197">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Feature\UiPresentationTest::test_order_pages_preserve_actions_and_price_locking_in_every_lifecycle_state&#13;
+Failed asserting that '&lt;!DOCTYPE html&gt;\n
+&lt;html lang="en"&gt;\n
+&lt;head&gt;\n
+    &lt;meta charset="UTF-8"&gt;\n
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;\n
+    &lt;title&gt;Order ORD-20261004-FA10E67E19 - Aling Chona Cakes &amp; Cupcakes&lt;/title&gt;\n
+    &lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;\n
+    &lt;script&gt;\n
+        tailwind.config = {\n
+            theme: {\n
+                extend: {\n
+                    fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },\n
+                    colors: {\n
+                        cream: { 50: '#FDFBF7', 100: '#F5F1EB' },\n
+                        cocoa: { 50: '#F5F1EB', 100: '#E8E0D4', 200: '#D4C4B0', 300: '#C2956B', 400: '#716153', 500: '#5C4A3A', 600: '#3C2415', 700: '#2C1810', 800: '#1A0E08' },\n
+                    }\n
+                }\n
+            }\n
+        }\n
+    &lt;/script&gt;\n
+    &lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;\n
+    &lt;link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"&gt;\n
+    &lt;script defer src="http://127.0.0.1:8000/js/alpine.min.js"&gt;&lt;/script&gt;\n
+    &lt;style&gt;\n
+        [x-cloak] { display: none !important; }\n
+        /* Custom scrollbar for sidebar */\n
+        .sidebar-scroll::-webkit-scrollbar { width: 4px; }\n
+        .sidebar-scroll::-webkit-scrollbar-track { background: transparent; }\n
+        .sidebar-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }\n
+    &lt;/style&gt;\n
+    &lt;link rel="stylesheet" href="http://127.0.0.1:8000/css/bakery-ui.css?v=1790948038"&gt;\n
+&lt;script defer src="http://127.0.0.1:8000/js/bakery-ui.js?v=1790947304"&gt;&lt;/script&gt;\n
+&lt;/head&gt;\n
+&lt;body class="bg-cream-50 text-cocoa-500 font-sans min-h-screen" x-data="{ sidebarOpen: false }"&gt;\n
+    &lt;a class="skip-link" href="#main-content"&gt;Skip to main content&lt;/a&gt;\n
+\n
+    \n
+    &lt;div x-show="sidebarOpen" x-transition:enter="transition-opacity ease-out duration-200" x-transition:leave="transition-opacity ease-in duration-150"\n
+         data-sidebar-backdrop class="fixed inset-0 z-40 bg-black/40 lg:hidden" @click="sidebarOpen = false" x-cloak&gt;&lt;/div&gt;\n
+\n
+    \n
+    &lt;aside id="staff-navigation" data-sidebar :data-open="sidebarOpen.toString()" aria-label="Staff navigation" :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"\n
+           class="fixed top-0 left-0 z-50 h-full w-60 bg-cocoa-700 text-cocoa-200 flex flex-col transition-transform duration-200 lg:translate-x-0"&gt;\n
+\n
+        &lt;button type="button" data-sidebar-close @click="sidebarOpen = false" aria-label="Close navigation" class="sidebar-close self-end p-3 text-white"&gt;&lt;svg class="ui-icon" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"&gt;&lt;path stroke-linecap="round" stroke-linejoin="round" d="m6 6 12 12M6 18 18 6" /&gt;&lt;/svg&gt;\n
+&lt;/button&gt;\n
+        \n
+        &lt;div class="px-5 py-5 border-b border-white/10"&gt;\n
+            &lt;a href="http://127.0.0.1:8000/dashboard" class="flex items-center gap-3"&gt;\n
+                &lt;span class="w-9 h-9 rounded-lg bg-cocoa-300 flex items-center justify-center text-white text-lg font-bold"&gt;A&lt;/span&gt;\n
+                &lt;div&gt;\n
+                    &lt;span class="font-bold text-white text-sm tracking-tight block leading-tight"&gt;Aling Chona&lt;/span&gt;\n
+                    &lt;span class="text-xs text-cocoa-200  leading-tight"&gt;Cakes &amp; Cupcakes&lt;/span&gt;\n
+                &lt;/div&gt;\n
+            &lt;/a&gt;\n
+        &lt;/div&gt;\n
+\n
+        \n
+        &lt;nav class="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto sidebar-scroll"&gt;\n
+            &lt;a href="http://127.0.0.1:8000/dashboard"\n
+               class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition\n
+                      text-cocoa-200 hover:bg-white/5 hover:text-white"&gt;\n
+                &lt;svg class="ui-icon w-[18px] h-[18px] flex-shrink-0" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"&gt;&lt;path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" /&gt;&lt;/svg&gt;\n
+                Dashboard\n
+            &lt;/a&gt;\n
+\n
+            &lt;a href="http://127.0.0.1:8000/orders"\n
+               class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition\n
+                      bg-white/10 text-white font-semibold"&gt;\n
+                &lt;svg class="ui-icon w-[18px] h-[18px] flex-shrink-0" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"&gt;&lt;path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15a2.25 2.25 0 012.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25z" /&gt;&lt;/svg&gt;\n
+                Orders\n
+            &lt;/a&gt;\n
+\n
+            &lt;a href="http://127.0.0.1:8000/pickup-schedule"\n
+               class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition\n
+                      text-cocoa-200 hover:bg-white/5 hover:text-white"&gt;\n
+                &lt;svg class="ui-icon w-[18px] h-[18px] flex-shrink-0" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"&gt;&lt;path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" /&gt;&lt;/svg&gt;\n
+                Pickup Schedule\n
+            &lt;/a&gt;\n
+\n
+            &lt;div class="pt-4 pb-1.5 px-3"&gt;\n
+                &lt;span class="text-xs font-semibold  text-cocoa-200"&gt;Manage&lt;/span&gt;\n
+            &lt;/div&gt;\n
+\n
+            &lt;a href="http://127.0.0.1:8000/customers"\n
+               class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition\n
+                      text-cocoa-200 hover:bg-white/5 hover:text-white"&gt;\n
+                &lt;svg class="ui-icon w-[18px] h-[18px] flex-shrink-0" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"&gt;&lt;path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" /&gt;&lt;/svg&gt;\n
+                Customers\n
+            &lt;/a&gt;\n
+\n
+            &lt;a href="http://127.0.0.1:8000/products"\n
+               class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition\n
+                      text-cocoa-200 hover:bg-white/5 hover:text-white"&gt;\n
+                &lt;svg class="ui-icon w-[18px] h-[18px] flex-shrink-0" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"&gt;&lt;path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" /&gt;&lt;/svg&gt;\n
+                Products\n
+            &lt;/a&gt;\n
+\n
+            &lt;a href="http://127.0.0.1:8000/supplies"\n
+               class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition\n
+                      text-cocoa-200 hover:bg-white/5 hover:text-white"&gt;\n
+                &lt;svg class="ui-icon w-[18px] h-[18px] flex-shrink-0" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"&gt;&lt;path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-2.25-1.313M21 7.5v2.25m0-2.25l-2.25 1.313M3 7.5l2.25-1.313M3 7.5l2.25 1.313M3 7.5v2.25m9 3l2.25-1.313M12 12.75l-2.25-1.313M12 12.75V15m0 6.75l2.25-1.313M12 21.75V19.5m0 2.25l-2.25-1.313m0-16.875L12 2.25l2.25 1.313M21 14.25v2.25l-2.25 1.313m-13.5 0L3 16.5v-2.25" /&gt;&lt;/svg&gt;\n
+                Inventory\n
+            &lt;/a&gt;\n
+\n
+            &lt;div class="pt-4 pb-1.5 px-3"&gt;\n
+                &lt;span class="text-xs font-semibold  text-cocoa-200"&gt;Finance&lt;/span&gt;\n
+            &lt;/div&gt;\n
+\n
+            &lt;a href="http://127.0.0.1:8000/expenses"\n
+               class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition\n
+                      text-cocoa-200 hover:bg-white/5 hover:text-white"&gt;\n
+                &lt;svg class="ui-icon w-[18px] h-[18px] flex-shrink-0" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"&gt;&lt;path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" /&gt;&lt;/svg&gt;\n
+                Expenses\n
+            &lt;/a&gt;\n
+\n
+                        &lt;a href="http://127.0.0.1:8000/reports"\n
+               class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition\n
+                      text-cocoa-200 hover:bg-white/5 hover:text-white"&gt;\n
+                &lt;svg class="ui-icon w-[18px] h-[18px] flex-shrink-0" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"&gt;&lt;path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" /&gt;&lt;/svg&gt;\n
+                Reports\n
+            &lt;/a&gt;\n
+            \n
+                            &lt;div class="pt-4 pb-1.5 px-3"&gt;\n
+                    &lt;span class="text-xs font-semibold  text-cocoa-200"&gt;Admin&lt;/span&gt;\n
+                &lt;/div&gt;\n
+\n
+                &lt;a href="http://127.0.0.1:8000/users"\n
+                   class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition\n
+                          text-cocoa-200 hover:bg-white/5 hover:text-white"&gt;\n
+                    &lt;svg class="ui-icon w-[18px] h-[18px] flex-shrink-0" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"&gt;&lt;path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" /&gt;&lt;/svg&gt;\n
+                    &lt;span&gt;Users (Owner)&lt;/span&gt;\n
+                &lt;/a&gt;\n
+                    &lt;/nav&gt;\n
+\n
+    &lt;/aside&gt;\n
+\n
+    \n
+    &lt;div class="lg:pl-60 min-h-screen flex flex-col"&gt;\n
+        \n
+        &lt;header class="sticky top-0 z-30 bg-white border-b border-cocoa-100"&gt;\n
+            &lt;div class="flex items-center justify-between px-4 sm:px-6 lg:px-8 h-14"&gt;\n
+                \n
+                &lt;button type="button" aria-label="Open navigation" aria-controls="staff-navigation" :aria-expanded="sidebarOpen.toString()" @click="sidebarOpen = true" class="lg:hidden p-2 -ml-2 rounded-lg text-cocoa-400 hover:text-cocoa-600 hover:bg-cream-100 transition"&gt;\n
+                    &lt;svg class="ui-icon w-5 h-5" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"&gt;&lt;path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /&gt;&lt;/svg&gt;\n
+                &lt;/button&gt;\n
+\n
+                \n
+                &lt;span class="hidden lg:block text-sm text-cocoa-500"&gt;Staff workspace&lt;/span&gt;\n
+\n
+                \n
+                &lt;div class="flex items-center gap-3 text-sm min-w-0"&gt;\n
+                    &lt;span class="text-cocoa-400 text-xs min-w-0"&gt;Review  Owner &lt;span class="text-cocoa-500"&gt;&amp;middot;&lt;/span&gt; &lt;span class="capitalize"&gt;owner&lt;/span&gt;&lt;/span&gt;\n
+                    &lt;form action="http://127.0.0.1:8000/logout" method="POST" class="inline"&gt;\n
+                        &lt;input type="hidden" name="_token" value="uIlSPsz57Zw7uTmYoLOGhX89eF8tbdIbNeXJHC9Q" autocomplete="off"&gt;                        &lt;button type="submit" class="px-3 py-1.5 text-xs font-medium text-cocoa-400 hover:text-cocoa-600 border border-cocoa-100 rounded-lg hover:bg-cream-100 transition"&gt;\n
+                            Sign Out\n
+                        &lt;/button&gt;\n
+                    &lt;/form&gt;\n
+                &lt;/div&gt;\n
+            &lt;/div&gt;\n
+        &lt;/header&gt;\n
+\n
+        \n
+        &lt;main id="main-content" tabindex="-1" class="flex-grow px-4 sm:px-6 lg:px-8 py-6"&gt;\n
+            \n
+            \n
+            \n
+            &lt;div class="space-y-4"&gt;\n
+    \n
+    &lt;div class="page-heading"&gt;\n
+        &lt;div class="flex items-center gap-2 text-sm"&gt;\n
+            &lt;a href="http://127.0.0.1:8000/orders" class="text-cocoa-500 hover:text-cocoa-600 font-medium transition"&gt;&lt;svg class="ui-icon mr-1" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"&gt;&lt;path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" /&gt;&lt;/svg&gt;\n
+ Orders&lt;/a&gt;\n
+            &lt;span class="text-cocoa-200"&gt;/&lt;/span&gt;\n
+            &lt;span class="text-cocoa-400 font-mono"&gt;ORD-20261004-FA10E67E19&lt;/span&gt;\n
+        &lt;/div&gt;\n
+        &lt;span class="px-3 py-1 rounded-full text-xs font-semibold\n
+            bg-cocoa-50 text-cocoa-500 "&gt;\n
+            Staff Created (Review)\n
+        &lt;/span&gt;\n
+    &lt;/div&gt;\n
+\n
+    \n
+    &lt;div class="bg-white border border-cocoa-100 rounded-xl p-6"&gt;\n
+        &lt;div class="flex flex-col md:flex-row md:items-center justify-between gap-6"&gt;\n
+            &lt;div&gt;\n
+                &lt;div class="flex items-center gap-3 flex-wrap"&gt;\n
+                    &lt;h1 class="text-2xl font-bold text-cocoa-600 font-mono"&gt;ORD-20261004-FA10E67E19&lt;/h1&gt;\n
+                    &lt;span class="status"&gt;Confirmed&lt;/span&gt;\n
+                    &lt;span class="status status-attention"&gt;Partially paid&lt;/span&gt;\n
+                &lt;/div&gt;\n
+                &lt;div class="text-xs text-cocoa-400 mt-2 flex flex-wrap gap-x-4 gap-y-1"&gt;\n
+                    &lt;span&gt;Submitted: &lt;strong class="text-cocoa-500"&gt;Oct 04, 2026 08:57 PM&lt;/strong&gt;&lt;/span&gt;\n
+                                                        &lt;/div&gt;\n
+            &lt;/div&gt;\n
+\n
+            \n
+            &lt;div class="order-money border-t md:border-t-0 md:border-l border-cocoa-100 md:pl-6 pt-4 md:pt-0"&gt;\n
+                &lt;div&gt;\n
+                    &lt;span class="text-xs text-cocoa-500  font-bold block"&gt;Total&lt;/span&gt;\n
+                    &lt;span class="text-xl font-bold text-cocoa-600"&gt;₱123,456.78&lt;/span&gt;\n
+                &lt;/div&gt;\n
+                &lt;div&gt;\n
+                    &lt;span class="text-xs text-cocoa-500  font-bold block"&gt;Paid&lt;/span&gt;\n
+                    &lt;span class="text-base font-bold text-emerald-700"&gt;₱61,728.39&lt;/span&gt;\n
+                &lt;/div&gt;\n
+                &lt;div&gt;\n
+                    &lt;span class="text-xs text-cocoa-500  font-bold block"&gt;Balance&lt;/span&gt;\n
+                    &lt;span class="text-base font-bold text-red-600"&gt;\n
+                        ₱61,728.39\n
+                    &lt;/span&gt;\n
+                &lt;/div&gt;\n
+            &lt;/div&gt;\n
+        &lt;/div&gt;\n
+    &lt;/div&gt;\n
+\n
+    \n
+    &lt;div class="review-layout"&gt;\n
+        \n
+        &lt;div class="review-main space-y-4"&gt;\n
+            \n
+            &lt;div class="bg-white border border-cocoa-100 rounded-xl p-4"&gt;\n
+                &lt;div class="flex items-center justify-between border-b border-cocoa-100 pb-4 mb-5"&gt;\n
+                    &lt;h2 class="text-sm font-semibold text-cocoa-600"&gt;Order Items &amp; Customizations&lt;/h2&gt;\n
+                    &lt;span class="text-sm text-cocoa-500"&gt;Saved prices&lt;/span&gt;\n
+                &lt;/div&gt;\n
+\n
+                &lt;div class="space-y-5"&gt;\n
+                                            &lt;div class="item-section space-y-3"&gt;\n
+                            &lt;div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-cocoa-100/60 pb-3"&gt;\n
+                                &lt;div&gt;\n
+                                    &lt;h3 class="font-semibold text-cocoa-600 text-sm"&gt;Custom celebration cake with buttercream flowers and a very long design description&lt;/h3&gt;\n
+                                    &lt;span class="text-xs text-cocoa-400"&gt;Saved package price: ₱123,456.78&lt;/span&gt;\n
+                                &lt;/div&gt;\n
+                                &lt;div class="text-right"&gt;\n
+                                    &lt;span class="text-xs text-cocoa-400 block"&gt;Subtotal (1 qty)&lt;/span&gt;\n
+                                    &lt;span class="text-base font-bold text-cocoa-600"&gt;₱123,456.78&lt;/span&gt;\n
+                                &lt;/div&gt;\n
+                            &lt;/div&gt;\n
+\n
+                            \n
+                            &lt;div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs"&gt;\n
+                                &lt;div&gt;\n
+                                    &lt;span class="text-cocoa-500 font-bold block text-xs "&gt;Layers&lt;/span&gt;\n
+                                    &lt;span class="text-cocoa-700 font-medium"&gt;2&lt;/span&gt;\n
+                                &lt;/div&gt;\n
+                                &lt;div&gt;\n
+                                    &lt;span class="text-cocoa-500 font-bold block text-xs "&gt;Theme / Colors&lt;/span&gt;\n
+                                    &lt;span class="text-cocoa-700 font-medium"&gt;Pastel blue and gold floral celebration&lt;/span&gt;\n
+                                &lt;/div&gt;\n
+                                &lt;div&gt;\n
+                                    &lt;span class="text-cocoa-500 font-bold block text-xs "&gt;Special Requests&lt;/span&gt;\n
+                                    &lt;span class="text-cocoa-700 font-medium"&gt;Happy birthday, Maria! Please keep the inscription and every design detail visible.&lt;/span&gt;\n
+                                &lt;/div&gt;\n
+                            &lt;/div&gt;\n
+\n
+                            \n
+                            \n
+                            \n
+                            &lt;div class="included-items text-sm space-y-1"&gt;\n
+        &lt;p class="font-semibold"&gt;Included per package · ₱0 extra&lt;/p&gt;\n
+                &lt;p class="whitespace-pre-line"&gt;Two-layer cake and 8 included cupcakes&lt;/p&gt;    &lt;/div&gt;\n
+                                                    &lt;/div&gt;\n
+                                    &lt;/div&gt;\n
+            &lt;/div&gt;\n
+\n
+            \n
+            &lt;div class="bg-white border border-cocoa-100 rounded-xl p-4"&gt;\n
+                &lt;div class="flex items-center justify-between border-b border-cocoa-100 pb-4 mb-4"&gt;\n
+                    &lt;h2 class="text-sm font-semibold text-cocoa-600"&gt;All Reference Images&lt;/h2&gt;\n
+                    &lt;span class="text-xs text-cocoa-400"&gt;0 image(s)&lt;/span&gt;\n
+                &lt;/div&gt;\n
+\n
+                                    &lt;p class="text-sm text-cocoa-400 py-4 text-center"&gt;No images uploaded for this order.&lt;/p&gt;\n
+                \n
+            &lt;/div&gt;\n
+\n
+            \n
+            \n
+            &lt;div class="bg-white border border-cocoa-100 rounded-xl p-6 space-y-4"&gt;\n
+                &lt;div class="flex items-center justify-between border-b border-cocoa-100 pb-4"&gt;\n
+                    &lt;h2 class="text-sm font-semibold text-cocoa-600"&gt;Payments&lt;/h2&gt;\n
+                    &lt;span class="text-xs font-mono font-semibold text-emerald-700"&gt;\n
+                        Paid: ₱61,728.39 / ₱123,456.78\n
+                    &lt;/span&gt;\n
+                &lt;/div&gt;\n
+\n
+                \n
+                \n
+                \n
+                                                    &lt;p class="text-sm text-cocoa-500"&gt;Exactly 50% is collected at booking. The remaining balance is collected at actual pickup after the order is Ready for pickup.&lt;/p&gt;\n
+                \n
+                \n
+                &lt;div class="table-scroll" role="region" aria-label="Scrollable data table" tabindex="0"&gt;\n
+                    &lt;table class="w-full text-left"&gt;\n
+                        &lt;thead&gt;\n
+                            &lt;tr class="bg-cream-100 text-cocoa-600 text-xs  font-bold"&gt;\n
+                                &lt;th class="px-4 py-3"&gt;Date&lt;/th&gt;\n
+                                &lt;th class="px-4 py-3"&gt;Type&lt;/th&gt;\n
+                                &lt;th class="px-4 py-3"&gt;Method&lt;/th&gt;\n
+                                &lt;th class="px-4 py-3"&gt;Ref #&lt;/th&gt;\n
+                                &lt;th class="px-4 py-3"&gt;Recorded By&lt;/th&gt;\n
+                                &lt;th class="px-4 py-3 text-right"&gt;Amount&lt;/th&gt;\n
+                            &lt;/tr&gt;\n
+                        &lt;/thead&gt;\n
+                        &lt;tbody class="divide-y divide-cocoa-100/60"&gt;\n
+                                                            &lt;tr class="text-sm hover:bg-cream-50 transition"&gt;\n
+                                    &lt;td class="px-4 py-3 text-xs text-cocoa-500"&gt;Oct 04, 2026 08:57 PM&lt;/td&gt;\n
+                                    &lt;td class="px-4 py-3"&gt;\n
+                                        &lt;span class="px-2.5 py-0.5 rounded-full text-xs font-semibold\n
+                                            bg-amber-50 text-cocoa-500 ring-1 ring-amber-200"&gt;\n
+                                            down payment\n
+                                        &lt;/span&gt;\n
+                                    &lt;/td&gt;\n
+                                    &lt;td class="px-4 py-3 font-medium text-cocoa-500 text-xs"&gt;gcash&lt;/td&gt;\n
+                                    &lt;td class="px-4 py-3 font-mono text-cocoa-400 text-xs"&gt;TEST-REF-123&lt;/td&gt;\n
+                                    &lt;td class="px-4 py-3 text-cocoa-400 text-xs"&gt;Review&lt;/td&gt;\n
+                                    &lt;td class="px-4 py-3 text-right font-semibold text-cocoa-600"&gt;₱61,728.39&lt;/td&gt;\n
+                                &lt;/tr&gt;\n
+                                                    &lt;/tbody&gt;\n
+                    &lt;/table&gt;\n
+                &lt;/div&gt;\n
+            &lt;/div&gt;\n
+        &lt;/div&gt;\n
+        \n
+        &lt;div class="review-context space-y-6"&gt;\n
+            \n
+            &lt;div class="bg-white border border-cocoa-100 rounded-xl p-5"&gt;\n
+                &lt;h2 class="text-sm font-semibold text-cocoa-600 mb-3"&gt;Customer and pickup&lt;/h2&gt;\n
+                &lt;div class="space-y-2.5 text-sm"&gt;\n
+                    &lt;div&gt;\n
+                        &lt;span class="text-xs text-cocoa-400 block font-medium"&gt;Name&lt;/span&gt;\n
+                        &lt;a href="http://127.0.0.1:8000/customers/1" class="font-semibold text-cocoa-600 hover:text-cocoa-500 transition"&gt;\n
+                            Maria Alexandra De la Cruz Santiago\n
+                        &lt;/a&gt;\n
+                    &lt;/div&gt;\n
+                    &lt;div&gt;\n
+                        &lt;span class="text-xs text-cocoa-400 block font-medium"&gt;Phone&lt;/span&gt;\n
+                        &lt;span class="font-mono font-medium text-cocoa-600"&gt;09171234567&lt;/span&gt;\n
+                    &lt;/div&gt;\n
+                &lt;/div&gt;\n
+                &lt;div class="border-t border-cocoa-100 my-4"&gt;&lt;/div&gt;\n
+                &lt;h3 class="text-xs font-semibold text-cocoa-500 mb-3"&gt;Pickup Schedule&lt;/h3&gt;\n
+                &lt;div class="space-y-2.5 text-sm"&gt;\n
+                    &lt;div&gt;\n
+                        &lt;span class="text-xs text-cocoa-400 block font-medium"&gt;Pickup Date&lt;/span&gt;\n
+                        &lt;span class="font-semibold text-cocoa-600"&gt;October 07, 2026 (Wednesday)&lt;/span&gt;\n
+                    &lt;/div&gt;\n
+                    &lt;div&gt;\n
+                        &lt;span class="text-xs text-cocoa-400 block font-medium"&gt;Pickup Time&lt;/span&gt;\n
+                        &lt;span class="font-semibold text-cocoa-600"&gt;02:00 PM&lt;/span&gt;\n
+                    &lt;/div&gt;\n
+                                            &lt;div class="pt-2 border-t border-cocoa-100 mt-2"&gt;\n
+                            &lt;span class="text-xs text-cocoa-400 block font-medium"&gt;Order Notes&lt;/span&gt;\n
+                            &lt;p class="text-cocoa-600 italic mt-0.5 text-xs"&gt;Keep the cake level. Customer will call before pickup.&lt;/p&gt;\n
+                        &lt;/div&gt;\n
+                                    &lt;/div&gt;\n
+            &lt;/div&gt;\n
+\n
+            &lt;section class="section-form space-y-4" aria-labelledby="readiness-deadline"&gt;\n
+    &lt;h2 id="readiness-deadline" class="font-semibold text-cocoa-600"&gt;Readiness and refunds&lt;/h2&gt;\n
+    &lt;p class="text-sm"&gt;Ready for pickup deadline: &lt;strong&gt;Oct 7, 2026 2:00 PM&lt;/strong&gt; (Asia/Manila). Completion happens after collection and final payment.&lt;/p&gt;\n
+                &lt;details&gt;&lt;summary class="cursor-pointer py-2 font-medium text-red-800"&gt;Bakery cannot fulfil this order&lt;/summary&gt;\n
+            &lt;form action="http://127.0.0.1:8000/orders/1/bakery-failure" method="POST" class="space-y-3 mt-3" onsubmit="return confirm('Cancel for bakery failure and request a full refund of all verified payments?');"&gt;&lt;input type="hidden" name="_token" value="uIlSPsz57Zw7uTmYoLOGhX89eF8tbdIbNeXJHC9Q" autocomplete="off"&gt;                &lt;p class="text-sm"&gt;This cancels the order for bakery failure. All verified payments (₱61,728.39) must be returned, including any final payment.&lt;/p&gt;\n
+                &lt;p class="text-sm"&gt;Use this for an actual bakery failure, including one after the order was marked ready. A customer collecting late alone is not a bakery failure.&lt;/p&gt;\n
+                &lt;div&gt;&lt;label for="failure-reason"&gt;Reason shown to the buyer&lt;/label&gt;&lt;textarea id="failure-reason" name="reason" rows="3" maxlength="1000" required class="w-full"&gt;&lt;/textarea&gt;&lt;/div&gt;\n
+                &lt;label class="flex items-start gap-3"&gt;&lt;input type="checkbox" name="bakery_failure_confirmed" value="1" required &gt;&lt;span&gt;I confirm the bakery cannot fulfil this order. This is not solely a late customer collection.&lt;/span&gt;&lt;/label&gt;\n
+                                &lt;button class="w-full px-4 py-2 border border-red-200 text-red-800 rounded-lg"&gt;Mark bakery failure&lt;/button&gt;\n
+            &lt;/form&gt;\n
+        &lt;/details&gt;\n
+    &lt;/section&gt;\n
+\n
+            \n
+            &lt;div class="bg-white border border-cocoa-100 rounded-xl p-5 space-y-3"&gt;\n
+                &lt;h2 class="text-sm font-semibold text-cocoa-600"&gt;Order actions&lt;/h2&gt;\n
+\n
+                                    &lt;form action="http://127.0.0.1:8000/orders/1/status" method="POST"&gt;\n
+                        &lt;input type="hidden" name="_token" value="uIlSPsz57Zw7uTmYoLOGhX89eF8tbdIbNeXJHC9Q" autocomplete="off"&gt;                        &lt;input type="hidden" name="_method" value="PATCH"&gt;                        &lt;input type="hidden" name="status" value="preparing"&gt;\n
+                        &lt;button type="submit" class="w-full py-2.5 bg-cocoa-600 hover:bg-cocoa-700 text-white font-semibold text-sm rounded-lg transition flex items-center justify-center gap-2 "&gt;\n
+                            &lt;span&gt;Start Preparing (Baking)&lt;/span&gt;\n
+                        &lt;/button&gt;\n
+                    &lt;/form&gt;\n
+                \n
+                                    &lt;form action="http://127.0.0.1:8000/orders/1/cancel" method="POST" onsubmit="return confirm('Are you sure you want to cancel this order? The deposit is retained under the customer-cancellation policy. For bakery failure, use the full-refund action instead.');"&gt;\n
+                        &lt;input type="hidden" name="_token" value="uIlSPsz57Zw7uTmYoLOGhX89eF8tbdIbNeXJHC9Q" autocomplete="off"&gt;                        &lt;button type="submit" class="w-full py-2 bg-white hover:bg-red-50 text-red-600 font-medium text-sm rounded-lg border border-red-200 transition"&gt;\n
+                            &lt;span&gt;Customer cancellation&lt;/span&gt;\n
+                        &lt;/button&gt;\n
+                    &lt;/form&gt;\n
+                            &lt;/div&gt;\n
+        &lt;/div&gt;\n
+\n
+    &lt;/div&gt;\n
+&lt;/div&gt;\n
+        &lt;/main&gt;\n
+\n
+        \n
+        &lt;footer class="border-t border-cocoa-100 px-4 sm:px-6 lg:px-8 py-3 mt-auto"&gt;\n
+            &lt;div class="text-xs text-cocoa-400 flex items-center justify-between"&gt;\n
+                &lt;span&gt;Aling Chona Cakes &amp; Cupcakes — Staff System&lt;/span&gt;\n
+                \n
+            &lt;/div&gt;\n
+        &lt;/footer&gt;\n
+    &lt;/div&gt;\n
+\n
+    &lt;script type="application/json" id="validation-errors"&gt;[]&lt;/script&gt;\n
+&lt;/body&gt;\n
+&lt;/html&gt;\n
+' [UTF-8](length: 28414) contains "value="final_payment"" [ASCII](length: 21).
+&#13;
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponseAssert.php:45
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:710
+C:\Users\User\Desktop\IT12_Project\tests\Feature\UiPresentationTest.php:45</failure>
+        </testcase>
+        <testcase name="test_public_receipt_remains_unpaid_and_validation_preserves_selected_items" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\UiPresentationTest.php" line="77" class="Tests\Feature\UiPresentationTest" classname="Tests.Feature.UiPresentationTest" assertions="17" time="0.118337"/>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>

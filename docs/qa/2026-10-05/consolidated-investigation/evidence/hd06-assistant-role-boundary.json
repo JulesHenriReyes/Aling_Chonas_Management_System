@@ -1,0 +1,8 @@
+{
+    "assistant_customer_create_status": 302,
+    "assistant_customer_created": true,
+    "assistant_order_create_status": 302,
+    "assistant_order_created": true,
+    "assistant_users_status": 403,
+    "conclusion": "CONFIRMED DEFECT CR-01: Server routes/controllers accept Assistant customer and order creations without role rejection, directly contradicting Owner Decision 1 (Milestone 3 P366)."
+}

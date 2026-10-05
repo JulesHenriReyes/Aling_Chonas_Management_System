@@ -1,0 +1,391 @@
+PHPUnit 11.5.56 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.2.12
+Configuration: C:\Users\User\Desktop\IT12_Project\phpunit.xml
+
+..EEEEEEEEEE............E......................................  63 / 119 ( 52%)
+........................................................        119 / 119 (100%)
+
+Time: 00:39.523, Memory: 64.00 MB
+
+There were 11 errors:
+
+1) Tests\Feature\ContactAndPickupCalendarTest::test_invalid_contacts_are_rejected_at_every_entry_without_changing_customer_or_order_records
+Illuminate\Database\QueryException: SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: package_options.included_contents (Connection: sqlite, Database: :memory:, SQL: insert into "package_options" ("layers", "price", "is_active", "product_id", "updated_at", "created_at") values (1, 2000, 1, 1, 2026-10-04 21:05:35, 2026-10-04 21:05:35))
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:838
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:794
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:573
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:537
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Processors\Processor.php:32
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Builder.php:4170
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Builder.php:2237
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1436
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1401
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1240
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasOneOrMany.php:391
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\helpers.php:393
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasOneOrMany.php:388
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:30
+
+Caused by
+PDOException: SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: package_options.included_contents
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:584
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:827
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:794
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:573
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:537
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Processors\Processor.php:32
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Builder.php:4170
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Builder.php:2237
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1436
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1401
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1240
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasOneOrMany.php:391
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\helpers.php:393
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasOneOrMany.php:388
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:30
+
+2) Tests\Feature\ContactAndPickupCalendarTest::test_mobile_and_complete_manila_and_provincial_landlines_normalize_and_match_across_entry_points
+Illuminate\Database\QueryException: SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: package_options.included_contents (Connection: sqlite, Database: :memory:, SQL: insert into "package_options" ("layers", "price", "is_active", "product_id", "updated_at", "created_at") values (1, 2000, 1, 1, 2026-10-04 21:05:35, 2026-10-04 21:05:35))
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:838
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:794
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:573
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:537
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Processors\Processor.php:32
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Builder.php:4170
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Builder.php:2237
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1436
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1401
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1240
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasOneOrMany.php:391
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\helpers.php:393
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasOneOrMany.php:388
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:30
+
+Caused by
+PDOException: SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: package_options.included_contents
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:584
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:827
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:794
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:573
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:537
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Processors\Processor.php:32
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Builder.php:4170
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Builder.php:2237
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1436
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1401
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1240
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasOneOrMany.php:391
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\helpers.php:393
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasOneOrMany.php:388
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:30
+
+3) Tests\Feature\ContactAndPickupCalendarTest::test_equivalent_historical_international_landline_matches_without_rewriting_or_guessing_an_old_contact
+Illuminate\Database\QueryException: SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: package_options.included_contents (Connection: sqlite, Database: :memory:, SQL: insert into "package_options" ("layers", "price", "is_active", "product_id", "updated_at", "created_at") values (1, 2000, 1, 1, 2026-10-04 21:05:35, 2026-10-04 21:05:35))
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:838
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:794
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:573
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:537
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Processors\Processor.php:32
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Builder.php:4170
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Builder.php:2237
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1436
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1401
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1240
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasOneOrMany.php:391
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\helpers.php:393
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasOneOrMany.php:388
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:30
+
+Caused by
+PDOException: SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: package_options.included_contents
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:584
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:827
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:794
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:573
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:537
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Processors\Processor.php:32
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Builder.php:4170
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Builder.php:2237
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1436
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1401
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1240
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasOneOrMany.php:391
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\helpers.php:393
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasOneOrMany.php:388
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:30
+
+4) Tests\Feature\ContactAndPickupCalendarTest::test_invalid_contact_keeps_draft_details_and_per_line_staged_image_associations
+Illuminate\Database\QueryException: SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: package_options.included_contents (Connection: sqlite, Database: :memory:, SQL: insert into "package_options" ("layers", "price", "is_active", "product_id", "updated_at", "created_at") values (1, 2000, 1, 1, 2026-10-04 21:05:35, 2026-10-04 21:05:35))
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:838
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:794
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:573
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:537
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Processors\Processor.php:32
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Builder.php:4170
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Builder.php:2237
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1436
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1401
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1240
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasOneOrMany.php:391
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\helpers.php:393
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasOneOrMany.php:388
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:30
+
+Caused by
+PDOException: SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: package_options.included_contents
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:584
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:827
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:794
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:573
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:537
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Processors\Processor.php:32
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Builder.php:4170
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Builder.php:2237
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1436
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1401
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1240
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasOneOrMany.php:391
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\helpers.php:393
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasOneOrMany.php:388
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:30
+
+5) Tests\Feature\ContactAndPickupCalendarTest::test_pickup_local_today_matches_dashboard_schedule_http_service_and_date_inputs with data set #0 ('2026-10-04 15:59:59', '2026-10-04')
+Illuminate\Database\QueryException: SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: package_options.included_contents (Connection: sqlite, Database: :memory:, SQL: insert into "package_options" ("layers", "price", "is_active", "product_id", "updated_at", "created_at") values (1, 2000, 1, 1, 2026-10-04 21:05:35, 2026-10-04 21:05:35))
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:838
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:794
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:573
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:537
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Processors\Processor.php:32
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Builder.php:4170
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Builder.php:2237
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1436
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1401
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1240
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasOneOrMany.php:391
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\helpers.php:393
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasOneOrMany.php:388
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:30
+
+Caused by
+PDOException: SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: package_options.included_contents
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:584
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:827
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:794
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:573
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:537
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Processors\Processor.php:32
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Builder.php:4170
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Builder.php:2237
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1436
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1401
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1240
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasOneOrMany.php:391
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\helpers.php:393
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasOneOrMany.php:388
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:30
+
+6) Tests\Feature\ContactAndPickupCalendarTest::test_pickup_local_today_matches_dashboard_schedule_http_service_and_date_inputs with data set #1 ('2026-10-04 16:00:00', '2026-10-05')
+Illuminate\Database\QueryException: SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: package_options.included_contents (Connection: sqlite, Database: :memory:, SQL: insert into "package_options" ("layers", "price", "is_active", "product_id", "updated_at", "created_at") values (1, 2000, 1, 1, 2026-10-04 21:05:35, 2026-10-04 21:05:35))
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:838
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:794
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:573
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:537
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Processors\Processor.php:32
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Builder.php:4170
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Builder.php:2237
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1436
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1401
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1240
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasOneOrMany.php:391
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\helpers.php:393
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasOneOrMany.php:388
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:30
+
+Caused by
+PDOException: SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: package_options.included_contents
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:584
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:827
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:794
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:573
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:537
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Processors\Processor.php:32
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Builder.php:4170
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Builder.php:2237
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1436
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1401
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1240
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasOneOrMany.php:391
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\helpers.php:393
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasOneOrMany.php:388
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:30
+
+7) Tests\Feature\ContactAndPickupCalendarTest::test_pickup_local_today_matches_dashboard_schedule_http_service_and_date_inputs with data set #2 ('2026-10-04 17:00:00', '2026-10-05')
+Illuminate\Database\QueryException: SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: package_options.included_contents (Connection: sqlite, Database: :memory:, SQL: insert into "package_options" ("layers", "price", "is_active", "product_id", "updated_at", "created_at") values (1, 2000, 1, 1, 2026-10-04 21:05:35, 2026-10-04 21:05:35))
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:838
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:794
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:573
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:537
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Processors\Processor.php:32
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Builder.php:4170
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Builder.php:2237
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1436
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1401
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1240
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasOneOrMany.php:391
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\helpers.php:393
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasOneOrMany.php:388
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:30
+
+Caused by
+PDOException: SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: package_options.included_contents
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:584
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:827
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:794
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:573
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:537
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Processors\Processor.php:32
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Builder.php:4170
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Builder.php:2237
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1436
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1401
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1240
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasOneOrMany.php:391
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\helpers.php:393
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasOneOrMany.php:388
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:30
+
+8) Tests\Feature\ContactAndPickupCalendarTest::test_pickup_local_today_matches_dashboard_schedule_http_service_and_date_inputs with data set #3 ('2026-10-04 16:00:01', '2026-10-05')
+Illuminate\Database\QueryException: SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: package_options.included_contents (Connection: sqlite, Database: :memory:, SQL: insert into "package_options" ("layers", "price", "is_active", "product_id", "updated_at", "created_at") values (1, 2000, 1, 1, 2026-10-04 21:05:35, 2026-10-04 21:05:35))
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:838
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:794
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:573
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:537
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Processors\Processor.php:32
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Builder.php:4170
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Builder.php:2237
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1436
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1401
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1240
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasOneOrMany.php:391
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\helpers.php:393
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasOneOrMany.php:388
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:30
+
+Caused by
+PDOException: SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: package_options.included_contents
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:584
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:827
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:794
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:573
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:537
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Processors\Processor.php:32
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Builder.php:4170
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Builder.php:2237
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1436
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1401
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1240
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasOneOrMany.php:391
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\helpers.php:393
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasOneOrMany.php:388
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:30
+
+9) Tests\Feature\ContactAndPickupCalendarTest::test_pickup_local_today_matches_dashboard_schedule_http_service_and_date_inputs with data set #4 ('2026-10-31 16:00:00', '2026-11-01')
+Illuminate\Database\QueryException: SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: package_options.included_contents (Connection: sqlite, Database: :memory:, SQL: insert into "package_options" ("layers", "price", "is_active", "product_id", "updated_at", "created_at") values (1, 2000, 1, 1, 2026-10-04 21:05:35, 2026-10-04 21:05:35))
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:838
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:794
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:573
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:537
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Processors\Processor.php:32
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Builder.php:4170
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Builder.php:2237
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1436
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1401
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1240
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasOneOrMany.php:391
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\helpers.php:393
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasOneOrMany.php:388
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:30
+
+Caused by
+PDOException: SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: package_options.included_contents
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:584
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:827
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:794
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:573
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:537
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Processors\Processor.php:32
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Builder.php:4170
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Builder.php:2237
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1436
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1401
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1240
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasOneOrMany.php:391
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\helpers.php:393
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasOneOrMany.php:388
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:30
+
+10) Tests\Feature\ContactAndPickupCalendarTest::test_pickup_local_today_matches_dashboard_schedule_http_service_and_date_inputs with data set #5 ('2026-12-31 16:00:00', '2027-01-01')
+Illuminate\Database\QueryException: SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: package_options.included_contents (Connection: sqlite, Database: :memory:, SQL: insert into "package_options" ("layers", "price", "is_active", "product_id", "updated_at", "created_at") values (1, 2000, 1, 1, 2026-10-04 21:05:35, 2026-10-04 21:05:35))
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:838
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:794
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:573
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:537
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Processors\Processor.php:32
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Builder.php:4170
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Builder.php:2237
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1436
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1401
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1240
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasOneOrMany.php:391
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\helpers.php:393
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasOneOrMany.php:388
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:30
+
+Caused by
+PDOException: SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: package_options.included_contents
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:584
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:827
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:794
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:573
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:537
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Processors\Processor.php:32
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Builder.php:4170
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Builder.php:2237
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1436
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1401
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1240
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasOneOrMany.php:391
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\helpers.php:393
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasOneOrMany.php:388
+C:\Users\User\Desktop\IT12_Project\tests\Feature\ContactAndPickupCalendarTest.php:30
+
+11) Tests\Feature\FixedCatalogAndPaymentReviewTest::test_bakery_failure_refunds_all_verified_money_only_after_transfer_confirmation
+Illuminate\Validation\ValidationException: Confirm the bakery cannot fulfil the order. Late customer collection alone is not a bakery failure.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Validation\ValidationException.php:70
+C:\Users\User\Desktop\IT12_Project\app\Services\RefundService.php:20
+C:\Users\User\Desktop\IT12_Project\tests\Feature\FixedCatalogAndPaymentReviewTest.php:192
+
+ERRORS!
+Tests: 119, Assertions: 1113, Errors: 11.

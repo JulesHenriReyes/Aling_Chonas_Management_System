@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="C:\Users\User\Desktop\IT12_Project\docs\qa\2026-10-05\business-investigation\phpunit-business.xml" tests="15" assertions="109" errors="0" failures="5" skipped="0" time="1.703293">
+    <testsuite name="Audit additions" tests="15" assertions="109" errors="0" failures="5" skipped="0" time="1.703293">
+      <testsuite name="Qa\Business\BusinessInvestigationTest" file="C:\Users\User\Desktop\IT12_Project\docs\qa\2026-10-05\business-investigation\tests\BusinessInvestigationTest.php" tests="15" assertions="109" errors="0" failures="5" skipped="0" time="1.703293">
+        <testcase name="test_ordinary_receiving_usage_count_and_linked_correction_have_no_implicit_expenses" file="C:\Users\User\Desktop\IT12_Project\docs\qa\2026-10-05\business-investigation\tests\BusinessInvestigationTest.php" line="18" class="Qa\Business\BusinessInvestigationTest" classname="Qa.Business.BusinessInvestigationTest" assertions="20" time="0.629253"/>
+        <testcase name="test_expense_creator_editor_void_and_active_totals" file="C:\Users\User\Desktop\IT12_Project\docs\qa\2026-10-05\business-investigation\tests\BusinessInvestigationTest.php" line="36" class="Qa\Business\BusinessInvestigationTest" classname="Qa.Business.BusinessInvestigationTest" assertions="10" time="0.130530"/>
+        <testcase name="test_expense_filtered_total_covers_matching_records" file="C:\Users\User\Desktop\IT12_Project\docs\qa\2026-10-05\business-investigation\tests\BusinessInvestigationTest.php" line="50" class="Qa\Business\BusinessInvestigationTest" classname="Qa.Business.BusinessInvestigationTest" assertions="2" time="0.093225"/>
+        <testcase name="test_fully_paid_customer_cancellation_recognizes_all_verified_retained_money" file="C:\Users\User\Desktop\IT12_Project\docs\qa\2026-10-05\business-investigation\tests\BusinessInvestigationTest.php" line="58" class="Qa\Business\BusinessInvestigationTest" classname="Qa.Business.BusinessInvestigationTest" assertions="5" time="0.098542">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Qa\Business\BusinessInvestigationTest::test_fully_paid_customer_cancellation_recognizes_all_verified_retained_money&#13;
+Owner-approved retention includes the final payment.
+Failed asserting that 500.0 matches expected 1000.
+&#13;
+C:\Users\User\Desktop\IT12_Project\docs\qa\2026-10-05\business-investigation\tests\BusinessInvestigationTest.php:73</failure>
+        </testcase>
+        <testcase name="test_required_customer_contact_cannot_normalize_to_empty" file="C:\Users\User\Desktop\IT12_Project\docs\qa\2026-10-05\business-investigation\tests\BusinessInvestigationTest.php" line="77" class="Qa\Business\BusinessInvestigationTest" classname="Qa.Business.BusinessInvestigationTest" assertions="1" time="0.044943">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Qa\Business\BusinessInvestigationTest::test_required_customer_contact_cannot_normalize_to_empty&#13;
+Session is missing expected key [errors].
+Failed asserting that false is true.
+&#13;
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponseAssert.php:45
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:1547
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:1634
+C:\Users\User\Desktop\IT12_Project\docs\qa\2026-10-05\business-investigation\tests\BusinessInvestigationTest.php:81</failure>
+        </testcase>
+        <testcase name="test_public_contact_cannot_normalize_to_empty" file="C:\Users\User\Desktop\IT12_Project\docs\qa\2026-10-05\business-investigation\tests\BusinessInvestigationTest.php" line="84" class="Qa\Business\BusinessInvestigationTest" classname="Qa.Business.BusinessInvestigationTest" assertions="1" time="0.061983">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Qa\Business\BusinessInvestigationTest::test_public_contact_cannot_normalize_to_empty&#13;
+Session is missing expected key [errors].
+Failed asserting that false is true.
+&#13;
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponseAssert.php:45
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:1547
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:1634
+C:\Users\User\Desktop\IT12_Project\docs\qa\2026-10-05\business-investigation\tests\BusinessInvestigationTest.php:90</failure>
+        </testcase>
+        <testcase name="test_refund_only_period_has_negative_net_collections_and_no_retention" file="C:\Users\User\Desktop\IT12_Project\docs\qa\2026-10-05\business-investigation\tests\BusinessInvestigationTest.php" line="93" class="Qa\Business\BusinessInvestigationTest" classname="Qa.Business.BusinessInvestigationTest" assertions="8" time="0.039419"/>
+        <testcase name="test_pickup_schedule_date_and_terminal_status_scope" file="C:\Users\User\Desktop\IT12_Project\docs\qa\2026-10-05\business-investigation\tests\BusinessInvestigationTest.php" line="108" class="Qa\Business\BusinessInvestigationTest" classname="Qa.Business.BusinessInvestigationTest" assertions="3" time="0.069535"/>
+        <testcase name="test_single_row_stock_rules_and_baseline_are_explicit" file="C:\Users\User\Desktop\IT12_Project\docs\qa\2026-10-05\business-investigation\tests\BusinessInvestigationTest.php" line="117" class="Qa\Business\BusinessInvestigationTest" classname="Qa.Business.BusinessInvestigationTest" assertions="6" time="0.064459"/>
+        <testcase name="test_receipt_review_is_separate_from_verified_money" file="C:\Users\User\Desktop\IT12_Project\docs\qa\2026-10-05\business-investigation\tests\BusinessInvestigationTest.php" line="133" class="Qa\Business\BusinessInvestigationTest" classname="Qa.Business.BusinessInvestigationTest" assertions="10" time="0.103031"/>
+        <testcase name="test_bakery_failure_full_refund_waits_for_transfer_confirmation" file="C:\Users\User\Desktop\IT12_Project\docs\qa\2026-10-05\business-investigation\tests\BusinessInvestigationTest.php" line="153" class="Qa\Business\BusinessInvestigationTest" classname="Qa.Business.BusinessInvestigationTest" assertions="6" time="0.061345"/>
+        <testcase name="test_ordinary_package_line_add_edit_remove_and_checkout" file="C:\Users\User\Desktop\IT12_Project\docs\qa\2026-10-05\business-investigation\tests\BusinessInvestigationTest.php" line="169" class="Qa\Business\BusinessInvestigationTest" classname="Qa.Business.BusinessInvestigationTest" assertions="16" time="0.083916"/>
+        <testcase name="test_owner_normal_catalog_settings_users_and_customer_edits" file="C:\Users\User\Desktop\IT12_Project\docs\qa\2026-10-05\business-investigation\tests\BusinessInvestigationTest.php" line="188" class="Qa\Business\BusinessInvestigationTest" classname="Qa.Business.BusinessInvestigationTest" assertions="18" time="0.110077"/>
+        <testcase name="test_dashboard_today_pickups_uses_the_bakery_calendar" file="C:\Users\User\Desktop\IT12_Project\docs\qa\2026-10-05\business-investigation\tests\BusinessInvestigationTest.php" line="212" class="Qa\Business\BusinessInvestigationTest" classname="Qa.Business.BusinessInvestigationTest" assertions="2" time="0.067620">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Qa\Business\BusinessInvestigationTest::test_dashboard_today_pickups_uses_the_bakery_calendar&#13;
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+ Array &amp;0 [
+-    0 =&gt; 'SYNTHETIC-TODAY',
++    0 =&gt; 'SYNTHETIC-YESTERDAY',
+ ]
+&#13;
+C:\Users\User\Desktop\IT12_Project\docs\qa\2026-10-05\business-investigation\tests\BusinessInvestigationTest.php:221</failure>
+        </testcase>
+        <testcase name="test_new_public_order_rejects_a_past_bakery_pickup_date" file="C:\Users\User\Desktop\IT12_Project\docs\qa\2026-10-05\business-investigation\tests\BusinessInvestigationTest.php" line="224" class="Qa\Business\BusinessInvestigationTest" classname="Qa.Business.BusinessInvestigationTest" assertions="1" time="0.045416">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Qa\Business\BusinessInvestigationTest::test_new_public_order_rejects_a_past_bakery_pickup_date&#13;
+Session is missing expected key [errors].
+Failed asserting that false is true.
+&#13;
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponseAssert.php:45
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:1547
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:1634
+C:\Users\User\Desktop\IT12_Project\docs\qa\2026-10-05\business-investigation\tests\BusinessInvestigationTest.php:232</failure>
+        </testcase>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>

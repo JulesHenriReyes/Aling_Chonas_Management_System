@@ -1,0 +1,1 @@
+{"outcome":"PASS","screenshots":93,"baseline":78,"regularReadOnly":3}

@@ -4,11 +4,16 @@ namespace App\Services;
 
 use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Models\OrderImage;
 use App\Models\Payment;
 use App\Models\PaymentProof;
 use App\Models\User;
+use App\Support\PickupCalendar;
 use Carbon\Carbon;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class OrderService
@@ -41,7 +46,7 @@ class OrderService
      */
     public function createInternalOrder(array $data, ?User $user): Order
     {
-        return $this->executeOrderCreation($data, $this->requireStaffUser($user));
+        return $this->executeOrderCreation($data, StaffAccess::requireOwner($user));
     }
 
     /**
@@ -50,26 +55,28 @@ class OrderService
     private function executeOrderCreation(array $data, ?User $user): Order
     {
         return DB::transaction(function () use ($data, $user) {
-            if (!empty($data['submission_key'])) {
+            if (! empty($data['submission_key'])) {
                 $existing = Order::where('submission_key', $data['submission_key'])->first();
-                if ($existing) return $existing;
+                if ($existing) {
+                    return $existing;
+                }
             }
-            if (empty($data['items']) || !is_array($data['items'])) {
+            if (empty($data['items']) || ! is_array($data['items'])) {
                 throw ValidationException::withMessages([
                     'items' => ['At least one product line item is required.'],
                 ]);
             }
 
             // Pickup date cannot be in the past
-            $pickupDate = Carbon::parse($data['pickup_date'])->startOfDay();
-            if ($pickupDate->isPast() && !$pickupDate->isToday()) {
+            $pickupDate = Carbon::parse($data['pickup_date'], config('bakery.pickup_timezone'))->startOfDay();
+            if ($pickupDate->lt(PickupCalendar::today())) {
                 throw ValidationException::withMessages([
                     'pickup_date' => ['Pickup date cannot be in the past.'],
                 ]);
             }
 
             $quote = app(CatalogPricingService::class)->quote($data['items']);
-            if (isset($data['expected_total']) && !$this->sameAmount((float) $data['expected_total'], (float) $quote['total'])) {
+            if (isset($data['expected_total']) && ! $this->sameAmount((float) $data['expected_total'], (float) $quote['total'])) {
                 throw ValidationException::withMessages(['items' => 'A catalog price changed. Review the current itemized total before submitting again.']);
             }
             $orderNumber = $this->generateOrderNumber();
@@ -94,14 +101,14 @@ class OrderService
                 $orderDetail = $order->orderDetails()->create($line);
                 $orderDetail->addOns()->createMany($extras);
 
-                if (!empty($item['images']) && is_array($item['images'])) {
+                if (! empty($item['images']) && is_array($item['images'])) {
                     foreach ($item['images'] as $imageFile) {
                         $this->saveOrderDetailImage($order, $orderDetail, $imageFile, $user);
                     }
                 }
             }
 
-            if (!empty($data['images']) && is_array($data['images'])) {
+            if (! empty($data['images']) && is_array($data['images'])) {
                 foreach ($data['images'] as $imageFile) {
                     $this->saveOrderDetailImage($order, null, $imageFile, $user);
                 }
@@ -122,14 +129,21 @@ class OrderService
         string $originalFilename,
         ?OrderDetail $orderDetail = null,
         ?User $uploader = null
-    ): \App\Models\OrderImage {
+    ): OrderImage {
+        $uploader = StaffAccess::requireOwner($uploader);
+
+        return $this->persistImage($order, $filePath, $originalFilename, $orderDetail, $uploader);
+    }
+
+    private function persistImage(Order $order, string $filePath, string $originalFilename, ?OrderDetail $orderDetail, ?User $uploader): OrderImage
+    {
         if ($orderDetail !== null && (int) $orderDetail->order_id !== (int) $order->id) {
             throw ValidationException::withMessages([
                 'order_detail_id' => ['The specified order detail does not belong to this order.'],
             ]);
         }
 
-        return \App\Models\OrderImage::create([
+        return OrderImage::create([
             'order_id' => $order->id,
             'order_detail_id' => $orderDetail?->id,
             'file_path' => $filePath,
@@ -141,17 +155,17 @@ class OrderService
     /**
      * Helper to save an image file or representation.
      */
-    protected function saveOrderDetailImage(Order $order, ?OrderDetail $orderDetail, $imageFile, ?User $user): \App\Models\OrderImage
+    protected function saveOrderDetailImage(Order $order, ?OrderDetail $orderDetail, $imageFile, ?User $user): OrderImage
     {
-        if ($imageFile instanceof \Illuminate\Http\UploadedFile) {
+        if ($imageFile instanceof UploadedFile) {
             $path = $imageFile->store("order_images/{$order->id}", 'public');
             $filename = $imageFile->getClientOriginalName();
         } elseif (is_array($imageFile)) {
             $filename = $imageFile['original_filename'];
             if (isset($imageFile['staged_path'])) {
                 $extension = pathinfo($imageFile['staged_path'], PATHINFO_EXTENSION);
-                $path = "order_images/{$order->id}/".\Illuminate\Support\Str::uuid().'.'.$extension;
-                \Illuminate\Support\Facades\Storage::disk('public')->put($path, \Illuminate\Support\Facades\Storage::disk('local')->get($imageFile['staged_path']));
+                $path = "order_images/{$order->id}/".Str::uuid().'.'.$extension;
+                Storage::disk('public')->put($path, Storage::disk('local')->get($imageFile['staged_path']));
             } else {
                 $path = $imageFile['file_path'];
             }
@@ -160,7 +174,7 @@ class OrderService
             $filename = basename($path);
         }
 
-        return $this->attachImage($order, $path, $filename, $orderDetail, $user);
+        return $this->persistImage($order, $path, $filename, $orderDetail, $user);
     }
 
     /**
@@ -168,7 +182,7 @@ class OrderService
      */
     public function updateOrderDetailPrice(Order $order, OrderDetail $orderDetail, float $newPrice, ?User $user): OrderDetail
     {
-        $this->requireStaffUser($user);
+        StaffAccess::requireOwner($user);
 
         throw ValidationException::withMessages([
             'unit_price' => ['Order prices are fixed catalog snapshots and cannot be adjusted.'],
@@ -187,7 +201,7 @@ class OrderService
         ?Carbon $paymentDate = null,
         ?PaymentProof $verifiedProof = null
     ): Payment {
-        $user = $this->requireStaffUser($user);
+        $user = StaffAccess::requireOwner($user);
 
         return DB::transaction(function () use ($order, $amount, $paymentMethod, $referenceNumber, $user, $paymentDate, $verifiedProof) {
             $order = $this->lockOrder($order);
@@ -195,7 +209,7 @@ class OrderService
 
             if ($order->user_id === null) {
                 $proof = $verifiedProof ? PaymentProof::whereKey($verifiedProof->id)->lockForUpdate()->first() : null;
-                if ($paymentMethod !== 'gcash' || !$proof || $proof->order_id !== $order->id
+                if ($paymentMethod !== 'gcash' || ! $proof || $proof->order_id !== $order->id
                     || $proof->status !== 'awaiting_verification'
                     || $proof->reference_number !== $this->normalizeReference($referenceNumber)) {
                     throw ValidationException::withMessages(['payment' => 'Review the buyer’s GCash proof to verify a public deposit.']);
@@ -220,16 +234,16 @@ class OrderService
                 ]);
             }
 
-            if ($order->hasDownPayment()) {
+            if ($order->hasDownPayment() || $order->amount_paid > 0) {
                 throw ValidationException::withMessages([
                     'payment_type' => ['A down payment has already been recorded for this order.'],
                 ]);
             }
 
             $requiredDeposit = $order->required_down_payment;
-            if (!$this->sameAmount($amount, $requiredDeposit)) {
+            if (! $this->sameAmount($amount, $requiredDeposit)) {
                 throw ValidationException::withMessages([
-                    'amount' => ["Down payment must be exactly 50% of order total (₱" . number_format($requiredDeposit, 2) . ")."],
+                    'amount' => ['Down payment must be exactly 50% of order total (₱'.number_format($requiredDeposit, 2).').'],
                 ]);
             }
 
@@ -264,7 +278,7 @@ class OrderService
     }
 
     /**
-     * Record final payment to settle the remaining balance.
+     * Settle the exact balance at actual pickup and complete in one transaction.
      */
     public function recordFinalPayment(
         Order $order,
@@ -272,11 +286,12 @@ class OrderService
         string $paymentMethod,
         ?string $referenceNumber,
         ?User $user,
-        ?Carbon $paymentDate = null
+        ?Carbon $paymentDate = null,
+        bool $pickupConfirmed = false
     ): Payment {
-        $user = $this->requireStaffUser($user);
+        $user = StaffAccess::requireOwner($user);
 
-        return DB::transaction(function () use ($order, $amount, $paymentMethod, $referenceNumber, $user, $paymentDate) {
+        return DB::transaction(function () use ($order, $amount, $paymentMethod, $referenceNumber, $user, $paymentDate, $pickupConfirmed) {
             $order = $this->lockOrder($order);
             $order->load(['orderDetails.addOns', 'payments']);
 
@@ -286,16 +301,19 @@ class OrderService
                 ]);
             }
 
-            if (!$this->hasVerifiedDownPayment($order)) {
+            if (! $this->hasVerifiedDownPayment($order)) {
                 throw ValidationException::withMessages([
                     'payment_type' => ['The exact 50% down payment must be recorded before final payment.'],
                 ]);
             }
 
-            if (!in_array($order->status, ['confirmed', 'preparing', 'ready_for_pickup'], true)) {
+            if ($order->status !== 'ready_for_pickup') {
                 throw ValidationException::withMessages([
-                    'status' => ['Final payment can only be recorded for an active confirmed order.'],
+                    'status' => ['The remaining balance is collected only at actual pickup after Ready for pickup.'],
                 ]);
+            }
+            if (! $pickupConfirmed) {
+                throw ValidationException::withMessages(['pickup_confirmed' => 'Confirm actual collection and verification of the remaining payment.']);
             }
 
             $remaining = $order->remaining_balance;
@@ -306,9 +324,9 @@ class OrderService
                 ]);
             }
 
-            if (!$this->sameAmount($amount, $remaining)) {
+            if (! $this->sameAmount($amount, $remaining)) {
                 throw ValidationException::withMessages([
-                    'amount' => ["Final payment must equal the exact remaining balance of ₱" . number_format($remaining, 2) . "."],
+                    'amount' => ['Final payment must equal the exact remaining balance of ₱'.number_format($remaining, 2).'.'],
                 ]);
             }
 
@@ -331,8 +349,33 @@ class OrderService
             $this->assignReference($paymentMethod, $referenceNumber, $payment);
 
             $order->unsetRelation('payments');
+            $order->update(['status' => 'completed', 'completed_at' => $order->completed_at ?? now()]);
 
             return $payment;
+        });
+    }
+
+    public function completePickup(Order $order, string $paymentMethod, ?string $referenceNumber, ?User $user, bool $pickupConfirmed = false): Order
+    {
+        $user = StaffAccess::requireOwner($user);
+        if (! $pickupConfirmed) {
+            throw ValidationException::withMessages(['pickup_confirmed' => 'Confirm the customer is collecting the order and the payment has been verified.']);
+        }
+
+        return DB::transaction(function () use ($order, $paymentMethod, $referenceNumber, $user) {
+            $order = $this->lockOrder($order);
+            $order->load(['orderDetails.addOns', 'payments']);
+            if ($order->status !== 'ready_for_pickup') {
+                throw ValidationException::withMessages(['status' => 'Only a Ready for pickup order can be collected.']);
+            }
+            if ($order->remaining_balance > 0) {
+                $this->recordFinalPayment($order, $order->remaining_balance, $paymentMethod, $referenceNumber, $user, null, true);
+            } else {
+                // A fully paid legacy order must never be charged a second time.
+                $this->updateStatus($order, 'completed', $user);
+            }
+
+            return $order->fresh(['payments']);
         });
     }
 
@@ -357,13 +400,13 @@ class OrderService
                 return $this->cancelOrder($order, $user);
             }
 
-            if (!in_array($newStatus, self::STATUS_TRANSITIONS[$order->status] ?? [], true)) {
+            if (! in_array($newStatus, self::STATUS_TRANSITIONS[$order->status] ?? [], true)) {
                 throw ValidationException::withMessages([
                     'status' => ["Order cannot transition directly from {$order->status} to {$newStatus}."],
                 ]);
             }
 
-            if ($newStatus === 'confirmed' && !$this->hasVerifiedDownPayment($order)) {
+            if ($newStatus === 'confirmed' && ! $this->hasVerifiedDownPayment($order)) {
                 throw ValidationException::withMessages([
                     'status' => ['Order cannot be confirmed without the exact verified 50% down payment.'],
                 ]);
@@ -397,7 +440,7 @@ class OrderService
      */
     public function cancelOrder(Order $order, ?User $user): Order
     {
-        $this->requireStaffUser($user);
+        StaffAccess::requireOwner($user);
 
         return DB::transaction(function () use ($order) {
             $order = $this->lockOrder($order);
@@ -425,6 +468,7 @@ class OrderService
     {
         $date = now()->format('Ymd');
         $random = strtoupper(bin2hex(random_bytes(5)));
+
         return "ORD-{$date}-{$random}";
     }
 
@@ -454,7 +498,7 @@ class OrderService
 
     private function reserveReference(string $method, ?string $reference): ?string
     {
-        if (!in_array($method, ['cash', 'gcash'], true)) {
+        if (! in_array($method, ['cash', 'gcash'], true)) {
             throw ValidationException::withMessages(['payment_method' => 'Choose Cash or GCash.']);
         }
         if ($method === 'cash') {
@@ -464,7 +508,7 @@ class OrderService
         if ($reference === '' || strlen($reference) > 100) {
             throw ValidationException::withMessages(['reference_number' => 'Enter the GCash transaction reference (up to 100 characters).']);
         }
-        if (!DB::table('gcash_references')->insertOrIgnore(['reference_number' => $reference])) {
+        if (! DB::table('gcash_references')->insertOrIgnore(['reference_number' => $reference])) {
             throw ValidationException::withMessages(['reference_number' => 'This GCash transaction reference has already been recorded.']);
         }
 

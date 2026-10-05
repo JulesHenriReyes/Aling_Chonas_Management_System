@@ -20,21 +20,30 @@
             <p class="text-sm">Confirmed by {{ $refund->completedBy?->full_name }} on {{ $refund->completed_at->format('M j, Y g:i A') }}.</p>
         @else
             <p class="text-sm">Return the full amount outside this website. Keep the original payment records. Complete this form only after the transfer succeeds.</p>
-            <form action="{{ route('refunds.complete', $refund) }}" method="POST" class="space-y-3">@csrf
-                <div><label for="refund-method">Refund method</label><select id="refund-method" name="method" required class="w-full"><option value="gcash">GCash</option><option value="cash">Cash</option></select></div>
-                <div><label for="refund-reference">Transfer reference or cash receipt reference</label><input id="refund-reference" name="reference_number" maxlength="100" required class="w-full"></div>
-                <label class="flex items-start gap-3"><input type="checkbox" name="transfer_confirmed" value="1" required><span>I confirm the full refund has actually been transferred or returned to the buyer.</span></label>
+            @can('manage-refunds')
+            <form action="{{ route('refunds.complete', $refund) }}" method="POST" data-action-form data-validation-active="{{ old('_workflow') === 'refund' ? 'true' : 'false' }}" class="space-y-3">@csrf
+                <input type="hidden" name="_workflow" value="refund">
+                <div><label for="refund-method">Refund method</label><select id="refund-method" name="method" required class="w-full"><option value="gcash" @selected(old('method', 'gcash') === 'gcash')>GCash</option><option value="cash" @selected(old('method') === 'cash')>Cash</option></select></div>
+                <div><label for="refund-reference">Transfer reference or cash receipt reference</label><input id="refund-reference" name="reference_number" maxlength="100" required value="{{ old('reference_number') }}" class="w-full"></div>
+                <label class="flex items-start gap-3"><input type="checkbox" name="transfer_confirmed" value="1" required {{ old('transfer_confirmed') ? 'checked' : '' }}><span>I confirm the full refund has actually been transferred or returned to the buyer.</span></label>
                 <button class="w-full px-4 py-3 bg-cocoa-600 text-white rounded-lg">Confirm completed refund</button>
+                <span role="status" data-submit-status></span>
             </form>
+            @endcan
         @endif
     @elseif ($order->cancellation_kind === 'bakery_failure')
         <p class="text-sm">Bakery failure: {{ $order->cancellation_reason }}. No verified payments were received, so no refund is due.</p>
-    @elseif ($order->status !== 'cancelled' && (!$order->ready_at || $order->ready_at->gt($deadline)))
-        <details><summary class="cursor-pointer py-2 font-medium text-red-800">Cannot fulfill by the pickup deadline</summary>
-            <form action="{{ route('orders.bakeryFailure', $order) }}" method="POST" class="space-y-3 mt-3" onsubmit="return confirm('Cancel for bakery failure and request a full refund of all verified payments?');">@csrf
+    @elseif (Gate::allows('manage-refunds') && !in_array($order->status, ['cancelled', 'completed']))
+        <details><summary class="bakery-failure-action cursor-pointer py-2 font-medium text-red-800">Bakery cannot fulfil this order</summary>
+            <form action="{{ route('orders.bakeryFailure', $order) }}" method="POST" data-action-form data-validation-active="{{ old('_workflow') === 'failure' ? 'true' : 'false' }}" class="space-y-3 mt-3" onsubmit="return confirm('Cancel for bakery failure and request a full refund of all verified payments?');">@csrf
+                <input type="hidden" name="_workflow" value="failure">
                 <p class="text-sm">This cancels the order for bakery failure. All verified payments (₱{{ number_format($order->amount_paid, 2) }}) must be returned, including any final payment.</p>
-                <div><label for="failure-reason">Reason shown to the buyer</label><textarea id="failure-reason" name="reason" rows="3" maxlength="1000" required class="w-full"></textarea></div>
+                <p class="text-sm">Use this for an actual bakery failure, including one after the order was marked ready. A customer collecting late alone is not a bakery failure.</p>
+                <div><label for="failure-reason">Reason shown to the buyer</label><textarea id="failure-reason" name="reason" rows="3" maxlength="1000" required class="w-full">{{ old('reason') }}</textarea>@error('reason')<p role="alert" data-error-for="reason" class="text-sm text-red-700">{{ $message }}</p>@enderror</div>
+                <label class="flex items-start gap-3"><input type="checkbox" name="bakery_failure_confirmed" value="1" required {{ old('bakery_failure_confirmed') ? 'checked' : '' }}><span>I confirm the bakery cannot fulfil this order. This is not solely a late customer collection.</span></label>
+                @error('bakery_failure_confirmed')<p role="alert" data-error-for="bakery_failure_confirmed" class="text-sm text-red-700">{{ $message }}</p>@enderror
                 <button class="w-full px-4 py-2 border border-red-200 text-red-800 rounded-lg">Mark bakery failure</button>
+                <span role="status" data-submit-status></span>
             </form>
         </details>
     @endif

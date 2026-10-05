@@ -8,10 +8,12 @@
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
             <h1 class="text-xl font-bold text-cocoa-600">Order Management</h1>
-            <p class="text-sm text-cocoa-400 mt-1">Review public submissions, adjust custom pricing, and record payments.</p>
+            <p class="text-sm text-cocoa-400 mt-1">Review saved order details and advance preparation and pickup statuses.</p>
         </div>
-        <a href="{{ route('orders.create') }}" class="bg-cocoa-600 hover:bg-cocoa-700 text-white font-semibold text-sm px-4 py-2 rounded-lg transition self-start sm:self-auto"><x-icon name="plus" class="mr-1" /> New Staff Order
+        @can('manage-orders')
+<a href="{{ route('orders.create') }}" class="bg-cocoa-600 hover:bg-cocoa-700 text-white font-semibold text-sm px-4 py-2 rounded-lg transition self-start sm:self-auto"><x-icon name="plus" class="mr-1" /> New Staff Order
         </a>
+@endcan
     </div>
 
     <!-- Filters & Search -->

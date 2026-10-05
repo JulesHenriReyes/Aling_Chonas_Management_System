@@ -1,0 +1,8 @@
+{
+    "environment": "Synthetic isolated SQLite preview",
+    "public_url": "\/order\/payment\/fbd04a987b322b64c67cc6a408f989a17899017634a503f8822ab57a8f7e9ddd",
+    "order_id": 18,
+    "status": "completed",
+    "paid": 2000,
+    "payment_count": 2
+}

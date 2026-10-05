@@ -8,9 +8,11 @@
         <a href="{{ route('customers.index') }}" class="text-cocoa-500 hover:text-cocoa-600 font-medium text-sm transition">
             <x-icon name="arrow-left" class="mr-1" /> Back to Customers
         </a>
-        <a href="{{ route('customers.edit', $customer) }}" class="bg-white border border-cocoa-100 text-cocoa-500 hover:bg-cream-100 font-medium text-sm px-4 py-2 rounded-lg transition">
+        @can('manage-customers')
+<a href="{{ route('customers.edit', $customer) }}" class="bg-white border border-cocoa-100 text-cocoa-500 hover:bg-cream-100 font-medium text-sm px-4 py-2 rounded-lg transition">
             Edit Details
         </a>
+@endcan
     </div>
 
     <!-- Info Card -->

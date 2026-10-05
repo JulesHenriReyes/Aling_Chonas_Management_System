@@ -92,7 +92,7 @@ class OrderAndPaymentBusinessRulesTest extends TestCase
             750.00,
             'cash',
             null,
-            $this->assistant
+            $this->owner
         );
 
         $order->refresh();
@@ -113,7 +113,7 @@ class OrderAndPaymentBusinessRulesTest extends TestCase
             500.00, // Expected 750.00
             'cash',
             null,
-            $this->assistant
+            $this->owner
         );
     }
 
@@ -126,7 +126,7 @@ class OrderAndPaymentBusinessRulesTest extends TestCase
             750.00,
             'cash',
             null,
-            $this->assistant
+            $this->owner
         );
 
         $this->expectException(ValidationException::class);
@@ -135,7 +135,7 @@ class OrderAndPaymentBusinessRulesTest extends TestCase
             750.00,
             'cash',
             null,
-            $this->assistant
+            $this->owner
         );
     }
 
@@ -154,16 +154,20 @@ class OrderAndPaymentBusinessRulesTest extends TestCase
         $order = $this->createSampleOrder();
 
         // 1. Pay 50% deposit
-        $this->orderService->recordDownPayment($order, 750.00, 'cash', null, $this->assistant);
+        $this->orderService->recordDownPayment($order, 750.00, 'cash', null, $this->owner);
         $order->refresh();
 
-        // 2. Pay remaining balance
+        // 2. Collect the balance after readiness at actual pickup
+        $this->orderService->updateStatus($order, 'preparing', $this->assistant);
+        $this->orderService->updateStatus($order, 'ready_for_pickup', $this->assistant);
         $payment = $this->orderService->recordFinalPayment(
             $order,
             750.00,
             'gcash',
             'GCASH-REF-999',
-            $this->assistant
+            $this->owner,
+            null,
+            true
         );
 
         $order->refresh();
@@ -176,26 +180,31 @@ class OrderAndPaymentBusinessRulesTest extends TestCase
     public function test_payment_exceeding_balance_rejected(): void
     {
         $order = $this->createSampleOrder();
-        $this->orderService->recordDownPayment($order, 750.00, 'cash', null, $this->assistant);
+        $this->orderService->recordDownPayment($order, 750.00, 'cash', null, $this->owner);
+
+        $this->orderService->updateStatus($order, 'preparing', $this->assistant);
+        $this->orderService->updateStatus($order, 'ready_for_pickup', $this->assistant);
 
         $this->expectException(ValidationException::class);
-        // Remaining balance is 750.00, paying 800.00 should fail
+        // Remaining balance is 750.00, paying 800.00 should fail at collection
         $this->orderService->recordFinalPayment(
             $order,
             800.00,
             'cash',
             null,
-            $this->assistant
+            $this->owner,
+            null,
+            true
         );
     }
 
     public function test_cancelled_order_preserves_payment_and_rejects_further_payment(): void
     {
         $order = $this->createSampleOrder();
-        $this->orderService->recordDownPayment($order, 750.00, 'gcash', 'GCASH-12345', $this->assistant);
+        $this->orderService->recordDownPayment($order, 750.00, 'gcash', 'GCASH-12345', $this->owner);
 
-        // Assistant cancels order
-        $this->orderService->cancelOrder($order, $this->assistant);
+        // Owner records customer cancellation
+        $this->orderService->cancelOrder($order, $this->owner);
         $order->refresh();
 
         $this->assertEquals('cancelled', $order->status);
@@ -205,22 +214,20 @@ class OrderAndPaymentBusinessRulesTest extends TestCase
 
         // Attempting another payment must be rejected
         $this->expectException(ValidationException::class);
-        $this->orderService->recordFinalPayment($order, 750.00, 'cash', null, $this->assistant);
+        $this->orderService->recordFinalPayment($order, 750.00, 'cash', null, $this->owner);
     }
 
     public function test_completed_at_is_recorded_and_not_overwritten(): void
     {
         $order = $this->createSampleOrder();
-        $this->orderService->recordDownPayment($order, 750.00, 'cash', null, $this->assistant);
-        $this->orderService->recordFinalPayment($order, 750.00, 'cash', null, $this->assistant);
-
+        $this->orderService->recordDownPayment($order, 750.00, 'cash', null, $this->owner);
         $this->orderService->updateStatus($order, 'preparing', $this->assistant);
         $this->orderService->updateStatus($order, 'ready_for_pickup', $this->assistant);
 
         $completedTime = Carbon::now()->subHour();
         Carbon::setTestNow($completedTime);
 
-        $this->orderService->updateStatus($order, 'completed', $this->assistant);
+        $this->orderService->recordFinalPayment($order, 750.00, 'cash', null, $this->owner, null, true);
         $order->refresh();
 
         $this->assertEquals('completed', $order->status);
@@ -243,7 +250,7 @@ class OrderAndPaymentBusinessRulesTest extends TestCase
         $cancelTime = Carbon::now()->subHours(2);
         Carbon::setTestNow($cancelTime);
 
-        $this->orderService->cancelOrder($order, $this->assistant);
+        $this->orderService->cancelOrder($order, $this->owner);
         $order->refresh();
 
         $this->assertEquals('cancelled', $order->status);

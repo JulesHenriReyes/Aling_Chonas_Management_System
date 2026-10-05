@@ -197,7 +197,13 @@ header .min-w-0 { overflow-wrap: anywhere; }
 .workspace-table td:last-child { white-space:normal; }
 .numeric { text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
 .nowrap { white-space:nowrap; }
-.sort-heading { min-height:44px; display:inline-flex; gap:.35rem; align-items:center; }
+.sort-heading { min-width:44px; min-height:44px; display:inline-flex; gap:.35rem; align-items:center; }
+.bakery-failure-action { min-height:44px; }
+.table-scroll .record-link { display:inline-flex; align-items:center; min-width:44px; min-height:44px; }
+.customer-row-actions { display:flex; justify-content:flex-end; gap:.5rem; }
+.customer-row-actions a { display:inline-flex; align-items:center; justify-content:center; min-width:44px; min-height:44px; }
+[aria-controls="staff-navigation"], [data-sidebar-close] { min-width:44px; min-height:44px; }
+[data-sidebar] a { min-height:44px; }
 .record-link, .back-link { color:var(--bakery-ink); text-decoration:underline; text-underline-offset:3px; font-weight:600; }
 .back-link { display:inline-flex; align-items:center; min-height:44px; font-size:.875rem; }
 .workspace-summary { font-size:.875rem; }

@@ -1,0 +1,58 @@
+PHPUnit 11.5.56 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.2.12
+Configuration: C:\Users\User\Desktop\IT12_Project\docs\qa\2026-10-05\business-investigation\phpunit-business.xml
+
+...FFF.......FF                                                   15 / 15 (100%)
+
+Time: 00:01.727, Memory: 54.00 MB
+
+There were 5 failures:
+
+1) Qa\Business\BusinessInvestigationTest::test_fully_paid_customer_cancellation_recognizes_all_verified_retained_money
+Owner-approved retention includes the final payment.
+Failed asserting that 500.0 matches expected 1000.
+
+C:\Users\User\Desktop\IT12_Project\docs\qa\2026-10-05\business-investigation\tests\BusinessInvestigationTest.php:73
+
+2) Qa\Business\BusinessInvestigationTest::test_required_customer_contact_cannot_normalize_to_empty
+Session is missing expected key [errors].
+Failed asserting that false is true.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponseAssert.php:45
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:1547
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:1634
+C:\Users\User\Desktop\IT12_Project\docs\qa\2026-10-05\business-investigation\tests\BusinessInvestigationTest.php:81
+
+3) Qa\Business\BusinessInvestigationTest::test_public_contact_cannot_normalize_to_empty
+Session is missing expected key [errors].
+Failed asserting that false is true.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponseAssert.php:45
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:1547
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:1634
+C:\Users\User\Desktop\IT12_Project\docs\qa\2026-10-05\business-investigation\tests\BusinessInvestigationTest.php:90
+
+4) Qa\Business\BusinessInvestigationTest::test_dashboard_today_pickups_uses_the_bakery_calendar
+Failed asserting that two arrays are identical.
+--- Expected
++++ Actual
+@@ @@
+ Array &0 [
+-    0 => 'SYNTHETIC-TODAY',
++    0 => 'SYNTHETIC-YESTERDAY',
+ ]
+
+C:\Users\User\Desktop\IT12_Project\docs\qa\2026-10-05\business-investigation\tests\BusinessInvestigationTest.php:221
+
+5) Qa\Business\BusinessInvestigationTest::test_new_public_order_rejects_a_past_bakery_pickup_date
+Session is missing expected key [errors].
+Failed asserting that false is true.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponseAssert.php:45
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:1547
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:1634
+C:\Users\User\Desktop\IT12_Project\docs\qa\2026-10-05\business-investigation\tests\BusinessInvestigationTest.php:232
+
+FAILURES!
+Tests: 15, Assertions: 109, Failures: 5.

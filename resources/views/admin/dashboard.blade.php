@@ -8,11 +8,13 @@
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
             <h1 class="text-xl font-bold text-cocoa-600">Welcome back, {{ Auth::user()->first_name }}</h1>
-            <p class="text-sm text-cocoa-400 mt-0.5">Here's today's overview for your bakery.</p>
+            <p class="text-sm text-cocoa-400 mt-0.5">Today's bakery overview · {{ \App\Support\PickupCalendar::today()->format('F j, Y') }} ({{ config('bakery.pickup_timezone') }})</p>
         </div>
         <div class="flex items-center gap-2">
-            <a href="{{ route('orders.create') }}" class="bg-cocoa-600 hover:bg-cocoa-700 text-white font-semibold text-sm px-4 py-2 rounded-lg transition"><x-icon name="plus" class="mr-1" /> New Staff Order
+            @can('manage-orders')
+<a href="{{ route('orders.create') }}" class="bg-cocoa-600 hover:bg-cocoa-700 text-white font-semibold text-sm px-4 py-2 rounded-lg transition"><x-icon name="plus" class="mr-1" /> New Staff Order
             </a>
+@endcan
             <a href="{{ route('public.order.index') }}" target="_blank" class="bg-white border border-cocoa-100 text-cocoa-500 hover:bg-cream-100 font-medium text-sm px-4 py-2 rounded-lg transition">
                 Public Store <x-icon name="external" class="ml-1" />
             </a>

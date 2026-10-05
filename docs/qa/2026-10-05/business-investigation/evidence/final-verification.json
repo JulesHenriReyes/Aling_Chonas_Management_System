@@ -1,0 +1,36 @@
+{
+  "production_code_config_changed": [],
+  "current_revision": "9dbd138bf7f02fae780fc7b6e2896e0a6a94b389",
+  "test_outcomes": {
+    "business-regression": {
+      "name": "C:\\Users\\User\\Desktop\\IT12_Project\\docs\\qa\\2026-10-05\\business-investigation\\phpunit-business.xml",
+      "tests": "28",
+      "assertions": "264",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "time": "5.434458",
+      "exit_status": 0,
+      "failed_methods": []
+    },
+    "business-qa": {
+      "name": "C:\\Users\\User\\Desktop\\IT12_Project\\docs\\qa\\2026-10-05\\business-investigation\\phpunit-business.xml",
+      "tests": "15",
+      "assertions": "109",
+      "errors": "0",
+      "failures": "5",
+      "skipped": "0",
+      "time": "1.703293",
+      "exit_status": 1,
+      "failed_methods": [
+        "test_fully_paid_customer_cancellation_recognizes_all_verified_retained_money",
+        "test_required_customer_contact_cannot_normalize_to_empty",
+        "test_public_contact_cannot_normalize_to_empty",
+        "test_dashboard_today_pickups_uses_the_bakery_calendar",
+        "test_new_public_order_rejects_a_past_bakery_pickup_date"
+      ]
+    }
+  },
+  "csv_internal_reconciliation": "pass",
+  "csv_business_policy": "Verified fail"
+}

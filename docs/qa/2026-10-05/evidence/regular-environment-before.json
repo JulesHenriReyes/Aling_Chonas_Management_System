@@ -1,0 +1,92 @@
+{
+    "audit_date": "2026-10-05",
+    "url": "http://127.0.0.1:8000",
+    "app_environment": "local",
+    "php": "8.2.12",
+    "laravel": "12.69.2",
+    "connection_default": "mysql",
+    "connection_name": "mysql",
+    "driver": "mysql",
+    "database": "aling_chona_db",
+    "host": "127.0.0.1",
+    "port": "3306",
+    "session_driver": "database",
+    "storage_timezone": "UTC",
+    "business_timezone": "Asia/Manila",
+    "pickup_timezone": "Asia/Manila",
+    "resolved_database": "aling_chona_db",
+    "connection_status": "connected",
+    "business_table_count": 24,
+    "migrations": [
+        {
+            "migration": "0001_01_01_000000_create_users_table",
+            "batch": 1
+        },
+        {
+            "migration": "0001_01_01_000001_create_cache_table",
+            "batch": 1
+        },
+        {
+            "migration": "0001_01_01_000002_create_jobs_table",
+            "batch": 1
+        },
+        {
+            "migration": "2026_09_22_000001_create_customers_table",
+            "batch": 1
+        },
+        {
+            "migration": "2026_09_22_000002_create_products_table",
+            "batch": 1
+        },
+        {
+            "migration": "2026_09_22_000003_create_supplies_table",
+            "batch": 1
+        },
+        {
+            "migration": "2026_09_22_000004_create_orders_table",
+            "batch": 1
+        },
+        {
+            "migration": "2026_09_22_000005_create_order_details_table",
+            "batch": 1
+        },
+        {
+            "migration": "2026_09_22_000006_create_order_images_table",
+            "batch": 1
+        },
+        {
+            "migration": "2026_09_22_000007_create_payments_table",
+            "batch": 1
+        },
+        {
+            "migration": "2026_09_22_000008_create_expenses_table",
+            "batch": 1
+        },
+        {
+            "migration": "2026_09_22_000009_create_inventory_transactions_table",
+            "batch": 1
+        },
+        {
+            "migration": "2026_09_24_000001_add_catalog_options_and_payment_review",
+            "batch": 2
+        },
+        {
+            "migration": "2026_09_27_000001_add_package_included_items",
+            "batch": 3
+        },
+        {
+            "migration": "2026_10_02_000001_add_stock_operations_and_expense_audits",
+            "batch": 4
+        },
+        {
+            "migration": "2026_10_02_000002_add_order_submission_key",
+            "batch": 4
+        },
+        {
+            "migration": "2026_10_02_000003_add_report_indexes",
+            "batch": 4
+        }
+    ],
+    "server_version": "10.4.32-MariaDB",
+    "configured_schema_visible": true
+}

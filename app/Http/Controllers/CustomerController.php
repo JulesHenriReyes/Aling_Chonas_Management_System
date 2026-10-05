@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CustomerRequest;
 use App\Models\Customer;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -32,14 +33,9 @@ class CustomerController extends Controller
         return view('admin.customers.create');
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(CustomerRequest $request): RedirectResponse
     {
-        $validated = $request->validate([
-            'first_name' => ['required', 'string', 'max:100'],
-            'middle_name' => ['nullable', 'string', 'max:100'],
-            'last_name' => ['required', 'string', 'max:100'],
-            'phone_number' => ['required', 'string', 'max:20'],
-        ]);
+        $validated = $request->validated();
 
         $customer = Customer::findOrCreateMatching($validated);
 
@@ -59,14 +55,9 @@ class CustomerController extends Controller
         return view('admin.customers.edit', compact('customer'));
     }
 
-    public function update(Request $request, Customer $customer): RedirectResponse
+    public function update(CustomerRequest $request, Customer $customer): RedirectResponse
     {
-        $validated = $request->validate([
-            'first_name' => ['required', 'string', 'max:100'],
-            'middle_name' => ['nullable', 'string', 'max:100'],
-            'last_name' => ['required', 'string', 'max:100'],
-            'phone_number' => ['required', 'string', 'max:20'],
-        ]);
+        $validated = $request->validated();
 
         $validated['phone_number'] = Customer::normalizePhoneNumber($validated['phone_number']);
         $customer->update($validated);

@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Support\PickupCalendar;
+
 class CatalogOrderRules
 {
     public static function items(): array
@@ -25,7 +27,7 @@ class CatalogOrderRules
     {
         return self::items() + [
             'expected_total' => ['required', 'numeric', 'min:0.02'],
-            'pickup_date' => ['required', 'date_format:Y-m-d', 'after_or_equal:today'],
+            'pickup_date' => ['required', 'date_format:Y-m-d', 'after_or_equal:'.PickupCalendar::todayString()],
             'pickup_time' => ['required', 'date_format:H:i'],
             'notes_text' => ['nullable', 'string', 'max:1000'],
             'images' => ['nullable', 'array', 'max:5'],

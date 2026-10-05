@@ -142,7 +142,7 @@ class Phase3QAFixesTest extends TestCase
 
     public function test_payment_controller_requires_reference_number_for_gcash_payments(): void
     {
-        $this->actingAs($this->assistant);
+        $this->actingAs($this->owner);
 
         $order = app(OrderService::class)->createInternalOrder([
             'customer_id' => $this->customer->id,

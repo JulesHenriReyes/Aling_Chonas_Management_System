@@ -46,7 +46,7 @@ class PaymentReviewService
 
     public function accept(PaymentProof $proof, float $observedAmount, string $observedReference, ?User $user): Payment
     {
-        $user = StaffAccess::require($user);
+        $user = StaffAccess::requireOwner($user);
 
         return DB::transaction(function () use ($proof, $observedAmount, $observedReference, $user) {
             $order = Order::whereKey($proof->order_id)->lockForUpdate()->firstOrFail();
@@ -63,7 +63,7 @@ class PaymentReviewService
 
     public function reject(PaymentProof $proof, string $reason, ?User $user): void
     {
-        $user = StaffAccess::require($user);
+        $user = StaffAccess::requireOwner($user);
         Validator::make(['reason' => trim($reason)], ['reason' => ['required', 'string', 'max:1000']])->validate();
         DB::transaction(function () use ($proof, $reason, $user) {
             $order = Order::whereKey($proof->order_id)->lockForUpdate()->firstOrFail();
