@@ -24,9 +24,8 @@ class PaymentReviewService
         try {
             return DB::transaction(function () use ($order, $receipt, $reference, &$path) {
                 $order = Order::whereKey($order->id)->lockForUpdate()->firstOrFail();
-                if ($order->user_id !== null || $order->status !== 'pending' || $order->hasDownPayment()
-                    || $order->paymentProofs()->where('status', 'awaiting_verification')->exists()) {
-                    throw ValidationException::withMessages(['receipt' => 'A receipt can be submitted only for a pending public order without a receipt awaiting review.']);
+                if (! $order->canSubmitReceipt()) {
+                    throw ValidationException::withMessages(['receipt' => 'Staff must confirm the request before you submit a receipt. A deposit must still be unpaid, with no receipt awaiting review.']);
                 }
                 $reference = app(OrderService::class)->normalizeReference($reference);
                 if ($reference === '' || DB::table('gcash_references')->where('reference_number', $reference)->exists()) {
@@ -68,8 +67,8 @@ class PaymentReviewService
         DB::transaction(function () use ($proof, $reason, $user) {
             $order = Order::whereKey($proof->order_id)->lockForUpdate()->firstOrFail();
             $proof = PaymentProof::whereKey($proof->id)->lockForUpdate()->firstOrFail();
-            if ($order->status !== 'pending' || $proof->status !== 'awaiting_verification') {
-                throw ValidationException::withMessages(['receipt' => 'Only an awaiting receipt on a pending order can be rejected.']);
+            if (! $order->canRecordDeposit() || $proof->status !== 'awaiting_verification') {
+                throw ValidationException::withMessages(['receipt' => 'Only an awaiting receipt on an approved, unpaid order can be rejected.']);
             }
             $proof->update(['status' => 'rejected', 'rejection_reason' => trim($reason), 'reviewed_by' => $user->id, 'reviewed_at' => now()]);
         });

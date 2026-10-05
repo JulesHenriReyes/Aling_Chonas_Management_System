@@ -66,7 +66,8 @@ final class DisposableDatabase
             }
             $record = ['pid' => getmypid(), 'name' => $connection->getName(), 'driver' => 'sqlite', 'database' => $database,
                 'actual' => $actual, 'storage' => $app->storagePath(), 'config_cached' => $app->configurationIsCached()];
-            file_put_contents(base_path('docs/qa/2026-10-05/implementation-verification/evidence/isolation.jsonl'),
+            $evidence = getenv('BAKERY_QA_EVIDENCE_DIR') ?: $app->storagePath('logs');
+            file_put_contents($evidence.'/isolation.jsonl',
                 json_encode($record, JSON_THROW_ON_ERROR).PHP_EOL, FILE_APPEND | LOCK_EX);
         });
         $app['db']->purge();

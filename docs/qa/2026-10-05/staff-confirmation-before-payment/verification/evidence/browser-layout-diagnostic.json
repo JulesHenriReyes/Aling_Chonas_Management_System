@@ -1,0 +1,48 @@
+{
+  "width": 390,
+  "scroll": 585,
+  "overflowing": [
+    {
+      "tag": "SPAN",
+      "classes": "text-cocoa-700 font-semibold",
+      "text": "Order status",
+      "width": 75.5,
+      "right": 398.65625
+    },
+    {
+      "tag": "H3",
+      "classes": "font-bold text-cocoa-700 text-sm sm:text-base leading-snug",
+      "text": "Floral celebration cake ×1",
+      "width": 154.796875,
+      "right": 420.796875
+    },
+    {
+      "tag": "SPAN",
+      "classes": "inline-block text-xs font-semibold text-cocoa-600 bg-white px-2 py-0.5 rounded-full border border-cocoa-100 ml-1",
+      "text": "×1",
+      "width": 60.296875,
+      "right": 406.234375
+    },
+    {
+      "tag": "SPAN",
+      "classes": "font-bold text-cocoa-700 whitespace-nowrap text-sm sm:text-base",
+      "text": "₱2,000.00",
+      "width": 148.34375,
+      "right": 585.140625
+    },
+    {
+      "tag": "SPAN",
+      "classes": "",
+      "text": "Blue buttercream flowers",
+      "width": 138.0625,
+      "right": 437.25
+    },
+    {
+      "tag": "SPAN",
+      "classes": "text-xs font-extrabold text-cocoa-700 px-2.5 py-1 rounded-full bg-cream-100 border border-cocoa-200",
+      "text": "₱1,000.00",
+      "width": 168.015625,
+      "right": 450.359375
+    }
+  ]
+}

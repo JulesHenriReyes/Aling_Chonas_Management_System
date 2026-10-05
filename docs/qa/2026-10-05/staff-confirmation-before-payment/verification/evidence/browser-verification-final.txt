@@ -1,0 +1,13 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+page.waitForFunction: Timeout 20000ms exceeded.
+    at settle (C:\Users\User\Desktop\IT12_Project\docs\qa\2026-10-05\staff-confirmation-before-payment\browser-verification.mjs:18:16)
+    at go (C:\Users\User\Desktop\IT12_Project\docs\qa\2026-10-05\staff-confirmation-before-payment\browser-verification.mjs:25:11)
+    at async file:///C:/Users/User/Desktop/IT12_Project/docs/qa/2026-10-05/staff-confirmation-before-payment/browser-verification.mjs:67:13 {
+  log: [],
+  name: 'TimeoutError'
+}
+
+Node.js v24.19.0

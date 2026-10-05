@@ -1,0 +1,16 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+locator.getAttribute: Error: strict mode violation: locator('a[href*="/packages/1/customize/"]') resolved to 2 elements:
+    1) <a class="ui-button primary" aria-label="Select Floral celebration cake package" href="http://127.0.0.1:8134/packages/1/customize/b629b7ca-4a56-40c9-9656-aebcd5fe57ba">Select package</a> aka getByRole('link', { name: 'Select Floral celebration' })
+    2) <a class="ui-button" href="http://127.0.0.1:8134/packages/1/customize/7a7a8f51-a3a6-4d8b-89cb-7591a1c6b335">Edit</a> aka getByRole('link', { name: 'Edit' })
+
+Call log:
+  - waiting for locator('a[href*="/packages/1/customize/"]')
+
+    at C:\Users\User\Desktop\IT12_Project\docs\qa\2026-10-05\staff-confirmation-before-payment\browser-checkout-and-errors.mjs:57:100 {
+  log: [ `  - waiting for locator('a[href*="/packages/1/customize/"]')` ]
+}
+
+Node.js v24.19.0

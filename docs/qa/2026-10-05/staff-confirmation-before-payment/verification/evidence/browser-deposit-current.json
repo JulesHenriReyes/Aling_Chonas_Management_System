@@ -1,0 +1,77 @@
+{
+  "records": [
+    {
+      "role": "owner",
+      "state": "approved",
+      "width": 360,
+      "height": 844,
+      "scale": 1,
+      "browser": "154.0.8037.97",
+      "url": "http://127.0.0.1:8134/orders/2",
+      "screenshot": "screenshots-complete/owner-approved-current-360.png",
+      "overflow": -15,
+      "interLoaded": true
+    },
+    {
+      "role": "owner",
+      "state": "approved",
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "browser": "154.0.8037.97",
+      "url": "http://127.0.0.1:8134/orders/2",
+      "screenshot": "screenshots-complete/owner-approved-current-390.png",
+      "overflow": -15,
+      "interLoaded": true
+    },
+    {
+      "role": "owner",
+      "state": "approved",
+      "width": 430,
+      "height": 844,
+      "scale": 1,
+      "browser": "154.0.8037.97",
+      "url": "http://127.0.0.1:8134/orders/2",
+      "screenshot": "screenshots-complete/owner-approved-current-430.png",
+      "overflow": -15,
+      "interLoaded": true
+    },
+    {
+      "role": "owner",
+      "state": "approved",
+      "width": 768,
+      "height": 844,
+      "scale": 1,
+      "browser": "154.0.8037.97",
+      "url": "http://127.0.0.1:8134/orders/2",
+      "screenshot": "screenshots-complete/owner-approved-current-768.png",
+      "overflow": -15,
+      "interLoaded": true
+    },
+    {
+      "role": "owner",
+      "state": "approved",
+      "width": 1024,
+      "height": 844,
+      "scale": 1,
+      "browser": "154.0.8037.97",
+      "url": "http://127.0.0.1:8134/orders/2",
+      "screenshot": "screenshots-complete/owner-approved-current-1024.png",
+      "overflow": -15,
+      "interLoaded": true
+    },
+    {
+      "role": "owner",
+      "state": "approved",
+      "width": 1440,
+      "height": 844,
+      "scale": 1,
+      "browser": "154.0.8037.97",
+      "url": "http://127.0.0.1:8134/orders/2",
+      "screenshot": "screenshots-complete/owner-approved-current-1440.png",
+      "overflow": -15,
+      "interLoaded": true
+    }
+  ],
+  "failures": []
+}

@@ -1,0 +1,17 @@
+[
+    {
+        "screen": "catalog",
+        "http_status": 200
+    },
+    {
+        "screen": "login",
+        "http_status": 200
+    },
+    {
+        "screen": "legacy_private_page",
+        "http_status": 200,
+        "review_first_visible": true,
+        "payment_qr_withheld": true,
+        "receipt_form_withheld": true
+    }
+]

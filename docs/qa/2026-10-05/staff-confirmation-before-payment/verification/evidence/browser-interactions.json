@@ -1,0 +1,18 @@
+[
+  {
+    "case": "Owner confirmation acknowledgment and unpaid preparation guard",
+    "passed": true
+  },
+  {
+    "case": "Assistant confirms public request, buyer submits receipt, repeat payment withheld",
+    "passed": true
+  },
+  {
+    "case": "Owner verification unlocks preparation and updates buyer booking status",
+    "passed": true
+  },
+  {
+    "case": "Owner account investigation and declined request preserve payment lock",
+    "passed": true
+  }
+]

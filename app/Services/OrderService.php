@@ -7,6 +7,7 @@ use App\Models\OrderDetail;
 use App\Models\OrderImage;
 use App\Models\Payment;
 use App\Models\PaymentProof;
+use App\Models\Refund;
 use App\Models\User;
 use App\Support\PickupCalendar;
 use Carbon\Carbon;
@@ -81,7 +82,7 @@ class OrderService
             }
             $orderNumber = $this->generateOrderNumber();
 
-            $order = Order::create([
+            $order = new Order([
                 'order_number' => $orderNumber,
                 'customer_id' => $data['customer_id'],
                 'user_id' => $user?->id,
@@ -93,11 +94,16 @@ class OrderService
                 'submission_key' => $data['submission_key'] ?? null,
                 'fixed_catalog_pricing' => true,
             ]);
+            $order->review_status = 'pending';
+            $order->save();
 
             foreach (array_values($data['items']) as $index => $item) {
                 $line = $quote['lines'][$index];
-                $extras = $line['add_ons'];
-                unset($line['add_ons']);
+                $extras = array_map(function ($extra) {
+                    unset($extra['photo_path']);
+                    return $extra;
+                }, $line['add_ons']);
+                unset($line['add_ons'], $line['photo_path']);
                 $orderDetail = $order->orderDetails()->create($line);
                 $orderDetail->addOns()->createMany($extras);
 
@@ -190,7 +196,7 @@ class OrderService
     }
 
     /**
-     * Record exactly 50% down payment and transition order to 'confirmed'.
+     * Record the exact deposit for an explicitly confirmed request.
      */
     public function recordDownPayment(
         Order $order,
@@ -201,16 +207,38 @@ class OrderService
         ?Carbon $paymentDate = null,
         ?PaymentProof $verifiedProof = null
     ): Payment {
+        return $this->persistDownPayment($order, $amount, $paymentMethod, $referenceNumber, $user, $paymentDate, $verifiedProof);
+    }
+
+    /**
+     * Reconcile a pre-change transfer only as part of a full-refund transaction.
+     * This never approves an impossible request or exposes a normal payment bypass.
+     */
+    public function refundLegacyDeposit(Order $order, PaymentProof $proof, float $amount, string $reference,
+        string $reason, ?User $user, bool $failureConfirmed = false): Refund
+    {
         $user = StaffAccess::requireOwner($user);
 
-        return DB::transaction(function () use ($order, $amount, $paymentMethod, $referenceNumber, $user, $paymentDate, $verifiedProof) {
+        return DB::transaction(function () use ($order, $proof, $amount, $reference, $reason, $user, $failureConfirmed) {
+            $this->persistDownPayment($order, $amount, 'gcash', $reference, $user, null, $proof, true);
+
+            return app(RefundService::class)->markBakeryFailure($order, $reason, $user, $failureConfirmed);
+        });
+    }
+
+    private function persistDownPayment(Order $order, float $amount, string $paymentMethod, ?string $referenceNumber,
+        ?User $user, ?Carbon $paymentDate = null, ?PaymentProof $verifiedProof = null, bool $legacyRefund = false): Payment
+    {
+        $user = StaffAccess::requireOwner($user);
+
+        return DB::transaction(function () use ($order, $amount, $paymentMethod, $referenceNumber, $user, $paymentDate, $verifiedProof, $legacyRefund) {
             $order = $this->lockOrder($order);
             $order->load(['orderDetails.addOns', 'payments']);
 
             if ($order->user_id === null) {
                 $proof = $verifiedProof ? PaymentProof::whereKey($verifiedProof->id)->lockForUpdate()->first() : null;
                 if ($paymentMethod !== 'gcash' || ! $proof || $proof->order_id !== $order->id
-                    || $proof->status !== 'awaiting_verification'
+                    || ! in_array($proof->status, $legacyRefund ? ['awaiting_verification', 'rejected'] : ['awaiting_verification'], true)
                     || $proof->reference_number !== $this->normalizeReference($referenceNumber)) {
                     throw ValidationException::withMessages(['payment' => 'Review the buyer’s GCash proof to verify a public deposit.']);
                 }
@@ -228,9 +256,10 @@ class OrderService
                 ]);
             }
 
-            if ($order->status !== 'pending') {
+            if ($legacyRefund ? ($order->review_status !== null || ! in_array($order->status, ['pending', 'confirmed'], true)
+                || $order->user_id !== null) : ! $order->canRecordDeposit()) {
                 throw ValidationException::withMessages([
-                    'status' => ['A down payment can only be recorded while an order is pending review.'],
+                    'status' => ['Staff must explicitly confirm this request before its deposit can be recorded. Legacy transfers require Owner reconciliation.'],
                 ]);
             }
 
@@ -269,8 +298,7 @@ class OrderService
                 $proof->update(['status' => 'verified', 'reviewed_by' => $user->id, 'reviewed_at' => now(), 'payment_id' => $payment->id]);
             }
 
-            // A verified 50% deposit is the only valid pending -> confirmed transition.
-            $order->update(['status' => 'confirmed']);
+            // Verification records money; the earlier feasibility decision is unchanged.
             $order->unsetRelation('payments');
 
             return $payment;
@@ -406,10 +434,14 @@ class OrderService
                 ]);
             }
 
-            if ($newStatus === 'confirmed' && ! $this->hasVerifiedDownPayment($order)) {
+            if ($newStatus === 'confirmed') {
                 throw ValidationException::withMessages([
-                    'status' => ['Order cannot be confirmed without the exact verified 50% down payment.'],
+                    'status' => ['Use Confirm request to review feasibility before payment.'],
                 ]);
+            }
+
+            if ($newStatus === 'preparing' && ! $order->canStartPreparation()) {
+                throw ValidationException::withMessages(['status' => 'Preparation requires staff confirmation and the verified exact 50% deposit.']);
             }
 
             if ($newStatus === 'completed') {
@@ -438,11 +470,11 @@ class OrderService
     /**
      * Cancel an order. Preserves payments as non-refundable deposit.
      */
-    public function cancelOrder(Order $order, ?User $user): Order
+    public function cancelOrder(Order $order, ?User $user, bool $noFundsChecked = false): Order
     {
         StaffAccess::requireOwner($user);
 
-        return DB::transaction(function () use ($order) {
+        return DB::transaction(function () use ($order, $noFundsChecked) {
             $order = $this->lockOrder($order);
             if ($order->status === 'completed') {
                 throw ValidationException::withMessages([
@@ -451,6 +483,9 @@ class OrderService
             }
 
             if ($order->status !== 'cancelled') {
+                if ($order->amount_paid === 0.0 && $order->paymentProofs()->exists() && ! $noFundsChecked) {
+                    throw ValidationException::withMessages(['no_funds_checked' => 'Investigate the reported transfer in the business account before closing an unpaid request.']);
+                }
                 // Preserve original cancelled_at timestamp
                 if ($order->cancelled_at === null) {
                     $order->cancelled_at = now();

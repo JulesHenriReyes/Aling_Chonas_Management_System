@@ -57,7 +57,7 @@
                         </div>
                         <div class="flex items-center sm:items-end flex-row sm:flex-col justify-between sm:justify-center gap-2 text-right">
                             <div class="flex items-center gap-2">
-                                <x-status :value="$order->status" />
+                                <x-status :value="$order->status" :label="$order->workflowLabel()" class="order-workflow-status" />
                                 <x-status :value="$order->payment_status" />
                                 <a href="{{ route('orders.show', $order) }}" class="ml-2 bg-white border border-cocoa-100 text-cocoa-500 hover:bg-cream-100 font-medium text-xs px-3 py-1 rounded-lg transition">
                                     View

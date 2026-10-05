@@ -164,7 +164,8 @@ class PublicOrderController extends Controller
             $request->session()->forget('public_package_editors');
         }
 
-        return redirect()->route('public.order.payment', $order->private_token);
+        return redirect()->route('public.order.payment', $order->private_token)
+            ->with('success', 'Your request is saved and awaiting staff confirmation. Keep this private link to check its status. No payment is requested yet.');
     }
 
     public function success()

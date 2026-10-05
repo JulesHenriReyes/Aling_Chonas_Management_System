@@ -13,8 +13,8 @@ class RefundController extends Controller
     public function store(Request $request, Order $order, RefundService $refunds)
     {
         Gate::authorize('manage-refunds');
-        $data = $request->validate(['reason' => ['required', 'string', 'max:1000'], 'bakery_failure_confirmed' => ['accepted']]);
-        $refunds->markBakeryFailure($order, $data['reason'], $request->user(), $request->boolean('bakery_failure_confirmed'));
+        $data = $request->validate(['reason' => ['required', 'string', 'max:1000'], 'bakery_failure_confirmed' => ['accepted'], 'no_funds_checked' => ['sometimes', 'accepted']]);
+        $refunds->markBakeryFailure($order, $data['reason'], $request->user(), $request->boolean('bakery_failure_confirmed'), $request->boolean('no_funds_checked'));
 
         return redirect()->route('orders.show', $order)->with('success', 'Bakery failure recorded. Any verified payments are due for a full refund; confirm completion after returning the money.');
     }

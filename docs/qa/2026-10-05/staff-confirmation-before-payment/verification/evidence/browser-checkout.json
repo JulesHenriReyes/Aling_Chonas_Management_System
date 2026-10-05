@@ -1,0 +1,610 @@
+{
+  "records": [
+    {
+      "role": "public",
+      "state": "checkout",
+      "width": 360,
+      "height": 844,
+      "scale": 1,
+      "browser": "154.0.8037.97",
+      "url": "http://127.0.0.1:8134/order/details",
+      "screenshot": "screenshots-checkout-1791199971714/public-checkout-360.png",
+      "overflow": -15,
+      "interLoaded": true,
+      "buttons": [
+        {
+          "text": "Submit order request",
+          "width": 263,
+          "height": 48
+        },
+        {
+          "text": "Back to packages",
+          "width": 263,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "role": "owner",
+      "state": "checkout",
+      "width": 360,
+      "height": 844,
+      "scale": 1,
+      "browser": "154.0.8037.97",
+      "url": "http://127.0.0.1:8134/orders/create/details",
+      "screenshot": "screenshots-checkout-1791199971714/owner-checkout-360.png",
+      "overflow": -15,
+      "interLoaded": true,
+      "buttons": [
+        {
+          "text": "Create staff order request",
+          "width": 263,
+          "height": 48
+        },
+        {
+          "text": "Back to packages",
+          "width": 263,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "role": "public",
+      "state": "checkout",
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "browser": "154.0.8037.97",
+      "url": "http://127.0.0.1:8134/order/details",
+      "screenshot": "screenshots-checkout-1791199971714/public-checkout-390.png",
+      "overflow": -15,
+      "interLoaded": true,
+      "buttons": [
+        {
+          "text": "Submit order request",
+          "width": 293,
+          "height": 48
+        },
+        {
+          "text": "Back to packages",
+          "width": 293,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "role": "public",
+      "state": "checkout",
+      "width": 390,
+      "height": 844,
+      "scale": 2,
+      "browser": "154.0.8037.97",
+      "url": "http://127.0.0.1:8134/order/details",
+      "screenshot": "screenshots-checkout-1791199971714/public-checkout-390-text200.png",
+      "overflow": -15,
+      "interLoaded": true,
+      "buttons": [
+        {
+          "text": "Submit order request",
+          "width": 213,
+          "height": 176
+        },
+        {
+          "text": "Back to packages",
+          "width": 213,
+          "height": 106
+        }
+      ]
+    },
+    {
+      "role": "owner",
+      "state": "checkout",
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "browser": "154.0.8037.97",
+      "url": "http://127.0.0.1:8134/orders/create/details",
+      "screenshot": "screenshots-checkout-1791199971714/owner-checkout-390.png",
+      "overflow": -15,
+      "interLoaded": true,
+      "buttons": [
+        {
+          "text": "Create staff order request",
+          "width": 293,
+          "height": 48
+        },
+        {
+          "text": "Back to packages",
+          "width": 293,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "role": "owner",
+      "state": "checkout",
+      "width": 390,
+      "height": 844,
+      "scale": 2,
+      "browser": "154.0.8037.97",
+      "url": "http://127.0.0.1:8134/orders/create/details",
+      "screenshot": "screenshots-checkout-1791199971714/owner-checkout-390-text200.png",
+      "overflow": -15,
+      "interLoaded": true,
+      "buttons": [
+        {
+          "text": "Create staff order request",
+          "width": 213,
+          "height": 216
+        },
+        {
+          "text": "Back to packages",
+          "width": 213,
+          "height": 106
+        }
+      ]
+    },
+    {
+      "role": "public",
+      "state": "checkout",
+      "width": 430,
+      "height": 844,
+      "scale": 1,
+      "browser": "154.0.8037.97",
+      "url": "http://127.0.0.1:8134/order/details",
+      "screenshot": "screenshots-checkout-1791199971714/public-checkout-430.png",
+      "overflow": -15,
+      "interLoaded": true,
+      "buttons": [
+        {
+          "text": "Submit order request",
+          "width": 333,
+          "height": 48
+        },
+        {
+          "text": "Back to packages",
+          "width": 333,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "role": "owner",
+      "state": "checkout",
+      "width": 430,
+      "height": 844,
+      "scale": 1,
+      "browser": "154.0.8037.97",
+      "url": "http://127.0.0.1:8134/orders/create/details",
+      "screenshot": "screenshots-checkout-1791199971714/owner-checkout-430.png",
+      "overflow": -15,
+      "interLoaded": true,
+      "buttons": [
+        {
+          "text": "Create staff order request",
+          "width": 333,
+          "height": 48
+        },
+        {
+          "text": "Back to packages",
+          "width": 333,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "role": "public",
+      "state": "checkout",
+      "width": 768,
+      "height": 844,
+      "scale": 1,
+      "browser": "154.0.8037.97",
+      "url": "http://127.0.0.1:8134/order/details",
+      "screenshot": "screenshots-checkout-1791199971714/public-checkout-768.png",
+      "overflow": -15,
+      "interLoaded": true,
+      "buttons": [
+        {
+          "text": "Submit order request",
+          "width": 647,
+          "height": 48
+        },
+        {
+          "text": "Back to packages",
+          "width": 647,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "role": "owner",
+      "state": "checkout",
+      "width": 768,
+      "height": 844,
+      "scale": 1,
+      "browser": "154.0.8037.97",
+      "url": "http://127.0.0.1:8134/orders/create/details",
+      "screenshot": "screenshots-checkout-1791199971714/owner-checkout-768.png",
+      "overflow": -15,
+      "interLoaded": true,
+      "buttons": [
+        {
+          "text": "Create staff order request",
+          "width": 647,
+          "height": 48
+        },
+        {
+          "text": "Back to packages",
+          "width": 647,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "role": "public",
+      "state": "checkout",
+      "width": 1024,
+      "height": 844,
+      "scale": 1,
+      "browser": "154.0.8037.97",
+      "url": "http://127.0.0.1:8134/order/details",
+      "screenshot": "screenshots-checkout-1791199971714/public-checkout-1024.png",
+      "overflow": -15,
+      "interLoaded": true,
+      "buttons": [
+        {
+          "text": "Submit order request",
+          "width": 304.75,
+          "height": 48
+        },
+        {
+          "text": "Back to packages",
+          "width": 304.75,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "role": "owner",
+      "state": "checkout",
+      "width": 1024,
+      "height": 844,
+      "scale": 1,
+      "browser": "154.0.8037.97",
+      "url": "http://127.0.0.1:8134/orders/create/details",
+      "screenshot": "screenshots-checkout-1791199971714/owner-checkout-1024.png",
+      "overflow": -15,
+      "interLoaded": true,
+      "buttons": [
+        {
+          "text": "Create staff order request",
+          "width": 232,
+          "height": 68
+        },
+        {
+          "text": "Back to packages",
+          "width": 232,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "role": "public",
+      "state": "checkout",
+      "width": 1440,
+      "height": 844,
+      "scale": 1,
+      "browser": "154.0.8037.97",
+      "url": "http://127.0.0.1:8134/order/details",
+      "screenshot": "screenshots-checkout-1791199971714/public-checkout-1440.png",
+      "overflow": -15,
+      "interLoaded": true,
+      "buttons": [
+        {
+          "text": "Submit order request",
+          "width": 411.03125,
+          "height": 48
+        },
+        {
+          "text": "Back to packages",
+          "width": 411.03125,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "role": "owner",
+      "state": "checkout",
+      "width": 1440,
+      "height": 844,
+      "scale": 1,
+      "browser": "154.0.8037.97",
+      "url": "http://127.0.0.1:8134/orders/create/details",
+      "screenshot": "screenshots-checkout-1791199971714/owner-checkout-1440.png",
+      "overflow": -15,
+      "interLoaded": true,
+      "buttons": [
+        {
+          "text": "Create staff order request",
+          "width": 373.765625,
+          "height": 48
+        },
+        {
+          "text": "Back to packages",
+          "width": 373.765625,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "role": "public",
+      "state": "catalog-review",
+      "width": 360,
+      "height": 844,
+      "scale": 1,
+      "browser": "154.0.8037.97",
+      "url": "http://127.0.0.1:8134/",
+      "screenshot": "screenshots-checkout-1791199971714/public-catalog-review-360.png",
+      "overflow": -15,
+      "interLoaded": true,
+      "buttons": []
+    },
+    {
+      "role": "public",
+      "state": "customize-review",
+      "width": 360,
+      "height": 844,
+      "scale": 1,
+      "browser": "154.0.8037.97",
+      "url": "http://127.0.0.1:8134/packages/1/customize/f279c570-1be6-461e-bad1-9f0e8ac7bee5",
+      "screenshot": "screenshots-checkout-1791199971714/public-customize-review-360.png",
+      "overflow": -15,
+      "interLoaded": true,
+      "buttons": [
+        {
+          "text": "Save package to order",
+          "width": 271,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "role": "public",
+      "state": "catalog-review",
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "browser": "154.0.8037.97",
+      "url": "http://127.0.0.1:8134/",
+      "screenshot": "screenshots-checkout-1791199971714/public-catalog-review-390.png",
+      "overflow": -15,
+      "interLoaded": true,
+      "buttons": []
+    },
+    {
+      "role": "public",
+      "state": "customize-review",
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "browser": "154.0.8037.97",
+      "url": "http://127.0.0.1:8134/packages/1/customize/45fb2705-d03b-4934-a743-9bdc5b8a1a31",
+      "screenshot": "screenshots-checkout-1791199971714/public-customize-review-390.png",
+      "overflow": -15,
+      "interLoaded": true,
+      "buttons": [
+        {
+          "text": "Save package to order",
+          "width": 301,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "role": "public",
+      "state": "catalog-review",
+      "width": 430,
+      "height": 844,
+      "scale": 1,
+      "browser": "154.0.8037.97",
+      "url": "http://127.0.0.1:8134/",
+      "screenshot": "screenshots-checkout-1791199971714/public-catalog-review-430.png",
+      "overflow": -15,
+      "interLoaded": true,
+      "buttons": []
+    },
+    {
+      "role": "public",
+      "state": "customize-review",
+      "width": 430,
+      "height": 844,
+      "scale": 1,
+      "browser": "154.0.8037.97",
+      "url": "http://127.0.0.1:8134/packages/1/customize/d1188db2-30d6-48da-a971-b84de24e8ef8",
+      "screenshot": "screenshots-checkout-1791199971714/public-customize-review-430.png",
+      "overflow": -15,
+      "interLoaded": true,
+      "buttons": [
+        {
+          "text": "Save package to order",
+          "width": 341,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "role": "public",
+      "state": "catalog-review",
+      "width": 768,
+      "height": 844,
+      "scale": 1,
+      "browser": "154.0.8037.97",
+      "url": "http://127.0.0.1:8134/",
+      "screenshot": "screenshots-checkout-1791199971714/public-catalog-review-768.png",
+      "overflow": -15,
+      "interLoaded": true,
+      "buttons": []
+    },
+    {
+      "role": "public",
+      "state": "customize-review",
+      "width": 768,
+      "height": 844,
+      "scale": 1,
+      "browser": "154.0.8037.97",
+      "url": "http://127.0.0.1:8134/packages/1/customize/88aebc26-73ec-4dab-b238-2300675fec81",
+      "screenshot": "screenshots-checkout-1791199971714/public-customize-review-768.png",
+      "overflow": -15,
+      "interLoaded": true,
+      "buttons": [
+        {
+          "text": "Save package to order",
+          "width": 221.46875,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "role": "public",
+      "state": "catalog-review",
+      "width": 1024,
+      "height": 844,
+      "scale": 1,
+      "browser": "154.0.8037.97",
+      "url": "http://127.0.0.1:8134/",
+      "screenshot": "screenshots-checkout-1791199971714/public-catalog-review-1024.png",
+      "overflow": -15,
+      "interLoaded": true,
+      "buttons": []
+    },
+    {
+      "role": "public",
+      "state": "customize-review",
+      "width": 1024,
+      "height": 844,
+      "scale": 1,
+      "browser": "154.0.8037.97",
+      "url": "http://127.0.0.1:8134/packages/1/customize/c8055bac-bfc4-4025-9860-7b3ef3a20cc1",
+      "screenshot": "screenshots-checkout-1791199971714/public-customize-review-1024.png",
+      "overflow": -15,
+      "interLoaded": true,
+      "buttons": [
+        {
+          "text": "Save package to order",
+          "width": 313.78125,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "role": "public",
+      "state": "catalog-review",
+      "width": 1440,
+      "height": 844,
+      "scale": 1,
+      "browser": "154.0.8037.97",
+      "url": "http://127.0.0.1:8134/",
+      "screenshot": "screenshots-checkout-1791199971714/public-catalog-review-1440.png",
+      "overflow": -15,
+      "interLoaded": true,
+      "buttons": []
+    },
+    {
+      "role": "public",
+      "state": "customize-review",
+      "width": 1440,
+      "height": 844,
+      "scale": 1,
+      "browser": "154.0.8037.97",
+      "url": "http://127.0.0.1:8134/packages/1/customize/c75cbbf5-ac5d-4029-ac59-030e00ef9415",
+      "screenshot": "screenshots-checkout-1791199971714/public-customize-review-1440.png",
+      "overflow": -15,
+      "interLoaded": true,
+      "buttons": [
+        {
+          "text": "Save package to order",
+          "width": 418,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "role": "public",
+      "state": "checkout-error",
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "browser": "154.0.8037.97",
+      "url": "http://127.0.0.1:8134/order/details",
+      "screenshot": "screenshots-checkout-1791199971714/public-checkout-error-390.png",
+      "overflow": -15,
+      "interLoaded": true,
+      "buttons": [
+        {
+          "text": "Submit order request",
+          "width": 293,
+          "height": 48
+        },
+        {
+          "text": "Back to packages",
+          "width": 293,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "role": "public",
+      "state": "submitted-request",
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "browser": "154.0.8037.97",
+      "url": "http://127.0.0.1:8134/order/payment/[private-token-redacted]",
+      "screenshot": "screenshots-checkout-1791199971714/public-submitted-request-390.png",
+      "overflow": -15,
+      "interLoaded": true,
+      "buttons": []
+    },
+    {
+      "role": "public",
+      "state": "missing-settings",
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "browser": "154.0.8037.97",
+      "url": "http://127.0.0.1:8134/order/payment/[private-token-redacted]",
+      "screenshot": "screenshots-checkout-1791199971714/public-missing-settings-390.png",
+      "overflow": -15,
+      "interLoaded": true,
+      "buttons": []
+    },
+    {
+      "role": "public",
+      "state": "missing-settings",
+      "width": 1440,
+      "height": 844,
+      "scale": 1,
+      "browser": "154.0.8037.97",
+      "url": "http://127.0.0.1:8134/order/payment/[private-token-redacted]",
+      "screenshot": "screenshots-checkout-1791199971714/public-missing-settings-1440.png",
+      "overflow": -15,
+      "interLoaded": true,
+      "buttons": []
+    }
+  ],
+  "interactions": [
+    {
+      "case": "Server validation retains draft/contact data, associates phone error, focuses invalid field",
+      "passed": true
+    },
+    {
+      "case": "Corrected customer submission opens saved private status with review first and payment withheld",
+      "passed": true
+    },
+    {
+      "case": "Approved order without configured QR has no blind payment or receipt invitation",
+      "passed": true
+    }
+  ],
+  "failures": []
+}

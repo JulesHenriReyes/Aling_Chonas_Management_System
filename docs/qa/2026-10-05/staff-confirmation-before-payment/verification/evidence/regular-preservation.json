@@ -1,0 +1,44 @@
+{
+    "database": "aling_chona_db",
+    "old_columns_and_business_tables_unchanged": true,
+    "changed_tables": [
+        "migrations"
+    ],
+    "migration_rows_added": 1,
+    "legacy_review_fields_all_null": true,
+    "preserved_orders": 6,
+    "preserved_payments": 5,
+    "preserved_proofs": 7,
+    "queue_counts": {
+        "review": 3,
+        "deposit": 0,
+        "receipts": 0,
+        "booked": 1
+    },
+    "review_columns": [
+        {
+            "Field": "review_status",
+            "Type": "varchar(24)",
+            "Null": "YES",
+            "Key": "",
+            "Default": null,
+            "Extra": ""
+        },
+        {
+            "Field": "reviewed_by",
+            "Type": "bigint(20) unsigned",
+            "Null": "YES",
+            "Key": "MUL",
+            "Default": null,
+            "Extra": ""
+        },
+        {
+            "Field": "reviewed_at",
+            "Type": "datetime",
+            "Null": "YES",
+            "Key": "",
+            "Default": null,
+            "Extra": ""
+        }
+    ]
+}

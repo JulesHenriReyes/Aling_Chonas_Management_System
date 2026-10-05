@@ -40,11 +40,13 @@ class CatalogPricingService
                 'product_id' => $product->id,
                 'package_option_id' => $option->id,
                 'product_name_snapshot' => $product->product_name,
+                'photo_path' => $product->photo_path,
                 'included_contents_snapshot' => $option->included_contents,
                 'included_items_snapshot' => $option->includedItems()->lockForUpdate()->get()->map(fn ($included) => [
                     'add_on_id' => $included->id,
                     'name' => $included->name,
                     'description' => $included->description,
+                    'photo_path' => $included->photo_path,
                     'quantity' => (int) $included->pivot->quantity,
                 ])->all(),
                 'quantity' => $quantity,
@@ -77,6 +79,7 @@ class CatalogPricingService
                     'add_on_id' => $addOn->id,
                     'name_snapshot' => $addOn->name,
                     'description_snapshot' => $addOn->description,
+                    'photo_path' => $addOn->photo_path,
                     'quantity' => $extraQuantity,
                     'unit_price' => $extraPriceCentavos / 100,
                 ];

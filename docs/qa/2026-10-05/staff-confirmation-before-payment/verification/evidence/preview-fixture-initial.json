@@ -1,0 +1,47 @@
+{
+    "environment": "Synthetic isolated SQLite preview",
+    "url": "http:\/\/127.0.0.1:8134",
+    "database": "C:\\Users\\User\\AppData\\Local\\Temp\/workflow-concurrency-staff-review-preview-98401d05be6c\/workflow-concurrency-preview.sqlite",
+    "storage": "C:\\Users\\User\\AppData\\Local\\Temp\/workflow-concurrency-staff-review-preview-98401d05be6c\/storage",
+    "orders": {
+        "pending": 1,
+        "approved": 2,
+        "confirmed": 3,
+        "preparing": 4,
+        "ready": 5,
+        "completed": 6,
+        "cancelled": 7,
+        "failure-pending": 8,
+        "failure-completed": 9,
+        "declined": 18,
+        "legacy": 19
+    },
+    "public": {
+        "pending": "\/order\/payment\/ed8f6fb7f3318b95d62d88455f6d4d49d23bcba08462180b169ab8acd1cde37a",
+        "approved": "\/order\/payment\/317c51d8bd53b66bc05adf6dabd1fb038278ddad1bd7ae63763c5c16b8da7528",
+        "awaiting": "\/order\/payment\/9af8d85e9ac85280acedc56116faff0ca612aa91da76774795030512ba3ece7e",
+        "rejected": "\/order\/payment\/e86a0a83d4b72a3d1010f00390f63788ef60f5564fc68119ed5f7174874f71c7",
+        "verified": "\/order\/payment\/3431fd570da0f8b81dfddbc685aaa38ba669f984b9199e1eeea6b1d2810d6296",
+        "cancelled": "\/order\/payment\/c079b48db3bbfdd45effb427c0247b72dce246e1ed39e8a25cfd55bbbca11b21",
+        "failure-pending": "\/order\/payment\/8300cf665d5f7d4a70d6e9e7d1ed0bf3a2221dd5363088c0b66c87d3c289b99d",
+        "failure-completed": "\/order\/payment\/947ce38c96fcdbd1ddbdb91084d31c4aa9c25df6a6620b3d6011d49c84cc9b65",
+        "declined": "\/order\/payment\/942fe1e2bbf78d2bba0758255d225f6969653c62475b53ef6c2669bfc0f39027",
+        "legacy": "\/order\/payment\/901a4746f59d6d2161836c9e636af337fd414a50f7e3e9a299b798d62ca8500b"
+    },
+    "product": 1,
+    "customer": 1,
+    "supply": 1,
+    "expense": 1,
+    "public_ids": {
+        "pending": 10,
+        "approved": 11,
+        "awaiting": 12,
+        "rejected": 13,
+        "verified": 14,
+        "cancelled": 15,
+        "failure-pending": 16,
+        "failure-completed": 17,
+        "declined": 18,
+        "legacy": 19
+    }
+}

@@ -20,6 +20,7 @@
         }
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script defer src="{{ asset('js/alpine.min.js') }}"></script>
     <style>
@@ -71,17 +72,17 @@
     </main>
 
     {{-- Footer --}}
-    <footer class="bg-cocoa-700 text-cocoa-200 py-8 mt-12">
-        <div class="max-w-7xl 2xl:max-w-[1600px] w-full mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12">
+    <footer class="bg-cocoa-700 text-cocoa-100 py-8 px-4 sm:px-6 lg:px-8 2xl:px-12 mt-12">
+        <div class="max-w-[1216px] 2xl:max-w-[1504px] w-full mx-auto">
             <div class="flex flex-wrap items-center justify-between gap-6 text-xs">
                 <div class="flex items-center gap-3 min-w-0">
-                    <span class="w-8 h-8 rounded-lg bg-cocoa-300/20 flex items-center justify-center text-cocoa-200 text-sm font-bold shrink-0">A</span>
+                    <span class="w-8 h-8 rounded-lg bg-cocoa-300/20 flex items-center justify-center text-cocoa-100 text-sm font-bold shrink-0">A</span>
                     <div class="min-w-0">
                         <span class="font-semibold text-white block">Aling Chona Cakes & Cupcakes</span>
-                        <span class="text-cocoa-200 block">Custom Bakes & Celebration Delights</span>
+                        <span class="text-cocoa-100 block">Custom Bakes & Celebration Delights</span>
                     </div>
                 </div>
-                <div class="flex flex-wrap items-center gap-4 text-cocoa-200 shrink-0">
+                <div class="flex flex-wrap items-center gap-4 text-cocoa-100 shrink-0">
                     <span>Cash & GCash Accepted</span>
                     <span>&copy; {{ date('Y') }}</span>
                 </div>

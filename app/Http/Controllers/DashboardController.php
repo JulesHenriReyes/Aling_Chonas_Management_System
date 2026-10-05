@@ -14,8 +14,10 @@ class DashboardController extends Controller
      */
     public function index(): View
     {
-        $pendingCount = Order::where('status', 'pending')->count();
-        $activeOrdersCount = Order::whereIn('status', ['confirmed', 'preparing', 'ready_for_pickup'])->count();
+        $pendingCount = Order::workflowQueue('review')->count();
+        $activeOrdersCount = Order::workflowQueue('booked')->count();
+        $awaitingDepositCount = Order::workflowQueue('deposit')->count();
+        $awaitingReceiptCount = Order::workflowQueue('receipts')->count();
         $completedCount = Order::where('status', 'completed')->count();
 
         // Low stock: current_quantity <= reorder_level
@@ -24,14 +26,14 @@ class DashboardController extends Controller
             ->count();
 
         // Pickups today
-        $todayPickups = Order::with('customer')
+        $todayPickups = Order::with(['customer', 'payments', 'paymentProofs'])
             ->whereDate('pickup_date', PickupCalendar::todayString())
             ->whereNotIn('status', ['completed', 'cancelled'])
             ->orderBy('pickup_time')
             ->get();
 
         // Recent orders (last 10)
-        $recentOrders = Order::with(['customer', 'user', 'orderDetails.product'])
+        $recentOrders = Order::with(['customer', 'user', 'orderDetails.product', 'payments', 'paymentProofs'])
             ->latest()
             ->take(10)
             ->get();
@@ -39,6 +41,8 @@ class DashboardController extends Controller
         return view('admin.dashboard', compact(
             'pendingCount',
             'activeOrdersCount',
+            'awaitingDepositCount',
+            'awaitingReceiptCount',
             'completedCount',
             'lowStockCount',
             'todayPickups',

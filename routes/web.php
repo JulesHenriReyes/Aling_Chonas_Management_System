@@ -77,6 +77,8 @@ Route::middleware(['auth', 'role:owner,assistant'])->group(function () {
     Route::post('/orders', [OrderController::class, 'store'])->middleware('can:manage-orders')->name('orders.store');
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
     Route::patch('/orders/{order}/status', [OrderController::class, 'updateStatus'])->middleware('can:update-order-status')->name('orders.updateStatus');
+    Route::post('/orders/{order}/confirm', [OrderController::class, 'confirm'])->middleware('can:confirm-orders')->name('orders.confirm');
+    Route::post('/orders/{order}/decline', [OrderController::class, 'decline'])->middleware('can:decline-orders')->name('orders.decline');
     Route::post('/orders/{order}/cancel', [OrderController::class, 'cancel'])->middleware('can:cancel-orders')->name('orders.cancel');
     Route::post('/orders/{order}/images', [OrderController::class, 'attachImage'])->middleware('can:manage-orders')->name('orders.attachImage');
     Route::post('/orders/{order}/payments', [PaymentController::class, 'store'])->middleware('can:record-payments')->name('orders.payments.store');
@@ -84,6 +86,7 @@ Route::middleware(['auth', 'role:owner,assistant'])->group(function () {
     Route::get('/payment-proofs/{proof}/receipt', [PaymentReviewController::class, 'receipt'])->middleware(PrivateOrderResponse::class)->name('proofs.receipt');
     Route::post('/payment-proofs/{proof}/accept', [PaymentReviewController::class, 'accept'])->middleware('can:review-proofs')->name('proofs.accept');
     Route::post('/payment-proofs/{proof}/reject', [PaymentReviewController::class, 'reject'])->middleware('can:review-proofs')->name('proofs.reject');
+    Route::post('/payment-proofs/{proof}/reconcile-refund', [PaymentReviewController::class, 'reconcileRefund'])->middleware('can:review-proofs')->name('proofs.reconcileRefund');
     Route::post('/orders/{order}/bakery-failure', [RefundController::class, 'store'])->middleware('can:manage-refunds')->name('orders.bakeryFailure');
     Route::post('/refunds/{refund}/complete', [RefundController::class, 'complete'])->middleware('can:manage-refunds')->name('refunds.complete');
 

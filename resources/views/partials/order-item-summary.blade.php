@@ -2,7 +2,7 @@
     @foreach ($order->orderDetails as $detail)
         <div class="p-4 sm:p-5 rounded-xl bg-cream-50/50 border border-cocoa-100 space-y-3.5">
             {{-- Main Package Row with Thumbnail on Left --}}
-            <div class="flex items-start gap-3 sm:gap-4">
+            <div class="order-package-row flex items-start gap-3 sm:gap-4">
                 @if ($detail->product?->photo_path)
                     <img src="{{ asset('storage/' . $detail->product->photo_path) }}"
                          alt="{{ $detail->product_name_snapshot ?? $detail->product->product_name }}"
@@ -13,7 +13,7 @@
                     </div>
                 @endif
 
-                <div class="min-w-0 flex-1 space-y-1">
+                <div class="order-package-copy min-w-0 flex-1 space-y-1">
                     <div class="flex justify-between items-start gap-2">
                         <h3 class="font-bold text-cocoa-700 text-sm sm:text-base leading-snug">
                             {{ $detail->product_name_snapshot ?? $detail->product->product_name }}
@@ -42,6 +42,20 @@
                             <span>{{ $detail->special_request }}</span>
                         </div>
                     @endif
+                </div>
+            @endif
+
+            {{-- Reference Photos --}}
+            @if ($detail->images && $detail->images->isNotEmpty())
+                <div class="pt-2 border-t border-cocoa-100/70 space-y-1.5 text-xs">
+                    <span class="font-semibold text-cocoa-700 block">Reference photos:</span>
+                    <div class="flex flex-wrap gap-2">
+                        @foreach ($detail->images as $img)
+                            <a href="{{ asset('storage/' . $img->file_path) }}" target="_blank" rel="noopener noreferrer" class="block border border-cocoa-100 rounded-lg overflow-hidden w-14 h-14 bg-white hover:opacity-80 transition shrink-0">
+                                <img src="{{ asset('storage/' . $img->file_path) }}" alt="{{ $img->original_filename }}" class="w-full h-full object-cover">
+                            </a>
+                        @endforeach
+                    </div>
                 </div>
             @endif
 

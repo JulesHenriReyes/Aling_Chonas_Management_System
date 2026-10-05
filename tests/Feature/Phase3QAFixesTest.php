@@ -164,6 +164,7 @@ class Phase3QAFixesTest extends TestCase
         $failResponse->assertSessionHasErrors('reference_number');
 
         // Successful GCash down payment with reference number
+        $this->confirmPaymentFixture($order);
         $successResponse = $this->post(route('orders.payments.store', $order), [
             'payment_type' => 'down_payment',
             'amount' => 375.00,

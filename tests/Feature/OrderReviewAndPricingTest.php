@@ -70,6 +70,7 @@ class OrderReviewAndPricingTest extends TestCase
     {
         $order = $this->orderService->createInternalOrder($this->orderData(), $this->owner);
         $detail = $order->orderDetails->firstWhere('product_id', $this->cake->id);
+        $this->confirmPaymentFixture($order);
         $this->orderService->recordDownPayment($order, 750.00, 'cash', null, $this->owner);
         $this->cake->options()->first()->update(['price' => 2000.00]);
         $detail->refresh();
@@ -91,6 +92,7 @@ class OrderReviewAndPricingTest extends TestCase
             $this->assertSame('pending', $order->fresh()->status);
         }
 
+        $this->confirmPaymentFixture($order);
         $this->orderService->recordDownPayment($order, 750.00, 'cash', null, $this->owner);
 
         try {

@@ -37,19 +37,23 @@ class OrderPaymentPageController extends Controller
         return redirect()->route('public.order.payment', $token)->with('success', 'Receipt submitted. Staff will verify it against the business GCash account.');
     }
 
-    public function qr(string $token)
+    public function qr(Request $request, string $token)
     {
-        $this->order($token);
+        $order = $this->order($token);
+        abort_unless($order->canSubmitReceipt(), 403, 'Payment is available only after staff confirmation, with no receipt awaiting review.');
         $settings = PaymentSetting::first();
         abort_unless($settings?->isConfigured(), 404);
 
-        return Storage::disk('public')->download($settings->qr_path, 'Aling-Chona-GCash.'.pathinfo($settings->qr_path, PATHINFO_EXTENSION));
+        $filename = 'Aling-Chona-GCash.'.pathinfo($settings->qr_path, PATHINFO_EXTENSION);
+
+        return $request->boolean('inline') ? Storage::disk('public')->response($settings->qr_path, $filename)
+            : Storage::disk('public')->download($settings->qr_path, $filename);
     }
 
     public function saveLink(string $token)
     {
         $order = $this->order($token);
-        $content = "Aling Chona Cakes & Cupcakes\nOrder {$order->order_number}\nKeep this private link safe. Anyone with it can view this order and submit a receipt.\n".route('public.order.payment', $token)."\n";
+        $content = "Aling Chona Cakes & Cupcakes\nOrder {$order->order_number}\nKeep this private link safe. Anyone with it can view this order and submit a receipt after staff confirmation.\n".route('public.order.payment', $token)."\n";
 
         return response($content, 200, [
             'Content-Type' => 'text/plain; charset=UTF-8',

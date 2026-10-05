@@ -1,0 +1,21 @@
+{"width":360,"captures":29,"failures":0}
+{"width":390,"captures":67,"failures":0}
+{"width":430,"captures":96,"failures":0}
+{"width":768,"captures":125,"failures":0}
+node:internal/fs/promises:697
+  return new FileHandle(await PromisePrototypeThen(
+                        ^
+
+Error: UNKNOWN: unknown error, open 'C:\Users\User\Desktop\IT12_Project\docs\qa\2026-10-05\staff-confirmation-before-payment\verification\evidence\screenshots\assistant-legacy-1024.png'
+    at async open (node:internal/fs/promises:697:25)
+    at async Object.writeFile (node:internal/fs/promises:1317:14)
+    at async _Page.screenshot (C:\Users\User\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\node_modules\playwright-core\lib\coreBundle.js:61393:11)
+    at async capture (file:///C:/Users/User/Desktop/IT12_Project/docs/qa/2026-10-05/staff-confirmation-before-payment/browser-verification.mjs:46:5)
+    at async file:///C:/Users/User/Desktop/IT12_Project/docs/qa/2026-10-05/staff-confirmation-before-payment/browser-verification.mjs:82:17 {
+  errno: -4094,
+  code: 'UNKNOWN',
+  syscall: 'open',
+  path: 'C:\\Users\\User\\Desktop\\IT12_Project\\docs\\qa\\2026-10-05\\staff-confirmation-before-payment\\verification\\evidence\\screenshots\\assistant-legacy-1024.png'
+}
+
+Node.js v24.19.0

@@ -38,7 +38,8 @@ final class DisposableMariaDb
                 || (int) $actual['port'] !== 33317 || self::path($actual['datadir']) !== $dataDirectory) {
                 throw new RuntimeException('Actual PDO server, schema, driver or connection name is unsafe.');
             }
-            file_put_contents(base_path('docs/qa/2026-10-05/implementation-verification/evidence/mariadb-isolation.jsonl'),
+            $evidence = getenv('BAKERY_QA_EVIDENCE_DIR') ?: $app->storagePath('logs');
+            file_put_contents($evidence.'/mariadb-isolation.jsonl',
                 json_encode(['pid' => getmypid(), 'name' => $connection->getName(), 'driver' => 'mysql', 'actual' => $actual,
                     'storage' => $app->storagePath(), 'config_cached' => false], JSON_THROW_ON_ERROR).PHP_EOL, FILE_APPEND | LOCK_EX);
         });

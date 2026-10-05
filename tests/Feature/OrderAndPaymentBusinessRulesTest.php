@@ -80,13 +80,14 @@ class OrderAndPaymentBusinessRulesTest extends TestCase
         ], $this->owner); // Total: 1000 + 500 = 1500.00
     }
 
-    public function test_50_percent_down_payment_accepted_and_confirms_order(): void
+    public function test_exact_deposit_is_accepted_after_staff_confirmation(): void
     {
         $order = $this->createSampleOrder();
         $this->assertEquals(1500.00, $order->total_amount);
         $this->assertEquals(750.00, $order->required_down_payment);
         $this->assertEquals('pending', $order->status);
 
+        $this->confirmPaymentFixture($order);
         $payment = $this->orderService->recordDownPayment(
             $order,
             750.00,
@@ -108,6 +109,7 @@ class OrderAndPaymentBusinessRulesTest extends TestCase
         $order = $this->createSampleOrder();
 
         $this->expectException(ValidationException::class);
+        $this->confirmPaymentFixture($order);
         $this->orderService->recordDownPayment(
             $order,
             500.00, // Expected 750.00
@@ -121,6 +123,7 @@ class OrderAndPaymentBusinessRulesTest extends TestCase
     {
         $order = $this->createSampleOrder();
 
+        $this->confirmPaymentFixture($order);
         $this->orderService->recordDownPayment(
             $order,
             750.00,
@@ -130,6 +133,7 @@ class OrderAndPaymentBusinessRulesTest extends TestCase
         );
 
         $this->expectException(ValidationException::class);
+        $this->confirmPaymentFixture($order);
         $this->orderService->recordDownPayment(
             $order,
             750.00,
@@ -139,13 +143,13 @@ class OrderAndPaymentBusinessRulesTest extends TestCase
         );
     }
 
-    public function test_confirmation_without_deposit_rejected(): void
+    public function test_generic_status_update_cannot_bypass_staff_review(): void
     {
         $order = $this->createSampleOrder();
         $this->assertEquals('pending', $order->status);
 
         $this->expectException(ValidationException::class);
-        // Attempting to move straight to confirmed without down payment
+        // A generic status update cannot replace the explicit feasibility review.
         $this->orderService->updateStatus($order, 'confirmed', $this->assistant);
     }
 
@@ -154,6 +158,7 @@ class OrderAndPaymentBusinessRulesTest extends TestCase
         $order = $this->createSampleOrder();
 
         // 1. Pay 50% deposit
+        $this->confirmPaymentFixture($order);
         $this->orderService->recordDownPayment($order, 750.00, 'cash', null, $this->owner);
         $order->refresh();
 
@@ -180,6 +185,7 @@ class OrderAndPaymentBusinessRulesTest extends TestCase
     public function test_payment_exceeding_balance_rejected(): void
     {
         $order = $this->createSampleOrder();
+        $this->confirmPaymentFixture($order);
         $this->orderService->recordDownPayment($order, 750.00, 'cash', null, $this->owner);
 
         $this->orderService->updateStatus($order, 'preparing', $this->assistant);
@@ -201,6 +207,7 @@ class OrderAndPaymentBusinessRulesTest extends TestCase
     public function test_cancelled_order_preserves_payment_and_rejects_further_payment(): void
     {
         $order = $this->createSampleOrder();
+        $this->confirmPaymentFixture($order);
         $this->orderService->recordDownPayment($order, 750.00, 'gcash', 'GCASH-12345', $this->owner);
 
         // Owner records customer cancellation
@@ -220,6 +227,7 @@ class OrderAndPaymentBusinessRulesTest extends TestCase
     public function test_completed_at_is_recorded_and_not_overwritten(): void
     {
         $order = $this->createSampleOrder();
+        $this->confirmPaymentFixture($order);
         $this->orderService->recordDownPayment($order, 750.00, 'cash', null, $this->owner);
         $this->orderService->updateStatus($order, 'preparing', $this->assistant);
         $this->orderService->updateStatus($order, 'ready_for_pickup', $this->assistant);

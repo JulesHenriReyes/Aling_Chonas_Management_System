@@ -23,16 +23,16 @@
 
     {{-- Metric Cards --}}
     <div class="metrics">
-        <a href="{{ route('orders.index', ['status' => 'pending']) }}" class="bg-white border border-cocoa-100 rounded-xl p-5 hover:border-cocoa-200 transition block">
+        <a href="{{ route('orders.index', ['queue' => 'review']) }}" class="bg-white border border-cocoa-100 rounded-xl p-5 hover:border-cocoa-200 transition block">
             <div class="text-xs font-semibold text-cocoa-400 ">Pending Review</div>
             <div class="text-2xl font-bold text-cocoa-600 mt-1.5">{{ $pendingCount }}</div>
-            <div class="text-xs text-cocoa-400 mt-1">Awaiting deposit verification</div>
+            <div class="text-xs text-cocoa-400 mt-1">Awaiting staff confirmation</div>
         </a>
 
-        <a href="{{ route('orders.index', ['status' => 'confirmed']) }}" class="bg-white border border-cocoa-100 rounded-xl p-5 hover:border-cocoa-200 transition block">
-            <div class="text-xs font-semibold text-cocoa-400 ">Active Orders</div>
+        <a href="{{ route('orders.index', ['queue' => 'booked']) }}" class="bg-white border border-cocoa-100 rounded-xl p-5 hover:border-cocoa-200 transition block">
+            <div class="text-xs font-semibold text-cocoa-400 ">Paid bookings</div>
             <div class="text-2xl font-bold text-cocoa-600 mt-1.5">{{ $activeOrdersCount }}</div>
-            <div class="text-xs text-cocoa-400 mt-1">Confirmed & preparing</div>
+            <div class="text-xs text-cocoa-400 mt-1">Deposit verified · preparation & pickup</div>
         </a>
 
         <a href="{{ route('orders.index', ['status' => 'completed']) }}" class="bg-white border border-cocoa-100 rounded-xl p-5 hover:border-cocoa-200 transition block">
@@ -47,6 +47,11 @@
             <div class="text-xs text-cocoa-400 mt-1">Below reorder level</div>
         </a>
     </div>
+
+    <nav aria-label="Payment workflow queues" class="flex flex-wrap gap-3 text-sm">
+        <a href="{{ route('orders.index', ['queue' => 'deposit']) }}" class="inline-flex items-center min-h-[44px] px-4 py-3 rounded-lg bg-white border border-cocoa-100 font-semibold text-cocoa-700">Confirmed — awaiting deposit: {{ $awaitingDepositCount }}</a>
+        <a href="{{ route('orders.index', ['queue' => 'receipts']) }}" class="inline-flex items-center min-h-[44px] px-4 py-3 rounded-lg bg-white border border-cocoa-100 font-semibold text-cocoa-700">Receipt awaiting verification: {{ $awaitingReceiptCount }}</a>
+    </nav>
 
     {{-- Two-Column Grid --}}
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -76,7 +81,7 @@
                                     <span class="text-xs font-mono font-semibold text-cocoa-500">
                                         {{ \Carbon\Carbon::parse($order->pickup_time)->format('h:i A') }}
                                     </span>
-                                    <x-status :value="$order->status" />
+                                    <x-status :value="$order->status" :label="$order->workflowLabel()" class="order-workflow-status" />
                                 </div>
                             </div>
                         </div>
@@ -123,7 +128,7 @@
                                     </td>
                                     <td class="px-5 py-3 font-semibold text-cocoa-600">₱{{ number_format($order->total_amount, 2) }}</td>
                                     <td class="px-5 py-3">
-                                        <x-status :value="$order->status" />
+                                        <x-status :value="$order->status" :label="$order->workflowLabel()" class="order-workflow-status" />
                                     </td>
                                     <td class="px-5 py-3 text-right">
                                         <a href="{{ route('orders.show', $order) }}"
@@ -137,5 +142,9 @@
             @endif
         </div>
     </div>
+    {{-- Reusable Skeleton Template for Dynamic Dashboard Transitions --}}
+    <template id="dashboard-skeleton">
+        @include('partials.dashboard-skeleton')
+    </template>
 </div>
 @endsection

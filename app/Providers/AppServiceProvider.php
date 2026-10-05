@@ -26,11 +26,11 @@ class AppServiceProvider extends ServiceProvider
     {
         $staffCanOperate = fn (User $user) => $user->is_active && in_array($user->role, ['owner', 'assistant'], true);
         $ownerCanManage = fn (User $user) => $user->is_active && $user->isOwner();
-        foreach (['view-records', 'update-order-status', 'manage-expenses', 'manage-inventory'] as $capability) {
+        foreach (['view-records', 'update-order-status', 'confirm-orders', 'manage-expenses', 'manage-inventory'] as $capability) {
             Gate::define($capability, $staffCanOperate);
         }
         foreach (['manage-users', 'manage-products', 'view-reports', 'manage-customers', 'manage-orders',
-            'cancel-orders', 'record-payments', 'review-proofs', 'manage-refunds'] as $capability) {
+            'cancel-orders', 'decline-orders', 'record-payments', 'review-proofs', 'manage-refunds'] as $capability) {
             Gate::define($capability, $ownerCanManage);
         }
 

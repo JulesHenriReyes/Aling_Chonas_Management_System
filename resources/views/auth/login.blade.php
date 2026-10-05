@@ -30,13 +30,13 @@
         <div class="text-center mb-8">
             <span class="inline-flex w-14 h-14 rounded-2xl bg-cocoa-600 items-center justify-center text-white text-2xl font-bold mb-4">A</span>
             <h1 class="text-xl font-bold text-cocoa-600 tracking-tight">Aling Chona</h1>
-            <p class="text-xs text-cocoa-400  mt-0.5">Cakes & Cupcakes</p>
+            <p class="text-xs text-cocoa-500 mt-0.5">Cakes & Cupcakes</p>
         </div>
 
         {{-- Login Card --}}
         <div class="bg-white rounded-xl border border-cocoa-100 p-6 sm:p-8">
             <h2 class="text-base font-bold text-cocoa-600 mb-1">Staff Sign In</h2>
-            <p class="text-xs text-cocoa-400 mb-6">Access restricted to authorized staff only.</p>
+            <p class="text-xs text-cocoa-500 mb-6">Access restricted to authorized staff only.</p>
 
             @if ($errors->any())
                 <div data-error-summary role="alert" tabindex="-1" class="mb-4 px-3 py-2.5 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs">
@@ -63,9 +63,9 @@
                 <div class="flex items-center justify-between text-xs pt-1">
                     <label class="flex items-center gap-2 cursor-pointer">
                         <input type="checkbox" name="remember" class="rounded text-cocoa-600 focus:ring-cocoa-300 border-cocoa-200">
-                        <span class="text-cocoa-400">Remember me</span>
+                        <span class="text-cocoa-500">Remember me</span>
                     </label>
-                    <a href="{{ route('public.order.index') }}" class="text-cocoa-500 hover:text-cocoa-500 transition">
+                    <a href="{{ route('public.order.index') }}" class="text-cocoa-500 hover:text-cocoa-700 transition">
                         <x-icon name="arrow-left" class="mr-1" /> Public Site
                     </a>
                 </div>

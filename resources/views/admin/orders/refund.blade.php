@@ -42,6 +42,10 @@
                 <div><label for="failure-reason">Reason shown to the buyer</label><textarea id="failure-reason" name="reason" rows="3" maxlength="1000" required class="w-full">{{ old('reason') }}</textarea>@error('reason')<p role="alert" data-error-for="reason" class="text-sm text-red-700">{{ $message }}</p>@enderror</div>
                 <label class="flex items-start gap-3"><input type="checkbox" name="bakery_failure_confirmed" value="1" required {{ old('bakery_failure_confirmed') ? 'checked' : '' }}><span>I confirm the bakery cannot fulfil this order. This is not solely a late customer collection.</span></label>
                 @error('bakery_failure_confirmed')<p role="alert" data-error-for="bakery_failure_confirmed" class="text-sm text-red-700">{{ $message }}</p>@enderror
+                @if ($order->amount_paid === 0.0 && $order->paymentProofs->isNotEmpty())
+                    <label class="flex items-start gap-3 text-sm"><input type="checkbox" name="no_funds_checked" value="1" required><span>I checked every reported transfer in the business account and no funds were received. Received money must be verified and reconciled first.</span></label>
+                    @error('no_funds_checked')<p role="alert" data-error-for="no_funds_checked" class="text-sm text-red-700">{{ $message }}</p>@enderror
+                @endif
                 <button class="w-full px-4 py-2 border border-red-200 text-red-800 rounded-lg">Mark bakery failure</button>
                 <span role="status" data-submit-status></span>
             </form>

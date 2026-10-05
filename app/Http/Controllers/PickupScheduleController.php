@@ -15,7 +15,7 @@ class PickupScheduleController extends Controller
             'pickup_date' => ['nullable', 'date'],
         ]);
 
-        $orders = Order::with(['customer', 'orderDetails.product'])
+        $orders = Order::with(['customer', 'orderDetails.product', 'orderDetails.addOns', 'payments', 'paymentProofs'])
             ->whereNotIn('status', ['completed', 'cancelled'])
             ->when(
                 $validated['pickup_date'] ?? null,

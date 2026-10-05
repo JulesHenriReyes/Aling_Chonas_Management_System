@@ -36,6 +36,7 @@ class ApprovedWorkflowReportAcceptanceTest extends TestCase
             $fixture[$key] = $orders->createInternalOrder(['customer_id' => $buyer->id, 'pickup_date' => '2026-12-01',
                 'pickup_time' => '15:00', 'expected_total' => 2000,
                 'items' => [['product_id' => $product->id, 'package_option_id' => $option->id, 'quantity' => 1]]], $owner);
+            $this->confirmPaymentFixture($fixture[$key]);
             $orders->recordDownPayment($fixture[$key], 1000, 'cash', null, $owner);
         }
         $pending = $refunds->markBakeryFailure($fixture['refund-november'], 'Actual oven failure', $owner, true);

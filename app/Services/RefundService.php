@@ -11,7 +11,7 @@ use Illuminate\Validation\ValidationException;
 
 class RefundService
 {
-    public function markBakeryFailure(Order $order, string $reason, ?User $user, bool $failureConfirmed = false): ?Refund
+    public function markBakeryFailure(Order $order, string $reason, ?User $user, bool $failureConfirmed = false, bool $noFundsChecked = false): ?Refund
     {
         $user = StaffAccess::requireOwner($user);
         Validator::make(['reason' => trim($reason)], ['reason' => ['required', 'string', 'max:1000']])->validate();
@@ -19,12 +19,15 @@ class RefundService
             throw ValidationException::withMessages(['bakery_failure_confirmed' => 'Confirm the bakery cannot fulfil the order. Late customer collection alone is not a bakery failure.']);
         }
 
-        return DB::transaction(function () use ($order, $reason, $user) {
+        return DB::transaction(function () use ($order, $reason, $user, $noFundsChecked) {
             $order = Order::whereKey($order->id)->lockForUpdate()->firstOrFail();
             // Readiness does not rule out a later genuine inability to fulfil.
             // The Owner must declare an actual bakery failure, not late collection.
             if (in_array($order->status, ['cancelled', 'completed'], true)) {
                 throw ValidationException::withMessages(['reason' => 'Completed or cancelled orders cannot be declared a bakery failure.']);
+            }
+            if ($order->amount_paid === 0.0 && $order->paymentProofs()->exists() && ! $noFundsChecked) {
+                throw ValidationException::withMessages(['no_funds_checked' => 'Check the reported transfer first. Verify received money before requesting its refund; do not close a reported transfer as unpaid.']);
             }
             $order->update([
                 'status' => 'cancelled', 'cancelled_at' => now(),

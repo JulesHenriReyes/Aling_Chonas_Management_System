@@ -86,6 +86,7 @@ class ImplementationPolicyTest extends TestCase
 
     private function ready(Order $order): void
     {
+        $this->confirmPaymentFixture($order);
         $this->orders->recordDownPayment($order, 1000, 'cash', null, $this->owner);
         $this->orders->updateStatus($order, 'preparing', $this->assistant);
         $this->orders->updateStatus($order, 'ready_for_pickup', $this->assistant);
@@ -95,8 +96,10 @@ class ImplementationPolicyTest extends TestCase
     {
         $order = $this->order();
         $public = $this->order(true);
+        $this->confirmPaymentFixture($public);
         $proof = app(PaymentReviewService::class)->submit($public, UploadedFile::fake()->image('receipt.png'), 'PROOF-1');
         $failed = $this->order();
+        $this->confirmPaymentFixture($failed);
         $this->orders->recordDownPayment($failed, 1000, 'cash', null, $this->owner);
         $refund = app(RefundService::class)->markBakeryFailure($failed, 'Oven failure', $this->owner, true);
         $customer = ['first_name' => 'New', 'last_name' => 'Buyer', 'phone_number' => '09181234567'];
@@ -137,7 +140,9 @@ class ImplementationPolicyTest extends TestCase
         $public = $this->order(true);
         $reviews = app(PaymentReviewService::class);
         $refunds = app(RefundService::class);
+        $this->confirmPaymentFixture($public);
         $proof = $reviews->submit($public, UploadedFile::fake()->image('receipt.png'), 'SERVICE-1');
+        $this->confirmPaymentFixture($order);
         $this->orders->recordDownPayment($order, 1000, 'cash', null, $this->owner);
         $refund = $refunds->markBakeryFailure($order, 'Oven failure', $this->owner, true);
         $active = $this->order();
@@ -165,6 +170,7 @@ class ImplementationPolicyTest extends TestCase
             $this->denied(fn () => $this->orders->recordDownPayment($order, $amount, 'gcash', 'EXCESS', $this->owner));
         }
         $this->denied(fn () => $this->orders->recordFinalPayment($order, 1000, 'gcash', 'EARLY', $this->owner, null, true));
+        $this->confirmPaymentFixture($order);
         $this->orders->recordDownPayment($order, 1000, 'cash', null, $this->owner);
         $this->denied(fn () => $this->orders->recordDownPayment($order, 1000, 'cash', null, $this->owner));
         foreach (['confirmed', 'preparing'] as $state) {
@@ -264,6 +270,7 @@ class ImplementationPolicyTest extends TestCase
     public function test_excessive_public_proof_is_not_accepted_as_a_deposit_or_refund(): void
     {
         $order = $this->order(true);
+        $this->confirmPaymentFixture($order);
         $proof = app(PaymentReviewService::class)->submit($order, UploadedFile::fake()->image('receipt.png'), 'OVER-1');
         $this->denied(fn () => app(PaymentReviewService::class)->accept($proof, 2000, 'OVER-1', $this->owner));
         $this->assertSame('awaiting_verification', $proof->fresh()->status);

@@ -1,0 +1,485 @@
+PHPUnit 11.5.56 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.2.12
+Configuration: C:\Users\User\Desktop\IT12_Project\phpunit.xml
+
+...............................................................  63 / 138 ( 45%)
+............................................................... 126 / 138 ( 91%)
+.....FF.....                                                    138 / 138 (100%)
+
+Time: 02:10.028, Memory: 66.00 MB
+
+There were 2 failures:
+
+1) Tests\Feature\TwoStepOrderingAndReceiptScreenTest::test_rejection_state_and_authenticated_screenshot_remain_separate_from_payment
+Failed asserting that '<!DOCTYPE html>\n
+<html lang="en">\n
+<head>\n
+    <meta charset="UTF-8">\n
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n
+    <meta name="referrer" content="no-referrer">\n
+    <title>Your order · Aling Chona</title>\n
+    <script src="https://cdn.tailwindcss.com"></script>\n
+    <script>\n
+        tailwind.config = {\n
+            theme: {\n
+                extend: {\n
+                    fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },\n
+                    colors: {\n
+                        cream: { 50: '#FDFBF7', 100: '#F5F1EB' },\n
+                        cocoa: { 50: '#F5F1EB', 100: '#E8E0D4', 200: '#D4C4B0', 300: '#C2956B', 400: '#716153', 500: '#5C4A3A', 600: '#3C2415', 700: '#2C1810', 800: '#1A0E08' },\n
+                    }\n
+                }\n
+            }\n
+        }\n
+    </script>\n
+    <link rel="preconnect" href="https://fonts.googleapis.com">\n
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">\n
+    <script defer src="http://127.0.0.1:8000/js/alpine.min.js"></script>\n
+    <style>\n
+        [x-cloak] { display: none !important; }\n
+    </style>\n
+    <link rel="stylesheet" href="http://127.0.0.1:8000/css/bakery-ui.css?v=1791199960">\n
+<script defer src="http://127.0.0.1:8000/js/bakery-ui.js?v=1791192650"></script>\n
+</head>\n
+<body class="public-store bg-cream-50 text-cocoa-500 font-sans min-h-screen flex flex-col">\n
+    <a class="skip-link" href="#main-content">Skip to main content</a>\n
+    \n
+    <header class="bg-white border-b border-cocoa-100 sticky top-0 z-40">\n
+        <div class="max-w-7xl 2xl:max-w-[1600px] w-full mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12 flex flex-wrap items-center justify-between gap-4 min-h-[4rem] py-3">\n
+            <a href="http://127.0.0.1:8000" class="flex items-center gap-3">\n
+                <span class="w-10 h-10 rounded-xl bg-cocoa-600 flex items-center justify-center text-white text-lg font-bold shrink-0 shadow-sm">A</span>\n
+                <div class="min-w-0">\n
+                    <span class="text-base font-bold text-cocoa-600 leading-tight tracking-tight block whitespace-nowrap">Aling Chona</span>\n
+                    <p class="text-xs text-cocoa-500 leading-tight whitespace-nowrap">Cakes & Cupcakes</p>\n
+                </div>\n
+            </a>\n
+            <div class="flex items-center gap-3 shrink-0">\n
+                <a href="http://127.0.0.1:8000/login" class="text-xs font-semibold px-3 py-1.5 rounded-lg border border-cocoa-100 text-cocoa-500 hover:text-cocoa-700 hover:bg-cream-100 transition">\n
+                    Staff Login\n
+                </a>\n
+            </div>\n
+        </div>\n
+    </header>\n
+\n
+    \n
+    <main id="main-content" tabindex="-1" class="flex-grow max-w-7xl 2xl:max-w-[1600px] w-full mx-auto px-4 py-8 sm:px-6 lg:px-8 2xl:px-12">\n
+        \n
+        \n
+        <div class="public-order-status max-w-5xl mx-auto space-y-6">\n
+    \n
+    <nav aria-label="Progress" class="mb-5">\n
+        <div class="flex items-center text-xs tracking-wide">\n
+            <span class="text-cocoa-700">Packages</span>\n
+            <span class="text-cocoa-300 mx-2">/</span>\n
+            <span class="text-cocoa-700">Contact & pickup</span>\n
+            <span class="text-cocoa-300 mx-2">/</span>\n
+            <span class="text-cocoa-700 font-semibold" aria-current="step">Order status</span>\n
+        </div>\n
+    </nav>\n
+\n
+    <header class="space-y-1">\n
+        <div class="flex flex-wrap items-center justify-between gap-3">\n
+            <h1 class="font-bold text-cocoa-700 text-2xl sm:text-3xl">Your order ORD-20261005-16554B08B4</h1>\n
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-cream-100 text-cocoa-700 border border-cocoa-200">\n
+                <svg class="w-3.5 h-3.5 text-cocoa-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>\n
+                <span>Pickup: October 6, 2026 at 2:00 PM (Asia/Manila)</span>\n
+            </div>\n
+        </div>\n
+        <p class="text-xs text-cocoa-400">\n
+                            After staff confirmation, pay the exact 50% deposit to secure your booking. The remaining balance is due only at actual pickup after Ready for pickup.\n
+                    </p>\n
+    </header>\n
+\n
+    \n
+    \n
+    <section class="checkout-card p-5 space-y-3" aria-labelledby="order-progress">\n
+        <div class="flex items-center justify-between border-b border-cocoa-100 pb-3">\n
+            <h2 id="order-progress" class="font-bold text-cocoa-700 text-sm">Order progress</h2>\n
+            <span class="status  order-workflow-status">Confirmed — awaiting deposit</span>\n
+        </div>\n
+        <div class="text-sm text-cocoa-600">\n
+                                                <div class="receipt-rejected" role="alert">\n
+                        <strong>Receipt rejected</strong>\n
+                        <p>Reference not found</p>\n
+                        <a href="#replacement-receipt" class="inline-block underline font-semibold mt-1">Upload a replacement receipt</a>\n
+                    </div>\n
+                    <p class="mt-2 text-xs text-cocoa-500">If the transfer succeeded, do not pay again. Contact the bakery if you need help resolving the rejection.</p>\n
+                                    </div>\n
+    </section>\n
+\n
+    \n
+    \n
+    \n
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">\n
+        \n
+        <div class="lg:col-span-7 space-y-6">\n
+            \n
+            <section class="checkout-card p-6 space-y-4" aria-labelledby="fixed-total">\n
+                <div class="flex items-center justify-between border-b border-cocoa-100 pb-3">\n
+                    <h2 id="fixed-total" class="font-bold text-cocoa-700 text-base">Your fixed-price order</h2>\n
+                    <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-cream-100 text-cocoa-600 border border-cocoa-100">\n
+                        2 packages\n
+                    </span>\n
+                </div>\n
+\n
+                <div class="space-y-4">\n
+            <div class="p-4 sm:p-5 rounded-xl bg-cream-50/50 border border-cocoa-100 space-y-3.5">\n
+            \n
+            <div class="order-package-row flex items-start gap-3 sm:gap-4">\n
+                                    <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-cocoa-50 border border-cocoa-100 flex items-center justify-center shrink-0 text-cocoa-400">\n
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8.25v-1.5m0 1.5c-1.355 0-2.697.056-4.024.166C6.845 8.51 6 9.473 6 10.608v2.513m6-4.871c1.355 0 2.697.056 4.024.166C17.155 8.51 18 9.473 18 10.608v2.513M15 8.25v-1.5m-6 1.5v-1.5m12 9.75-1.5.75m-15-.75 1.5.75m0 0a3.75 3.75 0 0 0 7.5 0m7.5 0a3.75 3.75 0 0 1-7.5 0" /></svg>\n
+                    </div>\n
+                \n
+                <div class="order-package-copy min-w-0 flex-1 space-y-1">\n
+                    <div class="flex justify-between items-start gap-2">\n
+                        <h3 class="font-bold text-cocoa-700 text-sm sm:text-base leading-snug">\n
+                            Birthday package\n
+                            <span class="inline-block text-xs font-semibold text-cocoa-600 bg-white px-2 py-0.5 rounded-full border border-cocoa-100 ml-1">×2</span>\n
+                        </h3>\n
+                        <span class="font-bold text-cocoa-700 whitespace-nowrap text-sm sm:text-base">₱2,000.00</span>\n
+                    </div>\n
+                    <p class="text-xs text-cocoa-400">2 layer(s) · ₱1,000.00 each</p>\n
+                </div>\n
+            </div>\n
+\n
+            <div class="included-items text-sm space-y-1">\n
+        <p class="font-semibold">Included per package · ₱0 extra</p>\n
+                <p class="whitespace-pre-line">Two-layer cake and 8 included cupcakes</p>    </div>\n
+\n
+            \n
+                            <div class="pt-2 border-t border-cocoa-100/70 space-y-1.5 text-xs">\n
+                                            <div class="flex items-center gap-1.5 text-cocoa-600">\n
+                            <span class="font-semibold text-cocoa-700">Theme/Colors:</span>\n
+                            <span>Blue flowers</span>\n
+                        </div>\n
+                                                        </div>\n
+            \n
+            \n
+                    </div>\n
+    </div>\n
+\n
+                <div class="border-t border-cocoa-100 pt-4 space-y-3">\n
+                    <div class="flex justify-between items-center text-sm">\n
+                        <span class="text-cocoa-500 font-medium">Order Total</span>\n
+                        <span class="font-bold text-cocoa-700 text-lg">₱2,000.00</span>\n
+                    </div>\n
+\n
+                    \n
+                    <div class="p-3.5 rounded-xl bg-cocoa-50/80 border border-cocoa-200/80 space-y-2">\n
+                        <div class="flex justify-between items-baseline">\n
+                            <span class="text-xs font-bold text-cocoa-700 uppercase tracking-wide">Exact 50% Deposit</span>\n
+                            <strong class="text-base font-extrabold text-cocoa-700">₱1,000.00</strong>\n
+                        </div>\n
+                        <div class="flex justify-between text-xs text-cocoa-500 pt-1.5 border-t border-cocoa-200/60">\n
+                            <span>Verified Payments Received:</span>\n
+                            <span class="font-semibold text-cocoa-700">₱0.00</span>\n
+                        </div>\n
+                                                    <div class="flex justify-between text-xs text-cocoa-500">\n
+                                <span>Remaining Balance (at Pickup):</span>\n
+                                <span class="font-semibold text-cocoa-700">₱2,000.00</span>\n
+                            </div>\n
+                                            </div>\n
+\n
+                    \n
+                    <p class="text-xs text-cocoa-400 pt-2 border-t border-cocoa-100">\n
+                        Customer cancellations retain the verified booking deposit. If the bakery cannot fulfil your order, all verified payments are due for a full refund. A refund is marked completed only after the money is returned.\n
+                    </p>\n
+                </div>\n
+            </section>\n
+\n
+                    </div>\n
+\n
+        \n
+        <div class="lg:col-span-5 space-y-6">\n
+                            \n
+                <section class="checkout-card p-6 space-y-3" x-data="{ copied: false, failed: false }" aria-labelledby="save-order">\n
+                    <div class="flex items-center gap-2.5 pb-3 border-b border-cocoa-100">\n
+                        <div class="w-8 h-8 rounded-lg bg-cocoa-50 text-cocoa-600 flex items-center justify-center shrink-0 border border-cocoa-100">\n
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg>\n
+                        </div>\n
+                        <h2 id="save-order" class="font-bold text-cocoa-700 text-base">Keep your order link</h2>\n
+                    </div>\n
+                    <p class="text-xs text-cocoa-400">Anyone with this link can view your order and send a receipt. Keep it private. Returning to this link will reopen the order status.</p>\n
+                    <div>\n
+                        <label for="private-order-link" class="block text-xs font-semibold text-cocoa-700 uppercase tracking-wider mb-1.5">Private order link</label>\n
+                        <input id="private-order-link" type="text" readonly value="http://127.0.0.1:8000/order/payment/e9ec4c77d7a4680adb48a1702a179cbf84607bbba95092b07649b94fbddae87d" class="form-input-custom font-mono text-xs bg-cream-50" x-ref="orderLink">\n
+                    </div>\n
+                    <div class="flex flex-wrap gap-2.5 pt-1">\n
+                        <button type="button" class="px-3.5 py-2 text-xs font-semibold bg-white border border-cocoa-200 hover:bg-cream-100 text-cocoa-700 rounded-lg transition" @click="navigator.clipboard ? navigator.clipboard.writeText($refs.orderLink.value).then(() => { copied = true; failed = false }).catch(() => { failed = true }) : failed = true">Copy order link</button>\n
+                        <a href="http://127.0.0.1:8000/order/payment/e9ec4c77d7a4680adb48a1702a179cbf84607bbba95092b07649b94fbddae87d/save-link" class="px-3.5 py-2 text-xs font-semibold text-cocoa-600 hover:text-cocoa-800 underline transition inline-flex items-center">Save order link</a>\n
+                    </div>\n
+                    <p role="status" x-show="copied" x-cloak class="text-xs text-emerald-700 font-medium">Order link copied to clipboard.</p>\n
+                    <p role="status" x-show="failed" x-cloak class="text-xs text-amber-700">Copy is unavailable. Select the link above or use Save order link.</p>\n
+                </section>\n
+                    </div>\n
+    </div>\n
+</div>\n
+    </main>\n
+\n
+    \n
+    <footer class="bg-cocoa-700 text-cocoa-100 py-8 px-4 sm:px-6 lg:px-8 2xl:px-12 mt-12">\n
+        <div class="max-w-[1216px] 2xl:max-w-[1504px] w-full mx-auto">\n
+            <div class="flex flex-wrap items-center justify-between gap-6 text-xs">\n
+                <div class="flex items-center gap-3 min-w-0">\n
+                    <span class="w-8 h-8 rounded-lg bg-cocoa-300/20 flex items-center justify-center text-cocoa-100 text-sm font-bold shrink-0">A</span>\n
+                    <div class="min-w-0">\n
+                        <span class="font-semibold text-white block">Aling Chona Cakes & Cupcakes</span>\n
+                        <span class="text-cocoa-100 block">Custom Bakes & Celebration Delights</span>\n
+                    </div>\n
+                </div>\n
+                <div class="flex flex-wrap items-center gap-4 text-cocoa-100 shrink-0">\n
+                    <span>Cash & GCash Accepted</span>\n
+                    <span>&copy; 2026</span>\n
+                </div>\n
+            </div>\n
+        </div>\n
+    </footer>\n
+    <script type="application/json" id="validation-errors">[]</script>\n
+</body>\n
+</html>\n
+' [UTF-8](length: 14342) contains "Submit replacement receipt" [ASCII](length: 26).
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponseAssert.php:45
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:710
+C:\Users\User\Desktop\IT12_Project\tests\Feature\TwoStepOrderingAndReceiptScreenTest.php:120
+
+2) Tests\Feature\TwoStepOrderingAndReceiptScreenTest::test_buyer_can_replace_a_rejected_receipt_and_prior_history_remains_visible
+Failed asserting that '<!DOCTYPE html>\n
+<html lang="en">\n
+<head>\n
+    <meta charset="UTF-8">\n
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n
+    <meta name="referrer" content="no-referrer">\n
+    <title>Your order · Aling Chona</title>\n
+    <script src="https://cdn.tailwindcss.com"></script>\n
+    <script>\n
+        tailwind.config = {\n
+            theme: {\n
+                extend: {\n
+                    fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },\n
+                    colors: {\n
+                        cream: { 50: '#FDFBF7', 100: '#F5F1EB' },\n
+                        cocoa: { 50: '#F5F1EB', 100: '#E8E0D4', 200: '#D4C4B0', 300: '#C2956B', 400: '#716153', 500: '#5C4A3A', 600: '#3C2415', 700: '#2C1810', 800: '#1A0E08' },\n
+                    }\n
+                }\n
+            }\n
+        }\n
+    </script>\n
+    <link rel="preconnect" href="https://fonts.googleapis.com">\n
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">\n
+    <script defer src="http://127.0.0.1:8000/js/alpine.min.js"></script>\n
+    <style>\n
+        [x-cloak] { display: none !important; }\n
+    </style>\n
+    <link rel="stylesheet" href="http://127.0.0.1:8000/css/bakery-ui.css?v=1791199960">\n
+<script defer src="http://127.0.0.1:8000/js/bakery-ui.js?v=1791192650"></script>\n
+</head>\n
+<body class="public-store bg-cream-50 text-cocoa-500 font-sans min-h-screen flex flex-col">\n
+    <a class="skip-link" href="#main-content">Skip to main content</a>\n
+    \n
+    <header class="bg-white border-b border-cocoa-100 sticky top-0 z-40">\n
+        <div class="max-w-7xl 2xl:max-w-[1600px] w-full mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12 flex flex-wrap items-center justify-between gap-4 min-h-[4rem] py-3">\n
+            <a href="http://127.0.0.1:8000" class="flex items-center gap-3">\n
+                <span class="w-10 h-10 rounded-xl bg-cocoa-600 flex items-center justify-center text-white text-lg font-bold shrink-0 shadow-sm">A</span>\n
+                <div class="min-w-0">\n
+                    <span class="text-base font-bold text-cocoa-600 leading-tight tracking-tight block whitespace-nowrap">Aling Chona</span>\n
+                    <p class="text-xs text-cocoa-500 leading-tight whitespace-nowrap">Cakes & Cupcakes</p>\n
+                </div>\n
+            </a>\n
+            <div class="flex items-center gap-3 shrink-0">\n
+                <a href="http://127.0.0.1:8000/login" class="text-xs font-semibold px-3 py-1.5 rounded-lg border border-cocoa-100 text-cocoa-500 hover:text-cocoa-700 hover:bg-cream-100 transition">\n
+                    Staff Login\n
+                </a>\n
+            </div>\n
+        </div>\n
+    </header>\n
+\n
+    \n
+    <main id="main-content" tabindex="-1" class="flex-grow max-w-7xl 2xl:max-w-[1600px] w-full mx-auto px-4 py-8 sm:px-6 lg:px-8 2xl:px-12">\n
+        \n
+                    <div data-error-summary role="alert" tabindex="-1" class="mb-6 px-4 py-3 rounded-lg bg-red-50 border border-red-200 text-red-800 text-sm">\n
+                <div class="font-semibold mb-1">Please correct the following errors:</div>\n
+                <ul class="list-disc list-inside space-y-0.5 text-xs">\n
+                                            <li>The receipt field must be an image.</li>\n
+                                            <li>The receipt field must be a file of type: jpg, jpeg, png, webp.</li>\n
+                                    </ul>\n
+            </div>\n
+        \n
+        <div class="public-order-status max-w-5xl mx-auto space-y-6">\n
+    \n
+    <nav aria-label="Progress" class="mb-5">\n
+        <div class="flex items-center text-xs tracking-wide">\n
+            <span class="text-cocoa-700">Packages</span>\n
+            <span class="text-cocoa-300 mx-2">/</span>\n
+            <span class="text-cocoa-700">Contact & pickup</span>\n
+            <span class="text-cocoa-300 mx-2">/</span>\n
+            <span class="text-cocoa-700 font-semibold" aria-current="step">Order status</span>\n
+        </div>\n
+    </nav>\n
+\n
+    <header class="space-y-1">\n
+        <div class="flex flex-wrap items-center justify-between gap-3">\n
+            <h1 class="font-bold text-cocoa-700 text-2xl sm:text-3xl">Your order ORD-20261005-BE6DAE8341</h1>\n
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-cream-100 text-cocoa-700 border border-cocoa-200">\n
+                <svg class="w-3.5 h-3.5 text-cocoa-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>\n
+                <span>Pickup: October 6, 2026 at 2:00 PM (Asia/Manila)</span>\n
+            </div>\n
+        </div>\n
+        <p class="text-xs text-cocoa-400">\n
+                            After staff confirmation, pay the exact 50% deposit to secure your booking. The remaining balance is due only at actual pickup after Ready for pickup.\n
+                    </p>\n
+    </header>\n
+\n
+    \n
+    \n
+    <section class="checkout-card p-5 space-y-3" aria-labelledby="order-progress">\n
+        <div class="flex items-center justify-between border-b border-cocoa-100 pb-3">\n
+            <h2 id="order-progress" class="font-bold text-cocoa-700 text-sm">Order progress</h2>\n
+            <span class="status  order-workflow-status">Confirmed — awaiting deposit</span>\n
+        </div>\n
+        <div class="text-sm text-cocoa-600">\n
+                                                <p><strong>Confirmed — awaiting deposit.</strong> The bakery has confirmed it can fulfil your request. Payment details are not configured yet. Contact the bakery before sending money.</p>\n
+                                    </div>\n
+    </section>\n
+\n
+    \n
+    \n
+    \n
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">\n
+        \n
+        <div class="lg:col-span-7 space-y-6">\n
+            \n
+            <section class="checkout-card p-6 space-y-4" aria-labelledby="fixed-total">\n
+                <div class="flex items-center justify-between border-b border-cocoa-100 pb-3">\n
+                    <h2 id="fixed-total" class="font-bold text-cocoa-700 text-base">Your fixed-price order</h2>\n
+                    <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-cream-100 text-cocoa-600 border border-cocoa-100">\n
+                        2 packages\n
+                    </span>\n
+                </div>\n
+\n
+                <div class="space-y-4">\n
+            <div class="p-4 sm:p-5 rounded-xl bg-cream-50/50 border border-cocoa-100 space-y-3.5">\n
+            \n
+            <div class="order-package-row flex items-start gap-3 sm:gap-4">\n
+                                    <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-cocoa-50 border border-cocoa-100 flex items-center justify-center shrink-0 text-cocoa-400">\n
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8.25v-1.5m0 1.5c-1.355 0-2.697.056-4.024.166C6.845 8.51 6 9.473 6 10.608v2.513m6-4.871c1.355 0 2.697.056 4.024.166C17.155 8.51 18 9.473 18 10.608v2.513M15 8.25v-1.5m-6 1.5v-1.5m12 9.75-1.5.75m-15-.75 1.5.75m0 0a3.75 3.75 0 0 0 7.5 0m7.5 0a3.75 3.75 0 0 1-7.5 0" /></svg>\n
+                    </div>\n
+                \n
+                <div class="order-package-copy min-w-0 flex-1 space-y-1">\n
+                    <div class="flex justify-between items-start gap-2">\n
+                        <h3 class="font-bold text-cocoa-700 text-sm sm:text-base leading-snug">\n
+                            Birthday package\n
+                            <span class="inline-block text-xs font-semibold text-cocoa-600 bg-white px-2 py-0.5 rounded-full border border-cocoa-100 ml-1">×2</span>\n
+                        </h3>\n
+                        <span class="font-bold text-cocoa-700 whitespace-nowrap text-sm sm:text-base">₱2,000.00</span>\n
+                    </div>\n
+                    <p class="text-xs text-cocoa-400">2 layer(s) · ₱1,000.00 each</p>\n
+                </div>\n
+            </div>\n
+\n
+            <div class="included-items text-sm space-y-1">\n
+        <p class="font-semibold">Included per package · ₱0 extra</p>\n
+                <p class="whitespace-pre-line">Two-layer cake and 8 included cupcakes</p>    </div>\n
+\n
+            \n
+                            <div class="pt-2 border-t border-cocoa-100/70 space-y-1.5 text-xs">\n
+                                            <div class="flex items-center gap-1.5 text-cocoa-600">\n
+                            <span class="font-semibold text-cocoa-700">Theme/Colors:</span>\n
+                            <span>Blue flowers</span>\n
+                        </div>\n
+                                                        </div>\n
+            \n
+            \n
+                    </div>\n
+    </div>\n
+\n
+                <div class="border-t border-cocoa-100 pt-4 space-y-3">\n
+                    <div class="flex justify-between items-center text-sm">\n
+                        <span class="text-cocoa-500 font-medium">Order Total</span>\n
+                        <span class="font-bold text-cocoa-700 text-lg">₱2,000.00</span>\n
+                    </div>\n
+\n
+                    \n
+                    <div class="p-3.5 rounded-xl bg-cocoa-50/80 border border-cocoa-200/80 space-y-2">\n
+                        <div class="flex justify-between items-baseline">\n
+                            <span class="text-xs font-bold text-cocoa-700 uppercase tracking-wide">Exact 50% Deposit</span>\n
+                            <strong class="text-base font-extrabold text-cocoa-700">₱1,000.00</strong>\n
+                        </div>\n
+                        <div class="flex justify-between text-xs text-cocoa-500 pt-1.5 border-t border-cocoa-200/60">\n
+                            <span>Verified Payments Received:</span>\n
+                            <span class="font-semibold text-cocoa-700">₱0.00</span>\n
+                        </div>\n
+                                                    <div class="flex justify-between text-xs text-cocoa-500">\n
+                                <span>Remaining Balance (at Pickup):</span>\n
+                                <span class="font-semibold text-cocoa-700">₱2,000.00</span>\n
+                            </div>\n
+                                            </div>\n
+\n
+                    \n
+                    <p class="text-xs text-cocoa-400 pt-2 border-t border-cocoa-100">\n
+                        Customer cancellations retain the verified booking deposit. If the bakery cannot fulfil your order, all verified payments are due for a full refund. A refund is marked completed only after the money is returned.\n
+                    </p>\n
+                </div>\n
+            </section>\n
+\n
+                    </div>\n
+\n
+        \n
+        <div class="lg:col-span-5 space-y-6">\n
+                            \n
+                <section class="checkout-card p-6 space-y-3" x-data="{ copied: false, failed: false }" aria-labelledby="save-order">\n
+                    <div class="flex items-center gap-2.5 pb-3 border-b border-cocoa-100">\n
+                        <div class="w-8 h-8 rounded-lg bg-cocoa-50 text-cocoa-600 flex items-center justify-center shrink-0 border border-cocoa-100">\n
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg>\n
+                        </div>\n
+                        <h2 id="save-order" class="font-bold text-cocoa-700 text-base">Keep your order link</h2>\n
+                    </div>\n
+                    <p class="text-xs text-cocoa-400">Anyone with this link can view your order and send a receipt. Keep it private. Returning to this link will reopen the order status.</p>\n
+                    <div>\n
+                        <label for="private-order-link" class="block text-xs font-semibold text-cocoa-700 uppercase tracking-wider mb-1.5">Private order link</label>\n
+                        <input id="private-order-link" type="text" readonly value="http://127.0.0.1:8000/order/payment/4d0113d56b7b0fdb4958f9049b2d72ce4dfc38e09cb4195bce8bff50fe1b05c5" class="form-input-custom font-mono text-xs bg-cream-50" x-ref="orderLink">\n
+                    </div>\n
+                    <div class="flex flex-wrap gap-2.5 pt-1">\n
+                        <button type="button" class="px-3.5 py-2 text-xs font-semibold bg-white border border-cocoa-200 hover:bg-cream-100 text-cocoa-700 rounded-lg transition" @click="navigator.clipboard ? navigator.clipboard.writeText($refs.orderLink.value).then(() => { copied = true; failed = false }).catch(() => { failed = true }) : failed = true">Copy order link</button>\n
+                        <a href="http://127.0.0.1:8000/order/payment/4d0113d56b7b0fdb4958f9049b2d72ce4dfc38e09cb4195bce8bff50fe1b05c5/save-link" class="px-3.5 py-2 text-xs font-semibold text-cocoa-600 hover:text-cocoa-800 underline transition inline-flex items-center">Save order link</a>\n
+                    </div>\n
+                    <p role="status" x-show="copied" x-cloak class="text-xs text-emerald-700 font-medium">Order link copied to clipboard.</p>\n
+                    <p role="status" x-show="failed" x-cloak class="text-xs text-amber-700">Copy is unavailable. Select the link above or use Save order link.</p>\n
+                </section>\n
+                    </div>\n
+    </div>\n
+</div>\n
+    </main>\n
+\n
+    \n
+    <footer class="bg-cocoa-700 text-cocoa-100 py-8 px-4 sm:px-6 lg:px-8 2xl:px-12 mt-12">\n
+        <div class="max-w-[1216px] 2xl:max-w-[1504px] w-full mx-auto">\n
+            <div class="flex flex-wrap items-center justify-between gap-6 text-xs">\n
+                <div class="flex items-center gap-3 min-w-0">\n
+                    <span class="w-8 h-8 rounded-lg bg-cocoa-300/20 flex items-center justify-center text-cocoa-100 text-sm font-bold shrink-0">A</span>\n
+                    <div class="min-w-0">\n
+                        <span class="font-semibold text-white block">Aling Chona Cakes & Cupcakes</span>\n
+                        <span class="text-cocoa-100 block">Custom Bakes & Celebration Delights</span>\n
+                    </div>\n
+                </div>\n
+                <div class="flex flex-wrap items-center gap-4 text-cocoa-100 shrink-0">\n
+                    <span>Cash & GCash Accepted</span>\n
+                    <span>&copy; 2026</span>\n
+                </div>\n
+            </div>\n
+        </div>\n
+    </footer>\n
+    <script type="application/json" id="validation-errors">{"receipt":["The receipt field must be an image.","The receipt field must be a file of type: jpg, jpeg, png, webp."]}</script>\n
+</body>\n
+</html>\n
+' [UTF-8](length: 14748) contains "value="REF-OLD"" [ASCII](length: 15).
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponseAssert.php:45
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:710
+C:\Users\User\Desktop\IT12_Project\tests\Feature\TwoStepOrderingAndReceiptScreenTest.php:137
+
+FAILURES!
+Tests: 138, Assertions: 1843, Failures: 2.

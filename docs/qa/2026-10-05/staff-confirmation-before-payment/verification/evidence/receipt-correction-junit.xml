@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="C:\Users\User\Desktop\IT12_Project\phpunit.xml" tests="6" assertions="81" errors="0" failures="0" skipped="0" time="13.501764">
+    <testsuite name="Feature" tests="6" assertions="81" errors="0" failures="0" skipped="0" time="13.501764">
+      <testsuite name="Tests\Feature\TwoStepOrderingAndReceiptScreenTest" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\TwoStepOrderingAndReceiptScreenTest.php" tests="6" assertions="81" errors="0" failures="0" skipped="0" time="13.501764">
+        <testcase name="test_public_draft_keeps_package_and_uploaded_image_while_moving_back_and_forth" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\TwoStepOrderingAndReceiptScreenTest.php" line="41" class="Tests\Feature\TwoStepOrderingAndReceiptScreenTest" classname="Tests.Feature.TwoStepOrderingAndReceiptScreenTest" assertions="21" time="3.961200"/>
+        <testcase name="test_price_is_checked_again_when_submitting_draft_and_fields_survive_validation" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\TwoStepOrderingAndReceiptScreenTest.php" line="71" class="Tests\Feature\TwoStepOrderingAndReceiptScreenTest" classname="Tests.Feature.TwoStepOrderingAndReceiptScreenTest" assertions="8" time="0.272937"/>
+        <testcase name="test_staff_uses_two_steps_and_can_create_and_select_customer_inline" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\TwoStepOrderingAndReceiptScreenTest.php" line="87" class="Tests\Feature\TwoStepOrderingAndReceiptScreenTest" classname="Tests.Feature.TwoStepOrderingAndReceiptScreenTest" assertions="14" time="4.013970"/>
+        <testcase name="test_rejection_state_and_authenticated_screenshot_remain_separate_from_payment" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\TwoStepOrderingAndReceiptScreenTest.php" line="107" class="Tests\Feature\TwoStepOrderingAndReceiptScreenTest" classname="Tests.Feature.TwoStepOrderingAndReceiptScreenTest" assertions="13" time="4.526818"/>
+        <testcase name="test_buyer_can_replace_a_rejected_receipt_and_prior_history_remains_visible" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\TwoStepOrderingAndReceiptScreenTest.php" line="126" class="Tests\Feature\TwoStepOrderingAndReceiptScreenTest" classname="Tests.Feature.TwoStepOrderingAndReceiptScreenTest" assertions="18" time="0.473542"/>
+        <testcase name="test_buyer_can_remove_saved_reference_without_leaving_an_orphaned_upload" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\TwoStepOrderingAndReceiptScreenTest.php" line="158" class="Tests\Feature\TwoStepOrderingAndReceiptScreenTest" classname="Tests.Feature.TwoStepOrderingAndReceiptScreenTest" assertions="7" time="0.253297"/>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>

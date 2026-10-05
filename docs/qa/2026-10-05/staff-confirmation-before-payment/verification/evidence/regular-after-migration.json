@@ -1,0 +1,189 @@
+{
+    "captured_at_utc": "2026-10-05T11:00:46+00:00",
+    "connection": "mysql",
+    "driver": "mysql",
+    "database": "aling_chona_db",
+    "version": "10.4.32-MariaDB",
+    "pickup_timezone": "Asia\/Manila",
+    "storage_timezone": "UTC",
+    "tables": {
+        "add_on_product": {
+            "count": 18,
+            "sha256": "48cc18b8729ba84f0c8ec8b6d5fa6d210e17724afc4f74b71b7c26f7ec70dbd8"
+        },
+        "add_ons": {
+            "count": 5,
+            "sha256": "9dd710f231659717369e3960ffb77f117dd9040a205e05ec940043f2ac4240dc"
+        },
+        "cache": {
+            "count": 14,
+            "sha256": "d0809422146904eda9072921c5b5e1920a3dc3a542ff2ee64bd1bf973d345993"
+        },
+        "cache_locks": {
+            "count": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "customers": {
+            "count": 6,
+            "sha256": "11c7cc35d93b14260e22a33770f979d7913f48fa7f123bd3f9af09ed23d80715"
+        },
+        "expense_audits": {
+            "count": 1,
+            "sha256": "0180b3729c5c51fa32d0e485900ff76e8cd38b9f326918f1c29ff51c280c4a1f"
+        },
+        "expenses": {
+            "count": 1,
+            "sha256": "f2c3e8d0fd9c73d98103ca899ee05978f22e7da6337542f137d3e793d9cbe686"
+        },
+        "failed_jobs": {
+            "count": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "gcash_references": {
+            "count": 3,
+            "sha256": "86d13c7beb4ff7b734d0cf5c559b872dfa45d076208a27e43227b1e7bd176c04"
+        },
+        "inventory_baselines": {
+            "count": 10,
+            "sha256": "3ce3cd43ec313534d5eb1158271a22d726ba37e8cdee1695f61ca55a94239ba2"
+        },
+        "inventory_operations": {
+            "count": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "inventory_transactions": {
+            "count": 2,
+            "sha256": "35024d005a84adedbc7aaf355a9dc0670132848462c3457c4acccf316091d01b"
+        },
+        "job_batches": {
+            "count": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "jobs": {
+            "count": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "migrations": {
+            "count": 18,
+            "sha256": "608bce916c305d352ea3477e83b652ba049d32e467a3ff73bb9780caf5707fd2"
+        },
+        "order_add_ons": {
+            "count": 4,
+            "sha256": "8bd12a49c7599e0eb39e2d5ddfbad822d0a0e8771a502cce1da61b6a769aea55"
+        },
+        "order_details": {
+            "count": 6,
+            "sha256": "07eae72a87f4316908380277b6ef63408092a5b60b3ff312ef8a8b8faee3f4fb"
+        },
+        "order_images": {
+            "count": 2,
+            "sha256": "87574ed001d7de3979597791a7733d8a5172368c08fd67066c635984ef25ea39"
+        },
+        "orders": {
+            "count": 6,
+            "sha256": "798ef5dcea9620c48b4cc40aa67360929e6cb22700cb35270ef008511434a711"
+        },
+        "package_option_inclusions": {
+            "count": 5,
+            "sha256": "00f3e899d7facc0c1c1399a5bae2f1d3f31a30616d35ede0b5b0d077211d4cc8"
+        },
+        "package_options": {
+            "count": 6,
+            "sha256": "13e589c8e9adfd58069e94f79f8008b07cd55abd3fcd48632832c78882753906"
+        },
+        "password_reset_tokens": {
+            "count": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "payment_proofs": {
+            "count": 7,
+            "sha256": "d10363e12faa686285236c385852a30cbca059892d2771cf430ae8d250cb34ab"
+        },
+        "payment_settings": {
+            "count": 1,
+            "sha256": "3d86d3145b09f5050d0630eb2ef995177fdd90a69e9f2fd9c52b43d41417218a"
+        },
+        "payments": {
+            "count": 5,
+            "sha256": "1f89f2471c73a355dc881ab5e8c728b6e680e430a9775eeb9feaa06bb8655ab2"
+        },
+        "products": {
+            "count": 4,
+            "sha256": "2bb07005c6b9367fba9a8048effa22d41b2f0277ee784a20f6553e8b097567b9"
+        },
+        "refunds": {
+            "count": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "sessions": {
+            "count": 2,
+            "sha256": "232808cfa819ec7d0b5b89dc2a2b39a41d6bc637ed8d4a5b06fc4a44ebaa47c7"
+        },
+        "supplies": {
+            "count": 10,
+            "sha256": "22a2ef1f84bab9df62f65374e6e8b0c4babaa7ac7793a13a7cc81aded915b9c5"
+        },
+        "users": {
+            "count": 2,
+            "sha256": "faa7db7128c4cdea1964d6e3ddbf5f6ab8f7cc918f9930b89605a403ddd151a3"
+        }
+    },
+    "legacy_cancellation_exceptions": [],
+    "legacy_overpayments": [],
+    "review_preflight": [
+        {
+            "id": 1,
+            "status": "completed",
+            "pickup_date": "2026-09-30",
+            "pickup_time": "00:56:00",
+            "paid": "1200.00",
+            "proofs": 2,
+            "awaiting_proofs": 0
+        },
+        {
+            "id": 2,
+            "status": "pending",
+            "pickup_date": "2026-10-10",
+            "pickup_time": "10:00:00",
+            "paid": "0.00",
+            "proofs": 1,
+            "awaiting_proofs": 1
+        },
+        {
+            "id": 3,
+            "status": "pending",
+            "pickup_date": "2026-09-28",
+            "pickup_time": "10:40:00",
+            "paid": "0.00",
+            "proofs": 0,
+            "awaiting_proofs": 0
+        },
+        {
+            "id": 4,
+            "status": "pending",
+            "pickup_date": "2026-10-25",
+            "pickup_time": "09:45:00",
+            "paid": "0.00",
+            "proofs": 1,
+            "awaiting_proofs": 0
+        },
+        {
+            "id": 5,
+            "status": "confirmed",
+            "pickup_date": "2026-09-30",
+            "pickup_time": "10:53:00",
+            "paid": "475.00",
+            "proofs": 1,
+            "awaiting_proofs": 0
+        },
+        {
+            "id": 6,
+            "status": "completed",
+            "pickup_date": "2026-09-30",
+            "pickup_time": "13:00:00",
+            "paid": "2200.00",
+            "proofs": 2,
+            "awaiting_proofs": 0
+        }
+    ]
+}

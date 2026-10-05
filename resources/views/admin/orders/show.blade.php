@@ -23,7 +23,7 @@
             <div>
                 <div class="flex items-center gap-3 flex-wrap">
                     <h1 class="text-2xl font-bold text-cocoa-600 font-mono">{{ $order->order_number }}</h1>
-                    <x-status :value="$order->status" />
+                    <x-status :value="$order->status" :label="$order->workflowLabel()" class="order-workflow-status" />
                     <x-status :value="$order->payment_status" />
                 </div>
                 <div class="text-xs text-cocoa-400 mt-2 flex flex-wrap gap-x-4 gap-y-1">
@@ -170,6 +170,7 @@
 
             </div>
 
+            @include('admin.orders.staff-review')
             @include('admin.orders.proof-review')
 
             {{-- Payments --}}
@@ -182,18 +183,18 @@
                 </div>
 
                 {{-- Down Payment Form --}}
-                @if (Gate::allows('record-payments') && $order->status === 'pending' && $order->user_id !== null)
+                @if (Gate::allows('record-payments') && $order->canRecordDeposit() && $order->user_id !== null)
                     <div class="bg-cream-50 border border-cocoa-100 rounded-lg p-5 space-y-3">
                         <div class="page-heading">
                             <h3 class="font-semibold text-cocoa-600 text-xs ">
-                                Record 50% Down Payment to Confirm Order
+                                Verify 50% Deposit and Secure Booking
                             </h3>
                             <span class="font-bold text-sm text-cocoa-600">
                                 Exact 50%: ₱{{ number_format($order->required_down_payment, 2) }}
                             </span>
                         </div>
                         <p class="text-xs text-cocoa-500">
-                            Recording this verified payment will automatically <strong>confirm</strong> the order.
+                            Staff has confirmed this request. Recording the verified deposit secures the booking and allows preparation.
                         </p>
 
                         <form action="{{ route('orders.payments.store', $order) }}" method="POST" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3 pt-2">
@@ -222,7 +223,7 @@
 
                             <div class="flex items-end">
                                 <button type="submit" class="w-full py-2 bg-cocoa-600 hover:bg-cocoa-700 text-white font-semibold text-xs rounded-lg transition ">
-                                    Record deposit & confirm
+                                    Verify deposit and secure booking
                                 </button>
                             </div>
                         </form>
@@ -281,7 +282,7 @@
                     </div>
                 @endif
                 @if (in_array($order->status, ['pending', 'confirmed', 'preparing'], true))
-                    <p class="text-sm text-cocoa-500">Exactly 50% is collected at booking. The remaining balance is collected at actual pickup after the order is Ready for pickup.</p>
+                    <p class="text-sm text-cocoa-500">Staff confirmation opens the exact 50% deposit. Verification secures the booking. The remaining balance is collected at actual pickup after Ready for pickup.</p>
                 @endif
 
                 {{-- Payment History Table --}}
@@ -365,7 +366,7 @@
             <div class="bg-white border border-cocoa-100 rounded-xl p-5 space-y-3">
                 <h2 class="text-sm font-semibold text-cocoa-600">Order actions</h2>
 
-                @if ($order->status === 'confirmed')
+                @if ($order->canStartPreparation())
                     <form action="{{ route('orders.updateStatus', $order) }}" method="POST">
                         @csrf
                         @method('PATCH')
@@ -374,6 +375,8 @@
                             <span>Start Preparing (Baking)</span>
                         </button>
                     </form>
+                @elseif ($order->status === 'confirmed')
+                    <p class="p-3 bg-amber-50 rounded-lg text-sm">Preparation is locked until staff confirmation and the exact 50% deposit are verified.</p>
                 @elseif ($order->status === 'preparing')
                     <form action="{{ route('orders.updateStatus', $order) }}" method="POST">
                         @csrf
@@ -404,13 +407,16 @@
                     </div>
                 @elseif ($order->status === 'cancelled')
                     <div class="p-3 bg-red-50 border border-red-200 rounded-lg text-xs text-red-800 font-semibold text-center">
-                        Order Cancelled
+                        {{ $order->cancellation_kind === 'staff_rejected' ? 'Request declined' : 'Order Cancelled' }}
                     </div>
                 @endif
 
                 @if (Gate::allows('cancel-orders') && $order->status !== 'completed' && $order->status !== 'cancelled')
                     <form action="{{ route('orders.cancel', $order) }}" method="POST" onsubmit="return confirm('Are you sure you want to cancel this order? The deposit is retained under the customer-cancellation policy. For bakery failure, use the full-refund action instead.');">
                         @csrf
+                        @if ($order->amount_paid === 0.0 && $order->paymentProofs->isNotEmpty())
+                            <label class="flex items-start gap-3 my-3 text-sm"><input type="checkbox" name="no_funds_checked" value="1" required><span>I checked every reported transfer in the business account and no funds were received. If funds arrived, I must verify them before closing this order.</span></label>
+                        @endif
                         <button type="submit" class="w-full py-2 bg-white hover:bg-red-50 text-red-600 font-medium text-sm rounded-lg border border-red-200 transition">
                             <span>Customer cancellation</span>
                         </button>

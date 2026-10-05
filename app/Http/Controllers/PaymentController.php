@@ -40,7 +40,7 @@ class PaymentController extends Controller
                 $validated['reference_number'] ?? null,
                 $user
             );
-            $message = '50% down payment of ₱'.number_format($validated['amount'], 2).' recorded. Order is now Confirmed!';
+            $message = '50% deposit of ₱'.number_format($validated['amount'], 2).' verified. Booking secured; preparation is now available.';
         } else {
             $this->orderService->recordFinalPayment(
                 $order,

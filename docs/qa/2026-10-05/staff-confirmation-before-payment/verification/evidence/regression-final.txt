@@ -1,0 +1,12 @@
+PHPUnit 11.5.56 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.2.12
+Configuration: C:\Users\User\Desktop\IT12_Project\phpunit.xml
+
+...............................................................  63 / 137 ( 45%)
+............................................................... 126 / 137 ( 91%)
+...........                                                     137 / 137 (100%)
+
+Time: 00:41.424, Memory: 64.00 MB
+
+OK (137 tests, 1837 assertions)

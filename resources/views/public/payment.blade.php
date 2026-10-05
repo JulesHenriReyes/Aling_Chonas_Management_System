@@ -2,7 +2,7 @@
 @section('title', 'Your order · Aling Chona')
 @section('content')
 @php($proof = $order->paymentProofs->first())
-<div class="max-w-5xl mx-auto space-y-6">
+<div class="public-order-status max-w-5xl mx-auto space-y-6">
     {{-- Progress Navigation --}}
     <nav aria-label="Progress" class="mb-5">
         <div class="flex items-center text-xs tracking-wide">
@@ -10,7 +10,7 @@
             <span class="text-cocoa-300 mx-2">/</span>
             <span class="text-cocoa-700">Contact & pickup</span>
             <span class="text-cocoa-300 mx-2">/</span>
-            <span class="text-cocoa-700 font-semibold" aria-current="step">Payment</span>
+            <span class="text-cocoa-700 font-semibold" aria-current="step">Order status</span>
         </div>
     </nav>
 
@@ -27,8 +27,10 @@
                 This order is cancelled. See the payment and refund status below.
             @elseif ($order->status === 'completed')
                 Pickup is complete. No further payment is due.
+            @elseif ($order->needsStaffReview() || $order->status === 'pending')
+                Staff will review your request first. No payment is requested while it awaits confirmation.
             @else
-                Pay exactly 50% at booking. The remaining balance is due only when you collect your order after it is Ready for pickup.
+                After staff confirmation, pay the exact 50% deposit to secure your booking. The remaining balance is due only at actual pickup after Ready for pickup.
             @endif
         </p>
     </header>
@@ -41,30 +43,38 @@
     <section class="checkout-card p-5 space-y-3" aria-labelledby="order-progress">
         <div class="flex items-center justify-between border-b border-cocoa-100 pb-3">
             <h2 id="order-progress" class="font-bold text-cocoa-700 text-sm">Order progress</h2>
-            <x-status :value="$order->status" :label="$order->status === 'pending' ? 'Pending deposit verification' : null" />
+            <x-status :value="$order->status" :label="$order->workflowLabel()" class="order-workflow-status" />
         </div>
         <div class="text-sm text-cocoa-600">
-            @if ($order->status === 'pending')
-                @if (!$proof)
-                    <p><strong>Awaiting receipt.</strong> {{ $settings?->isConfigured() ? 'Pay the exact 50% deposit using the business GCash QR below, then send your receipt.' : 'Your order is saved. The bakery needs to set up its GCash payment details before you send money.' }}</p>
-                @elseif ($proof->status === 'awaiting_verification')
+            @if ($order->needsStaffReview() || $order->status === 'pending')
+                <p><strong>Awaiting staff confirmation.</strong> The bakery will check your design, quantity, pickup schedule and capacity before opening payment. Keep this private link to check the decision.</p>
+                @if ($proof || $order->amount_paid > 0)
+                    <p class="mt-2 text-amber-800">A payment or receipt was reported under the previous flow. The Owner needs to check it. Please do not transfer again; contact the bakery for reconciliation.</p>
+                @endif
+            @elseif ($order->status === 'confirmed' && $order->amount_paid === 0.0)
+                @if ($proof?->status === 'awaiting_verification')
                     <p><strong>Awaiting verification.</strong> Your receipt is with our team. It does not count as a payment until verified. Please do not pay again.</p>
-                @elseif ($proof->status === 'rejected')
+                @elseif ($proof?->status === 'rejected')
                     <div class="receipt-rejected" role="alert">
                         <strong>Receipt rejected</strong>
                         <p>{{ $proof->rejection_reason }}</p>
                         <a href="#replacement-receipt" class="inline-block underline font-semibold mt-1">Upload a replacement receipt</a>
                     </div>
                     <p class="mt-2 text-xs text-cocoa-500">If the transfer succeeded, do not pay again. Contact the bakery if you need help resolving the rejection.</p>
+                @else
+                    <p><strong>Confirmed — awaiting deposit.</strong> The bakery has confirmed it can fulfil your request. {{ $settings?->isConfigured() ? 'Pay the exact 50% deposit below to secure your booking. Preparation starts after the deposit is verified.' : 'Payment details are not configured yet. Contact the bakery before sending money.' }}</p>
                 @endif
             @elseif ($order->status === 'confirmed')
-                <p>Your deposit is verified and your order is confirmed. We’ll mark it Preparing when baking begins.</p>
+                <p>Your deposit is verified and your booking is secured. We’ll mark it Preparing when baking begins.</p>
             @elseif ($order->status === 'preparing')
                 <p>We’re preparing your cakes. Check this link for Ready for pickup.</p>
             @elseif ($order->status === 'ready_for_pickup')
                 <p>Your order is ready for pickup. The remaining balance is due when you collect it.</p>
             @elseif ($order->status === 'completed')
                 <p>Your order has been collected and paid in full. Thank you for ordering with Aling Chona.</p>
+            @elseif ($order->cancellation_kind === 'staff_rejected')
+                <p><strong>Request declined.</strong> The bakery cannot accept this request: {{ $order->cancellation_reason }}</p>
+                <p class="mt-2">No verified payment is recorded. @if($proof)The Owner checked the reported transfer before declining; contact the bakery if your account shows a successful transfer.@else No payment was requested for this request.@endif You may submit a revised request.</p>
             @elseif ($order->cancellation_kind === 'bakery_failure')
                 <p>The bakery could not fulfil your order. {{ $order->cancellation_reason }}</p>
                 @unless ($order->refund)<p>No verified payment was recorded, so no refund is due.</p>@endunless
@@ -94,7 +104,7 @@
         </section>
     @endif
 
-    @php($needsPayment = $order->status === 'pending' && (!$proof || $proof->status === 'rejected'))
+    @php($needsPayment = $order->canSubmitReceipt() && ($settings?->isConfigured() || $proof?->status === 'rejected' || filled(old('reference_number'))))
 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {{-- Left Column: Order Items & Pricing Summary + Bookmark Link --}}
@@ -181,7 +191,7 @@
                             <div class="w-8 h-8 rounded-lg bg-cocoa-50 text-cocoa-700 flex items-center justify-center shrink-0 border border-cocoa-200">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
                             </div>
-                            <h2 class="font-bold text-cocoa-700 text-base">Pay your GCash deposit</h2>
+                            <h2 class="font-bold text-cocoa-700 text-base">{{ $proof?->status === 'rejected' ? 'Correct your payment receipt' : ($settings?->isConfigured() ? 'Pay your GCash deposit' : 'Submit your reported transfer receipt') }}</h2>
                         </div>
                         <span class="text-xs font-extrabold text-cocoa-700 px-2.5 py-1 rounded-full bg-cream-100 border border-cocoa-200">
                             ₱{{ number_format($order->required_down_payment, 2) }}
@@ -190,17 +200,21 @@
 
                     {{-- Step 1: Scan & Transfer --}}
                     <section class="space-y-3" aria-labelledby="gcash-payment">
+                        @if ($settings?->isConfigured())
                         <div class="flex items-center gap-2">
                             <span class="w-5 h-5 rounded-full bg-cocoa-700 text-white text-[11px] font-bold flex items-center justify-center">1</span>
                             <h3 id="gcash-payment" class="text-xs font-bold text-cocoa-700 uppercase tracking-wider">Step 1: Scan & Send via GCash</h3>
                         </div>
+                        @else
+                            <h3 id="gcash-payment" class="text-xs font-bold text-cocoa-700">Payment details unavailable</h3>
+                        @endif
 
                         @if ($settings?->isConfigured())
                             <p class="text-xs text-cocoa-600">
-                                Send exactly <strong class="font-bold text-cocoa-700">₱{{ number_format($order->required_down_payment, 2) }}</strong> using the business GCash QR.
+                                @if ($proof?->status === 'rejected')If you have already transferred money, do not pay again. Correct your receipt below or contact the bakery. Only send money if you have not already made a transfer.@else Send exactly <strong class="font-bold text-cocoa-700">₱{{ number_format($order->required_down_payment, 2) }}</strong> using the business GCash QR.@endif
                             </p>
                             <div class="flex flex-col items-center gap-2.5 p-3 rounded-xl bg-cream-50/60 border border-cocoa-100">
-                                <img src="{{ asset('storage/'.$settings->qr_path) }}" width="240" height="240" alt="Business GCash payment QR" class="w-full max-w-[220px] h-auto rounded-lg border border-cocoa-100 bg-white p-2 shadow-xs">
+                                <img src="{{ route('public.order.qr', ['token' => $order->private_token, 'inline' => 1]) }}" width="240" height="240" alt="Business GCash payment QR" class="w-full max-w-[220px] h-auto rounded-lg border border-cocoa-100 bg-white p-2 shadow-xs">
                                 <a href="{{ route('public.order.qr', $order->private_token) }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white hover:bg-cream-100 text-cocoa-700 text-xs font-semibold border border-cocoa-200 transition shadow-2xs">
                                     <svg class="w-3.5 h-3.5 text-cocoa-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
                                     <span>Save QR image</span>

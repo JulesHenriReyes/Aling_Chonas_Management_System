@@ -22,7 +22,7 @@
         <div class="p-6 sm:p-8 space-y-6">
             <div>
                 <x-status :value="$orderData['status']" :label="'Pending review'" />
-                <p class="text-sm text-cocoa-500 mt-2">Your request has been submitted, but is not yet confirmed. Our team will contact you after reviewing your design.</p>
+                <p class="text-sm text-cocoa-500 mt-2">Your request is awaiting staff confirmation. No payment is requested yet. Use your saved private order link to check the decision.</p>
             </div>
 
             {{-- Next Steps & 50% Down Payment Instructions --}}
@@ -32,16 +32,16 @@
                 </h2>
                 <ol class="list-decimal list-inside text-sm text-cocoa-500 space-y-2 leading-relaxed">
                     <li>
-                        <strong>Staff Price Review:</strong> Displayed prices are initial estimates. Staff will review your custom layers, theme, and decoration requests to confirm the final order price.
+                        <strong>Staff Confirmation:</strong> Staff will review the saved items, design, quantities, pickup schedule and available capacity before accepting the request.
                     </li>
                     <li>
-                        <strong>50% Down Payment:</strong> Once the price is finalized, an <strong>exact 50% down payment</strong> is required to confirm your order and schedule preparation.
+                        <strong>50% Down Payment:</strong> Pay only after staff confirmation. The verified exact 50% deposit secures the booking and allows preparation.
                     </li>
                     <li>
                         <strong>Payment Methods:</strong> We accept <strong>Cash</strong> or <strong>GCash</strong>. If paying via GCash, please provide the transaction reference number to our staff.
                     </li>
                     <li>
-                        <strong>Remaining Balance:</strong> The remaining 50% balance will be settled upon pickup of your cake.
+                        <strong>Remaining Balance:</strong> Pay the remaining balance at actual collection after Ready for pickup.
                     </li>
                 </ol>
             </div>

@@ -1,0 +1,24 @@
+{"width":360,"captures":29,"failures":0}
+{"width":390,"captures":67,"failures":2}
+{"width":430,"captures":96,"failures":2}
+{"width":768,"captures":125,"failures":2}
+{"width":1024,"captures":154,"failures":2}
+{"width":1440,"captures":186,"failures":2}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: [{"filename":"public-pending-390-text200.png","issue":"page-overflow","amount":195},{"filename":"public-approved-390-text200.png","issue":"page-overflow","amount":195}]
+
+2 !== 0
+
+    at file:///C:/Users/User/Desktop/IT12_Project/docs/qa/2026-10-05/staff-confirmation-before-payment/browser-verification.mjs:155:12 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 2,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

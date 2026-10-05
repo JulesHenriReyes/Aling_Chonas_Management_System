@@ -16,6 +16,12 @@
 @endcan
     </div>
 
+    <nav aria-label="Order workflow queues" class="flex flex-wrap gap-2">
+        @foreach (['review' => 'Awaiting staff review', 'deposit' => 'Awaiting deposit', 'receipts' => 'Receipt verification', 'booked' => 'Paid bookings'] as $queue => $queueLabel)
+            <a href="{{ route('orders.index', array_merge(request()->query(), ['queue' => $queue, 'status' => null, 'page' => 1])) }}" class="inline-flex items-center min-h-[44px] px-3 py-3 border rounded-lg text-sm font-semibold {{ request('queue') === $queue ? 'bg-cocoa-600 text-white border-cocoa-600' : 'bg-white text-cocoa-700 border-cocoa-100' }}">{{ $queueLabel }}</a>
+        @endforeach
+    </nav>
+
     <!-- Filters & Search -->
     <div class="space-y-4">
         <!-- Status Tabs -->
@@ -33,7 +39,7 @@
                 ];
             @endphp
             @foreach ($statuses as $key => $label)
-                <a href="{{ route('orders.index', array_merge(request()->query(), ['status' => $key, 'page' => 1])) }}"
+                <a href="{{ route('orders.index', array_merge(request()->query(), ['status' => $key, 'queue' => null, 'page' => 1])) }}"
                    class="px-3 py-1.5 rounded-lg font-medium transition {{ $currentStatus === $key ? 'bg-cocoa-600 text-white' : 'text-cocoa-500 hover:bg-cream-100' }}">
                     {{ $label }}
                 </a>
@@ -42,6 +48,7 @@
 
         <form action="{{ route('orders.index') }}" method="GET" class="flex flex-col sm:flex-row gap-3">
             <input type="hidden" name="status" value="{{ request('status') }}">
+            @if(request('queue'))<input type="hidden" name="queue" value="{{ request('queue') }}">@endif
             <div class="flex-grow">
                 <input aria-label="Search" type="text" name="search" value="{{ request('search') }}" 
                        placeholder="Search by Order #, Customer Name, or Phone..." 
@@ -131,7 +138,7 @@
                                     @endif
                                 </td>
                                 <td class="p-4">
-                                    <x-status :value="$order->status" />
+                                    <x-status :value="$order->status" :label="$order->workflowLabel()" class="order-workflow-status" />
                                 </td>
                                 <td class="p-4 text-right">
                                     <a href="{{ route('orders.show', $order) }}" 

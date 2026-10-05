@@ -1,5 +1,5 @@
 @if ($staff)<script src="{{ asset('js/staff-customer-picker.js') }}?v={{ filemtime(public_path('js/staff-customer-picker.js')) }}"></script>@endif
-<form action="{{ $staff ? route('orders.store') : route('public.order.store') }}" method="POST" class="order-details-grid" @if($staff) x-data="staffCustomerPicker({{ Js::from($customers->map(fn ($customer) => ['id' => $customer->id, 'name' => $customer->full_name, 'phone' => $customer->phone_number])->values()) }}, {{ Js::from(old('customer_id', $draft['details']['customer_id'] ?? '')) }}, {{ Js::from(route('orders.inlineCustomer')) }}, {{ Js::from(csrf_token()) }})" @submit="if ($event.submitter?.formAction !== {{ Js::from(route('orders.back')) }} && !selectedId) { error = 'Choose or add a customer before saving this order.'; $event.preventDefault() }" @endif>
+<form action="{{ $staff ? route('orders.store') : route('public.order.store') }}" method="POST" class="review-first-checkout order-details-grid" @if($staff) x-data="staffCustomerPicker({{ Js::from($customers->map(fn ($customer) => ['id' => $customer->id, 'name' => $customer->full_name, 'phone' => $customer->phone_number])->values()) }}, {{ Js::from(old('customer_id', $draft['details']['customer_id'] ?? '')) }}, {{ Js::from(route('orders.inlineCustomer')) }}, {{ Js::from(csrf_token()) }})" @submit="if ($event.submitter?.formAction !== {{ Js::from(route('orders.back')) }} && !selectedId) { error = 'Choose or add a customer before saving this order.'; $event.preventDefault() }" @endif>
     @csrf
     @unless($staff)
         <input type="hidden" name="submission_key" value="{{ $draft['submission_key'] }}">
@@ -132,18 +132,39 @@
             </span>
         </div>
 
-        <div class="divide-y divide-cocoa-100 max-h-80 overflow-y-auto pr-1 -mr-1">
+        <div class="divide-y divide-cocoa-100 max-h-96 overflow-y-auto pr-1 -mr-1">
             @foreach ($quote['lines'] as $line)
-                <div class="py-3 text-xs space-y-1.5 first:pt-0">
-                    <div class="flex justify-between items-start gap-2">
-                        <div class="font-bold text-cocoa-700 text-sm">
-                            {{ $line['product_name_snapshot'] }}
-                            <span class="inline-block text-xs font-semibold text-cocoa-600 bg-cream-100 px-1.5 py-0.5 rounded border border-cocoa-100 ml-1">×{{ $line['quantity'] }}</span>
+                @php($photo = $line['photo_path'] ?? \App\Models\Product::find($line['product_id'])?->photo_path)
+                @php($draftItem = $draft['items'][$loop->index] ?? null)
+                <div class="py-3.5 text-xs space-y-2.5 first:pt-0">
+                    {{-- Package visual row with thumbnail on left --}}
+                    <div class="flex items-start gap-3">
+                        @if ($photo)
+                            <img src="{{ asset('storage/' . $photo) }}"
+                                 alt="{{ $line['product_name_snapshot'] }}"
+                                 width="64"
+                                 height="64"
+                                 class="w-16 h-16 rounded-xl object-cover border border-cocoa-100/90 bg-white shrink-0 shadow-xs">
+                        @else
+                            <div class="w-16 h-16 rounded-xl bg-cocoa-50 border border-cocoa-100 flex items-center justify-center shrink-0 text-cocoa-400">
+                                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8.25v-1.5m0 1.5c-1.355 0-2.697.056-4.024.166C6.845 8.51 6 9.473 6 10.608v2.513m6-4.871c1.355 0 2.697.056 4.024.166C17.155 8.51 18 9.473 18 10.608v2.513M15 8.25v-1.5m-6 1.5v-1.5m12 9.75-1.5.75m-15-.75 1.5.75m0 0a3.75 3.75 0 0 0 7.5 0m7.5 0a3.75 3.75 0 0 1-7.5 0" /></svg>
+                            </div>
+                        @endif
+
+                        <div class="min-w-0 flex-1 space-y-0.5">
+                            <div class="flex justify-between items-start gap-2">
+                                <div class="font-bold text-cocoa-700 text-sm leading-snug">
+                                    {{ $line['product_name_snapshot'] }}
+                                    <span class="inline-block text-xs font-semibold text-cocoa-600 bg-cream-100 px-1.5 py-0.5 rounded border border-cocoa-100 ml-1">×{{ $line['quantity'] }}</span>
+                                </div>
+                                <span class="font-bold text-cocoa-700 whitespace-nowrap text-sm">₱{{ number_format($line['unit_price'] * $line['quantity'], 2) }}</span>
+                            </div>
+                            <p class="text-cocoa-500 text-[11px]">{{ $line['layers'] }} layer(s)</p>
                         </div>
-                        <span class="font-bold text-cocoa-700 whitespace-nowrap text-sm">₱{{ number_format($line['unit_price'] * $line['quantity'], 2) }}</span>
                     </div>
-                    <p class="text-cocoa-500 text-[11px]">{{ $line['layers'] }} layer(s)</p>
+
                     @include('partials.included-items', ['includedItems' => $line['included_items_snapshot'] ?? [], 'includedText' => $line['included_contents_snapshot'], 'packageQuantity' => $line['quantity']])
+
                     @if ($line['themes'])
                         <div class="text-[11px] text-cocoa-600 bg-cream-100/60 px-2 py-1 rounded border border-cocoa-100/80">
                             <span class="font-semibold text-cocoa-700">Theme/Colors:</span> {{ $line['themes'] }}
@@ -154,13 +175,26 @@
                             <span class="font-semibold text-amber-900">Custom request:</span> {{ $line['special_request'] }}
                         </div>
                     @endif
+                    @if (!empty($draftItem['staged_images']))
+                        <div class="text-[11px] text-cocoa-600 bg-cream-50 px-2 py-1 rounded border border-cocoa-100 flex items-center gap-1.5">
+                            <svg class="w-3.5 h-3.5 text-cocoa-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            <span>{{ count($draftItem['staged_images']) }} reference photo(s) attached</span>
+                        </div>
+                    @endif
                     @if (!empty($line['add_ons']))
-                        <div class="pl-2 border-l-2 border-cocoa-200 text-[11px] space-y-0.5 text-cocoa-500">
-                            <p class="font-semibold">Paid extras · quantities for this whole order line</p>
+                        <div class="pl-2 border-l-2 border-cocoa-200 text-[11px] space-y-1.5 text-cocoa-500 pt-0.5">
+                            <p class="font-semibold text-cocoa-600">Paid extras · quantities for this whole order line</p>
                             @foreach ($line['add_ons'] as $extra)
-                                <div class="flex justify-between">
-                                    <span>+ {{ $extra['name_snapshot'] }} × {{ $extra['quantity'] }}</span>
-                                    <span class="font-medium text-cocoa-600">₱{{ number_format($extra['unit_price'] * $extra['quantity'], 2) }}</span>
+                                <div class="flex items-center justify-between gap-2">
+                                    <div class="flex items-center gap-1.5 min-w-0">
+                                        @if (!empty($extra['photo_path']))
+                                            <img src="{{ asset('storage/' . $extra['photo_path']) }}"
+                                                 alt="{{ $extra['name_snapshot'] }}"
+                                                 class="w-6 h-6 rounded object-cover border border-cocoa-100 shrink-0 bg-cream-50">
+                                        @endif
+                                        <span class="truncate">+ {{ $extra['name_snapshot'] }} × {{ $extra['quantity'] }}</span>
+                                    </div>
+                                    <span class="font-medium text-cocoa-600 whitespace-nowrap">₱{{ number_format($extra['unit_price'] * $extra['quantity'], 2) }}</span>
                                 </div>
                             @endforeach
                         </div>
@@ -181,18 +215,18 @@
                     <strong class="text-base font-extrabold text-cocoa-700">₱{{ number_format($quote['deposit'], 2) }}</strong>
                 </div>
                 <p class="text-[11px] text-cocoa-500 leading-tight">
-                    Required to confirm your slot. The remaining balance (₱{{ number_format($quote['total'] - $quote['deposit'], 2) }}) is paid at pickup.
+                    Pay only after staff confirms your request. The verified deposit secures your booking; the remaining balance (₱{{ number_format($quote['total'] - $quote['deposit'], 2) }}) is paid at actual pickup.
                 </p>
             </div>
         </div>
 
         <input type="hidden" name="expected_total" value="{{ $quote['total'] }}">
 
-        @if ($staff)<p class="text-xs text-cocoa-400">Record the exact deposit after creating this order.</p>@endif
+        <p class="text-xs text-cocoa-500">The bakery will review your request first. Payment becomes available after staff confirmation.</p>
 
         <div class="flex flex-col gap-2 pt-1">
             <button type="submit" class="w-full py-3.5 px-5 bg-cocoa-600 hover:bg-cocoa-700 active:scale-[0.99] text-white font-semibold rounded-xl shadow-sm transition flex items-center justify-center gap-2 text-sm">
-                <span>{{ $staff ? 'Create staff order' : 'Submit order & continue' }}</span>
+                <span>{{ $staff ? 'Create staff order request' : 'Submit order request' }}</span>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
             </button>
             <button type="submit" formnovalidate formaction="{{ $staff ? route('orders.back') : route('public.order.back') }}" class="w-full py-2.5 px-4 border border-cocoa-200 hover:bg-cream-100 text-cocoa-600 font-medium rounded-xl transition flex items-center justify-center gap-2 text-xs">

@@ -1,0 +1,217 @@
+[
+  {
+    "File": "app/Http/Controllers/DashboardController.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in app/Http/Controllers/DashboardController.php"
+  },
+  {
+    "File": "app/Http/Controllers/OrderController.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in app/Http/Controllers/OrderController.php"
+  },
+  {
+    "File": "app/Http/Controllers/OrderPaymentPageController.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in app/Http/Controllers/OrderPaymentPageController.php"
+  },
+  {
+    "File": "app/Http/Controllers/PaymentController.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in app/Http/Controllers/PaymentController.php"
+  },
+  {
+    "File": "app/Http/Controllers/PaymentReviewController.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in app/Http/Controllers/PaymentReviewController.php"
+  },
+  {
+    "File": "app/Http/Controllers/PickupScheduleController.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in app/Http/Controllers/PickupScheduleController.php"
+  },
+  {
+    "File": "app/Http/Controllers/PublicOrderController.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in app/Http/Controllers/PublicOrderController.php"
+  },
+  {
+    "File": "app/Http/Controllers/RefundController.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in app/Http/Controllers/RefundController.php"
+  },
+  {
+    "File": "app/Models/Order.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in app/Models/Order.php"
+  },
+  {
+    "File": "app/Providers/AppServiceProvider.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in app/Providers/AppServiceProvider.php"
+  },
+  {
+    "File": "app/Services/OrderReviewService.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in app/Services/OrderReviewService.php"
+  },
+  {
+    "File": "app/Services/OrderService.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in app/Services/OrderService.php"
+  },
+  {
+    "File": "app/Services/PaymentReviewService.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in app/Services/PaymentReviewService.php"
+  },
+  {
+    "File": "app/Services/RefundService.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in app/Services/RefundService.php"
+  },
+  {
+    "File": "database/migrations/2026_10_05_000001_add_order_staff_review.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in database/migrations/2026_10_05_000001_add_order_staff_review.php"
+  },
+  {
+    "File": "resources/views/admin/dashboard.blade.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in resources/views/admin/dashboard.blade.php"
+  },
+  {
+    "File": "resources/views/admin/orders/index.blade.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in resources/views/admin/orders/index.blade.php"
+  },
+  {
+    "File": "resources/views/admin/orders/proof-review.blade.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in resources/views/admin/orders/proof-review.blade.php"
+  },
+  {
+    "File": "resources/views/admin/orders/refund.blade.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in resources/views/admin/orders/refund.blade.php"
+  },
+  {
+    "File": "resources/views/admin/orders/show.blade.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in resources/views/admin/orders/show.blade.php"
+  },
+  {
+    "File": "resources/views/admin/schedule/index.blade.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in resources/views/admin/schedule/index.blade.php"
+  },
+  {
+    "File": "resources/views/admin/supplies/index.blade.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in resources/views/admin/supplies/index.blade.php"
+  },
+  {
+    "File": "resources/views/auth/login.blade.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in resources/views/auth/login.blade.php"
+  },
+  {
+    "File": "resources/views/layouts/admin.blade.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in resources/views/layouts/admin.blade.php"
+  },
+  {
+    "File": "resources/views/partials/catalog-order-details.blade.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in resources/views/partials/catalog-order-details.blade.php"
+  },
+  {
+    "File": "resources/views/public/details.blade.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in resources/views/public/details.blade.php"
+  },
+  {
+    "File": "resources/views/public/layout.blade.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in resources/views/public/layout.blade.php"
+  },
+  {
+    "File": "resources/views/public/payment.blade.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in resources/views/public/payment.blade.php"
+  },
+  {
+    "File": "routes/web.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in routes/web.php"
+  },
+  {
+    "File": "tests/Feature/ApprovedWorkflowReportAcceptanceTest.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in tests/Feature/ApprovedWorkflowReportAcceptanceTest.php"
+  },
+  {
+    "File": "tests/Feature/FinancialReportingTest.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in tests/Feature/FinancialReportingTest.php"
+  },
+  {
+    "File": "tests/Feature/FixedCatalogAndPaymentReviewTest.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in tests/Feature/FixedCatalogAndPaymentReviewTest.php"
+  },
+  {
+    "File": "tests/Feature/ImplementationPolicyTest.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in tests/Feature/ImplementationPolicyTest.php"
+  },
+  {
+    "File": "tests/Feature/OrderAndPaymentBusinessRulesTest.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in tests/Feature/OrderAndPaymentBusinessRulesTest.php"
+  },
+  {
+    "File": "tests/Feature/OrderReviewAndPricingTest.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in tests/Feature/OrderReviewAndPricingTest.php"
+  },
+  {
+    "File": "tests/Feature/Phase3QAFixesTest.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in tests/Feature/Phase3QAFixesTest.php"
+  },
+  {
+    "File": "tests/Feature/StaffConfirmationBeforePaymentTest.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in tests/Feature/StaffConfirmationBeforePaymentTest.php"
+  },
+  {
+    "File": "tests/Feature/TwoStepOrderingAndReceiptScreenTest.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in tests/Feature/TwoStepOrderingAndReceiptScreenTest.php"
+  },
+  {
+    "File": "tests/Feature/UiPresentationTest.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in tests/Feature/UiPresentationTest.php"
+  },
+  {
+    "File": "tests/Support/DisposableDatabase.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in tests/Support/DisposableDatabase.php"
+  },
+  {
+    "File": "tests/Support/DisposableMariaDb.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in tests/Support/DisposableMariaDb.php"
+  },
+  {
+    "File": "tests/Support/staff-review-concurrency-worker.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in tests/Support/staff-review-concurrency-worker.php"
+  },
+  {
+    "File": "tests/TestCase.php",
+    "Exit": 0,
+    "Output": "No syntax errors detected in tests/TestCase.php"
+  }
+]

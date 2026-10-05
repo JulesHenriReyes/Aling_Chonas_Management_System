@@ -1,0 +1,46 @@
+{
+    "environment": "Synthetic isolated SQLite preview",
+    "url": "http:\/\/127.0.0.1:8134",
+    "database": "C:\\Users\\User\\AppData\\Local\\Temp\/workflow-concurrency-staff-review-preview-f1ad56ac0317\/workflow-concurrency-preview.sqlite",
+    "storage": "C:\\Users\\User\\AppData\\Local\\Temp\/workflow-concurrency-staff-review-preview-f1ad56ac0317\/storage",
+    "orders": {
+        "pending": 1,
+        "approved": 2,
+        "confirmed": 3,
+        "preparing": 4,
+        "ready": 5,
+        "completed": 6,
+        "cancelled": 7,
+        "failure-pending": 8,
+        "failure-completed": 9,
+        "declined": 18,
+        "legacy": 19
+    },
+    "public": {
+        "pending": "\/order\/payment\/16950b9708505f3a831e3b47da92fb28668eb5ee915b4f101a6654f2e8335fd0",
+        "approved": "\/order\/payment\/5217019db7c7d2c7dc78507b341ca722816abc23b734746118c71073c6edf325",
+        "awaiting": "\/order\/payment\/1f77564dd8fcd50f51e8c57709886e7151b8ff75aa46745f7cef1c071b3f0c2e",
+        "rejected": "\/order\/payment\/08f61b5e71b71fdd1039a80c69af3f42d0de596113036dd7863ced9c0ce8e550",
+        "verified": "\/order\/payment\/4152656e9ff5346da6e4e2fa75f0d102e1e7b9bd388a45cfb9251ebbedca8e8b",
+        "cancelled": "\/order\/payment\/be6e7a95555b1fd2a03070f1700a6773ee7931347c367ea69646e21bcc13a698",
+        "failure-pending": "\/order\/payment\/e7c7bdca1befddf6db490ed45cd6fef8f5b3378d40834ec5e102ed799a8f17f1",
+        "failure-completed": "\/order\/payment\/9ddab0d4c9a5532a15e7ca7978e0c6a683dc40747b12e3ece0881b57d04f152d",
+        "declined": "\/order\/payment\/4e6a12b12a2707e7e8e34c5bd2d39f5bf24dc9dd9ef92ab326159c6b9380f9a1",
+        "legacy": "\/order\/payment\/b8e5b65d72f3aca816a24518dce855bab20125f24f1279ade2cfb6e0d654d5d7"
+    },
+    "product": 1,
+    "option": 1,
+    "customer": 1,
+    "public_ids": {
+        "pending": 10,
+        "approved": 11,
+        "awaiting": 12,
+        "rejected": 13,
+        "verified": 14,
+        "cancelled": 15,
+        "failure-pending": 16,
+        "failure-completed": 17
+    },
+    "supply": 1,
+    "expense": 1
+}

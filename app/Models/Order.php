@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -39,6 +40,7 @@ class Order extends Model
             'completed_at' => 'datetime',
             'cancelled_at' => 'datetime',
             'ready_at' => 'datetime',
+            'reviewed_at' => 'datetime',
             'fixed_catalog_pricing' => 'boolean',
         ];
     }
@@ -51,6 +53,86 @@ class Order extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function reviewer(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'reviewed_by');
+    }
+
+    public function hasApprovedReview(): bool
+    {
+        return $this->review_status === 'approved' && $this->reviewed_by !== null && $this->reviewed_at !== null;
+    }
+
+    public function canRecordDeposit(): bool
+    {
+        return $this->status === 'confirmed' && $this->hasApprovedReview()
+            && $this->amount_paid === 0.0 && ! $this->hasDownPayment();
+    }
+
+    public function canSubmitReceipt(): bool
+    {
+        return $this->user_id === null && $this->canRecordDeposit()
+            && ! $this->hasAwaitingReceipt();
+    }
+
+    public function needsStaffReview(): bool
+    {
+        return $this->amount_paid === 0.0 && ($this->status === 'pending'
+            || ($this->status === 'confirmed' && $this->review_status === null));
+    }
+
+    public function hasVerifiedDeposit(): bool
+    {
+        $deposits = $this->relationLoaded('payments') ? $this->payments->where('payment_type', 'down_payment')
+            : $this->payments()->where('payment_type', 'down_payment')->get();
+
+        return $deposits->count() === 1 && $this->required_down_payment > 0
+            && (int) round((float) $deposits->first()->amount * 100) === (int) round($this->required_down_payment * 100);
+    }
+
+    public function canStartPreparation(): bool
+    {
+        return $this->status === 'confirmed'
+            && ($this->hasApprovedReview() || $this->review_status === null)
+            && ($this->hasVerifiedDeposit() || ($this->review_status === null && $this->total_amount > 0
+                && $this->payment_status === 'fully_paid'));
+    }
+
+    public function workflowLabel(): string
+    {
+        if ($this->status === 'cancelled' && $this->cancellation_kind === 'staff_rejected') {
+            return 'Request declined';
+        }
+        if ($this->needsStaffReview()) {
+            return $this->hasReportedTransfer() ? 'Staff review — reported payment needs checking' : 'Awaiting staff confirmation';
+        }
+        if ($this->status === 'confirmed' && $this->amount_paid === 0.0) {
+            return $this->hasAwaitingReceipt()
+                ? 'Receipt awaiting verification' : 'Confirmed — awaiting deposit';
+        }
+        if ($this->status === 'confirmed') {
+            return $this->review_status === null ? 'Previously confirmed' : 'Deposit verified — booking secured';
+        }
+
+        return ucfirst(str_replace('_', ' ', $this->status));
+    }
+
+    public function scopeWorkflowQueue(Builder $query, string $queue): Builder
+    {
+        $unpaid = fn (Builder $q) => $q->whereDoesntHave('payments', fn (Builder $p) => $p->where('amount', '>', 0));
+        return match ($queue) {
+            'review' => $query->where(fn (Builder $q) => $q->where('status', 'pending')->orWhere(fn (Builder $legacy) =>
+                $legacy->where('status', 'confirmed')->whereNull('review_status')->where($unpaid))),
+            'deposit' => $query->where('status', 'confirmed')->where('review_status', 'approved')->where($unpaid)
+                ->whereDoesntHave('paymentProofs', fn (Builder $p) => $p->where('status', 'awaiting_verification')),
+            'receipts' => $query->where('status', 'confirmed')->where('review_status', 'approved')->where($unpaid)
+                ->whereHas('paymentProofs', fn (Builder $p) => $p->where('status', 'awaiting_verification')),
+            'booked' => $query->whereIn('status', ['confirmed', 'preparing', 'ready_for_pickup'])
+                ->whereHas('payments', fn (Builder $p) => $p->where('amount', '>', 0)),
+            default => $query,
+        };
     }
 
     public function orderDetails(): HasMany
@@ -172,6 +254,18 @@ class Order extends Model
      */
     public function hasDownPayment(): bool
     {
-        return $this->payments()->where('payment_type', 'down_payment')->exists();
+        return $this->relationLoaded('payments') ? $this->payments->contains('payment_type', 'down_payment')
+            : $this->payments()->where('payment_type', 'down_payment')->exists();
+    }
+
+    public function hasReportedTransfer(): bool
+    {
+        return $this->relationLoaded('paymentProofs') ? $this->paymentProofs->isNotEmpty() : $this->paymentProofs()->exists();
+    }
+
+    public function hasAwaitingReceipt(): bool
+    {
+        return $this->relationLoaded('paymentProofs') ? $this->paymentProofs->contains('status', 'awaiting_verification')
+            : $this->paymentProofs()->where('status', 'awaiting_verification')->exists();
     }
 }

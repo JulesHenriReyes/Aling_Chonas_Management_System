@@ -1,0 +1,48 @@
+{
+  "width": 390,
+  "scroll": 395,
+  "overflowing": [
+    {
+      "tag": "DIV",
+      "classes": "",
+      "text": "PICKUP DATE *",
+      "width": 314.375,
+      "right": 395.375
+    },
+    {
+      "tag": "LABEL",
+      "classes": "block text-xs font-semibold text-cocoa-700 uppercase tracking-wider mb-1.5",
+      "text": "PICKUP DATE *",
+      "width": 314.375,
+      "right": 395.375
+    },
+    {
+      "tag": "INPUT",
+      "classes": "form-input-custom",
+      "text": "",
+      "width": 314.375,
+      "right": 395.375
+    },
+    {
+      "tag": "DIV",
+      "classes": "",
+      "text": "PICKUP TIME *",
+      "width": 314.375,
+      "right": 395.375
+    },
+    {
+      "tag": "LABEL",
+      "classes": "block text-xs font-semibold text-cocoa-700 uppercase tracking-wider mb-1.5",
+      "text": "PICKUP TIME *",
+      "width": 314.375,
+      "right": 395.375
+    },
+    {
+      "tag": "INPUT",
+      "classes": "form-input-custom",
+      "text": "",
+      "width": 314.375,
+      "right": 395.375
+    }
+  ]
+}

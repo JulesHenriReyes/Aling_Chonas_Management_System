@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Services\CatalogPricingService;
 use App\Services\OrderDraftService;
 use App\Services\OrderService;
+use App\Services\OrderReviewService;
 use App\Support\PhilippineContact;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -28,11 +29,15 @@ class OrderController extends Controller
      */
     public function index(Request $request): View
     {
-        $query = Order::with(['customer', 'user', 'orderDetails.product', 'payments'])
+        $query = Order::with(['customer', 'user', 'orderDetails.product', 'orderDetails.addOns', 'payments', 'paymentProofs'])
             ->latest();
 
         if ($request->filled('status')) {
             $query->where('status', $request->status);
+        }
+        if ($request->filled('queue')) {
+            $request->validate(['queue' => ['required', Rule::in(['review', 'deposit', 'receipts', 'booked'])]]);
+            $query->workflowQueue($request->string('queue')->toString());
         }
 
         if ($request->filled('origin')) {
@@ -174,9 +179,33 @@ class OrderController extends Controller
             'paymentProofs.reviewer',
             'refund.requestedBy',
             'refund.completedBy',
+            'reviewer',
         ]);
 
-        return view('admin.orders.show', compact('order'));
+        $otherRequests = Order::whereDate('pickup_date', $order->pickup_date->toDateString())->whereKeyNot($order->id);
+        $pickupContext = ['booked' => (clone $otherRequests)->workflowQueue('booked')->count(),
+            'awaitingDeposit' => (clone $otherRequests)->where('status', 'confirmed')
+                ->whereDoesntHave('payments', fn ($query) => $query->where('amount', '>', 0))->count()];
+
+        return view('admin.orders.show', compact('order', 'pickupContext'));
+    }
+
+    public function confirm(Request $request, Order $order, OrderReviewService $reviews): RedirectResponse
+    {
+        Gate::authorize('confirm-orders');
+        $request->validate(['feasibility_confirmed' => ['accepted']]);
+        $reviews->confirm($order, $request->user(), $request->boolean('feasibility_confirmed'));
+
+        return back()->with('success', 'Request confirmed as feasible. The exact 50% deposit is now available; preparation requires verification.');
+    }
+
+    public function decline(Request $request, Order $order, OrderReviewService $reviews): RedirectResponse
+    {
+        Gate::authorize('decline-orders');
+        $request->validate(['decline_reason' => ['required', 'string', 'max:1000'], 'no_funds_checked' => ['sometimes', 'accepted']]);
+        $reviews->decline($order, $request->string('decline_reason')->toString(), $request->user(), $request->boolean('no_funds_checked'));
+
+        return back()->with('success', 'Request declined. The reason is available through the customer’s private order link.');
     }
 
     /**
@@ -196,9 +225,10 @@ class OrderController extends Controller
     /**
      * Cancel an order.
      */
-    public function cancel(Order $order): RedirectResponse
+    public function cancel(Request $request, Order $order): RedirectResponse
     {
-        $this->orderService->cancelOrder($order, Auth::user());
+        $request->validate(['no_funds_checked' => ['sometimes', 'accepted']]);
+        $this->orderService->cancelOrder($order, Auth::user(), $request->boolean('no_funds_checked'));
 
         return back()->with('success', "Order {$order->order_number} has been cancelled.");
     }

@@ -119,6 +119,7 @@ class FixedCatalogAndPaymentReviewTest extends TestCase
         $order = $this->orders->createPublicOrder($this->data());
         $this->assertMatchesRegularExpression('/^[a-f0-9]{64}$/', $order->private_token);
         $this->assertArrayNotHasKey('private_token', $order->toArray());
+        $this->confirmPaymentFixture($order);
         $proof = $this->reviews->submit($order, UploadedFile::fake()->image('receipt.png'), ' REF 001 ');
         Storage::disk('receipts')->assertExists($proof->file_path);
         $this->assertSame('REF001', $proof->reference_number);
@@ -141,9 +142,11 @@ class FixedCatalogAndPaymentReviewTest extends TestCase
     public function test_rejection_retains_history_and_allows_replacement_but_pending_proof_blocks_replacement(): void
     {
         $order = $this->orders->createPublicOrder($this->data());
+        $this->confirmPaymentFixture($order);
         $first = $this->reviews->submit($order, UploadedFile::fake()->image('first.jpg'), 'A001');
         $this->rejected(fn () => $this->reviews->submit($order, UploadedFile::fake()->image('second.jpg'), 'A002'));
         $this->reviews->reject($first, 'Reference was not found in the business account.', $this->owner);
+        $this->confirmPaymentFixture($order);
         $second = $this->reviews->submit($order, UploadedFile::fake()->image('second.jpg'), 'A002');
         $this->assertSame('rejected', $first->fresh()->status);
         $this->assertSame('awaiting_verification', $second->status);
@@ -156,11 +159,14 @@ class FixedCatalogAndPaymentReviewTest extends TestCase
     {
         $first = $this->orders->createPublicOrder($this->data());
         $second = $this->orders->createPublicOrder($this->data());
+        $this->confirmPaymentFixture($first);
         $proof = $this->reviews->submit($first, UploadedFile::fake()->image('one.jpg'), 'DUP-1');
+        $this->confirmPaymentFixture($second);
         $other = $this->reviews->submit($second, UploadedFile::fake()->image('two.jpg'), 'DUP-1');
         $this->reviews->accept($proof, 1350, 'DUP-1', $this->owner);
         $this->rejected(fn () => $this->reviews->accept($other, 1350, 'dup-1', $this->owner));
-        $this->assertSame('pending', $second->fresh()->status);
+        $this->assertSame('confirmed', $second->fresh()->status);
+        $this->assertSame(0.0, $second->fresh()->amount_paid);
         $this->owner->update(['is_active' => false]);
         $this->rejected(fn () => $this->reviews->reject($other, 'Cannot verify', $this->owner));
         $this->assertDatabaseCount('payments', 1);
@@ -169,6 +175,7 @@ class FixedCatalogAndPaymentReviewTest extends TestCase
     public function test_cash_workflow_and_readiness_before_collection_are_preserved(): void
     {
         $order = $this->orders->createInternalOrder($this->data(), $this->owner);
+        $this->confirmPaymentFixture($order);
         $this->orders->recordDownPayment($order, 1350, 'cash', null, $this->owner);
         $this->orders->updateStatus($order, 'preparing', $this->owner);
         $this->orders->updateStatus($order, 'ready_for_pickup', $this->owner);
@@ -185,6 +192,7 @@ class FixedCatalogAndPaymentReviewTest extends TestCase
     public function test_bakery_failure_refunds_all_verified_money_only_after_transfer_confirmation(): void
     {
         $order = $this->orders->createInternalOrder($this->data(), $this->owner);
+        $this->confirmPaymentFixture($order);
         $this->orders->recordDownPayment($order, 1350, 'cash', null, $this->owner);
         // Explicit legacy full prepayment, not a supported advance-payment path.
         $order->payments()->create(['user_id' => $this->owner->id, 'amount' => 1350, 'payment_type' => 'final_payment', 'payment_method' => 'gcash', 'reference_number' => 'FINAL-1', 'payment_date' => now()]);
@@ -226,11 +234,14 @@ class FixedCatalogAndPaymentReviewTest extends TestCase
         $response->assertRedirect($url);
         $this->flushSession();
         foreach ([1, 2] as $refresh) {
-            $this->get($url)->assertOk()->assertSee('Awaiting receipt')->assertSee('GCash QR is not configured')
+            $this->get($url)->assertOk()->assertSee('Awaiting staff confirmation')->assertDontSee('Business GCash payment QR')
                 ->assertDontSee('09171234567')->assertHeader('Referrer-Policy', 'no-referrer');
         }
         $this->get(route('public.order.payment', str_repeat('0', 64)))->assertNotFound();
         $this->get(route('public.order.saveLink', $order->private_token))->assertOk()->assertSee($url, false);
+        $this->confirmPaymentFixture($order);
+        $this->get($url)->assertSee('Payment details are not configured yet')
+            ->assertDontSee('Business GCash payment QR')->assertDontSee('name="receipt"', false);
         $this->post(route('public.order.receipt', $order->private_token), [
             'reference_number' => 'HTTP-1', 'receipt' => UploadedFile::fake()->image('receipt.png'),
         ])->assertRedirect($url);
@@ -269,6 +280,8 @@ class FixedCatalogAndPaymentReviewTest extends TestCase
             'photo' => UploadedFile::fake()->image('test-qr.png'),
         ])->assertSessionHasNoErrors();
         $order = $this->orders->createPublicOrder($this->data());
+        $this->get(route('public.order.payment', $order->private_token))->assertOk()->assertDontSee('Save QR image');
+        $this->confirmPaymentFixture($order);
         $this->get(route('public.order.payment', $order->private_token))->assertOk()->assertDontSee('TEST ACCOUNT ONLY')->assertDontSee('TEST-ACCOUNT-NOT-REAL')->assertSee('Save QR image');
         $this->get(route('public.order.qr', $order->private_token))->assertOk()->assertDownload();
         $this->get(route('orders.create'))->assertOk()->assertDontSee('name="unit_price"', false);
@@ -314,6 +327,7 @@ class FixedCatalogAndPaymentReviewTest extends TestCase
             $this->post($url, [])->assertSessionHasErrors('receipt');
         }
         $this->post($url, [])->assertStatus(429);
+        $this->confirmPaymentFixture($order);
         $proof = $this->reviews->submit($order, UploadedFile::fake()->image('receipt.jpg'), 'INACTIVE-1');
         $this->owner->update(['is_active' => false]);
         $this->actingAs($this->owner)->get(route('proofs.receipt', $proof))->assertForbidden();
@@ -328,6 +342,7 @@ class FixedCatalogAndPaymentReviewTest extends TestCase
         $data['pickup_date'] = '2026-09-24';
         $data['pickup_time'] = '15:00'; // 07:00 UTC at the bakery.
         $order = $this->orders->createPublicOrder($data);
+        $this->confirmPaymentFixture($order);
         $proof = $this->reviews->submit($order, UploadedFile::fake()->image('receipt.jpg'), 'LATE-1');
         $this->reviews->accept($proof, 1350, 'LATE-1', $this->owner);
         $this->orders->updateStatus($order, 'preparing', $this->owner);
@@ -351,6 +366,7 @@ class FixedCatalogAndPaymentReviewTest extends TestCase
     public function test_historical_completed_pickup_remains_terminal_even_without_readiness_timestamp(): void
     {
         $order = $this->orders->createInternalOrder($this->data(), $this->owner);
+        $this->confirmPaymentFixture($order);
         $this->orders->recordDownPayment($order, 1350, 'cash', null, $this->owner);
         // Historical paid and collected order; ledger is seeded directly.
         $order->payments()->create(['user_id' => $this->owner->id, 'amount' => 1350, 'payment_type' => 'final_payment', 'payment_method' => 'cash', 'payment_date' => now()]);

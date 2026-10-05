@@ -7,7 +7,7 @@
         <span class="text-cocoa-300 mx-2">/</span>
         <span class="text-cocoa-700 font-semibold" aria-current="step">Contact & pickup</span>
         <span class="text-cocoa-300 mx-2">/</span>
-        <span class="text-cocoa-400">Payment</span>
+        <span class="text-cocoa-400">Staff review</span>
     </div>
 </nav>
 

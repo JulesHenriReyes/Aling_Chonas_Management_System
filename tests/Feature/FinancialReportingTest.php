@@ -55,7 +55,7 @@ class FinancialReportingTest extends TestCase
 
     public function test_financial_summary_and_operational_net_income(): void
     {
-        $today = Carbon::parse('2026-09-22 10:00:00');
+        $today = Carbon::parse('2026-09-22 10:00:00', 'Asia/Manila')->utc();
         Carbon::setTestNow($today);
 
         // 1. Order 1: ₱2000 cake, completed today
@@ -69,6 +69,7 @@ class FinancialReportingTest extends TestCase
         ], $this->owner);
 
         // Down payment: ₱1000 cash
+        $this->confirmPaymentFixture($order1);
         $this->orderService->recordDownPayment($order1, 1000.00, 'cash', null, $this->owner, $today);
         // Final payment: ₱1000 gcash
         $this->orderService->updateStatus($order1, 'preparing', $this->owner);
@@ -87,6 +88,7 @@ $this->orderService->recordFinalPayment($order1, 1000.00, 'gcash', 'REF-1000', $
             ],
         ], $this->owner);
 
+        $this->confirmPaymentFixture($order2);
         $this->orderService->recordDownPayment($order2, 1000.00, 'gcash', 'REF-500', $this->owner, $today);
         $this->orderService->cancelOrder($order2, $this->owner);
 
@@ -161,6 +163,7 @@ $this->orderService->recordFinalPayment($order1, 1000.00, 'gcash', 'REF-1000', $
             'items' => [['product_id' => $this->cake->id, 'package_option_id' => $this->cake->options()->first()->id, 'quantity' => 1]],
         ], $this->owner);
 
+        $this->confirmPaymentFixture($order);
         $this->orderService->recordDownPayment($order, 1000.00, 'cash', null, $this->owner, $today);
         $this->orderService->cancelOrder($order, $this->owner);
 
@@ -179,6 +182,7 @@ $this->orderService->recordFinalPayment($order1, 1000.00, 'gcash', 'REF-1000', $
             'items' => [['product_id' => $this->cake->id, 'package_option_id' => $this->cake->options()->first()->id, 'quantity' => 1]],
         ], $this->owner);
 
+        $this->confirmPaymentFixture($order);
         $this->orderService->recordDownPayment($order, 1000.00, 'cash', null, $this->owner, $today);
         // Explicit historical fixture; preserve existing classification, not a new retention decision.
         $order->payments()->create(['user_id' => $this->owner->id, 'amount' => 1000, 'payment_type' => 'final_payment', 'payment_method' => 'cash', 'payment_date' => $today]);

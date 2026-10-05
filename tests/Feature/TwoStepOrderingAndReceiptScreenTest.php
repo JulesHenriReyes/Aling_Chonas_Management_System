@@ -111,12 +111,14 @@ class TwoStepOrderingAndReceiptScreenTest extends TestCase
         $order = app(\App\Services\OrderService::class)->createPublicOrder($this->selection() + [
             'customer_id' => $customer->id, 'pickup_date' => now()->addDay()->toDateString(), 'pickup_time' => '14:00',
         ]);
+        $this->confirmPaymentFixture($order);
         $proof = app(PaymentReviewService::class)->submit($order, UploadedFile::fake()->image('receipt.png'), 'REF-22');
         $this->get(route('proofs.receipt', $proof))->assertRedirect(route('login'));
         $this->actingAs($owner)->get(route('orders.show', $order))->assertOk()->assertSee('View screenshot')->assertSee('value="REF-22"', false);
         $this->get(route('proofs.receipt', $proof))->assertOk();
         app(PaymentReviewService::class)->reject($proof, 'Reference not found', $owner);
-        $this->get(route('public.order.payment', $order->private_token))->assertOk()->assertSee('Receipt rejected')->assertSee('Reference not found')->assertSee('Submit replacement receipt');
+        $this->get(route('public.order.payment', $order->private_token))->assertOk()->assertSee('Receipt rejected')->assertSee('Reference not found')->assertSee('Submit replacement receipt')
+            ->assertDontSee('Step 1: Scan & Send via GCash');
         $this->assertSame(0.0, $order->fresh()->amount_paid);
         $this->assertSame('unpaid', $order->fresh()->payment_status);
     }
@@ -129,6 +131,7 @@ class TwoStepOrderingAndReceiptScreenTest extends TestCase
             'customer_id' => $customer->id, 'pickup_date' => now()->addDay()->toDateString(), 'pickup_time' => '14:00',
         ]);
         $page = route('public.order.payment', $order->private_token);
+        $this->confirmPaymentFixture($order);
         $this->from($page)->post(route('public.order.receipt', $order->private_token), [
             'reference_number' => 'REF-OLD', 'receipt' => UploadedFile::fake()->create('not-an-image.txt', 1, 'text/plain'),
         ])->assertSessionHasErrors('receipt');

@@ -1,0 +1,24 @@
+{"width":360,"captures":29,"failures":0}
+{"width":390,"captures":67,"failures":0}
+{"width":430,"captures":96,"failures":0}
+{"width":768,"captures":125,"failures":0}
+{"width":1024,"captures":154,"failures":0}
+{"width":1440,"captures":186,"failures":0}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+false !== true
+
+    at file:///C:/Users/User/Desktop/IT12_Project/docs/qa/2026-10-05/staff-confirmation-before-payment/browser-verification.mjs:116:12 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
