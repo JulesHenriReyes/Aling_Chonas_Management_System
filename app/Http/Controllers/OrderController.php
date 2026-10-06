@@ -33,7 +33,11 @@ class OrderController extends Controller
             ->latest();
 
         if ($request->filled('status')) {
-            $query->where('status', $request->status);
+            if ($request->status === 'awaiting_deposit' || $request->status === 'deposit') {
+                $query->workflowQueue('deposit');
+            } else {
+                $query->where('status', $request->status);
+            }
         }
         if ($request->filled('queue')) {
             $request->validate(['queue' => ['required', Rule::in(['review', 'deposit', 'receipts', 'booked'])]]);

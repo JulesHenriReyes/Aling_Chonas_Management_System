@@ -16,21 +16,17 @@
 @endcan
     </div>
 
-    <nav aria-label="Order workflow queues" class="flex flex-wrap gap-2">
-        @foreach (['review' => 'Awaiting staff review', 'deposit' => 'Awaiting deposit', 'receipts' => 'Receipt verification', 'booked' => 'Paid bookings'] as $queue => $queueLabel)
-            <a href="{{ route('orders.index', array_merge(request()->query(), ['queue' => $queue, 'status' => null, 'page' => 1])) }}" class="inline-flex items-center min-h-[44px] px-3 py-3 border rounded-lg text-sm font-semibold {{ request('queue') === $queue ? 'bg-cocoa-600 text-white border-cocoa-600' : 'bg-white text-cocoa-700 border-cocoa-100' }}">{{ $queueLabel }}</a>
-        @endforeach
-    </nav>
-
     <!-- Filters & Search -->
     <div class="space-y-4">
         <!-- Status Tabs -->
         <div class="flex flex-wrap gap-2 text-sm border-b border-cocoa-100 pb-3">
             @php
                 $currentStatus = request('status', '');
+                $currentQueue = request('queue', '');
                 $statuses = [
                     '' => 'All Statuses',
                     'pending' => 'Pending Review',
+                    'deposit' => 'Awaiting Deposit',
                     'confirmed' => 'Confirmed',
                     'preparing' => 'Preparing',
                     'ready_for_pickup' => 'Ready for Pickup',
@@ -39,8 +35,18 @@
                 ];
             @endphp
             @foreach ($statuses as $key => $label)
-                <a href="{{ route('orders.index', array_merge(request()->query(), ['status' => $key, 'queue' => null, 'page' => 1])) }}"
-                   class="px-3 py-1.5 rounded-lg font-medium transition {{ $currentStatus === $key ? 'bg-cocoa-600 text-white' : 'text-cocoa-500 hover:bg-cream-100' }}">
+                @php
+                    $isActive = match($key) {
+                        '' => $currentStatus === '' && empty($currentQueue),
+                        'deposit' => $currentQueue === 'deposit' || $currentStatus === 'deposit' || $currentStatus === 'awaiting_deposit',
+                        default => $currentStatus === $key && empty($currentQueue),
+                    };
+                    $queryParam = $key === 'deposit'
+                        ? ['status' => null, 'queue' => 'deposit', 'page' => 1]
+                        : ['status' => $key ?: null, 'queue' => null, 'page' => 1];
+                @endphp
+                <a href="{{ route('orders.index', array_merge(request()->query(), $queryParam)) }}"
+                   class="px-3 py-1.5 rounded-lg font-medium transition {{ $isActive ? 'bg-cocoa-600 text-white' : 'text-cocoa-500 hover:bg-cream-100' }}">
                     {{ $label }}
                 </a>
             @endforeach
@@ -64,7 +70,7 @@
             <button type="submit" class="bg-white border border-cocoa-100 text-cocoa-500 hover:bg-cream-100 font-medium text-sm px-4 py-2 rounded-lg transition">
                 Filter
             </button>
-            @if(request()->hasAny(['status', 'search', 'origin']))
+            @if(request()->hasAny(['status', 'search', 'origin', 'queue']))
                 <a href="{{ route('orders.index') }}" class="text-cocoa-500 hover:text-cocoa-600 font-medium text-sm self-center px-3 py-2">
                     Reset
                 </a>
@@ -108,12 +114,14 @@
                                 </td>
                                 <td class="p-4">
                                     @if ($order->user_id === null)
-                                        <span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-medium text-cocoa-500">
+                                        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium text-cocoa-500">
                                             Public Web
+                                            <x-tooltip text="Order submitted online by customer via public storefront." />
                                         </span>
                                     @else
-                                        <span class="text-xs text-cocoa-500">
+                                        <span class="inline-flex items-center gap-1 text-xs text-cocoa-500">
                                             Staff ({{ $order->user->first_name }})
+                                            <x-tooltip text="Order manually created by staff member {{ $order->user->first_name }}." />
                                         </span>
                                     @endif
                                 </td>

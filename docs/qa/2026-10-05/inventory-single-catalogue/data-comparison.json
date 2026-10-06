@@ -1,0 +1,37 @@
+{
+  "unchanged_tables": [
+    "add_on_product",
+    "add_ons",
+    "cache",
+    "cache_locks",
+    "customers",
+    "expense_audits",
+    "expenses",
+    "failed_jobs",
+    "gcash_references",
+    "inventory_baselines",
+    "inventory_operations",
+    "inventory_transactions",
+    "job_batches",
+    "jobs",
+    "migrations",
+    "order_add_ons",
+    "order_details",
+    "order_images",
+    "orders",
+    "package_option_inclusions",
+    "package_options",
+    "password_reset_tokens",
+    "payment_proofs",
+    "payment_settings",
+    "payments",
+    "products",
+    "refunds",
+    "supplies",
+    "users"
+  ],
+  "changed_tables": [
+    "sessions"
+  ],
+  "inventory_unchanged": true
+}

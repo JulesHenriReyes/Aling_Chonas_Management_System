@@ -21,5 +21,46 @@
 @foreach($item['staged_images'] ?? [] as $image)<p class="form-hint">Reference: {{ $image['original_filename'] }}</p>@endforeach @if($entry['error'])<p class="field-error">{{ $entry['error'] }}</p>@endif</div></div><div class="workspace-actions">@if($entry['product']?->is_active)<a class="ui-button" href="{{ route('public.package.customize',['product'=>$item['product_id'],'line'=>$item['draft_key']]) }}">Edit</a>@endif<form method="POST" action="{{ route('public.package.remove',$item['draft_key']) }}">@csrf<button class="ui-button quiet">Remove</button></form></div></article>@endforeach
 <div class="bag-total"><p>Order total <strong>₱{{ number_format(collect($draftLines)->sum(fn($line) => $line['quote']['total'] ?? 0),2) }}</strong></p>@unless(collect($draftLines)->contains(fn($line)=>$line['error']))<a class="ui-button primary" href="{{ route('public.order.details') }}">Continue to contact and pickup</a>@endunless</div></section>@endif
 </div>
-<script>try { const key = new URLSearchParams(location.search).get('saved_line'); if (key) sessionStorage.removeItem('bakery-package-'+key); } catch {}</script>
+<script>
+try {
+    const params = new URLSearchParams(location.search);
+    const key = params.get('saved_line');
+    if (key) {
+        sessionStorage.removeItem('bakery-package-' + key);
+        const orderBag = document.getElementById('your-order');
+        if (orderBag) {
+            const smoothScroll = () => {
+                const header = document.querySelector('header');
+                const headerHeight = header ? header.offsetHeight : 70;
+                const targetY = orderBag.getBoundingClientRect().top + window.pageYOffset - headerHeight - 16;
+                const startY = window.pageYOffset;
+                const distance = targetY - startY;
+                const duration = 650;
+                let start = null;
+                let active = true;
+
+                const cancel = () => { active = false; };
+                window.addEventListener('touchstart', cancel, { passive: true, once: true });
+                window.addEventListener('wheel', cancel, { passive: true, once: true });
+
+                const step = (timestamp) => {
+                    if (!active) return;
+                    if (!start) start = timestamp;
+                    const elapsed = timestamp - start;
+                    const progress = Math.min(elapsed / duration, 1);
+                    const ease = progress < 0.5 
+                        ? 4 * progress * progress * progress 
+                        : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+                    window.scrollTo(0, startY + (distance * ease));
+                    if (progress < 1) {
+                        requestAnimationFrame(step);
+                    }
+                };
+                requestAnimationFrame(step);
+            };
+            setTimeout(smoothScroll, 120);
+        }
+    }
+} catch {}
+</script>
 @endsection

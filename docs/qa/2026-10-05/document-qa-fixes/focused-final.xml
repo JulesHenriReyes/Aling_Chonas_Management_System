@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="C:\Users\User\Desktop\IT12_Project\phpunit.xml" tests="8" assertions="173" errors="0" failures="0" skipped="0" time="13.862635">
+    <testsuite name="Feature" tests="8" assertions="173" errors="0" failures="0" skipped="0" time="13.862635">
+      <testsuite name="Tests\Feature\ReceiptUploadRedirectTest" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ReceiptUploadRedirectTest.php" tests="3" assertions="30" errors="0" failures="0" skipped="0" time="1.007049">
+        <testcase name="test_invalid_buyer_upload_returns_to_its_order_even_with_an_admin_referrer" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ReceiptUploadRedirectTest.php" line="39" class="Tests\Feature\ReceiptUploadRedirectTest" classname="Tests.Feature.ReceiptUploadRedirectTest" assertions="13" time="0.824784"/>
+        <testcase name="test_missing_upload_with_stale_previous_page_returns_to_its_private_order" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ReceiptUploadRedirectTest.php" line="56" class="Tests\Feature\ReceiptUploadRedirectTest" classname="Tests.Feature.ReceiptUploadRedirectTest" assertions="7" time="0.097092"/>
+        <testcase name="test_service_rejection_keeps_the_buyer_on_the_order_and_json_clients_get_422" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\ReceiptUploadRedirectTest.php" line="65" class="Tests\Feature\ReceiptUploadRedirectTest" classname="Tests.Feature.ReceiptUploadRedirectTest" assertions="10" time="0.085172"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\UiPresentationTest" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\UiPresentationTest.php" tests="5" assertions="143" errors="0" failures="0" skipped="0" time="12.855586">
+        <testcase name="test_order_pages_preserve_actions_and_price_locking_in_every_lifecycle_state" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\UiPresentationTest.php" line="31" class="Tests\Feature\UiPresentationTest" classname="Tests.Feature.UiPresentationTest" assertions="42" time="10.440069"/>
+        <testcase name="test_public_receipt_remains_unpaid_and_validation_preserves_selected_items" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\UiPresentationTest.php" line="82" class="Tests\Feature\UiPresentationTest" classname="Tests.Feature.UiPresentationTest" assertions="17" time="2.181068"/>
+        <testcase name="test_staff_workspace_recommendations_presentation" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\UiPresentationTest.php" line="99" class="Tests\Feature\UiPresentationTest" classname="Tests.Feature.UiPresentationTest" assertions="23" time="0.112794"/>
+        <testcase name="test_view_transitions_and_floating_row_actions_presentation" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\UiPresentationTest.php" line="157" class="Tests\Feature\UiPresentationTest" classname="Tests.Feature.UiPresentationTest" assertions="28" time="0.033525"/>
+        <testcase name="test_public_storefront_layout_and_quiet_button_presentation" file="C:\Users\User\Desktop\IT12_Project\tests\Feature\UiPresentationTest.php" line="201" class="Tests\Feature\UiPresentationTest" classname="Tests.Feature.UiPresentationTest" assertions="33" time="0.088130"/>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>

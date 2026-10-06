@@ -1,0 +1,393 @@
+{
+  "captures": [
+    {
+      "name": "owner-supplies-390",
+      "file": "screenshots/owner-supplies-390.png",
+      "width": 390,
+      "overflow": -15,
+      "overflowElements": [],
+      "geometry": {
+        "viewport": 390,
+        "root": 375,
+        "body": 375,
+        "elements": []
+      }
+    },
+    {
+      "name": "owner-stock-count-390",
+      "file": "screenshots/owner-stock-count-390.png",
+      "width": 390,
+      "overflow": -15,
+      "overflowElements": [],
+      "geometry": {
+        "viewport": 390,
+        "root": 375,
+        "body": 375,
+        "elements": [
+          {
+            "tag": "TABLE",
+            "class": "batch-table",
+            "left": -109,
+            "right": 671,
+            "scroll": 780,
+            "client": 780,
+            "overflow": "visible"
+          },
+          {
+            "tag": "THEAD",
+            "class": "",
+            "left": -109,
+            "right": 671,
+            "scroll": 780,
+            "client": 780,
+            "overflow": "visible"
+          },
+          {
+            "tag": "TR",
+            "class": "",
+            "left": -109,
+            "right": 671,
+            "scroll": 780,
+            "client": 780,
+            "overflow": "visible"
+          },
+          {
+            "tag": "TH",
+            "class": "numeric",
+            "left": 379.5625,
+            "right": 503.640625,
+            "scroll": 124,
+            "client": 124,
+            "overflow": "visible"
+          },
+          {
+            "tag": "TH",
+            "class": "",
+            "left": 503.640625,
+            "right": 671,
+            "scroll": 167,
+            "client": 167,
+            "overflow": "visible"
+          },
+          {
+            "tag": "TBODY",
+            "class": "",
+            "left": -109,
+            "right": 671,
+            "scroll": 780,
+            "client": 780,
+            "overflow": "visible"
+          },
+          {
+            "tag": "TR",
+            "class": "",
+            "left": -109,
+            "right": 671,
+            "scroll": 780,
+            "client": 780,
+            "overflow": "visible"
+          },
+          {
+            "tag": "TD",
+            "class": "numeric",
+            "left": 379.5625,
+            "right": 503.640625,
+            "scroll": 124,
+            "client": 124,
+            "overflow": "visible"
+          },
+          {
+            "tag": "TD",
+            "class": "",
+            "left": 503.640625,
+            "right": 671,
+            "scroll": 167,
+            "client": 167,
+            "overflow": "visible"
+          },
+          {
+            "tag": "BUTTON",
+            "class": "ui-button quiet",
+            "left": 517.234375,
+            "right": 571.578125,
+            "scroll": 54,
+            "client": 54,
+            "overflow": "visible"
+          },
+          {
+            "tag": "BUTTON",
+            "class": "ui-button quiet",
+            "left": 517.234375,
+            "right": 604.25,
+            "scroll": 87,
+            "client": 87,
+            "overflow": "visible"
+          }
+        ]
+      }
+    },
+    {
+      "name": "owner-supplies-1440",
+      "file": "screenshots/owner-supplies-1440.png",
+      "width": 1440,
+      "overflow": -15,
+      "overflowElements": [],
+      "geometry": {
+        "viewport": 1440,
+        "root": 1425,
+        "body": 1425,
+        "elements": []
+      }
+    },
+    {
+      "name": "owner-stock-count-1440",
+      "file": "screenshots/owner-stock-count-1440.png",
+      "width": 1440,
+      "overflow": -15,
+      "overflowElements": [],
+      "geometry": {
+        "viewport": 1440,
+        "root": 1425,
+        "body": 1425,
+        "elements": []
+      }
+    },
+    {
+      "name": "assistant-supplies-390",
+      "file": "screenshots/assistant-supplies-390.png",
+      "width": 390,
+      "overflow": -15,
+      "overflowElements": [],
+      "geometry": {
+        "viewport": 390,
+        "root": 375,
+        "body": 375,
+        "elements": []
+      }
+    },
+    {
+      "name": "assistant-stock-count-390",
+      "file": "screenshots/assistant-stock-count-390.png",
+      "width": 390,
+      "overflow": -15,
+      "overflowElements": [],
+      "geometry": {
+        "viewport": 390,
+        "root": 375,
+        "body": 375,
+        "elements": [
+          {
+            "tag": "TABLE",
+            "class": "batch-table",
+            "left": -109,
+            "right": 671,
+            "scroll": 780,
+            "client": 780,
+            "overflow": "visible"
+          },
+          {
+            "tag": "THEAD",
+            "class": "",
+            "left": -109,
+            "right": 671,
+            "scroll": 780,
+            "client": 780,
+            "overflow": "visible"
+          },
+          {
+            "tag": "TR",
+            "class": "",
+            "left": -109,
+            "right": 671,
+            "scroll": 780,
+            "client": 780,
+            "overflow": "visible"
+          },
+          {
+            "tag": "TH",
+            "class": "numeric",
+            "left": 379.5625,
+            "right": 503.640625,
+            "scroll": 124,
+            "client": 124,
+            "overflow": "visible"
+          },
+          {
+            "tag": "TH",
+            "class": "",
+            "left": 503.640625,
+            "right": 671,
+            "scroll": 167,
+            "client": 167,
+            "overflow": "visible"
+          },
+          {
+            "tag": "TBODY",
+            "class": "",
+            "left": -109,
+            "right": 671,
+            "scroll": 780,
+            "client": 780,
+            "overflow": "visible"
+          },
+          {
+            "tag": "TR",
+            "class": "",
+            "left": -109,
+            "right": 671,
+            "scroll": 780,
+            "client": 780,
+            "overflow": "visible"
+          },
+          {
+            "tag": "TD",
+            "class": "numeric",
+            "left": 379.5625,
+            "right": 503.640625,
+            "scroll": 124,
+            "client": 124,
+            "overflow": "visible"
+          },
+          {
+            "tag": "TD",
+            "class": "",
+            "left": 503.640625,
+            "right": 671,
+            "scroll": 167,
+            "client": 167,
+            "overflow": "visible"
+          },
+          {
+            "tag": "BUTTON",
+            "class": "ui-button quiet",
+            "left": 517.234375,
+            "right": 571.578125,
+            "scroll": 54,
+            "client": 54,
+            "overflow": "visible"
+          },
+          {
+            "tag": "BUTTON",
+            "class": "ui-button quiet",
+            "left": 517.234375,
+            "right": 604.25,
+            "scroll": 87,
+            "client": 87,
+            "overflow": "visible"
+          }
+        ]
+      }
+    },
+    {
+      "name": "assistant-supplies-1440",
+      "file": "screenshots/assistant-supplies-1440.png",
+      "width": 1440,
+      "overflow": -15,
+      "overflowElements": [],
+      "geometry": {
+        "viewport": 1440,
+        "root": 1425,
+        "body": 1425,
+        "elements": []
+      }
+    },
+    {
+      "name": "assistant-stock-count-1440",
+      "file": "screenshots/assistant-stock-count-1440.png",
+      "width": 1440,
+      "overflow": -15,
+      "overflowElements": [],
+      "geometry": {
+        "viewport": 1440,
+        "root": 1425,
+        "body": 1425,
+        "elements": []
+      }
+    },
+    {
+      "name": "customer-invalid-upload-390",
+      "file": "screenshots/customer-invalid-upload-390.png",
+      "width": 390,
+      "overflow": -15,
+      "overflowElements": [],
+      "geometry": {
+        "viewport": 390,
+        "root": 375,
+        "body": 375,
+        "elements": []
+      }
+    }
+  ],
+  "checks": [
+    "owner sortable headings limited to Supply and Category",
+    "owner reorder column hidden",
+    "owner Stock in and Stock out present",
+    "owner statuses still reflect threshold",
+    "owner menu hit target at least 44px",
+    "owner menu has accessible name",
+    "owner keyboard menu focuses Edit",
+    "owner-supplies-390 has no page overflow",
+    "owner Escape closes menu",
+    "owner Stock out form heading",
+    "owner changing to count clears reduction value",
+    "owner count semantics explained",
+    "owner-stock-count-390 has no page overflow",
+    "owner changing back clears count value",
+    "owner sortable headings limited to Supply and Category",
+    "owner reorder column hidden",
+    "owner Stock in and Stock out present",
+    "owner statuses still reflect threshold",
+    "owner menu hit target at least 44px",
+    "owner menu has accessible name",
+    "owner keyboard menu focuses Edit",
+    "owner-supplies-1440 has no page overflow",
+    "owner Escape closes menu",
+    "owner Stock out form heading",
+    "owner changing to count clears reduction value",
+    "owner count semantics explained",
+    "owner-stock-count-1440 has no page overflow",
+    "owner changing back clears count value",
+    "usage operation posted",
+    "usage stock balance correct",
+    "waste operation posted",
+    "waste stock balance correct",
+    "stocktake operation posted",
+    "stocktake stock balance correct",
+    "Stock in balance correct",
+    "assistant sortable headings limited to Supply and Category",
+    "assistant reorder column hidden",
+    "assistant Stock in and Stock out present",
+    "assistant statuses still reflect threshold",
+    "assistant menu hit target at least 44px",
+    "assistant menu has accessible name",
+    "assistant keyboard menu focuses Edit",
+    "assistant-supplies-390 has no page overflow",
+    "assistant Escape closes menu",
+    "assistant Stock out form heading",
+    "assistant changing to count clears reduction value",
+    "assistant count semantics explained",
+    "assistant-stock-count-390 has no page overflow",
+    "assistant changing back clears count value",
+    "assistant sortable headings limited to Supply and Category",
+    "assistant reorder column hidden",
+    "assistant Stock in and Stock out present",
+    "assistant statuses still reflect threshold",
+    "assistant menu hit target at least 44px",
+    "assistant menu has accessible name",
+    "assistant keyboard menu focuses Edit",
+    "assistant-supplies-1440 has no page overflow",
+    "assistant Escape closes menu",
+    "assistant Stock out form heading",
+    "assistant changing to count clears reduction value",
+    "assistant count semantics explained",
+    "assistant-stock-count-1440 has no page overflow",
+    "assistant changing back clears count value",
+    "invalid upload stays on customer order",
+    "reference number retained",
+    "customer sees upload error",
+    "customer-invalid-upload-390 has no page overflow",
+    "inventory remains restricted to staff"
+  ],
+  "failures": [],
+  "browser": "154.0.8037.97"
+}

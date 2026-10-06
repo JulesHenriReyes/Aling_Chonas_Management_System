@@ -9,6 +9,8 @@
         'arrow-right' => 'M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3',
         'external' => 'M7.5 3.75H3.75v16.5h16.5V16.5M12 3.75h8.25V12m0-8.25L9 15',
         'close' => 'm6 6 12 12M6 18 18 6',
+        'dots-vertical' => 'M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z',
+        'ellipsis-vertical' => 'M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z',
     ];
 @endphp
 <svg {{ $attributes->class(['ui-icon']) }} aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $path ?? $paths[$name] ?? $paths['clipboard'] }}" /></svg>

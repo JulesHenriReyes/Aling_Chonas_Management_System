@@ -1,0 +1,15 @@
+{
+    "database": "C:\\Users\\User\\AppData\\Local\\Temp\/workflow-concurrency-inventory-single-catalogue-5ea48b988257\/workflow-concurrency-preview.sqlite",
+    "storage": "C:\\Users\\User\\AppData\\Local\\Temp\/workflow-concurrency-inventory-single-catalogue-5ea48b988257\/storage",
+    "url": "http:\/\/127.0.0.1:8140",
+    "environment": "Synthetic isolated inventory preview",
+    "supply_ids": {
+        "Flour": 1,
+        "Sugar": 2,
+        "Cocoa": 3,
+        "Egg": 4,
+        "Vegetable oil": 5,
+        "Baking powder": 6,
+        "Cake boxes": 7
+    }
+}

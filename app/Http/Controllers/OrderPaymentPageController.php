@@ -7,6 +7,7 @@ use App\Models\PaymentSetting;
 use App\Services\PaymentReviewService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\ValidationException;
 
 class OrderPaymentPageController extends Controller
 {
@@ -28,11 +29,17 @@ class OrderPaymentPageController extends Controller
     public function submit(Request $request, string $token, PaymentReviewService $reviews)
     {
         $order = $this->order($token);
-        $data = $request->validate([
-            'receipt' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
-            'reference_number' => ['required', 'string', 'max:100'],
-        ]);
-        $reviews->submit($order, $data['receipt'], $data['reference_number']);
+        try {
+            $data = $request->validate([
+                'receipt' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
+                'reference_number' => ['required', 'string', 'max:100'],
+            ]);
+            $reviews->submit($order, $data['receipt'], $data['reference_number']);
+        } catch (ValidationException $exception) {
+            // The browser's previous page may belong to staff or an older session.
+            // Keep Laravel's input/error handling and JSON 422 responses intact.
+            throw $exception->redirectTo(route('public.order.payment', $token));
+        }
 
         return redirect()->route('public.order.payment', $token)->with('success', 'Receipt submitted. Staff will verify it against the business GCash account.');
     }

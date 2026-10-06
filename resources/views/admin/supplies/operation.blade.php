@@ -2,7 +2,7 @@
 @section('title', 'Stock operation')
 @section('content')
 <div class="workspace"><header class="workspace-heading"><div><a class="back-link" href="{{ route('inventory.history') }}">← Movement history</a><h1>{{ ucfirst($operation->type) }} #{{ $operation->id }}</h1><p>Posted {{ $operation->created_at->format('M d, Y H:i:s') }} by {{ $operation->user->full_name }}</p></div><a class="ui-button" href="{{ route('supplies.index') }}">Inventory</a></header>
-<section class="workspace-panel"><dl class="detail-grid"><div><dt>Effective date</dt><dd>{{ $operation->operation_date->format('M d, Y') }}</dd></div><div><dt>Supplier</dt><dd>{{ $operation->supplier ?? '—' }}</dd></div><div><dt>Delivery reference</dt><dd>{{ $operation->delivery_reference ?? '—' }}</dd></div><div><dt>Notes / reason</dt><dd>{{ $operation->notes ?? '—' }}</dd></div></dl>
+<section class="workspace-panel"><dl class="detail-grid"><div><dt>Effective date</dt><dd>{{ $operation->operation_date->format('M d, Y') }}</dd></div><div><dt>Supplier</dt><dd>{{ $operation->supplier ?? '—' }}</dd></div><div><dt>Notes / reason</dt><dd>{{ $operation->notes ?? '—' }}</dd></div></dl>
 @if($operation->original)<p>Reversal of <a class="record-link" href="{{ route('inventory.show',$operation->original) }}">operation #{{ $operation->original->id }}</a>.</p>@endif
 @if($operation->reversal)<p class="notice-danger">Reversed by <a class="record-link" href="{{ route('inventory.show',$operation->reversal) }}">operation #{{ $operation->reversal->id }}</a>.</p>@endif</section>
 @include('admin.supplies.movement-table',['movements'=>$operation->movements])

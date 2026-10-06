@@ -1,0 +1,3193 @@
+{
+  "checks": [
+    "owner 390 combined on-hand column",
+    "owner 390 quantities include units",
+    "owner 390 action column compact",
+    "owner-inventory-390 has no page overflow",
+    "owner 390 delivery wording removed",
+    "owner 390 dropdown initially closed",
+    "owner 390 browse excludes inactive supplies",
+    "owner 390 picker stays open after selection",
+    "owner 390 selected supply is marked Added",
+    "owner 390 multiple supplies selected without reopening",
+    "owner 390 selection preserves search",
+    "owner 390 preview quantities include units",
+    "owner-picker-390 has no page overflow",
+    "owner 390 outside click closes picker",
+    "owner 390 keyboard adds another supply",
+    "owner 390 Escape closes picker and restores search focus",
+    "owner 390 typed selection retains its search and list",
+    "owner 390 dropdown button closes list",
+    "owner 390 count mode still clears reduction quantity",
+    "owner 390 count preview sets remaining quantity",
+    "owner 390 quantity unit stays on one line",
+    "owner-stock-count-390 has no page overflow",
+    "owner 1440 combined on-hand column",
+    "owner 1440 quantities include units",
+    "owner 1440 action column compact",
+    "owner-inventory-1440 has no page overflow",
+    "owner 1440 delivery wording removed",
+    "owner 1440 dropdown initially closed",
+    "owner 1440 browse excludes inactive supplies",
+    "owner 1440 picker stays open after selection",
+    "owner 1440 selected supply is marked Added",
+    "owner 1440 multiple supplies selected without reopening",
+    "owner 1440 selection preserves search",
+    "owner 1440 preview quantities include units",
+    "owner-picker-1440 has no page overflow",
+    "owner 1440 outside click closes picker",
+    "owner 1440 keyboard adds another supply",
+    "owner 1440 Escape closes picker and restores search focus",
+    "owner 1440 typed selection retains its search and list",
+    "owner 1440 dropdown button closes list",
+    "owner 1440 count mode still clears reduction quantity",
+    "owner 1440 count preview sets remaining quantity",
+    "owner 1440 quantity unit stays on one line",
+    "owner-stock-count-1440 has no page overflow",
+    "owner new supply starts with typed name",
+    "owner all eight ingredient shortcuts present",
+    "owner preset selects correct name and unit",
+    "owner-new-supply-mobile has no page overflow",
+    "owner new supply added to batch at zero",
+    "owner-new-stock-in-mobile has no page overflow",
+    "owner stock in saved as one grouped operation",
+    "owner operation has no delivery reference",
+    "owner new stock amount saved with unit",
+    "existing flour stock increases exactly once",
+    "duplicate ingredient shows validation error in place",
+    "assistant 390 combined on-hand column",
+    "assistant 390 quantities include units",
+    "assistant 390 action column compact",
+    "assistant-inventory-390 has no page overflow",
+    "assistant 390 delivery wording removed",
+    "assistant 390 dropdown initially closed",
+    "assistant 390 browse excludes inactive supplies",
+    "assistant 390 picker stays open after selection",
+    "assistant 390 selected supply is marked Added",
+    "assistant 390 multiple supplies selected without reopening",
+    "assistant 390 selection preserves search",
+    "assistant 390 preview quantities include units",
+    "assistant-picker-390 has no page overflow",
+    "assistant 390 outside click closes picker",
+    "assistant 390 keyboard adds another supply",
+    "assistant 390 Escape closes picker and restores search focus",
+    "assistant 390 typed selection retains its search and list",
+    "assistant 390 dropdown button closes list",
+    "assistant 390 count mode still clears reduction quantity",
+    "assistant 390 count preview sets remaining quantity",
+    "assistant 390 quantity unit stays on one line",
+    "assistant-stock-count-390 has no page overflow",
+    "assistant 1440 combined on-hand column",
+    "assistant 1440 quantities include units",
+    "assistant 1440 action column compact",
+    "assistant-inventory-1440 has no page overflow",
+    "assistant 1440 delivery wording removed",
+    "assistant 1440 dropdown initially closed",
+    "assistant 1440 browse excludes inactive supplies",
+    "assistant 1440 picker stays open after selection",
+    "assistant 1440 selected supply is marked Added",
+    "assistant 1440 multiple supplies selected without reopening",
+    "assistant 1440 selection preserves search",
+    "assistant 1440 preview quantities include units",
+    "assistant-picker-1440 has no page overflow",
+    "assistant 1440 outside click closes picker",
+    "assistant 1440 keyboard adds another supply",
+    "assistant 1440 Escape closes picker and restores search focus",
+    "assistant 1440 typed selection retains its search and list",
+    "assistant 1440 dropdown button closes list",
+    "assistant 1440 count mode still clears reduction quantity",
+    "assistant 1440 count preview sets remaining quantity",
+    "assistant 1440 quantity unit stays on one line",
+    "assistant-stock-count-1440 has no page overflow",
+    "assistant new supply starts with typed name",
+    "assistant all eight ingredient shortcuts present",
+    "assistant preset selects correct name and unit",
+    "assistant-new-supply-mobile has no page overflow",
+    "assistant new supply added to batch at zero",
+    "assistant-new-stock-in-mobile has no page overflow",
+    "assistant stock in saved as one grouped operation",
+    "assistant operation has no delivery reference",
+    "assistant new stock amount saved with unit",
+    "assistant-add-supply-mobile has no page overflow",
+    "standalone creation goes directly to stock in",
+    "standalone creation preselects a zero-stock row",
+    "no Alpine or browser errors"
+  ],
+  "captures": [
+    {
+      "name": "owner-inventory-390",
+      "file": "screenshots/owner-inventory-390.png",
+      "width": 390,
+      "overflow": -15,
+      "geometry": [
+        {
+          "tag": "TABLE",
+          "class": "supplies-table",
+          "left": 17,
+          "right": 657,
+          "width": 640,
+          "scroll": 640,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COLGROUP",
+          "class": "",
+          "left": 17,
+          "right": 657,
+          "width": 640,
+          "scroll": 640,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COL",
+          "class": "supplies-stock-col",
+          "left": 297.015625,
+          "right": 431.40625,
+          "width": 134,
+          "scroll": 134,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COL",
+          "class": "supplies-status-col",
+          "left": 431.40625,
+          "right": 585,
+          "width": 154,
+          "scroll": 154,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COL",
+          "class": "supplies-actions-col",
+          "left": 585,
+          "right": 657,
+          "width": 72,
+          "scroll": 72,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "THEAD",
+          "class": "",
+          "left": 17,
+          "right": 657,
+          "width": 640,
+          "scroll": 640,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TR",
+          "class": "",
+          "left": 17,
+          "right": 657,
+          "width": 640,
+          "scroll": 640,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TH",
+          "class": "numeric",
+          "left": 297.015625,
+          "right": 431.40625,
+          "width": 134,
+          "scroll": 134,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TH",
+          "class": "",
+          "left": 431.40625,
+          "right": 585,
+          "width": 154,
+          "scroll": 154,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "SPAN",
+          "class": "inline-flex items-center gap-1",
+          "left": 445,
+          "right": 543.25,
+          "width": 98,
+          "scroll": 98,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "DIV",
+          "class": "inline-flex items-center align-middle ui-tooltip",
+          "left": 527.25,
+          "right": 543.25,
+          "width": 16,
+          "scroll": 16,
+          "overflow": "visible",
+          "position": "relative"
+        },
+        {
+          "tag": "BUTTON",
+          "class": "inline-flex items-center justify-center w-4 h-4 text-cocoa-400 hover:text-cocoa-600 focus:outline-none focus-visible:ring-1 focus-visible:ring-cocoa-400 rounded-full transition-colors cursor-help",
+          "left": 527.25,
+          "right": 543.25,
+          "width": 16,
+          "scroll": 16,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "svg",
+          "class": "svg",
+          "left": 528.25,
+          "right": 542.25,
+          "width": 14,
+          "scroll": 14,
+          "overflow": "hidden",
+          "position": "static"
+        },
+        {
+          "tag": "path",
+          "class": "svg",
+          "left": 529.6500244140625,
+          "right": 540.8499755859375,
+          "width": 0,
+          "scroll": 0,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TH",
+          "class": "",
+          "left": 585,
+          "right": 657,
+          "width": 72,
+          "scroll": 72,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TBODY",
+          "class": "",
+          "left": 17,
+          "right": 657,
+          "width": 640,
+          "scroll": 640,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TR",
+          "class": "",
+          "left": 17,
+          "right": 657,
+          "width": 640,
+          "scroll": 640,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "numeric",
+          "left": 297.015625,
+          "right": 431.40625,
+          "width": 134,
+          "scroll": 134,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "",
+          "left": 431.40625,
+          "right": 585,
+          "width": 154,
+          "scroll": 154,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "DIV",
+          "class": "inline-flex items-center align-middle ui-tooltip",
+          "left": 445,
+          "right": 510.546875,
+          "width": 66,
+          "scroll": 66,
+          "overflow": "visible",
+          "position": "relative"
+        },
+        {
+          "tag": "SPAN",
+          "class": "inline-flex items-center cursor-help focus:outline-none focus-visible:ring-1 focus-visible:ring-cocoa-400 rounded",
+          "left": 445,
+          "right": 510.546875,
+          "width": 66,
+          "scroll": 66,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "SPAN",
+          "class": "status status-success cursor-help",
+          "left": 445,
+          "right": 510.546875,
+          "width": 66,
+          "scroll": 66,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "",
+          "left": 585,
+          "right": 657,
+          "width": 72,
+          "scroll": 72,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "DETAILS",
+          "class": "row-actions supply-actions",
+          "left": 599.40625,
+          "right": 643.40625,
+          "width": 44,
+          "scroll": 44,
+          "overflow": "visible",
+          "position": "relative"
+        },
+        {
+          "tag": "SUMMARY",
+          "class": "",
+          "left": 599.40625,
+          "right": 643.40625,
+          "width": 42,
+          "scroll": 42,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "svg",
+          "class": "svg",
+          "left": 612.40625,
+          "right": 630.40625,
+          "width": 18,
+          "scroll": 18,
+          "overflow": "hidden",
+          "position": "static"
+        },
+        {
+          "tag": "path",
+          "class": "svg",
+          "left": 615.40625,
+          "right": 627.40625,
+          "width": 0,
+          "scroll": 0,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "DIV",
+          "class": "",
+          "left": 505.5062561035156,
+          "right": 641.3062744140625,
+          "width": 138,
+          "scroll": 138,
+          "overflow": "hidden",
+          "position": "absolute"
+        },
+        {
+          "tag": "A",
+          "class": "",
+          "left": 506.47625732421875,
+          "right": 640.3362426757812,
+          "width": 138,
+          "scroll": 138,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "A",
+          "class": "",
+          "left": 506.47625732421875,
+          "right": 640.3362426757812,
+          "width": 138,
+          "scroll": 138,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "A",
+          "class": "",
+          "left": 506.47625732421875,
+          "right": 640.3362426757812,
+          "width": 138,
+          "scroll": 138,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TR",
+          "class": "",
+          "left": 17,
+          "right": 657,
+          "width": 640,
+          "scroll": 640,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "numeric",
+          "left": 297.015625,
+          "right": 431.40625,
+          "width": 134,
+          "scroll": 134,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "",
+          "left": 431.40625,
+          "right": 585,
+          "width": 154,
+          "scroll": 154,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "DIV",
+          "class": "inline-flex items-center align-middle ui-tooltip",
+          "left": 445,
+          "right": 510.546875,
+          "width": 66,
+          "scroll": 66,
+          "overflow": "visible",
+          "position": "relative"
+        }
+      ]
+    },
+    {
+      "name": "owner-picker-390",
+      "file": "screenshots/owner-picker-390.png",
+      "width": 390,
+      "overflow": -15,
+      "geometry": [
+        {
+          "tag": "TABLE",
+          "class": "batch-table",
+          "left": -74,
+          "right": 846,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COLGROUP",
+          "class": "",
+          "left": -74,
+          "right": 846,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COL",
+          "class": "batch-quantity-col",
+          "left": 303.1875,
+          "right": 468.78125,
+          "width": 166,
+          "scroll": 166,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COL",
+          "class": "batch-change-col",
+          "left": 468.78125,
+          "right": 597.578125,
+          "width": 129,
+          "scroll": 129,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COL",
+          "class": "batch-stock-col",
+          "left": 597.578125,
+          "right": 744.765625,
+          "width": 147,
+          "scroll": 147,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COL",
+          "class": "batch-actions-col",
+          "left": 744.765625,
+          "right": 846,
+          "width": 101,
+          "scroll": 101,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "THEAD",
+          "class": "",
+          "left": -74,
+          "right": 846,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TR",
+          "class": "",
+          "left": -74,
+          "right": 846,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TH",
+          "class": "",
+          "left": 303.1875,
+          "right": 468.78125,
+          "width": 166,
+          "scroll": 166,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TH",
+          "class": "numeric",
+          "left": 468.78125,
+          "right": 597.578125,
+          "width": 129,
+          "scroll": 129,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TH",
+          "class": "numeric",
+          "left": 597.578125,
+          "right": 744.765625,
+          "width": 147,
+          "scroll": 147,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TH",
+          "class": "",
+          "left": 744.765625,
+          "right": 846,
+          "width": 101,
+          "scroll": 101,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TBODY",
+          "class": "",
+          "left": -74,
+          "right": 846,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TR",
+          "class": "",
+          "left": -74,
+          "right": 846,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "",
+          "left": 303.1875,
+          "right": 468.78125,
+          "width": 166,
+          "scroll": 166,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "DIV",
+          "class": "stock-quantity-input",
+          "left": 316.78125,
+          "right": 455.1875,
+          "width": 138,
+          "scroll": 138,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "INPUT",
+          "class": "",
+          "left": 316.78125,
+          "right": 433.96875,
+          "width": 115,
+          "scroll": 115,
+          "overflow": "clip",
+          "position": "static"
+        },
+        {
+          "tag": "SPAN",
+          "class": "",
+          "left": 440.359375,
+          "right": 455.1875,
+          "width": 15,
+          "scroll": 15,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "numeric",
+          "left": 468.78125,
+          "right": 597.578125,
+          "width": 129,
+          "scroll": 129,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "numeric",
+          "left": 597.578125,
+          "right": 744.765625,
+          "width": 147,
+          "scroll": 147,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "",
+          "left": 744.765625,
+          "right": 846,
+          "width": 101,
+          "scroll": 101,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "DIV",
+          "class": "stock-row-actions",
+          "left": 758.359375,
+          "right": 832.40625,
+          "width": 74,
+          "scroll": 74,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "BUTTON",
+          "class": "ui-button quiet",
+          "left": 758.359375,
+          "right": 812.703125,
+          "width": 54,
+          "scroll": 54,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TR",
+          "class": "",
+          "left": -74,
+          "right": 846,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "",
+          "left": 303.1875,
+          "right": 468.78125,
+          "width": 166,
+          "scroll": 166,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "DIV",
+          "class": "stock-quantity-input",
+          "left": 316.78125,
+          "right": 455.1875,
+          "width": 138,
+          "scroll": 138,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "INPUT",
+          "class": "",
+          "left": 316.78125,
+          "right": 433.96875,
+          "width": 115,
+          "scroll": 115,
+          "overflow": "clip",
+          "position": "static"
+        },
+        {
+          "tag": "SPAN",
+          "class": "",
+          "left": 440.359375,
+          "right": 455.1875,
+          "width": 15,
+          "scroll": 15,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "numeric",
+          "left": 468.78125,
+          "right": 597.578125,
+          "width": 129,
+          "scroll": 129,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "numeric",
+          "left": 597.578125,
+          "right": 744.765625,
+          "width": 147,
+          "scroll": 147,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "",
+          "left": 744.765625,
+          "right": 846,
+          "width": 101,
+          "scroll": 101,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "DIV",
+          "class": "stock-row-actions",
+          "left": 758.359375,
+          "right": 832.40625,
+          "width": 74,
+          "scroll": 74,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "BUTTON",
+          "class": "ui-button quiet",
+          "left": 758.359375,
+          "right": 812.703125,
+          "width": 54,
+          "scroll": 54,
+          "overflow": "visible",
+          "position": "static"
+        }
+      ]
+    },
+    {
+      "name": "owner-stock-count-390",
+      "file": "screenshots/owner-stock-count-390.png",
+      "width": 390,
+      "overflow": -15,
+      "geometry": [
+        {
+          "tag": "TABLE",
+          "class": "batch-table",
+          "left": -74,
+          "right": 846,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COLGROUP",
+          "class": "",
+          "left": -74,
+          "right": 846,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COL",
+          "class": "batch-quantity-col",
+          "left": 303.1875,
+          "right": 468.78125,
+          "width": 166,
+          "scroll": 166,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COL",
+          "class": "batch-change-col",
+          "left": 468.78125,
+          "right": 597.578125,
+          "width": 129,
+          "scroll": 129,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COL",
+          "class": "batch-stock-col",
+          "left": 597.578125,
+          "right": 744.765625,
+          "width": 147,
+          "scroll": 147,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COL",
+          "class": "batch-actions-col",
+          "left": 744.765625,
+          "right": 846,
+          "width": 101,
+          "scroll": 101,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "THEAD",
+          "class": "",
+          "left": -74,
+          "right": 846,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TR",
+          "class": "",
+          "left": -74,
+          "right": 846,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TH",
+          "class": "",
+          "left": 303.1875,
+          "right": 468.78125,
+          "width": 166,
+          "scroll": 166,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TH",
+          "class": "numeric",
+          "left": 468.78125,
+          "right": 597.578125,
+          "width": 129,
+          "scroll": 129,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TH",
+          "class": "numeric",
+          "left": 597.578125,
+          "right": 744.765625,
+          "width": 147,
+          "scroll": 147,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TH",
+          "class": "",
+          "left": 744.765625,
+          "right": 846,
+          "width": 101,
+          "scroll": 101,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TBODY",
+          "class": "",
+          "left": -74,
+          "right": 846,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TR",
+          "class": "",
+          "left": -74,
+          "right": 846,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "",
+          "left": 303.1875,
+          "right": 468.78125,
+          "width": 166,
+          "scroll": 166,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "DIV",
+          "class": "stock-quantity-input",
+          "left": 316.78125,
+          "right": 455.1875,
+          "width": 138,
+          "scroll": 138,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "INPUT",
+          "class": "",
+          "left": 316.78125,
+          "right": 433.96875,
+          "width": 115,
+          "scroll": 115,
+          "overflow": "clip",
+          "position": "static"
+        },
+        {
+          "tag": "SPAN",
+          "class": "",
+          "left": 440.359375,
+          "right": 455.1875,
+          "width": 15,
+          "scroll": 15,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "numeric",
+          "left": 468.78125,
+          "right": 597.578125,
+          "width": 129,
+          "scroll": 129,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "numeric",
+          "left": 597.578125,
+          "right": 744.765625,
+          "width": 147,
+          "scroll": 147,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "",
+          "left": 744.765625,
+          "right": 846,
+          "width": 101,
+          "scroll": 101,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "DIV",
+          "class": "stock-row-actions",
+          "left": 758.359375,
+          "right": 832.40625,
+          "width": 74,
+          "scroll": 74,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "BUTTON",
+          "class": "ui-button quiet",
+          "left": 758.359375,
+          "right": 812.703125,
+          "width": 54,
+          "scroll": 54,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "SPAN",
+          "class": "inline-flex items-center gap-1",
+          "left": 758.359375,
+          "right": 832.40625,
+          "width": 74,
+          "scroll": 74,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "BUTTON",
+          "class": "ui-button quiet",
+          "left": 758.359375,
+          "right": 812.40625,
+          "width": 54,
+          "scroll": 54,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "DIV",
+          "class": "inline-flex items-center align-middle ui-tooltip",
+          "left": 816.40625,
+          "right": 832.40625,
+          "width": 16,
+          "scroll": 16,
+          "overflow": "visible",
+          "position": "relative"
+        },
+        {
+          "tag": "BUTTON",
+          "class": "inline-flex items-center justify-center w-4 h-4 text-cocoa-400 hover:text-cocoa-600 focus:outline-none focus-visible:ring-1 focus-visible:ring-cocoa-400 rounded-full transition-colors cursor-help",
+          "left": 816.40625,
+          "right": 832.40625,
+          "width": 16,
+          "scroll": 16,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "svg",
+          "class": "svg",
+          "left": 817.40625,
+          "right": 831.40625,
+          "width": 14,
+          "scroll": 14,
+          "overflow": "hidden",
+          "position": "static"
+        },
+        {
+          "tag": "path",
+          "class": "svg",
+          "left": 818.8062744140625,
+          "right": 830.0062255859375,
+          "width": 0,
+          "scroll": 0,
+          "overflow": "visible",
+          "position": "static"
+        }
+      ]
+    },
+    {
+      "name": "owner-inventory-1440",
+      "file": "screenshots/owner-inventory-1440.png",
+      "width": 1440,
+      "overflow": -15,
+      "geometry": []
+    },
+    {
+      "name": "owner-picker-1440",
+      "file": "screenshots/owner-picker-1440.png",
+      "width": 1440,
+      "overflow": -15,
+      "geometry": []
+    },
+    {
+      "name": "owner-stock-count-1440",
+      "file": "screenshots/owner-stock-count-1440.png",
+      "width": 1440,
+      "overflow": -15,
+      "geometry": []
+    },
+    {
+      "name": "owner-new-supply-mobile",
+      "file": "screenshots/owner-new-supply-mobile.png",
+      "width": 390,
+      "overflow": -15,
+      "geometry": [
+        {
+          "tag": "TABLE",
+          "class": "batch-table",
+          "left": 34,
+          "right": 954,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COLGROUP",
+          "class": "",
+          "left": 34,
+          "right": 954,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COL",
+          "class": "batch-stock-col",
+          "left": 264,
+          "right": 411.1875,
+          "width": 147,
+          "scroll": 147,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COL",
+          "class": "batch-quantity-col",
+          "left": 411.1875,
+          "right": 576.78125,
+          "width": 166,
+          "scroll": 166,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COL",
+          "class": "batch-change-col",
+          "left": 576.78125,
+          "right": 705.578125,
+          "width": 129,
+          "scroll": 129,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COL",
+          "class": "batch-stock-col",
+          "left": 705.578125,
+          "right": 852.765625,
+          "width": 147,
+          "scroll": 147,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COL",
+          "class": "batch-actions-col",
+          "left": 852.765625,
+          "right": 954,
+          "width": 101,
+          "scroll": 101,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "THEAD",
+          "class": "",
+          "left": 34,
+          "right": 954,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TR",
+          "class": "",
+          "left": 34,
+          "right": 954,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TH",
+          "class": "numeric",
+          "left": 264,
+          "right": 411.1875,
+          "width": 147,
+          "scroll": 147,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "SPAN",
+          "class": "inline-flex items-center gap-1 justify-end",
+          "left": 324.65625,
+          "right": 397.59375,
+          "width": 73,
+          "scroll": 73,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "DIV",
+          "class": "inline-flex items-center align-middle ui-tooltip",
+          "left": 381.59375,
+          "right": 397.59375,
+          "width": 16,
+          "scroll": 16,
+          "overflow": "visible",
+          "position": "relative"
+        },
+        {
+          "tag": "BUTTON",
+          "class": "inline-flex items-center justify-center w-4 h-4 text-cocoa-400 hover:text-cocoa-600 focus:outline-none focus-visible:ring-1 focus-visible:ring-cocoa-400 rounded-full transition-colors cursor-help",
+          "left": 381.59375,
+          "right": 397.59375,
+          "width": 16,
+          "scroll": 16,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "svg",
+          "class": "svg",
+          "left": 382.59375,
+          "right": 396.59375,
+          "width": 14,
+          "scroll": 14,
+          "overflow": "hidden",
+          "position": "static"
+        },
+        {
+          "tag": "path",
+          "class": "svg",
+          "left": 383.9937438964844,
+          "right": 395.1937561035156,
+          "width": 0,
+          "scroll": 0,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TH",
+          "class": "",
+          "left": 411.1875,
+          "right": 576.78125,
+          "width": 166,
+          "scroll": 166,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TH",
+          "class": "numeric",
+          "left": 576.78125,
+          "right": 705.578125,
+          "width": 129,
+          "scroll": 129,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TH",
+          "class": "numeric",
+          "left": 705.578125,
+          "right": 852.765625,
+          "width": 147,
+          "scroll": 147,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TH",
+          "class": "",
+          "left": 852.765625,
+          "right": 954,
+          "width": 101,
+          "scroll": 101,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TBODY",
+          "class": "",
+          "left": 34,
+          "right": 954,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TR",
+          "class": "",
+          "left": 34,
+          "right": 954,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "empty-state",
+          "left": 34,
+          "right": 954,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        }
+      ]
+    },
+    {
+      "name": "owner-new-stock-in-mobile",
+      "file": "screenshots/owner-new-stock-in-mobile.png",
+      "width": 390,
+      "overflow": -15,
+      "geometry": [
+        {
+          "tag": "TABLE",
+          "class": "batch-table",
+          "left": -74,
+          "right": 846,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COLGROUP",
+          "class": "",
+          "left": -74,
+          "right": 846,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COL",
+          "class": "batch-quantity-col",
+          "left": 303.1875,
+          "right": 468.78125,
+          "width": 166,
+          "scroll": 166,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COL",
+          "class": "batch-change-col",
+          "left": 468.78125,
+          "right": 597.578125,
+          "width": 129,
+          "scroll": 129,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COL",
+          "class": "batch-stock-col",
+          "left": 597.578125,
+          "right": 744.765625,
+          "width": 147,
+          "scroll": 147,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COL",
+          "class": "batch-actions-col",
+          "left": 744.765625,
+          "right": 846,
+          "width": 101,
+          "scroll": 101,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "THEAD",
+          "class": "",
+          "left": -74,
+          "right": 846,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TR",
+          "class": "",
+          "left": -74,
+          "right": 846,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TH",
+          "class": "",
+          "left": 303.1875,
+          "right": 468.78125,
+          "width": 166,
+          "scroll": 166,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TH",
+          "class": "numeric",
+          "left": 468.78125,
+          "right": 597.578125,
+          "width": 129,
+          "scroll": 129,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TH",
+          "class": "numeric",
+          "left": 597.578125,
+          "right": 744.765625,
+          "width": 147,
+          "scroll": 147,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TH",
+          "class": "",
+          "left": 744.765625,
+          "right": 846,
+          "width": 101,
+          "scroll": 101,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TBODY",
+          "class": "",
+          "left": -74,
+          "right": 846,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TR",
+          "class": "",
+          "left": -74,
+          "right": 846,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "",
+          "left": 303.1875,
+          "right": 468.78125,
+          "width": 166,
+          "scroll": 166,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "DIV",
+          "class": "stock-quantity-input",
+          "left": 316.78125,
+          "right": 455.1875,
+          "width": 138,
+          "scroll": 138,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "INPUT",
+          "class": "",
+          "left": 316.78125,
+          "right": 426.25,
+          "width": 107,
+          "scroll": 107,
+          "overflow": "clip",
+          "position": "static"
+        },
+        {
+          "tag": "SPAN",
+          "class": "",
+          "left": 432.640625,
+          "right": 455.1875,
+          "width": 23,
+          "scroll": 23,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "numeric",
+          "left": 468.78125,
+          "right": 597.578125,
+          "width": 129,
+          "scroll": 129,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "numeric",
+          "left": 597.578125,
+          "right": 744.765625,
+          "width": 147,
+          "scroll": 147,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "",
+          "left": 744.765625,
+          "right": 846,
+          "width": 101,
+          "scroll": 101,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "DIV",
+          "class": "stock-row-actions",
+          "left": 758.359375,
+          "right": 832.40625,
+          "width": 74,
+          "scroll": 74,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "BUTTON",
+          "class": "ui-button quiet",
+          "left": 758.359375,
+          "right": 812.703125,
+          "width": 54,
+          "scroll": 54,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TR",
+          "class": "",
+          "left": -74,
+          "right": 846,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "",
+          "left": 303.1875,
+          "right": 468.78125,
+          "width": 166,
+          "scroll": 166,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "DIV",
+          "class": "stock-quantity-input",
+          "left": 316.78125,
+          "right": 455.1875,
+          "width": 138,
+          "scroll": 138,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "INPUT",
+          "class": "",
+          "left": 316.78125,
+          "right": 433.96875,
+          "width": 115,
+          "scroll": 115,
+          "overflow": "clip",
+          "position": "static"
+        },
+        {
+          "tag": "SPAN",
+          "class": "",
+          "left": 440.359375,
+          "right": 455.1875,
+          "width": 15,
+          "scroll": 15,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "numeric",
+          "left": 468.78125,
+          "right": 597.578125,
+          "width": 129,
+          "scroll": 129,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "numeric",
+          "left": 597.578125,
+          "right": 744.765625,
+          "width": 147,
+          "scroll": 147,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "",
+          "left": 744.765625,
+          "right": 846,
+          "width": 101,
+          "scroll": 101,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "DIV",
+          "class": "stock-row-actions",
+          "left": 758.359375,
+          "right": 832.40625,
+          "width": 74,
+          "scroll": 74,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "BUTTON",
+          "class": "ui-button quiet",
+          "left": 758.359375,
+          "right": 812.703125,
+          "width": 54,
+          "scroll": 54,
+          "overflow": "visible",
+          "position": "static"
+        }
+      ]
+    },
+    {
+      "name": "assistant-inventory-390",
+      "file": "screenshots/assistant-inventory-390.png",
+      "width": 390,
+      "overflow": -15,
+      "geometry": [
+        {
+          "tag": "TABLE",
+          "class": "supplies-table",
+          "left": 17,
+          "right": 657,
+          "width": 640,
+          "scroll": 640,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COLGROUP",
+          "class": "",
+          "left": 17,
+          "right": 657,
+          "width": 640,
+          "scroll": 640,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COL",
+          "class": "supplies-stock-col",
+          "left": 297.015625,
+          "right": 431.40625,
+          "width": 134,
+          "scroll": 134,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COL",
+          "class": "supplies-status-col",
+          "left": 431.40625,
+          "right": 585,
+          "width": 154,
+          "scroll": 154,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COL",
+          "class": "supplies-actions-col",
+          "left": 585,
+          "right": 657,
+          "width": 72,
+          "scroll": 72,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "THEAD",
+          "class": "",
+          "left": 17,
+          "right": 657,
+          "width": 640,
+          "scroll": 640,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TR",
+          "class": "",
+          "left": 17,
+          "right": 657,
+          "width": 640,
+          "scroll": 640,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TH",
+          "class": "numeric",
+          "left": 297.015625,
+          "right": 431.40625,
+          "width": 134,
+          "scroll": 134,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TH",
+          "class": "",
+          "left": 431.40625,
+          "right": 585,
+          "width": 154,
+          "scroll": 154,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "SPAN",
+          "class": "inline-flex items-center gap-1",
+          "left": 445,
+          "right": 543.25,
+          "width": 98,
+          "scroll": 98,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "DIV",
+          "class": "inline-flex items-center align-middle ui-tooltip",
+          "left": 527.25,
+          "right": 543.25,
+          "width": 16,
+          "scroll": 16,
+          "overflow": "visible",
+          "position": "relative"
+        },
+        {
+          "tag": "BUTTON",
+          "class": "inline-flex items-center justify-center w-4 h-4 text-cocoa-400 hover:text-cocoa-600 focus:outline-none focus-visible:ring-1 focus-visible:ring-cocoa-400 rounded-full transition-colors cursor-help",
+          "left": 527.25,
+          "right": 543.25,
+          "width": 16,
+          "scroll": 16,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "svg",
+          "class": "svg",
+          "left": 528.25,
+          "right": 542.25,
+          "width": 14,
+          "scroll": 14,
+          "overflow": "hidden",
+          "position": "static"
+        },
+        {
+          "tag": "path",
+          "class": "svg",
+          "left": 529.6500244140625,
+          "right": 540.8499755859375,
+          "width": 0,
+          "scroll": 0,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TH",
+          "class": "",
+          "left": 585,
+          "right": 657,
+          "width": 72,
+          "scroll": 72,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TBODY",
+          "class": "",
+          "left": 17,
+          "right": 657,
+          "width": 640,
+          "scroll": 640,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TR",
+          "class": "",
+          "left": 17,
+          "right": 657,
+          "width": 640,
+          "scroll": 640,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "numeric",
+          "left": 297.015625,
+          "right": 431.40625,
+          "width": 134,
+          "scroll": 134,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "",
+          "left": 431.40625,
+          "right": 585,
+          "width": 154,
+          "scroll": 154,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "DIV",
+          "class": "inline-flex items-center align-middle ui-tooltip",
+          "left": 445,
+          "right": 510.546875,
+          "width": 66,
+          "scroll": 66,
+          "overflow": "visible",
+          "position": "relative"
+        },
+        {
+          "tag": "SPAN",
+          "class": "inline-flex items-center cursor-help focus:outline-none focus-visible:ring-1 focus-visible:ring-cocoa-400 rounded",
+          "left": 445,
+          "right": 510.546875,
+          "width": 66,
+          "scroll": 66,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "SPAN",
+          "class": "status status-success cursor-help",
+          "left": 445,
+          "right": 510.546875,
+          "width": 66,
+          "scroll": 66,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "",
+          "left": 585,
+          "right": 657,
+          "width": 72,
+          "scroll": 72,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "DETAILS",
+          "class": "row-actions supply-actions",
+          "left": 599.40625,
+          "right": 643.40625,
+          "width": 44,
+          "scroll": 44,
+          "overflow": "visible",
+          "position": "relative"
+        },
+        {
+          "tag": "SUMMARY",
+          "class": "",
+          "left": 599.40625,
+          "right": 643.40625,
+          "width": 42,
+          "scroll": 42,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "svg",
+          "class": "svg",
+          "left": 612.40625,
+          "right": 630.40625,
+          "width": 18,
+          "scroll": 18,
+          "overflow": "hidden",
+          "position": "static"
+        },
+        {
+          "tag": "path",
+          "class": "svg",
+          "left": 615.40625,
+          "right": 627.40625,
+          "width": 0,
+          "scroll": 0,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "DIV",
+          "class": "",
+          "left": 505.5062561035156,
+          "right": 641.3062744140625,
+          "width": 138,
+          "scroll": 138,
+          "overflow": "hidden",
+          "position": "absolute"
+        },
+        {
+          "tag": "A",
+          "class": "",
+          "left": 506.47625732421875,
+          "right": 640.3362426757812,
+          "width": 138,
+          "scroll": 138,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "A",
+          "class": "",
+          "left": 506.47625732421875,
+          "right": 640.3362426757812,
+          "width": 138,
+          "scroll": 138,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "A",
+          "class": "",
+          "left": 506.47625732421875,
+          "right": 640.3362426757812,
+          "width": 138,
+          "scroll": 138,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TR",
+          "class": "",
+          "left": 17,
+          "right": 657,
+          "width": 640,
+          "scroll": 640,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "numeric",
+          "left": 297.015625,
+          "right": 431.40625,
+          "width": 134,
+          "scroll": 134,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "",
+          "left": 431.40625,
+          "right": 585,
+          "width": 154,
+          "scroll": 154,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "DIV",
+          "class": "inline-flex items-center align-middle ui-tooltip",
+          "left": 445,
+          "right": 510.546875,
+          "width": 66,
+          "scroll": 66,
+          "overflow": "visible",
+          "position": "relative"
+        }
+      ]
+    },
+    {
+      "name": "assistant-picker-390",
+      "file": "screenshots/assistant-picker-390.png",
+      "width": 390,
+      "overflow": -15,
+      "geometry": [
+        {
+          "tag": "TABLE",
+          "class": "batch-table",
+          "left": -74,
+          "right": 846,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COLGROUP",
+          "class": "",
+          "left": -74,
+          "right": 846,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COL",
+          "class": "batch-quantity-col",
+          "left": 303.1875,
+          "right": 468.78125,
+          "width": 166,
+          "scroll": 166,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COL",
+          "class": "batch-change-col",
+          "left": 468.78125,
+          "right": 597.578125,
+          "width": 129,
+          "scroll": 129,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COL",
+          "class": "batch-stock-col",
+          "left": 597.578125,
+          "right": 744.765625,
+          "width": 147,
+          "scroll": 147,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COL",
+          "class": "batch-actions-col",
+          "left": 744.765625,
+          "right": 846,
+          "width": 101,
+          "scroll": 101,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "THEAD",
+          "class": "",
+          "left": -74,
+          "right": 846,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TR",
+          "class": "",
+          "left": -74,
+          "right": 846,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TH",
+          "class": "",
+          "left": 303.1875,
+          "right": 468.78125,
+          "width": 166,
+          "scroll": 166,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TH",
+          "class": "numeric",
+          "left": 468.78125,
+          "right": 597.578125,
+          "width": 129,
+          "scroll": 129,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TH",
+          "class": "numeric",
+          "left": 597.578125,
+          "right": 744.765625,
+          "width": 147,
+          "scroll": 147,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TH",
+          "class": "",
+          "left": 744.765625,
+          "right": 846,
+          "width": 101,
+          "scroll": 101,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TBODY",
+          "class": "",
+          "left": -74,
+          "right": 846,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TR",
+          "class": "",
+          "left": -74,
+          "right": 846,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "",
+          "left": 303.1875,
+          "right": 468.78125,
+          "width": 166,
+          "scroll": 166,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "DIV",
+          "class": "stock-quantity-input",
+          "left": 316.78125,
+          "right": 455.1875,
+          "width": 138,
+          "scroll": 138,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "INPUT",
+          "class": "",
+          "left": 316.78125,
+          "right": 433.96875,
+          "width": 115,
+          "scroll": 115,
+          "overflow": "clip",
+          "position": "static"
+        },
+        {
+          "tag": "SPAN",
+          "class": "",
+          "left": 440.359375,
+          "right": 455.1875,
+          "width": 15,
+          "scroll": 15,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "numeric",
+          "left": 468.78125,
+          "right": 597.578125,
+          "width": 129,
+          "scroll": 129,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "numeric",
+          "left": 597.578125,
+          "right": 744.765625,
+          "width": 147,
+          "scroll": 147,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "",
+          "left": 744.765625,
+          "right": 846,
+          "width": 101,
+          "scroll": 101,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "DIV",
+          "class": "stock-row-actions",
+          "left": 758.359375,
+          "right": 832.40625,
+          "width": 74,
+          "scroll": 74,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "BUTTON",
+          "class": "ui-button quiet",
+          "left": 758.359375,
+          "right": 812.703125,
+          "width": 54,
+          "scroll": 54,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TR",
+          "class": "",
+          "left": -74,
+          "right": 846,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "",
+          "left": 303.1875,
+          "right": 468.78125,
+          "width": 166,
+          "scroll": 166,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "DIV",
+          "class": "stock-quantity-input",
+          "left": 316.78125,
+          "right": 455.1875,
+          "width": 138,
+          "scroll": 138,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "INPUT",
+          "class": "",
+          "left": 316.78125,
+          "right": 433.96875,
+          "width": 115,
+          "scroll": 115,
+          "overflow": "clip",
+          "position": "static"
+        },
+        {
+          "tag": "SPAN",
+          "class": "",
+          "left": 440.359375,
+          "right": 455.1875,
+          "width": 15,
+          "scroll": 15,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "numeric",
+          "left": 468.78125,
+          "right": 597.578125,
+          "width": 129,
+          "scroll": 129,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "numeric",
+          "left": 597.578125,
+          "right": 744.765625,
+          "width": 147,
+          "scroll": 147,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "",
+          "left": 744.765625,
+          "right": 846,
+          "width": 101,
+          "scroll": 101,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "DIV",
+          "class": "stock-row-actions",
+          "left": 758.359375,
+          "right": 832.40625,
+          "width": 74,
+          "scroll": 74,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "BUTTON",
+          "class": "ui-button quiet",
+          "left": 758.359375,
+          "right": 812.703125,
+          "width": 54,
+          "scroll": 54,
+          "overflow": "visible",
+          "position": "static"
+        }
+      ]
+    },
+    {
+      "name": "assistant-stock-count-390",
+      "file": "screenshots/assistant-stock-count-390.png",
+      "width": 390,
+      "overflow": -15,
+      "geometry": [
+        {
+          "tag": "TABLE",
+          "class": "batch-table",
+          "left": -74,
+          "right": 846,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COLGROUP",
+          "class": "",
+          "left": -74,
+          "right": 846,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COL",
+          "class": "batch-quantity-col",
+          "left": 303.1875,
+          "right": 468.78125,
+          "width": 166,
+          "scroll": 166,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COL",
+          "class": "batch-change-col",
+          "left": 468.78125,
+          "right": 597.578125,
+          "width": 129,
+          "scroll": 129,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COL",
+          "class": "batch-stock-col",
+          "left": 597.578125,
+          "right": 744.765625,
+          "width": 147,
+          "scroll": 147,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COL",
+          "class": "batch-actions-col",
+          "left": 744.765625,
+          "right": 846,
+          "width": 101,
+          "scroll": 101,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "THEAD",
+          "class": "",
+          "left": -74,
+          "right": 846,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TR",
+          "class": "",
+          "left": -74,
+          "right": 846,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TH",
+          "class": "",
+          "left": 303.1875,
+          "right": 468.78125,
+          "width": 166,
+          "scroll": 166,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TH",
+          "class": "numeric",
+          "left": 468.78125,
+          "right": 597.578125,
+          "width": 129,
+          "scroll": 129,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TH",
+          "class": "numeric",
+          "left": 597.578125,
+          "right": 744.765625,
+          "width": 147,
+          "scroll": 147,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TH",
+          "class": "",
+          "left": 744.765625,
+          "right": 846,
+          "width": 101,
+          "scroll": 101,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TBODY",
+          "class": "",
+          "left": -74,
+          "right": 846,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TR",
+          "class": "",
+          "left": -74,
+          "right": 846,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "",
+          "left": 303.1875,
+          "right": 468.78125,
+          "width": 166,
+          "scroll": 166,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "DIV",
+          "class": "stock-quantity-input",
+          "left": 316.78125,
+          "right": 455.1875,
+          "width": 138,
+          "scroll": 138,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "INPUT",
+          "class": "",
+          "left": 316.78125,
+          "right": 433.96875,
+          "width": 115,
+          "scroll": 115,
+          "overflow": "clip",
+          "position": "static"
+        },
+        {
+          "tag": "SPAN",
+          "class": "",
+          "left": 440.359375,
+          "right": 455.1875,
+          "width": 15,
+          "scroll": 15,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "numeric",
+          "left": 468.78125,
+          "right": 597.578125,
+          "width": 129,
+          "scroll": 129,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "numeric",
+          "left": 597.578125,
+          "right": 744.765625,
+          "width": 147,
+          "scroll": 147,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "",
+          "left": 744.765625,
+          "right": 846,
+          "width": 101,
+          "scroll": 101,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "DIV",
+          "class": "stock-row-actions",
+          "left": 758.359375,
+          "right": 832.40625,
+          "width": 74,
+          "scroll": 74,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "BUTTON",
+          "class": "ui-button quiet",
+          "left": 758.359375,
+          "right": 812.703125,
+          "width": 54,
+          "scroll": 54,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "SPAN",
+          "class": "inline-flex items-center gap-1",
+          "left": 758.359375,
+          "right": 832.40625,
+          "width": 74,
+          "scroll": 74,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "BUTTON",
+          "class": "ui-button quiet",
+          "left": 758.359375,
+          "right": 812.40625,
+          "width": 54,
+          "scroll": 54,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "DIV",
+          "class": "inline-flex items-center align-middle ui-tooltip",
+          "left": 816.40625,
+          "right": 832.40625,
+          "width": 16,
+          "scroll": 16,
+          "overflow": "visible",
+          "position": "relative"
+        },
+        {
+          "tag": "BUTTON",
+          "class": "inline-flex items-center justify-center w-4 h-4 text-cocoa-400 hover:text-cocoa-600 focus:outline-none focus-visible:ring-1 focus-visible:ring-cocoa-400 rounded-full transition-colors cursor-help",
+          "left": 816.40625,
+          "right": 832.40625,
+          "width": 16,
+          "scroll": 16,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "svg",
+          "class": "svg",
+          "left": 817.40625,
+          "right": 831.40625,
+          "width": 14,
+          "scroll": 14,
+          "overflow": "hidden",
+          "position": "static"
+        },
+        {
+          "tag": "path",
+          "class": "svg",
+          "left": 818.8062744140625,
+          "right": 830.0062255859375,
+          "width": 0,
+          "scroll": 0,
+          "overflow": "visible",
+          "position": "static"
+        }
+      ]
+    },
+    {
+      "name": "assistant-inventory-1440",
+      "file": "screenshots/assistant-inventory-1440.png",
+      "width": 1440,
+      "overflow": -15,
+      "geometry": []
+    },
+    {
+      "name": "assistant-picker-1440",
+      "file": "screenshots/assistant-picker-1440.png",
+      "width": 1440,
+      "overflow": -15,
+      "geometry": []
+    },
+    {
+      "name": "assistant-stock-count-1440",
+      "file": "screenshots/assistant-stock-count-1440.png",
+      "width": 1440,
+      "overflow": -15,
+      "geometry": []
+    },
+    {
+      "name": "assistant-new-supply-mobile",
+      "file": "screenshots/assistant-new-supply-mobile.png",
+      "width": 390,
+      "overflow": -15,
+      "geometry": [
+        {
+          "tag": "TABLE",
+          "class": "batch-table",
+          "left": 34,
+          "right": 954,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COLGROUP",
+          "class": "",
+          "left": 34,
+          "right": 954,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COL",
+          "class": "batch-stock-col",
+          "left": 264,
+          "right": 411.1875,
+          "width": 147,
+          "scroll": 147,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COL",
+          "class": "batch-quantity-col",
+          "left": 411.1875,
+          "right": 576.78125,
+          "width": 166,
+          "scroll": 166,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COL",
+          "class": "batch-change-col",
+          "left": 576.78125,
+          "right": 705.578125,
+          "width": 129,
+          "scroll": 129,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COL",
+          "class": "batch-stock-col",
+          "left": 705.578125,
+          "right": 852.765625,
+          "width": 147,
+          "scroll": 147,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COL",
+          "class": "batch-actions-col",
+          "left": 852.765625,
+          "right": 954,
+          "width": 101,
+          "scroll": 101,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "THEAD",
+          "class": "",
+          "left": 34,
+          "right": 954,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TR",
+          "class": "",
+          "left": 34,
+          "right": 954,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TH",
+          "class": "numeric",
+          "left": 264,
+          "right": 411.1875,
+          "width": 147,
+          "scroll": 147,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "SPAN",
+          "class": "inline-flex items-center gap-1 justify-end",
+          "left": 324.65625,
+          "right": 397.59375,
+          "width": 73,
+          "scroll": 73,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "DIV",
+          "class": "inline-flex items-center align-middle ui-tooltip",
+          "left": 381.59375,
+          "right": 397.59375,
+          "width": 16,
+          "scroll": 16,
+          "overflow": "visible",
+          "position": "relative"
+        },
+        {
+          "tag": "BUTTON",
+          "class": "inline-flex items-center justify-center w-4 h-4 text-cocoa-400 hover:text-cocoa-600 focus:outline-none focus-visible:ring-1 focus-visible:ring-cocoa-400 rounded-full transition-colors cursor-help",
+          "left": 381.59375,
+          "right": 397.59375,
+          "width": 16,
+          "scroll": 16,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "svg",
+          "class": "svg",
+          "left": 382.59375,
+          "right": 396.59375,
+          "width": 14,
+          "scroll": 14,
+          "overflow": "hidden",
+          "position": "static"
+        },
+        {
+          "tag": "path",
+          "class": "svg",
+          "left": 383.9937438964844,
+          "right": 395.1937561035156,
+          "width": 0,
+          "scroll": 0,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TH",
+          "class": "",
+          "left": 411.1875,
+          "right": 576.78125,
+          "width": 166,
+          "scroll": 166,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TH",
+          "class": "numeric",
+          "left": 576.78125,
+          "right": 705.578125,
+          "width": 129,
+          "scroll": 129,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TH",
+          "class": "numeric",
+          "left": 705.578125,
+          "right": 852.765625,
+          "width": 147,
+          "scroll": 147,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TH",
+          "class": "",
+          "left": 852.765625,
+          "right": 954,
+          "width": 101,
+          "scroll": 101,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TBODY",
+          "class": "",
+          "left": 34,
+          "right": 954,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TR",
+          "class": "",
+          "left": 34,
+          "right": 954,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "empty-state",
+          "left": 34,
+          "right": 954,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        }
+      ]
+    },
+    {
+      "name": "assistant-new-stock-in-mobile",
+      "file": "screenshots/assistant-new-stock-in-mobile.png",
+      "width": 390,
+      "overflow": -15,
+      "geometry": [
+        {
+          "tag": "TABLE",
+          "class": "batch-table",
+          "left": -95,
+          "right": 825,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COLGROUP",
+          "class": "",
+          "left": -95,
+          "right": 825,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COL",
+          "class": "batch-quantity-col",
+          "left": 282.1875,
+          "right": 447.78125,
+          "width": 166,
+          "scroll": 166,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COL",
+          "class": "batch-change-col",
+          "left": 447.78125,
+          "right": 576.578125,
+          "width": 129,
+          "scroll": 129,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COL",
+          "class": "batch-stock-col",
+          "left": 576.578125,
+          "right": 723.765625,
+          "width": 147,
+          "scroll": 147,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "COL",
+          "class": "batch-actions-col",
+          "left": 723.765625,
+          "right": 825,
+          "width": 101,
+          "scroll": 101,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "THEAD",
+          "class": "",
+          "left": -95,
+          "right": 825,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TR",
+          "class": "",
+          "left": -95,
+          "right": 825,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TH",
+          "class": "",
+          "left": 282.1875,
+          "right": 447.78125,
+          "width": 166,
+          "scroll": 166,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TH",
+          "class": "numeric",
+          "left": 447.78125,
+          "right": 576.578125,
+          "width": 129,
+          "scroll": 129,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TH",
+          "class": "numeric",
+          "left": 576.578125,
+          "right": 723.765625,
+          "width": 147,
+          "scroll": 147,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TH",
+          "class": "",
+          "left": 723.765625,
+          "right": 825,
+          "width": 101,
+          "scroll": 101,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TBODY",
+          "class": "",
+          "left": -95,
+          "right": 825,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TR",
+          "class": "",
+          "left": -95,
+          "right": 825,
+          "width": 920,
+          "scroll": 920,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "",
+          "left": 282.1875,
+          "right": 447.78125,
+          "width": 166,
+          "scroll": 166,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "DIV",
+          "class": "stock-quantity-input",
+          "left": 295.78125,
+          "right": 434.1875,
+          "width": 138,
+          "scroll": 138,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "INPUT",
+          "class": "",
+          "left": 295.78125,
+          "right": 419.8125,
+          "width": 122,
+          "scroll": 122,
+          "overflow": "clip",
+          "position": "static"
+        },
+        {
+          "tag": "SPAN",
+          "class": "",
+          "left": 426.203125,
+          "right": 434.1875,
+          "width": 8,
+          "scroll": 8,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "numeric",
+          "left": 447.78125,
+          "right": 576.578125,
+          "width": 129,
+          "scroll": 129,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "numeric",
+          "left": 576.578125,
+          "right": 723.765625,
+          "width": 147,
+          "scroll": 147,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "TD",
+          "class": "",
+          "left": 723.765625,
+          "right": 825,
+          "width": 101,
+          "scroll": 101,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "DIV",
+          "class": "stock-row-actions",
+          "left": 737.359375,
+          "right": 811.40625,
+          "width": 74,
+          "scroll": 74,
+          "overflow": "visible",
+          "position": "static"
+        },
+        {
+          "tag": "BUTTON",
+          "class": "ui-button quiet",
+          "left": 737.359375,
+          "right": 791.703125,
+          "width": 54,
+          "scroll": 54,
+          "overflow": "visible",
+          "position": "static"
+        }
+      ]
+    },
+    {
+      "name": "assistant-add-supply-mobile",
+      "file": "screenshots/assistant-add-supply-mobile.png",
+      "width": 390,
+      "overflow": -15,
+      "geometry": []
+    }
+  ],
+  "consoleErrors": [],
+  "browserNotices": [
+    "Transition was aborted because of invalid state. ViewTransition opt-in disabled",
+    "Transition was aborted because of invalid state. ViewTransition opt-in disabled"
+  ],
+  "failures": []
+}

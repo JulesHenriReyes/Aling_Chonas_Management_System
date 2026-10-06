@@ -129,7 +129,10 @@
                     {{-- 50% Deposit & Payment Details Box --}}
                     <div class="p-3.5 rounded-xl bg-cocoa-50/80 border border-cocoa-200/80 space-y-2">
                         <div class="flex justify-between items-baseline">
-                            <span class="text-xs font-bold text-cocoa-700 uppercase tracking-wide">Exact 50% Deposit</span>
+                            <span class="text-xs font-bold text-cocoa-700 uppercase tracking-wide inline-flex items-center gap-1">
+                                Exact 50% Deposit
+                                <x-tooltip text="The 50% deposit locks in your baking schedule. Only verified deposits secure your booking; remaining balance is paid at pickup." />
+                            </span>
                             <strong class="text-base font-extrabold text-cocoa-700">₱{{ number_format($order->required_down_payment, 2) }}</strong>
                         </div>
                         <div class="flex justify-between text-xs text-cocoa-500 pt-1.5 border-t border-cocoa-200/60">
@@ -168,7 +171,10 @@
                     </div>
                     <p class="text-xs text-cocoa-400">Save or bookmark this private link to check your order progress at any time.</p>
                     <div>
-                        <label for="private-order-link" class="block text-xs font-semibold text-cocoa-700 uppercase tracking-wider mb-1.5">Private order link</label>
+                        <label for="private-order-link" class="block text-xs font-semibold text-cocoa-700 uppercase tracking-wider mb-1.5 inline-flex items-center gap-1">
+                            Private order link
+                            <x-tooltip text="Bookmark or copy this unique private link to track your order status and upload receipts without needing an account." />
+                        </label>
                         <input id="private-order-link" type="text" readonly value="{{ route('public.order.payment', $order->private_token) }}" class="form-input-custom font-mono text-xs bg-cream-50" x-ref="orderLink">
                     </div>
                     <div class="flex flex-wrap items-center gap-2.5 pt-1">
@@ -273,7 +279,10 @@
                     </div>
                     <p class="text-xs text-cocoa-400">Anyone with this link can view your order and send a receipt. Keep it private. Returning to this link will reopen the order status.</p>
                     <div>
-                        <label for="private-order-link" class="block text-xs font-semibold text-cocoa-700 uppercase tracking-wider mb-1.5">Private order link</label>
+                        <label for="private-order-link" class="block text-xs font-semibold text-cocoa-700 uppercase tracking-wider mb-1.5 inline-flex items-center gap-1">
+                            Private order link
+                            <x-tooltip text="Bookmark or copy this unique private link to track your order status and upload receipts without needing an account." />
+                        </label>
                         <input id="private-order-link" type="text" readonly value="{{ route('public.order.payment', $order->private_token) }}" class="form-input-custom font-mono text-xs bg-cream-50" x-ref="orderLink">
                     </div>
                     <div class="flex flex-wrap gap-2.5 pt-1">

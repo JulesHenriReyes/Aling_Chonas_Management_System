@@ -22,7 +22,7 @@ Source: user requirements in pasted-text-1.txt, 2 October 2026.
 - [x] Reports: reconciled summaries/trends/tables/breakdowns/drill-downs/CSV and scoped snapshots.
 - [x] Verification: focused integrity, authorization, ordering, date and reconciliation tests.
 - [x] Verification: browser interaction and screenshots at 360/390/430/768/1024/1440px.
-- [x] Delivery: migration/operating instructions, screenshots, test results and limitations.
+- [x] Handover: migration/operating instructions, screenshots, test results and limitations.
 
 ## Evidence / notes
 - Initial PHP suite: 78 tests passed, 636 assertions (before this upgrade).

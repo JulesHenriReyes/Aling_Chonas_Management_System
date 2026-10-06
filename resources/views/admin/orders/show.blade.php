@@ -11,10 +11,12 @@
             <span class="text-cocoa-200">/</span>
             <span class="text-cocoa-400 font-mono">{{ $order->order_number }}</span>
         </div>
-        <span class="px-3 py-1 rounded-full text-xs font-semibold
-            {{ $order->user_id === null ? 'bg-cream-100 text-cocoa-500 ' : 'bg-cocoa-50 text-cocoa-500 ' }}">
-            {{ $order->user_id === null ? 'Public Web Order' : 'Staff Created (' . $order->user->first_name . ')' }}
-        </span>
+        <x-tooltip :text="$order->user_id === null ? 'Order submitted online by customer via public storefront.' : 'Order manually created by staff member ' . $order->user->first_name . '.'">
+            <span class="px-3 py-1 rounded-full text-xs font-semibold cursor-help inline-flex items-center gap-1
+                {{ $order->user_id === null ? 'bg-cream-100 text-cocoa-500 ' : 'bg-cocoa-50 text-cocoa-500 ' }}">
+                {{ $order->user_id === null ? 'Public Web Order' : 'Staff Created (' . $order->user->first_name . ')' }}
+            </span>
+        </x-tooltip>
     </div>
 
     {{-- Order Header --}}
@@ -126,9 +128,40 @@
 
                             {{-- Fixed catalog snapshot --}}
                             @include('partials.included-items', ['includedItems' => $detail->included_items_snapshot ?? [], 'includedText' => $detail->included_contents_snapshot, 'packageQuantity' => $detail->quantity])
-                            @foreach ($detail->addOns as $extra)
-                                <p class="text-sm"><strong>Paid extra:</strong> {{ $extra->name_snapshot }} × {{ $extra->quantity }} for this whole order line · ₱{{ number_format($extra->subtotal, 2) }}<br>{{ $extra->description_snapshot }} · ₱{{ number_format($extra->unit_price, 2) }} each</p>
-                            @endforeach
+                            @if ($detail->addOns->isNotEmpty())
+                                <div class="space-y-1.5 pt-1">
+                                    @foreach ($detail->addOns as $extra)
+                                        @php
+                                            $extraPhoto = $extra->addOn?->photo_path ?? $extra->photo_path ?? null;
+                                        @endphp
+                                        <div class="flex items-start gap-2 text-sm pt-0.5">
+                                            @if ($extraPhoto)
+                                                <div x-data="{ expanded: false }" class="shrink-0 mt-0.5">
+                                                    <button type="button" @click="expanded = true" class="block border border-cocoa-100 rounded overflow-hidden w-7 h-7 bg-cream-50 hover:opacity-80 transition focus:outline-none cursor-pointer" title="Click to view image">
+                                                        <img src="{{ asset('storage/' . $extraPhoto) }}" alt="{{ $extra->name_snapshot }}" class="w-full h-full object-cover">
+                                                    </button>
+                                                    <template x-teleport="body">
+                                                        <div x-show="expanded" style="display: none;" class="fixed inset-0 z-[100] flex items-center justify-center bg-black bg-opacity-80 p-4 backdrop-blur-sm" @keydown.escape.window="expanded = false">
+                                                            <div class="relative w-full h-full flex justify-center items-center" @click.outside="expanded = false">
+                                                                <button @click="expanded = false" class="absolute top-4 right-4 text-white hover:text-gray-300 focus:outline-none z-[110]">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 drop-shadow-md" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                                                                </button>
+                                                                <img src="{{ asset('storage/' . $extraPhoto) }}" alt="{{ $extra->name_snapshot }}" class="max-w-full max-h-full object-contain rounded drop-shadow-2xl">
+                                                            </div>
+                                                        </div>
+                                                    </template>
+                                                </div>
+                                            @endif
+                                            <div class="min-w-0 flex-1">
+                                                <p class="leading-snug"><strong>Paid extra:</strong> {{ $extra->name_snapshot }} × {{ $extra->quantity }} for this whole order line · ₱{{ number_format($extra->subtotal, 2) }}</p>
+                                                @if ($extra->description_snapshot)
+                                                    <span class="block text-xs text-cocoa-400">{{ $extra->description_snapshot }} · ₱{{ number_format($extra->unit_price, 2) }} each</span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endif
                         </div>
                     @endforeach
                 </div>

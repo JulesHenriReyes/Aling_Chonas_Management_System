@@ -54,15 +54,19 @@ Choose **Select package**, select layers and quantity, then optional paid extras
 
 Normal phone cards remain two columns at 360/390/430 px; wider screens show three or four. With enlarged text, cards can use one column so names, prices and actions remain readable without clipping.
 
-### Receiving, usage and stocktake
+### Supplies, stock in and stock out
 
-Receive a delivery **once into shared supplies**. Enter date, optional supplier/reference and notes; search and add each supply once, then enter quantities in its displayed unit. Review change and expected stock before posting. All rows commit together or none do. Repeated submission of the same form returns its existing operation.
+Create each supply once through **Add supply**, then use **Stock in** for quantities bought. Type the supply name and choose its category and stock unit. The saved inventory records are the only ingredient list used by the stock forms. New supplies start at zero. **Save & stock in** opens the stock form with the new supply selected; **Save supply only** just creates its catalogue entry. Existing supplies retain their recorded units and quantities.
 
-**Record usage / waste** selects normal usage or waste/spoilage. Waste requires a reason. Both reject negative resulting stock. **Stocktake** accepts actual counted quantities, including zero, and requires an explanation. If stock changed while counting, reload current stock and recount before posting.
+For the bakery's ingredients, use Flour, Sugar and Cocoa in kg; Egg in pieces; Evaporated milk in cans; Vegetable oil in kg; and Baking powder and Baking soda in g. Initial seed data uses these names and units when setting up a fresh database. The app has no separate ingredient-template dropdown to maintain.
+
+In **Stock in**, enter date, optional supplier and notes. Use **Find a supply** to type a name or open the dropdown button. The list stays open as supplies are selected and marks them Added. Click outside, press Escape or use the button to close it. **Add a new supply** creates a missing catalogue entry on the same page and adds it to the batch with zero stock. Enter quantities beside their units, then review On hand, Change and After saving. All stock rows commit together or none do. Repeated submission of the same stock form returns its existing operation. Cancelling Stock in leaves any newly created catalogue entry at zero.
+
+**Stock out** selects Used for baking, Waste / spoilage or Count remaining stock. Waste requires a reason. Usage and waste reject negative resulting stock. Count remaining stock accepts actual counted quantities, including zero, and requires an explanation. If stock changed while counting, reload current stock and recount before posting.
 
 Use **Movement history** or a supply's details to inspect actor, effective date, posting time and reconciliation. To correct an operation, open it and post a reasoned **linked reversal**, then enter the corrected operation if needed. The reversal retains the original rows and is rejected if it would make stock negative. Legacy individual movements have their own correction page; grouped operations reverse together. Reversals cannot themselves be reversed.
 
-Stock units are fixed after creation. Add a separate supply if a different unit is needed. No purchase-unit conversion, recipes or order-driven ingredient deductions are inferred. Receiving, waste, adjustment and stocktake do **not** create expenses. Record an actual invoice separately with its real amount.
+Stock units are fixed after creation. Convert purchases into the recorded unit before entry: for example, a bag labelled 25 kg adds 25 kg of flour. Use the actual labelled weight or count; tray sizes and can capacities are not assumed. Add a separate supply if a different unit is needed. No recipes or order-driven ingredient deductions are inferred. Stock in, waste, adjustment and stocktake do **not** create expenses. Record an actual invoice separately with its real amount.
 
 ### Expenses and audit history
 
@@ -93,7 +97,7 @@ Click **Inspect records** on a metric for paginated supporting entries. **View c
 See [verification evidence](workflow-verification.md), [requirement checklist](upgrade-checklist.md) and [screenshot gallery](workflow-screenshots.md).
 
 - Initial browser verification used isolated SQLite and realistic bakery fixtures. Concurrent stock tests run two independent PHP processes against a disposable file database. The local deployment repair additionally verified backup restoration, migrations, schema/backfills and original records on a temporary MySQL copy. Concurrent MySQL load was not executed; the MySQL path retains transactions, stable row-lock ordering and uniqueness constraints.
-- Legacy movements without original before/after quantities cannot prove historical balances before audit adoption. The explicit reconciliation baseline makes current stock reconcilable without inventing historical deliveries. Earlier expense edits cannot be reconstructed.
+- Legacy movements without original before/after quantities cannot prove historical balances before audit adoption. The explicit reconciliation baseline makes current stock reconcilable without inventing historical stock entries. Earlier expense edits cannot be reconstructed.
 - Drafts are tied to the browser/server session; this is not a cross-device customer account cart. Existing session expiry settings apply.
 - Tailwind's CDN and Google font loading remain existing application dependencies. No offline frontend rebuild was introduced.
 - The preview's GCash QR is unset, so the payment page correctly requests bakery setup before money is sent. Existing payment verification behavior remains covered by the regression suite. No real payment was sent during verification.

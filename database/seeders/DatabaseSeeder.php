@@ -110,55 +110,12 @@ class DatabaseSeeder extends Seeder
         }
 
         // 4. Supplies (Ingredients and Packaging)
-        $supplies = [
-            [
-                'supply_name' => 'All-Purpose Flour',
-                'category' => 'ingredients',
-                'unit' => 'kg',
-                'current_quantity' => 25.00,
-                'reorder_level' => 10.00,
-                'is_active' => true,
-            ],
-            [
-                'supply_name' => 'Granulated White Sugar',
-                'category' => 'ingredients',
-                'unit' => 'kg',
-                'current_quantity' => 20.00,
-                'reorder_level' => 8.00,
-                'is_active' => true,
-            ],
-            [
-                'supply_name' => 'Unsalted Butter',
-                'category' => 'ingredients',
-                'unit' => 'kg',
-                'current_quantity' => 12.00,
-                'reorder_level' => 5.00,
-                'is_active' => true,
-            ],
-            [
-                'supply_name' => 'Dutch Process Cocoa Powder',
-                'category' => 'ingredients',
-                'unit' => 'kg',
-                'current_quantity' => 6.00,
-                'reorder_level' => 3.00,
-                'is_active' => true,
-            ],
-            [
-                'supply_name' => 'Fresh Eggs (Trays)',
-                'category' => 'ingredients',
-                'unit' => 'tray',
-                'current_quantity' => 5.00,
-                'reorder_level' => 2.00,
-                'is_active' => true,
-            ],
-            [
-                'supply_name' => 'Pure Vanilla Extract',
-                'category' => 'ingredients',
-                'unit' => 'bottle',
-                'current_quantity' => 4.00,
-                'reorder_level' => 2.00,
-                'is_active' => true,
-            ],
+        // Ingredient catalogue only: physical stock is recorded through Stock in.
+        $supplies = array_map(fn (array $preset) => $preset + [
+            'category' => 'ingredients', 'current_quantity' => 0,
+            'reorder_level' => 0, 'is_active' => true,
+        ], config('inventory.ingredient_presets'));
+        $supplies = array_merge($supplies, [
             [
                 'supply_name' => 'Pastry Cake Box 8x8',
                 'category' => 'packaging',
@@ -191,7 +148,7 @@ class DatabaseSeeder extends Seeder
                 'reorder_level' => 10.00,
                 'is_active' => true,
             ],
-        ];
+        ]);
 
         foreach ($supplies as $s) {
             Supply::firstOrCreate(['supply_name' => $s['supply_name']], $s);

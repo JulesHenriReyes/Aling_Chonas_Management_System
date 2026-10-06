@@ -78,8 +78,23 @@
     </div>
 
     <!-- Create Modal -->
-    <div x-show="showCreateModal" x-cloak data-dialog role="dialog" aria-modal="true" aria-labelledby="product-dialog-1" tabindex="-1" class="dialog-overlay fixed inset-0 bg-cocoa-800/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="dialog-panel bg-white border border-cocoa-100 rounded-xl max-w-md w-full p-6 " @click.away="showCreateModal = false">
+    <div x-show="showCreateModal" x-cloak data-dialog role="dialog" aria-modal="true" aria-labelledby="product-dialog-1" tabindex="-1"
+         x-transition:enter="transition ease-out duration-200"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-150"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         class="dialog-overlay fixed inset-0 bg-black/40 backdrop-blur-[2px] z-50 flex items-center justify-center p-4">
+        <div class="dialog-panel bg-white border border-cocoa-100 rounded-xl max-w-md w-full p-6 shadow-xl"
+             x-show="showCreateModal"
+             x-transition:enter="transition ease-out duration-200"
+             x-transition:enter-start="opacity-0 scale-[0.98] -translate-y-1"
+             x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+             x-transition:leave="transition ease-in duration-150"
+             x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+             x-transition:leave-end="opacity-0 scale-[0.98] -translate-y-1"
+             @click.away="showCreateModal = false">
             <h3 id="product-dialog-1" class="text-sm font-semibold text-cocoa-600 mb-4">Add New Bakery Product</h3>
             <form action="{{ route('products.store') }}" method="POST" class="space-y-4">
                 @csrf
@@ -104,8 +119,23 @@
     </div>
 
     <!-- Edit Modal -->
-    <div x-show="editingProduct" x-cloak data-dialog role="dialog" aria-modal="true" aria-labelledby="product-dialog-2" tabindex="-1" class="dialog-overlay fixed inset-0 bg-cocoa-800/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="dialog-panel bg-white border border-cocoa-100 rounded-xl max-w-md w-full p-6 " @click.away="closeEdit()">
+    <div x-show="editingProduct" x-cloak data-dialog role="dialog" aria-modal="true" aria-labelledby="product-dialog-2" tabindex="-1"
+         x-transition:enter="transition ease-out duration-200"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-150"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         class="dialog-overlay fixed inset-0 bg-black/40 backdrop-blur-[2px] z-50 flex items-center justify-center p-4">
+        <div class="dialog-panel bg-white border border-cocoa-100 rounded-xl max-w-md w-full p-6 shadow-xl"
+             x-show="editingProduct"
+             x-transition:enter="transition ease-out duration-200"
+             x-transition:enter-start="opacity-0 scale-[0.98] -translate-y-1"
+             x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+             x-transition:leave="transition ease-in duration-150"
+             x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+             x-transition:leave-end="opacity-0 scale-[0.98] -translate-y-1"
+             @click.away="closeEdit()">
             <h3 id="product-dialog-2" class="text-sm font-semibold text-cocoa-600 mb-4">Edit Product Details</h3>
             <template x-if="editingProduct"><form :action="'/products/' + editingProduct.id" method="POST" class="space-y-4">
                 @csrf

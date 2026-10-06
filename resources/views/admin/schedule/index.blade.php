@@ -9,13 +9,15 @@
             <h1 class="text-xl font-bold text-cocoa-600">Pickup Schedule</h1>
             <p class="text-sm text-cocoa-400 mt-1">Active customer pickups organized chronologically by date and time.</p>
         </div>
-        <form method="GET" action="{{ route('schedule.index') }}" class="flex flex-wrap items-center gap-2">
-            <input aria-label="Pickup date" type="date" name="pickup_date" value="{{ request('pickup_date') }}" class="w-full text-sm rounded-lg border-cocoa-100 bg-white focus:border-cocoa-300 focus:ring-cocoa-300">
-            <button type="submit" class="bg-white border border-cocoa-100 text-cocoa-500 hover:bg-cream-100 font-medium text-sm px-4 py-2 rounded-lg transition min-h-[44px] whitespace-nowrap">
+        <form method="GET" action="{{ route('schedule.index') }}" class="flex items-center gap-2 w-full sm:w-auto">
+            <div class="relative flex-1 sm:w-48">
+                <input aria-label="Pickup date" type="date" name="pickup_date" value="{{ request('pickup_date') }}" class="w-full h-10 text-sm rounded-lg border border-cocoa-100 bg-white px-3 text-cocoa-600 focus:border-cocoa-300 focus:ring-1 focus:ring-cocoa-300">
+            </div>
+            <button type="submit" class="h-10 px-4 bg-white border border-cocoa-100 text-cocoa-500 hover:bg-cream-100 hover:text-cocoa-700 font-medium text-sm rounded-lg transition inline-flex items-center justify-center whitespace-nowrap shrink-0">
                 Filter Date
             </button>
             @if(request('pickup_date'))
-                <a href="{{ route('schedule.index') }}" class="text-cocoa-500 hover:text-cocoa-600 font-medium text-sm px-2">
+                <a href="{{ route('schedule.index') }}" class="h-10 px-2 text-cocoa-500 hover:text-cocoa-600 font-medium text-sm inline-flex items-center shrink-0">
                     Reset
                 </a>
             @endif

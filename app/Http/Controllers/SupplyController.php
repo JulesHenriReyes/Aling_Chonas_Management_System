@@ -44,12 +44,22 @@ class SupplyController extends Controller
     {
         Gate::authorize('manage-inventory');
         $data = $this->validateSupply($request);
-        $data += $request->validate(['current_quantity' => ['required', 'numeric', 'decimal:0,2', 'between:0,99999999.99']]);
+        // Quick creation defines an item; the stock form records its quantity later.
+        $data += $request->validate(['current_quantity' => ['required', 'numeric', 'decimal:0,2',
+            $request->expectsJson() ? 'size:0' : 'between:0,99999999.99']],
+            ['current_quantity.size' => 'Create the supply with zero stock, then record its quantity through Stock in.']);
         $supply = DB::transaction(function () use ($data) {
             $supply = Supply::create($data);
             $this->inventoryService->establishBaseline($supply);
             return $supply;
         });
+        if ($request->expectsJson()) {
+            return response()->json($supply->fresh()->only(['id', 'supply_name', 'unit', 'current_quantity', 'stock_version']), 201);
+        }
+        if ($request->input('next') === 'stock_in' && $supply->is_active) {
+            return redirect()->route('inventory.create', ['type' => 'receipt', 'supply_id' => $supply->id])
+                ->with('success', 'Supply added. Enter the quantity to stock in.');
+        }
         return redirect()->route('supplies.show', $supply)->with('success', 'Supply added with a recorded opening balance.');
     }
     public function update(Request $request, Supply $supply)
@@ -73,12 +83,60 @@ class SupplyController extends Controller
         $data['is_active'] = $request->boolean('is_active', !$supply);
         return $data;
     }
-    public function show(Supply $supply)
+    public function show(Request $request, Supply $supply)
     {
         Gate::authorize('manage-inventory');
         $baseline = DB::table('inventory_baselines')->where('supply_id', $supply->id)->first();
-        $netMovement = $supply->inventoryTransactions()->selectRaw("COALESCE(SUM(CASE WHEN transaction_type = 'stock_out' THEN -quantity ELSE quantity END), 0) AS net")->value('net');
+        $netMovement = (float) $supply->inventoryTransactions()->selectRaw("COALESCE(SUM(CASE WHEN transaction_type = 'stock_out' THEN -quantity ELSE quantity END), 0) AS net")->value('net');
         $movements = $supply->inventoryTransactions()->with(['user', 'operation'])->latest('id')->paginate(20)->withQueryString();
+
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json([
+                'supply' => [
+                    'id' => $supply->id,
+                    'supply_name' => $supply->supply_name,
+                    'category' => $supply->category,
+                    'unit' => $supply->unit,
+                    'current_quantity' => (float) $supply->current_quantity,
+                    'formatted_quantity' => number_format($supply->current_quantity, 2),
+                    'reorder_level' => (float) $supply->reorder_level,
+                    'formatted_reorder_level' => number_format($supply->reorder_level, 2),
+                    'is_active' => (bool) $supply->is_active,
+                    'is_low_stock' => (bool) $supply->is_low_stock,
+                    'is_out_of_stock' => (float) $supply->current_quantity == 0,
+                    'created_at' => $supply->created_at?->format('M d, Y'),
+                ],
+                'baseline' => $baseline ? [
+                    'opening_quantity' => (float) $baseline->opening_quantity,
+                    'formatted_opening_quantity' => number_format($baseline->opening_quantity, 2),
+                    'unit' => $baseline->unit,
+                    'source' => $baseline->source,
+                    'source_label' => $baseline->source === 'legacy_reconciliation' ? 'Legacy reconciliation baseline' : 'Opening balance',
+                    'established_at' => \Carbon\Carbon::parse($baseline->established_at)->format('M d, Y'),
+                ] : null,
+                'net_movement' => $netMovement,
+                'formatted_net_movement' => number_format($netMovement, 2),
+                'movements' => $movements->take(5)->map(fn ($m) => [
+                    'id' => $m->id,
+                    'operation_type' => $m->operation?->type ?? 'manual',
+                    'transaction_type' => $m->transaction_type,
+                    'quantity' => (float) $m->quantity,
+                    'formatted_quantity' => ($m->transaction_type === 'stock_out' ? '-' : '+') . number_format($m->quantity, 2),
+                    'before_quantity' => number_format($m->before_quantity, 2),
+                    'after_quantity' => number_format($m->after_quantity, 2),
+                    'user_name' => $m->user ? ($m->user->first_name . ' ' . $m->user->last_name) : 'Staff',
+                    'date' => $m->created_at?->format('M d, Y h:i A'),
+                    'notes' => $m->notes,
+                ])->values(),
+                'routes' => [
+                    'edit' => route('supplies.edit', $supply),
+                    'history' => route('inventory.history', ['supply_id' => $supply->id]),
+                    'stock_in' => route('inventory.create', ['type' => 'receipt', 'supply_id' => $supply->id]),
+                    'stock_out' => route('inventory.create', ['type' => 'usage', 'supply_id' => $supply->id]),
+                ],
+            ]);
+        }
+
         return view('admin.supplies.show', compact('supply', 'baseline', 'netMovement', 'movements'));
     }
     public function lookup(Request $request)
@@ -94,6 +152,11 @@ class SupplyController extends Controller
         abort_unless(in_array($type, ['receipt', 'usage', 'waste', 'stocktake']), 404);
         $type = $request->old('type', $type);
         $lines = $request->old('lines', []);
+        if (!$request->session()->hasOldInput() && $type === 'receipt' && $request->filled('supply_id')) {
+            $request->validate(['supply_id' => ['integer']]);
+            $supply = Supply::active()->findOrFail($request->integer('supply_id'));
+            $lines = [['supply_id' => $supply->id, 'quantity' => '']];
+        }
         $selected = Supply::whereIn('id', array_slice(array_column($lines, 'supply_id'), 0, 100))->get()->keyBy('id');
         $initialLines = array_map(function ($line) use ($selected) {
             $supply = $selected->get($line['supply_id'] ?? null);

@@ -141,7 +141,7 @@
     {{-- Main Content Area --}}
     <div class="lg:pl-60 min-h-screen flex flex-col">
         {{-- Top Bar --}}
-        <header class="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-cocoa-100">
+        <header id="admin-topbar" class="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-cocoa-100">
             <div class="flex items-center justify-between px-4 sm:px-6 lg:px-8 h-14">
                 {{-- Mobile menu button --}}
                 <button type="button" aria-label="Open navigation" aria-controls="staff-navigation" :aria-expanded="sidebarOpen.toString()" @click="sidebarOpen = true" class="lg:hidden p-2 -ml-2 rounded-lg text-cocoa-400 hover:text-cocoa-600 hover:bg-cream-100 transition">

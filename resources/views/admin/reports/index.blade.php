@@ -12,10 +12,19 @@
 </form>
 <div class="resolved-period"><h2>{{ $period->label() }}</h2><p>Inclusive business dates · {{ $period->timezone }} · PHP</p></div>
 <section class="financial-summary" aria-label="Financial summary">
-@foreach(\App\Services\FinancialReportService::LABELS as $metric=>$label)<a class="summary-metric" href="{{ route('reports.records',$period->query()+['metric'=>$metric]) }}"><span>{{ $label }}</span><strong>₱{{ number_format($summary[$metric],2) }}</strong><small>Inspect records →</small></a>@endforeach
-<div class="summary-metric"><span>Net collections</span><strong>₱{{ number_format($summary['payment_collections'],2) }}</strong><small>Verified payments less completed refunds</small></div>
+@php
+    $metricTooltips = [
+        'sales' => 'Total invoiced value of orders with Completed status during this period.',
+        'gross_collections' => 'All verified cash and GCash payments received and ledgered in this period.',
+        'refunds_completed' => 'Funds refunded to customers for cancelled or unfulfilled orders.',
+        'cancellation_income' => 'Non-refundable deposits retained from customer-initiated cancellations.',
+        'expenses' => 'Total shop expenses logged during this period (excluding voided entries).',
+    ];
+@endphp
+@foreach(\App\Services\FinancialReportService::LABELS as $metric=>$label)<div class="summary-metric"><span class="inline-flex items-center gap-1">{{ $label }} <x-tooltip :text="$metricTooltips[$metric] ?? ''" /></span><strong>₱{{ number_format($summary[$metric],2) }}</strong><a href="{{ route('reports.records',$period->query()+['metric'=>$metric]) }}"><small>Inspect records →</small></a></div>@endforeach
+<div class="summary-metric"><span class="inline-flex items-center gap-1">Net collections <x-tooltip text="Gross verified collections minus completed refunds within this period." /></span><strong>₱{{ number_format($summary['payment_collections'],2) }}</strong><small>Verified payments less completed refunds</small></div>
 </section>
-<section class="operational-result"><div><h2>Operational result</h2><strong>₱{{ number_format($summary['operational_net_income'],2) }}</strong></div><p>Completed sales + retained cancellation deposits − valid expenses. Collections are shown separately. This is not accounting profit: cost of goods sold and other accounting costs are unavailable.</p></section>
+<section class="operational-result"><div><h2 class="inline-flex items-center gap-1">Operational result <x-tooltip text="Completed sales + retained cancellation deposits − valid expenses. Not formal accounting net profit." /></h2><strong>₱{{ number_format($summary['operational_net_income'],2) }}</strong></div><p>Completed sales + retained cancellation deposits − valid expenses. Collections are shown separately. This is not accounting profit: cost of goods sold and other accounting costs are unavailable.</p></section>
 <section class="workspace-panel report-trends"><div class="workspace-heading"><h2>{{ $grain }} trend</h2><span>{{ $summary['completed_order_count'] }} completed orders</span></div><p class="chart-legend"><span class="legend-sales">Completed sales</span><span class="legend-net">Net collections</span><span class="legend-expenses">Expenses</span></p>
 @php
 $maximum=max(1,collect($trends)->max(fn($row)=>max(abs($row['sales']),abs($row['payment_collections']),abs($row['expenses']))));

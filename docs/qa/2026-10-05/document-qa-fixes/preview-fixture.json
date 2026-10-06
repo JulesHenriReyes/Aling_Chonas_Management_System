@@ -1,0 +1,8 @@
+{
+    "database": "C:\\Users\\User\\AppData\\Local\\Temp\/workflow-concurrency-document-qa-24d3dae00163\/workflow-concurrency-preview.sqlite",
+    "storage": "C:\\Users\\User\\AppData\\Local\\Temp\/workflow-concurrency-document-qa-24d3dae00163\/storage",
+    "url": "http:\/\/127.0.0.1:8136",
+    "environment": "Synthetic isolated preview",
+    "supply_id": 1,
+    "public_page": "\/order\/payment\/d64455da38298cf98d3bb84b5481017a7c8c72a130444046877f7e4ff9fd1ef6"
+}

@@ -19,6 +19,16 @@ class OrderAddOn extends Model
         return Attribute::make(get: fn () => round($this->quantity * (float) $this->unit_price, 2));
     }
 
+    protected function photoPath(): Attribute
+    {
+        return Attribute::make(get: fn () => $this->addOn?->photo_path);
+    }
+
+    public function orderDetail(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(OrderDetail::class, 'order_detail_id');
+    }
+
     public function addOn(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(AddOn::class, 'add_on_id');

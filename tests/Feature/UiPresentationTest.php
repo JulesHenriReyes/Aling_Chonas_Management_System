@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\User;
 use App\Services\OrderService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Testing\TestResponse;
 use Tests\TestCase;
 
@@ -187,15 +188,15 @@ class UiPresentationTest extends TestCase
         $this->assertStringContainsString("document.addEventListener('focusout'", $js);
         $this->assertStringContainsString("event.key === 'ArrowDown'", $js);
         $this->assertStringContainsString("event.key === 'ArrowUp'", $js);
-        // Action button enhancements: elevation, hover lift, active press, and Receive stock iconography
+        // Action button enhancements: elevation, hover lift, active press, and Stock in iconography
         $this->assertStringContainsString('.ui-button.primary:hover { background:#2c1810; filter: brightness(1.1);', $css);
         $this->assertStringContainsString('.ui-button.primary:active { transform: translateY(0);', $css);
         $this->assertStringContainsString('.row-actions summary:hover', $css);
         $this->assertStringContainsString('.row-actions summary:active', $css);
 
-        // Check Receive stock button icon in supplies view
+        // Check Stock in button icon in supplies view
         $suppliesView = file_get_contents(resource_path('views/admin/supplies/index.blade.php'));
-        $this->assertStringContainsString('<x-icon name="plus" /> Receive stock', $suppliesView);
+        $this->assertStringContainsString('<x-icon name="plus" /> Stock in', $suppliesView);
     }
 
     public function test_public_storefront_layout_and_quiet_button_presentation(): void
@@ -274,6 +275,214 @@ class UiPresentationTest extends TestCase
             ->assertSee('lg:col-span-7 space-y-4', false)
             ->assertSee('lg:col-span-5 sidebar-column space-y-4 lg:sticky lg:top-20', false)
             ->assertSee('mt-6', false);
+    }
+
+    public function test_tooltip_components_render_accessible_attributes_and_guidance(): void
+    {
+        // 1. Blade Component Unit Rendering & Accessibility Checks
+        $renderedTooltip = Blade::render('<x-tooltip text="Helpful hint for staff" />');
+        $this->assertStringContainsString('x-data="{ show: false }"', $renderedTooltip);
+        $this->assertStringContainsString('role="tooltip"', $renderedTooltip);
+        $this->assertStringContainsString('aria-describedby="tooltip-', $renderedTooltip);
+        $this->assertStringContainsString('@focusin="show = true"', $renderedTooltip);
+        $this->assertStringContainsString('@focusout="show = false"', $renderedTooltip);
+        $this->assertStringContainsString('@mouseenter="show = true"', $renderedTooltip);
+        $this->assertStringContainsString('@mouseleave="show = false"', $renderedTooltip);
+        $this->assertStringContainsString('@click.prevent.stop="show = !show"', $renderedTooltip);
+        $this->assertStringContainsString('@click.outside="show = false"', $renderedTooltip);
+        $this->assertStringContainsString('bg-cocoa-800 text-white rounded-lg p-2.5 text-xs shadow-lg', $renderedTooltip);
+        $this->assertStringContainsString('max-w-[calc(100vw-2rem)]', $renderedTooltip);
+        $this->assertStringContainsString('Helpful hint for staff', $renderedTooltip);
+
+        $this->assertStringContainsString('x-id="[\'tooltip\']"', $renderedTooltip);
+        $this->assertStringContainsString(':aria-describedby="$id(\'tooltip\')"', $renderedTooltip);
+        $this->assertStringContainsString(':id="$id(\'tooltip\')"', $renderedTooltip);
+
+        // Status component auto-tooltip generation with standard hyphen normalization
+        $renderedPendingStatus = Blade::render('<x-status value="pending" />');
+        $this->assertStringContainsString('role="tooltip"', $renderedPendingStatus);
+        $this->assertStringContainsString('Order is awaiting initial review and confirmation by bakery staff', $renderedPendingStatus);
+
+        $renderedHyphenStatus = Blade::render('<x-status value="confirmed" label="Confirmed - awaiting deposit" />');
+        $this->assertStringContainsString('role="tooltip"', $renderedHyphenStatus);
+        $this->assertStringContainsString('awaiting 50% deposit from customer to lock schedule', $renderedHyphenStatus);
+
+        $renderedStockStatus = Blade::render('<x-status value="low_stock" />');
+        $this->assertStringContainsString('role="tooltip"', $renderedStockStatus);
+        $this->assertStringContainsString('Current stock is at or below the reorder point', $renderedStockStatus);
+
+        // 2. Public Storefront Targets
+        $product = $this->catalogProduct(['product_name' => 'Caramel Crunch Cake', 'price' => 1500, 'is_active' => true]);
+
+        // Add package to draft and load details
+        $this->post(route('public.order.continue'), [
+            'items' => [[
+                'product_id' => $product->id,
+                'package_option_id' => $product->options()->first()->id,
+                'quantity' => 1,
+            ]],
+        ])->assertRedirect(route('public.order.details'));
+
+        $detailsResponse = $this->get(route('public.order.details'));
+        $detailsResponse->assertOk()
+            ->assertSee('Exact 50% Deposit')
+            ->assertSee('A 50% deposit is required to reserve your order once staff confirms availability', false)
+            ->assertSee('Complimentary items (e.g. candles, toppers, or boxes) bundled with this package at no extra charge.', false);
+
+        // Package line fields guidance check
+        $customizeResponse = $this->get(route('public.package.customize', [$product, (string) \Illuminate\Support\Str::uuid()]));
+        $customizeResponse->assertOk()
+            ->assertSee('Attach cake inspiration or design sketches (up to 5 photos, 5 MB each). These guide our cake decorators and are not payment receipts.', false);
+
+        // Public order payment page check
+        $customer = Customer::create(['first_name' => 'Clara', 'last_name' => 'Batumbakal', 'phone_number' => '09181234567']);
+        $order = app(OrderService::class)->createPublicOrder([
+            'customer_id' => $customer->id,
+            'pickup_date' => now()->addDays(3)->toDateString(),
+            'pickup_time' => '14:00',
+            'items' => [[
+                'product_id' => $product->id,
+                'package_option_id' => $product->options()->first()->id,
+                'quantity' => 1,
+            ]],
+        ]);
+
+        $paymentResponse = $this->get(route('public.order.payment', $order->private_token));
+        $paymentResponse->assertOk()
+            ->assertSee('Exact 50% Deposit')
+            ->assertSee('The 50% deposit locks in your baking schedule', false)
+            ->assertSee('Private order link')
+            ->assertSee('Bookmark or copy this unique private link to track your order status and upload receipts without needing an account.', false);
+
+        // 3. Admin Workspace Targets
+        $owner = User::create([
+            'first_name' => 'Admin',
+            'last_name' => 'Owner',
+            'email' => 'admin-tooltip@example.test',
+            'password' => 'password123',
+            'role' => 'owner',
+            'is_active' => true,
+        ]);
+        $this->actingAs($owner);
+
+        // Admin Orders Index (unified status tabs and origin badges)
+        $ordersResponse = $this->get('/orders');
+        $ordersResponse->assertOk()
+            ->assertDontSee('Order workflow queues')
+            ->assertSee('Awaiting Deposit')
+            ->assertSee('Pending Review')
+            ->assertSee('Confirmed')
+            ->assertSee('Public Web')
+            ->assertSee('Order submitted online by customer via public storefront.', false);
+
+        // Admin Orders Show (origin badge)
+        $showResponse = $this->get('/orders/' . $order->id);
+        $showResponse->assertOk()
+            ->assertSee('Public Web Order')
+            ->assertSee('Order submitted online by customer via public storefront.', false);
+
+        // Admin Proof Review (receipt audit checkbox)
+        $this->confirmPaymentFixture($order);
+        $proof = $order->paymentProofs()->create([
+            'reference_number' => '123456789012',
+            'status' => 'awaiting_verification',
+            'file_path' => 'proofs/test.jpg',
+        ]);
+        $proofResponse = $this->get('/orders/' . $order->id);
+        $proofResponse->assertOk()
+            ->assertSee('Staff must independently log in to the merchant GCash wallet app to verify fund arrival and exact reference ID before checking this box.', false);
+
+        // Admin Supplies Index (stock level badge and header tooltip)
+        $suppliesResponse = $this->get('/supplies');
+        $suppliesResponse->assertOk()
+            ->assertSee('Stock status')
+            ->assertSee('Inventory levels automatically categorized as In stock, Low stock, or Out of stock based on reorder thresholds.', false);
+
+        // Admin Supplies Operation Form (stock reload concurrency tooltip and recorded column header tooltip)
+        $operationResponse = $this->get(route('inventory.create', 'stocktake'));
+        $operationResponse->assertOk()
+            ->assertSee('Current recorded on-hand quantity in the system. Use reload if another staff member updated inventory.', false)
+            ->assertSee('Fetches the latest recorded quantity and lock version from the server to prevent concurrency conflicts with other staff.', false);
+
+        // Admin Reports Index (financial metrics tooltips)
+        $reportsResponse = $this->get('/reports');
+        $reportsResponse->assertOk()
+            ->assertSee('Total invoiced value of orders with Completed status during this period.', false)
+            ->assertSee('All verified cash and GCash payments received and ledgered in this period.', false)
+            ->assertSee('Completed sales + retained cancellation deposits', false);
+    }
+
+    public function test_paid_extras_and_included_items_render_images_on_order_details(): void
+    {
+        $owner = User::create(['first_name' => 'Admin', 'last_name' => 'Owner', 'email' => 'owner_extras@example.test', 'password' => 'password123', 'role' => 'owner', 'is_active' => true]);
+        $customer = Customer::create(['first_name' => 'Teresa', 'last_name' => 'Magbanua', 'phone_number' => '09179998888']);
+        $product = $this->catalogProduct(['product_name' => 'Fiesta Cake', 'price' => 1500, 'is_active' => true]);
+        $extra = \App\Models\AddOn::create([
+            'name' => 'Special Cupcakes',
+            'description' => 'Box of 6 cupcakes',
+            'price' => 250,
+            'photo_path' => 'catalog/add-ons/cupcakes_test.jpg',
+            'is_active' => true,
+        ]);
+        $product->addOns()->attach($extra);
+
+        $order = app(OrderService::class)->createInternalOrder([
+            'customer_id' => $customer->id,
+            'pickup_date' => now()->addDays(2)->toDateString(),
+            'pickup_time' => '15:00',
+            'items' => [[
+                'product_id' => $product->id,
+                'package_option_id' => $product->options()->first()->id,
+                'quantity' => 1,
+                'add_ons' => [[
+                    'add_on_id' => $extra->id,
+                    'quantity' => 2,
+                ]],
+            ]],
+        ], $owner);
+
+        $this->actingAs($owner);
+        $response = $this->get(route('orders.show', $order));
+
+        $response->assertOk()
+            ->assertSee('Paid extra:')
+            ->assertSee('Special Cupcakes')
+            ->assertSee('catalog/add-ons/cupcakes_test.jpg')
+            ->assertSee('₱500.00')
+            ->assertSee('₱250.00 each');
+    }
+
+    public function test_inventory_detail_sliding_drawer_presentation_and_endpoint(): void
+    {
+        $owner = User::create(['first_name' => 'Baker', 'last_name' => 'Owner', 'email' => 'drawer_test@example.test', 'password' => 'password123', 'role' => 'owner', 'is_active' => true]);
+        $supply = \App\Models\Supply::create([
+            'supply_name' => 'Dutch Cocoa Powder',
+            'category' => 'ingredients',
+            'unit' => 'kg',
+            'current_quantity' => 15.5,
+            'reorder_level' => 3.0,
+            'is_active' => true,
+        ]);
+
+        $this->actingAs($owner);
+
+        // 1. Check supplies index view renders sliding drawer elements without backdrop blur
+        $indexResponse = $this->get('/supplies');
+        $indexResponse->assertOk()
+            ->assertSee('data-detail-drawer', false)
+            ->assertSee('openSupplyDetail', false)
+            ->assertSee('bg-black/25', false)
+            ->assertDontSee('data-detail-drawer fixed inset-0 bg-black/40 backdrop-blur', false);
+
+        // 2. Check JSON show endpoint for slide-over drawer async loading
+        $jsonResponse = $this->getJson(route('supplies.show', $supply));
+        $jsonResponse->assertOk()
+            ->assertJsonPath('supply.supply_name', 'Dutch Cocoa Powder')
+            ->assertJsonPath('supply.formatted_quantity', '15.50')
+            ->assertJsonPath('supply.formatted_reorder_level', '3.00')
+            ->assertJsonPath('supply.unit', 'kg')
+            ->assertJsonPath('routes.edit', route('supplies.edit', $supply))
+            ->assertJsonPath('routes.history', route('inventory.history', ['supply_id' => $supply->id]));
     }
 }
 

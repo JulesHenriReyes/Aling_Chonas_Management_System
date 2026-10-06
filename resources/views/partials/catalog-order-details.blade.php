@@ -211,7 +211,10 @@
 
             <div class="p-3.5 rounded-xl bg-cocoa-50/80 border border-cocoa-200/80 space-y-1">
                 <div class="flex justify-between items-baseline">
-                    <span class="text-xs font-bold text-cocoa-700 uppercase tracking-wide">Exact 50% Deposit</span>
+                    <span class="text-xs font-bold text-cocoa-700 uppercase tracking-wide inline-flex items-center gap-1">
+                        Exact 50% Deposit
+                        <x-tooltip text="A 50% deposit is required to reserve your order once staff confirms availability. The remaining balance is paid at pickup." />
+                    </span>
                     <strong class="text-base font-extrabold text-cocoa-700">₱{{ number_format($quote['deposit'], 2) }}</strong>
                 </div>
                 <p class="text-[11px] text-cocoa-500 leading-tight">
