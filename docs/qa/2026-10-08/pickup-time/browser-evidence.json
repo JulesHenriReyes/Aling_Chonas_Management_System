@@ -1,0 +1,108 @@
+{
+  "screens": [
+    {
+      "height": 844,
+      "overflow": false,
+      "popupFits": true,
+      "popupVisible": true,
+      "screen": "public",
+      "width": 390
+    },
+    {
+      "height": 1024,
+      "overflow": false,
+      "popupFits": true,
+      "popupVisible": true,
+      "screen": "public",
+      "width": 768
+    },
+    {
+      "height": 1000,
+      "overflow": false,
+      "popupFits": true,
+      "popupVisible": true,
+      "screen": "public",
+      "width": 1440
+    },
+    {
+      "height": 844,
+      "overflow": false,
+      "popupFits": true,
+      "popupVisible": true,
+      "screen": "staff",
+      "width": 390
+    },
+    {
+      "height": 1024,
+      "overflow": false,
+      "popupFits": true,
+      "popupVisible": true,
+      "screen": "staff",
+      "width": 768
+    },
+    {
+      "height": 1000,
+      "overflow": false,
+      "popupFits": true,
+      "popupVisible": true,
+      "screen": "staff",
+      "width": 1440
+    }
+  ],
+  "interactions": [
+    {
+      "doneDisabled": false,
+      "hour": "4",
+      "minute": "59",
+      "scenario": "Compatible hour change"
+    },
+    {
+      "scenario": "Outside click discards draft",
+      "saved": "6:00 PM",
+      "closed": true
+    },
+    {
+      "scenario": "Invalid saved time blocks submission",
+      "url": "http://127.0.0.1:8002/public-error.html",
+      "error": "Choose a pickup time between 8:00 AM and 6:00 PM.",
+      "doneDisabled": true
+    },
+    {
+      "scenario": "Invalid saved time blocks submission",
+      "url": "http://127.0.0.1:8002/public-error.html",
+      "error": "Choose a pickup time between 8:00 AM and 6:00 PM.",
+      "doneDisabled": true
+    },
+    {
+      "scenario": "Noon and corrected error",
+      "selected": "12:00 PM",
+      "errorVisible": false
+    },
+    {
+      "scenario": "Browser Back",
+      "selected": "12:00 PM"
+    },
+    {
+      "scenario": "Picker script unavailable",
+      "nativeVisible": true,
+      "customVisible": false,
+      "minimum": "08:00",
+      "maximum": "18:00"
+    },
+    {
+      "scenario": "Keyboard commit at AM boundary",
+      "selected": "11:59 AM",
+      "focus": "pickup-time-trigger"
+    }
+  ],
+  "additionalChecks": {
+    "closingMinuteChoices": [
+      "00"
+    ],
+    "closingChangeClearedIncompatibleMinute": true,
+    "escapePreservedSavedTime": "6:00 PM",
+    "reloadRestoredSavedTime": "6:00 PM",
+    "liveOrdersPosted": 0,
+    "pickerStayedOpenAfterInitialPageLoad": true
+  }
+}

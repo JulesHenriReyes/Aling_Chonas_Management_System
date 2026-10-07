@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'expiry_warning_days' => 7,
     // Suggestions for new ingredients; existing stock keeps its recorded unit.
     'ingredient_presets' => [
         ['supply_name' => 'Flour', 'unit' => 'kg'],
@@ -12,5 +13,5 @@ return [
         ['supply_name' => 'Baking powder', 'unit' => 'g'],
         ['supply_name' => 'Baking soda', 'unit' => 'g'],
     ],
-    'stock_units' => ['kg', 'g', 'piece', 'can', 'ml', 'litre'],
+    'stock_units' => ['kg', 'g', 'piece', 'pcs', 'can', 'ml', 'litre', 'pack', 'box', 'bottle'],
 ];

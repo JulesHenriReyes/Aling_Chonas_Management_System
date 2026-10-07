@@ -98,16 +98,16 @@
         @else
             <div class="table-scroll" role="region" aria-label="Scrollable data table" tabindex="0">
                 <table class="w-full text-left orders-table">
-                    <thead class="bg-cream-100 text-cocoa-400 text-xs font-semibold">
+                    <thead class="bg-cream-100 text-cocoa-500 text-xs font-semibold border-b border-cocoa-100">
                         <tr>
-                            <th class="p-4">Order #</th>
-                            <th class="p-4">Customer</th>
-                            <th class="p-4">Items</th>
-                            <th class="p-4">Pickup Schedule</th>
-                            <th class="p-4">Total Amount</th>
-                            <th class="p-4">Payment</th>
-                            <th class="p-4">Status</th>
-                            <th class="p-4 text-right">Action</th>
+                            <th class="py-2.5 px-3">Order #</th>
+                            <th class="py-2.5 px-3">Customer</th>
+                            <th class="py-2.5 px-3">Items</th>
+                            <th class="py-2.5 px-3">Pickup Schedule</th>
+                            <th class="py-2.5 px-3">Total Amount</th>
+                            <th class="py-2.5 px-3">Payment</th>
+                            <th class="py-2.5 px-3">Status</th>
+                            <th class="py-2.5 px-3 text-right">Action</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-cocoa-100/60">
@@ -161,7 +161,7 @@
                                     })->values(),
                                     'images' => $order->images->map(fn ($img) => [
                                         'id' => $img->id,
-                                        'url' => asset('storage/' . $img->file_path),
+                                        'url' => $img->url(),
                                     ])->values(),
                                     'payments' => $order->payments->map(function ($payment) {
                                         return [
@@ -178,44 +178,46 @@
                                         return [
                                             'id' => $proof->id,
                                             'status' => $proof->status,
-                                            'review_url' => route('orders.show', $order),
+                                            'reference_number' => $proof->reference_number,
+                                            'rejection_reason' => $proof->rejection_reason,
+                                            'review_url' => route('orders.show', $order) . '#proof-review',
                                             'receipt_url' => route('proofs.receipt', $proof),
                                             'uploaded_at' => $proof->created_at->format('M d, Y h:i A'),
                                         ];
                                     })->values(),
                                 ];
                             @endphp
-                            <tr class="text-sm text-cocoa-500 hover:bg-cream-50 transition cursor-pointer group"
+                            <tr class="text-xs text-cocoa-600 hover:bg-cream-50 transition cursor-pointer group"
                                 @click="$dispatch('open-order-detail', @js($orderData))">
-                                <td class="p-4 whitespace-nowrap">
+                                <td class="py-1.5 px-3 whitespace-nowrap align-middle">
                                     <a href="{{ route('orders.show', $order) }}" 
-                                       class="font-mono font-semibold text-cocoa-700 hover:underline group-hover:text-amber-800 block"
+                                       class="font-mono font-semibold text-xs text-cocoa-700 hover:underline group-hover:text-amber-800 block leading-tight"
                                        @click="if (!$event.ctrlKey && !$event.metaKey && $event.button === 0) { $event.preventDefault(); $event.stopPropagation(); $dispatch('open-order-detail', @js($orderData)); } else { $event.stopPropagation(); }">
                                         {{ $order->order_number }}
                                     </a>
                                 </td>
-                                <td class="p-4 whitespace-nowrap">
-                                    <div class="font-semibold text-cocoa-700">{{ $order->customer->full_name }}</div>
-                                    <div class="text-xs text-cocoa-400">{{ $order->customer->phone_number }}</div>
+                                <td class="py-1.5 px-3 whitespace-nowrap align-middle">
+                                    <div class="font-semibold text-xs text-cocoa-700 leading-tight">{{ $order->customer->full_name }}</div>
+                                    <div class="text-[11px] text-cocoa-400 font-mono leading-tight mt-0.5">{{ $order->customer->phone_number }}</div>
                                 </td>
                                 @php
                                     $pkgQty = $order->orderDetails->sum('quantity');
                                     $extrasQty = $order->orderDetails->flatMap->addOns->sum('quantity');
                                 @endphp
-                                <td class="p-4 whitespace-nowrap">
-                                    <div class="font-medium text-cocoa-600">{{ $pkgQty }} {{ $order->fixed_catalog_pricing ? \Illuminate\Support\Str::plural('package', $pkgQty) : \Illuminate\Support\Str::plural('item', $pkgQty) }}</div>
+                                <td class="py-1.5 px-3 whitespace-nowrap align-middle">
+                                    <div class="font-medium text-xs text-cocoa-700 leading-tight">{{ $pkgQty }} {{ $order->fixed_catalog_pricing ? \Illuminate\Support\Str::plural('package', $pkgQty) : \Illuminate\Support\Str::plural('item', $pkgQty) }}</div>
                                     @if ($extrasQty > 0)
-                                        <div class="text-xs text-cocoa-400">+ {{ $extrasQty }} {{ \Illuminate\Support\Str::plural('extra', $extrasQty) }}</div>
+                                        <div class="text-[11px] text-cocoa-400 leading-tight mt-0.5">+ {{ $extrasQty }} {{ \Illuminate\Support\Str::plural('extra', $extrasQty) }}</div>
                                     @endif
                                 </td>
-                                <td class="p-4 whitespace-nowrap">
-                                    <div class="font-semibold text-cocoa-600">{{ $order->pickup_date->format('M d, Y') }}</div>
-                                    <div class="text-xs text-cocoa-400">{{ \Carbon\Carbon::parse($order->pickup_time)->format('h:i A') }}</div>
+                                <td class="py-1.5 px-3 whitespace-nowrap align-middle">
+                                    <div class="font-semibold text-xs text-cocoa-700 leading-tight">{{ $order->pickup_date->format('M d, Y') }}</div>
+                                    <div class="text-[11px] text-cocoa-400 leading-tight mt-0.5">{{ \Carbon\Carbon::parse($order->pickup_time)->format('h:i A') }}</div>
                                 </td>
-                                <td class="p-4 whitespace-nowrap font-semibold text-cocoa-600">
+                                <td class="py-1.5 px-3 whitespace-nowrap font-semibold text-xs text-cocoa-700 tabular-nums align-middle">
                                     ₱{{ number_format($order->total_amount, 2) }}
                                 </td>
-                                <td class="p-4 whitespace-nowrap">
+                                <td class="py-1.5 px-3 whitespace-nowrap align-middle">
                                     @if ($order->status === 'cancelled')
                                         @if ($order->amount_paid > 0)
                                             <span class="inline-flex items-center text-xs font-semibold px-2 py-0.5 rounded text-amber-800 bg-amber-50 border border-amber-200" title="Deposit recorded">
@@ -227,23 +229,23 @@
                                     @else
                                         <x-status :value="$order->payment_status" />
                                         @if($order->payment_status === 'partially_paid')
-                                            <span class="block text-xs text-cocoa-400 mt-1">Bal: ₱{{ number_format($order->remaining_balance, 2) }}</span>
+                                            <span class="block text-[10px] text-cocoa-400 leading-tight mt-0.5">Bal: ₱{{ number_format($order->remaining_balance, 2) }}</span>
                                         @endif
                                     @endif
                                 </td>
-                                <td class="p-4 whitespace-nowrap">
+                                <td class="py-1.5 px-3 whitespace-nowrap align-middle">
                                     <x-status :value="$order->status" :label="$order->workflowLabel()" class="order-workflow-status" />
                                 </td>
-                                <td class="p-4 text-right whitespace-nowrap" @click.stop>
+                                <td class="py-1.5 px-3 text-right whitespace-nowrap align-middle" @click.stop>
                                     <a href="{{ route('orders.show', $order) }}" 
-                                       class="bg-white border border-cocoa-100 text-cocoa-500 hover:bg-cream-100 font-medium text-xs px-3 py-1.5 rounded-lg transition inline-block">{{ $order->status === 'pending' ? 'Review' : 'View' }}</a>
+                                       class="bg-white border border-cocoa-100 text-cocoa-600 hover:bg-cream-100 font-medium text-xs px-2.5 py-1 rounded-md transition inline-block shadow-2xs">{{ $order->status === 'pending' ? 'Review' : 'View' }}</a>
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
-            <div class="p-4 border-t border-cocoa-100/60">
+            <div class="px-4 py-3 border-t border-cocoa-100/60">
                 {{ $orders->links() }}
             </div>
         @endif
@@ -257,10 +259,12 @@
         showDetailDrawer: false,
         detailLoading: false,
         drawerOrder: null,
+        expandedImage: null,
         openOrderDetail(order) {
             this.drawerOrder = order;
             this.showDetailDrawer = true;
             this.detailLoading = true;
+            this.expandedImage = null;
 
             fetch('/orders/' + order.id, {
                 headers: {
@@ -284,10 +288,11 @@
         },
         closeDetailDrawer() {
             this.showDetailDrawer = false;
+            this.expandedImage = null;
         }
     }"
     @open-order-detail.window="openOrderDetail($event.detail)"
-    @keydown.escape.window="closeDetailDrawer"
+    @keydown.escape.window="if (expandedImage) { expandedImage = null; } else { closeDetailDrawer(); }"
     x-show="showDetailDrawer"
     x-cloak
     data-detail-drawer
@@ -401,7 +406,7 @@
                                         <div class="bg-cream-50/50 border border-cocoa-100 rounded-xl p-3 text-xs space-y-2">
                                             <div class="flex items-start gap-3">
                                                 <template x-if="item.photo_url">
-                                                    <img :src="item.photo_url" :alt="item.product_name" class="w-11 h-11 object-cover rounded-lg border border-cocoa-100 shrink-0">
+                                                    <img :src="item.photo_url" @click="expandedImage = item.photo_url" :alt="item.product_name" class="w-11 h-11 object-cover rounded-lg border border-cocoa-100 shrink-0 cursor-pointer hover:opacity-85 transition" title="Click to view full photo">
                                                 </template>
                                                 <div class="min-w-0 flex-1">
                                                     <span class="font-bold text-cocoa-700 text-sm leading-snug block" x-text="item.product_name"></span>
@@ -445,7 +450,7 @@
                                     <span class="text-[10px] font-semibold text-cocoa-400 uppercase tracking-wider block">Reference Photos</span>
                                     <div class="flex gap-2 overflow-x-auto py-1">
                                         <template x-for="img in drawerOrder.images" :key="img.id">
-                                            <img :src="img.url" class="w-14 h-14 object-cover rounded-lg border border-cocoa-100 shrink-0">
+                                            <img :src="img.url" @click="expandedImage = img.url" class="w-14 h-14 object-cover rounded-lg border border-cocoa-100 shrink-0 cursor-pointer hover:opacity-85 transition" title="Click to view full photo">
                                         </template>
                                     </div>
                                 </div>
@@ -495,16 +500,64 @@
                             <template x-if="drawerOrder.proofs && drawerOrder.proofs.length > 0">
                                 <div class="space-y-2">
                                     <span class="text-[10px] font-semibold text-cocoa-400 uppercase tracking-wider block">Uploaded Proofs</span>
-                                    <div class="space-y-1.5">
+                                    <div class="space-y-2">
                                         <template x-for="proof in drawerOrder.proofs" :key="proof.id">
-                                            <div class="bg-white border border-cocoa-100 rounded-lg p-2.5 text-xs flex items-center justify-between gap-3">
-                                                <div>
-                                                    <span class="font-semibold text-cocoa-700 capitalize" x-text="proof.status.replace('_', ' ')"></span>
-                                                    <div class="text-[11px] text-cocoa-400 mt-0.5" x-text="'Uploaded ' + proof.uploaded_at"></div>
+                                            <div class="bg-white border border-cocoa-100 rounded-lg p-2.5 text-xs flex items-center justify-between gap-3 shadow-sm">
+                                                <div class="flex items-center gap-3 min-w-0">
+                                                    <!-- Clickable receipt thumbnail with preview indicator -->
+                                                    <button type="button"
+                                                            @click="expandedImage = proof.receipt_url"
+                                                            class="shrink-0 relative w-11 h-11 rounded-lg border border-cocoa-100 overflow-hidden bg-cream-50 hover:opacity-90 focus:outline-none transition group cursor-pointer"
+                                                            title="Click to view full receipt">
+                                                        <img :src="proof.receipt_url" alt="Receipt preview" class="w-full h-full object-cover">
+                                                        <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 drop-shadow" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
+                                                            </svg>
+                                                        </div>
+                                                    </button>
+
+                                                    <div class="min-w-0 flex-1">
+                                                        <div class="flex items-center gap-1.5 flex-wrap">
+                                                            <template x-if="proof.status === 'verified'">
+                                                                <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200 uppercase tracking-wide">Verified</span>
+                                                            </template>
+                                                            <template x-if="proof.status === 'rejected'">
+                                                                <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-rose-50 text-rose-800 border border-rose-200 uppercase tracking-wide">Rejected</span>
+                                                            </template>
+                                                            <template x-if="proof.status === 'awaiting_verification'">
+                                                                <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-200 uppercase tracking-wide">Awaiting Verification</span>
+                                                            </template>
+
+                                                            <template x-if="proof.reference_number">
+                                                                <span class="font-mono text-[11px] text-cocoa-600 font-medium truncate" x-text="'Ref: ' + proof.reference_number"></span>
+                                                            </template>
+                                                        </div>
+
+                                                        <div class="text-[11px] text-cocoa-400 mt-0.5" x-text="'Uploaded ' + proof.uploaded_at"></div>
+
+                                                        <template x-if="proof.status === 'rejected' && proof.rejection_reason">
+                                                            <div class="text-[11px] text-rose-700 mt-1 italic leading-snug" x-text="'Reason: ' + proof.rejection_reason"></div>
+                                                        </template>
+                                                    </div>
                                                 </div>
-                                                <a :href="proof.review_url" class="ui-button text-xs py-1 px-2.5">
-                                                    Review
-                                                </a>
+
+                                                <div class="shrink-0">
+                                                    <!-- Only proofs awaiting verification show the action to review -->
+                                                    <template x-if="proof.status === 'awaiting_verification'">
+                                                        <a :href="proof.review_url" class="ui-button primary text-xs py-1 px-2.5">
+                                                            Review
+                                                        </a>
+                                                    </template>
+                                                    <!-- Completed proofs (verified/rejected) provide direct receipt preview instead of redundant navigation -->
+                                                    <template x-if="proof.status !== 'awaiting_verification'">
+                                                        <button type="button"
+                                                                @click="expandedImage = proof.receipt_url"
+                                                                class="ui-button quiet text-xs py-1 px-2.5 font-medium text-cocoa-600 hover:text-cocoa-800 cursor-pointer">
+                                                            View Receipt
+                                                        </button>
+                                                    </template>
+                                                </div>
                                             </div>
                                         </template>
                                     </div>
@@ -525,5 +578,31 @@
                 </template>
             </div>
         </div>
+
+        <!-- Fullscreen Image Preview Lightbox -->
+        <template x-teleport="body">
+            <div x-show="expandedImage"
+                 x-cloak
+                 style="display: none;"
+                 class="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm"
+                 @keydown.escape.window="expandedImage = null"
+                 data-dialog
+                 role="dialog"
+                 aria-modal="true"
+                 aria-label="Screenshot preview">
+                <div class="relative max-w-4xl max-h-[90vh] flex flex-col items-center justify-center" @click.outside="expandedImage = null">
+                    <div class="absolute -top-10 right-0 flex items-center gap-3">
+                        <a :href="expandedImage" target="_blank" class="text-white/80 hover:text-white text-xs flex items-center gap-1 underline" title="Open original image in new tab">
+                            <span>Open original</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                        </a>
+                        <button type="button" @click="expandedImage = null" class="text-white hover:text-gray-300 focus:outline-none" aria-label="Close image preview">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 drop-shadow-md" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                        </button>
+                    </div>
+                    <img :src="expandedImage" alt="Expanded preview" class="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl bg-black/40">
+                </div>
+            </div>
+        </template>
     </div>
 @endpush

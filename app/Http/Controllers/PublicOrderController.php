@@ -40,7 +40,8 @@ class PublicOrderController extends Controller
                 'product' => $products->firstWhere('id', $item['product_id']) ?? Product::find($item['product_id'])];
         }
 
-        return view('public.index', compact('products', 'draft', 'draftLines'));
+        $context = app(\App\Services\PackageDraftService::class)->context($request, false, $draft);
+        return view('public.index', compact('products', 'draft', 'draftLines', 'context'));
     }
 
     public function customize(Request $request, Product $product, string $line, PublicPackageDraftService $editors)
@@ -53,7 +54,7 @@ class PublicOrderController extends Controller
         abort_if($product->options->isEmpty(), 404);
         $editor = $editors->editor($request, $product, $line);
 
-        return view('public.customize', ['products' => collect([$product]), 'product' => $product, 'line' => $line, 'editor' => $editor]);
+        return view('public.customize', ['products' => collect([$product]), 'product' => $product, 'line' => $line, 'editor' => $editor, 'context' => $editors->context($request, false)]);
     }
 
     public function savePackage(Request $request, Product $product, string $line, PublicPackageDraftService $editors, CatalogPricingService $pricing)
@@ -114,7 +115,8 @@ class PublicOrderController extends Controller
             return redirect()->route('public.order.index')->withErrors($exception->errors());
         }
 
-        return view('public.details', compact('draft', 'quote'));
+        $context = app(\App\Services\PackageDraftService::class)->context($request, false, $draft);
+        return view('public.details', compact('draft', 'quote', 'context'));
     }
 
     public function backToSelection(Request $request, OrderDraftService $drafts)

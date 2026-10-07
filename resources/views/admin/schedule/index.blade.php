@@ -24,6 +24,41 @@
         </form>
     </div>
 
+    {{-- Weekly Capacity Snapshot Bar --}}
+    @if ($orders->isNotEmpty())
+        <div class="bg-white border border-cocoa-100 rounded-xl p-4 space-y-3">
+            <div class="flex items-center justify-between flex-wrap gap-2">
+                <span class="text-xs font-bold text-cocoa-700 uppercase tracking-wider flex items-center gap-1.5">
+                    <x-icon path="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" class="w-4 h-4 text-cocoa-500" />
+                    Pickup Schedule Capacity Overview
+                </span>
+                <div class="flex items-center gap-3 text-xs">
+                    <span class="text-cocoa-400 font-medium">{{ $orders->flatten()->count() }} active orders across {{ $orders->count() }} day(s)</span>
+                    @if(request('pickup_date'))
+                        <a href="{{ route('schedule.index') }}" class="text-cocoa-600 hover:text-cocoa-800 underline font-semibold inline-flex items-center gap-1">
+                            Show all dates
+                        </a>
+                    @endif
+                </div>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-2.5">
+                @foreach ($orders->take(7) as $dateStr => $dayOrders)
+                    @php
+                        $count = $dayOrders->count();
+                        $isSelected = request('pickup_date') === $dateStr;
+                        $statusClass = $count >= 5 ? 'bg-amber-50 border-amber-200 text-amber-800' : ($count >= 3 ? 'bg-cocoa-50 border-cocoa-200 text-cocoa-700' : 'bg-cream-50 border-cocoa-100 text-cocoa-600');
+                        $capacityLabel = $count >= 5 ? 'High volume' : ($count >= 3 ? 'Moderate' : 'Normal');
+                    @endphp
+                    <a href="{{ route('schedule.index', ['pickup_date' => $dateStr]) }}" class="p-2.5 rounded-lg border {{ $statusClass }} {{ $isSelected ? 'ring-2 ring-cocoa-600 shadow-xs' : 'hover:border-cocoa-300' }} transition text-center block">
+                        <span class="block text-[11px] font-bold">{{ \Carbon\Carbon::parse($dateStr)->format('D, M j') }}</span>
+                        <span class="block text-base font-bold my-0.5">{{ $count }}</span>
+                        <span class="block text-[10px] font-medium opacity-80">{{ $capacityLabel }}</span>
+                    </a>
+                @endforeach
+            </div>
+        </div>
+    @endif
+
     @forelse ($orders as $date => $dailyOrders)
         <section class="bg-white border border-cocoa-100 rounded-xl overflow-hidden">
             <div class="p-4 border-b border-cocoa-100/60 bg-cream-50 flex flex-wrap gap-2 items-center justify-between">

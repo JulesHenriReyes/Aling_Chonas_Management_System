@@ -7,9 +7,9 @@ use App\Models\OrderDetail;
 use App\Models\OrderImage;
 use App\Models\Payment;
 use App\Models\PaymentProof;
-use App\Models\Refund;
 use App\Models\User;
 use App\Support\PickupCalendar;
+use App\Support\PickupHours;
 use Carbon\Carbon;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
@@ -55,9 +55,11 @@ class OrderService
      */
     private function executeOrderCreation(array $data, ?User $user): Order
     {
-        return DB::transaction(function () use ($data, $user) {
+        $writtenImages = [];
+        try {
+            return DB::transaction(function () use ($data, $user, &$writtenImages) {
             if (! empty($data['submission_key'])) {
-                $existing = Order::where('submission_key', $data['submission_key'])->first();
+                $existing = Order::where('submission_key', $data['submission_key'])->where('user_id', $user?->id)->first();
                 if ($existing) {
                     return $existing;
                 }
@@ -76,6 +78,8 @@ class OrderService
                 ]);
             }
 
+            PickupHours::assertAllowed($data['pickup_time'] ?? null);
+
             $quote = app(CatalogPricingService::class)->quote($data['items']);
             if (isset($data['expected_total']) && ! $this->sameAmount((float) $data['expected_total'], (float) $quote['total'])) {
                 throw ValidationException::withMessages(['items' => 'A catalog price changed. Review the current itemized total before submitting again.']);
@@ -86,7 +90,7 @@ class OrderService
                 'order_number' => $orderNumber,
                 'customer_id' => $data['customer_id'],
                 'user_id' => $user?->id,
-                'status' => 'pending',
+                'status' => $user ? 'confirmed' : 'pending',
                 'pickup_date' => $data['pickup_date'],
                 'pickup_time' => $data['pickup_time'],
                 'notes_text' => $data['notes_text'] ?? null,
@@ -94,7 +98,11 @@ class OrderService
                 'submission_key' => $data['submission_key'] ?? null,
                 'fixed_catalog_pricing' => true,
             ]);
-            $order->review_status = 'pending';
+            $order->review_status = $user ? 'approved' : 'pending';
+            if ($user) {
+                $order->reviewed_by = $user->id;
+                $order->reviewed_at = now();
+            }
             $order->save();
 
             foreach (array_values($data['items']) as $index => $item) {
@@ -109,19 +117,27 @@ class OrderService
 
                 if (! empty($item['images']) && is_array($item['images'])) {
                     foreach ($item['images'] as $imageFile) {
-                        $this->saveOrderDetailImage($order, $orderDetail, $imageFile, $user);
+                        $this->saveOrderDetailImage($order, $orderDetail, $imageFile, $user, $writtenImages);
                     }
                 }
             }
 
             if (! empty($data['images']) && is_array($data['images'])) {
                 foreach ($data['images'] as $imageFile) {
-                    $this->saveOrderDetailImage($order, null, $imageFile, $user);
+                    $this->saveOrderDetailImage($order, null, $imageFile, $user, $writtenImages);
                 }
             }
 
             return $order->load(['customer', 'orderDetails.product', 'orderDetails.addOns', 'orderDetails.images', 'images', 'payments']);
-        });
+            });
+        } catch (\Throwable $exception) {
+            foreach ($writtenImages as [$disk, $path]) Storage::disk($disk)->delete($path);
+            if ($exception instanceof \Illuminate\Database\UniqueConstraintViolationException && !empty($data['submission_key'])) {
+                $original = Order::where('submission_key', $data['submission_key'])->where('user_id', $user?->id)->first();
+                if ($original) return $original;
+            }
+            throw $exception;
+        }
     }
 
     /**
@@ -161,17 +177,24 @@ class OrderService
     /**
      * Helper to save an image file or representation.
      */
-    protected function saveOrderDetailImage(Order $order, ?OrderDetail $orderDetail, $imageFile, ?User $user): OrderImage
+    protected function saveOrderDetailImage(Order $order, ?OrderDetail $orderDetail, $imageFile, ?User $user, array &$writtenImages = []): OrderImage
     {
+        $disk = $user ? 'staff_references' : 'public';
+        $directory = $user ? "staff/{$order->id}" : "order_images/{$order->id}";
         if ($imageFile instanceof UploadedFile) {
-            $path = $imageFile->store("order_images/{$order->id}", 'public');
+            $path = $imageFile->store($directory, $disk);
+            if (!$path) throw ValidationException::withMessages(['images' => 'Could not save the design reference. Your draft is kept.']);
+            $writtenImages[] = [$disk, $path];
             $filename = $imageFile->getClientOriginalName();
         } elseif (is_array($imageFile)) {
             $filename = $imageFile['original_filename'];
             if (isset($imageFile['staged_path'])) {
                 $extension = pathinfo($imageFile['staged_path'], PATHINFO_EXTENSION);
-                $path = "order_images/{$order->id}/".Str::uuid().'.'.$extension;
-                Storage::disk('public')->put($path, Storage::disk('local')->get($imageFile['staged_path']));
+                $path = $directory.'/'.Str::uuid().'.'.$extension;
+                $writtenImages[] = [$disk, $path];
+                if (!Storage::disk($disk)->put($path, Storage::disk($imageFile['staged_disk'] ?? 'local')->get($imageFile['staged_path']))) {
+                    throw ValidationException::withMessages(['images' => 'Could not save the design reference. Your draft is kept.']);
+                }
             } else {
                 $path = $imageFile['file_path'];
             }
@@ -210,35 +233,19 @@ class OrderService
         return $this->persistDownPayment($order, $amount, $paymentMethod, $referenceNumber, $user, $paymentDate, $verifiedProof);
     }
 
-    /**
-     * Reconcile a pre-change transfer only as part of a full-refund transaction.
-     * This never approves an impossible request or exposes a normal payment bypass.
-     */
-    public function refundLegacyDeposit(Order $order, PaymentProof $proof, float $amount, string $reference,
-        string $reason, ?User $user, bool $failureConfirmed = false): Refund
-    {
-        $user = StaffAccess::requireOwner($user);
-
-        return DB::transaction(function () use ($order, $proof, $amount, $reference, $reason, $user, $failureConfirmed) {
-            $this->persistDownPayment($order, $amount, 'gcash', $reference, $user, null, $proof, true);
-
-            return app(RefundService::class)->markBakeryFailure($order, $reason, $user, $failureConfirmed);
-        });
-    }
-
     private function persistDownPayment(Order $order, float $amount, string $paymentMethod, ?string $referenceNumber,
-        ?User $user, ?Carbon $paymentDate = null, ?PaymentProof $verifiedProof = null, bool $legacyRefund = false): Payment
+        ?User $user, ?Carbon $paymentDate = null, ?PaymentProof $verifiedProof = null): Payment
     {
         $user = StaffAccess::requireOwner($user);
 
-        return DB::transaction(function () use ($order, $amount, $paymentMethod, $referenceNumber, $user, $paymentDate, $verifiedProof, $legacyRefund) {
+        return DB::transaction(function () use ($order, $amount, $paymentMethod, $referenceNumber, $user, $paymentDate, $verifiedProof) {
             $order = $this->lockOrder($order);
             $order->load(['orderDetails.addOns', 'payments']);
 
             if ($order->user_id === null) {
                 $proof = $verifiedProof ? PaymentProof::whereKey($verifiedProof->id)->lockForUpdate()->first() : null;
                 if ($paymentMethod !== 'gcash' || ! $proof || $proof->order_id !== $order->id
-                    || ! in_array($proof->status, $legacyRefund ? ['awaiting_verification', 'rejected'] : ['awaiting_verification'], true)
+                    || $proof->status !== 'awaiting_verification'
                     || $proof->reference_number !== $this->normalizeReference($referenceNumber)) {
                     throw ValidationException::withMessages(['payment' => 'Review the buyer’s GCash proof to verify a public deposit.']);
                 }
@@ -256,10 +263,9 @@ class OrderService
                 ]);
             }
 
-            if ($legacyRefund ? ($order->review_status !== null || ! in_array($order->status, ['pending', 'confirmed'], true)
-                || $order->user_id !== null) : ! $order->canRecordDeposit()) {
+            if (! $order->canRecordDeposit()) {
                 throw ValidationException::withMessages([
-                    'status' => ['Staff must explicitly confirm this request before its deposit can be recorded. Legacy transfers require Owner reconciliation.'],
+                    'status' => ['Staff must explicitly confirm this request before its deposit can be recorded.'],
                 ]);
             }
 
@@ -468,7 +474,7 @@ class OrderService
     }
 
     /**
-     * Cancel an order. Preserves payments as non-refundable deposit.
+     * Customer cancellation retains the verified booking deposit and its ledger.
      */
     public function cancelOrder(Order $order, ?User $user, bool $noFundsChecked = false): Order
     {
@@ -483,6 +489,9 @@ class OrderService
             }
 
             if ($order->status !== 'cancelled') {
+                if ($order->hasVerifiedPayment() && (!$order->hasVerifiedDeposit() || $order->amount_paid !== $order->required_down_payment)) {
+                    throw ValidationException::withMessages(['status' => 'Only unpaid orders or orders with the verified exact 50% deposit can be cancelled. Fully paid or irregular payment records require Owner reconciliation.']);
+                }
                 if ($order->amount_paid === 0.0 && $order->paymentProofs()->exists() && ! $noFundsChecked) {
                     throw ValidationException::withMessages(['no_funds_checked' => 'Investigate the reported transfer in the business account before closing an unpaid request.']);
                 }

@@ -52,10 +52,10 @@ class OrderReviewService
                 return $order;
             }
             if (! $order->needsStaffReview() || $order->hasDownPayment()) {
-                throw ValidationException::withMessages(['review' => 'Only an unpaid request awaiting review can be declined. Use the existing cancellation or bakery-failure workflow for approved or paid orders.']);
+                throw ValidationException::withMessages(['review' => 'Only an unpaid request awaiting review can be declined. Use the existing cancellation workflow for approved or paid orders.']);
             }
             if ($order->paymentProofs()->exists() && (! $noFundsChecked || $order->review_status !== null)) {
-                throw ValidationException::withMessages(['no_funds_checked' => 'Check every reported transfer in the business account first. If funds were received, reconcile them for a full refund instead.']);
+                throw ValidationException::withMessages(['no_funds_checked' => 'Check every reported transfer in the business account first. If funds were received, ask the Owner to verify and record the payment before closing the request.']);
             }
             $order->forceFill(['status' => 'cancelled', 'review_status' => 'rejected', 'reviewed_by' => $user->id,
                 'reviewed_at' => now(), 'cancelled_at' => now(), 'cancellation_kind' => 'staff_rejected', 'cancellation_reason' => $reason])->save();

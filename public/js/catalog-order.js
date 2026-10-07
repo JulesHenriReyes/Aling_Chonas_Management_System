@@ -1,10 +1,11 @@
-window.catalogOrder = function (products, previousItems, quoteUrl, staff = false, persistKey = null) {
+window.catalogOrder = function (products, previousItems, quoteUrl, staff = false, persistKey = null, unavailable = false) {
     return {
-        products, staff, items: [], sequence: 0, quote: null, busy: false, error: '', uploading:false, uploadStatus:'',
+        products, staff, unavailable, items: [], sequence: 0, quote: null, busy: false, error: '', uploading:false, uploadStatus:'', fieldErrors:{}, saveTimer:null, savedSignature:'',
         init() {
             this.items = Object.values(previousItems || {}).map(item => ({
                 ...item, uid: ++this.sequence, draft_key: item.draft_key || this.newKey(), add_ons: Object.values(item.add_ons || {}),
             }));
+            this.savedSignature = this.editorSignature();
             if (persistKey) {
                 try {
                     const saved = JSON.parse(sessionStorage.getItem(persistKey) || 'null');
@@ -13,7 +14,7 @@ window.catalogOrder = function (products, previousItems, quoteUrl, staff = false
                     }
                 } catch {}
                 this.$el.addEventListener('change', event => {
-                    if (event.target.type === 'file' || event.target.name.includes('remove_staged_images')) this.saveReferences();
+                    if (event.target.type === 'file' || event.target.name?.includes('remove_staged_images')) this.saveReferences();
                 });
                 window.addEventListener('beforeunload', event => { if (this.uploading) { event.preventDefault(); event.returnValue=''; } });
                 window.addEventListener('pageshow', () => { this.busy=false; });
@@ -22,23 +23,36 @@ window.catalogOrder = function (products, previousItems, quoteUrl, staff = false
                 this.quote = null;
                 if (!persistKey) this.error = '';
                 if (persistKey) try { sessionStorage.setItem(persistKey, JSON.stringify(this.items[0])); } catch {}
+                if (staff && persistKey && this.editorSignature() !== this.savedSignature) this.scheduleSave();
             });
+            if (staff && persistKey && this.editorSignature() !== this.savedSignature) this.scheduleSave();
+        },
+        editorSignature() {
+            return JSON.stringify(this.items.map(({package_option_id, quantity, themes, special_request, add_ons}) => ({package_option_id, quantity, themes, special_request, add_ons})));
+        },
+        scheduleSave() {
+            clearTimeout(this.saveTimer);
+            this.saveTimer = setTimeout(() => { if (!this.uploading && !this.busy) this.saveReferences(); }, 400);
         },
         async saveReferences() {
             if (this.uploading) return;
+            clearTimeout(this.saveTimer);
             this.uploading=true; this.error=''; this.uploadStatus='';
+            const signature=this.editorSignature();
             const form=this.$el, data=new FormData(form);
             const files=[...form.querySelectorAll('input[type=file]')];
             files.forEach(input => input.disabled=true);
             try {
                 const response=await fetch(form.dataset.editorUrl,{method:'POST', body:data, headers:{Accept:'application/json'}});
                 const result=await response.json();
+                this.fieldErrors=result.errors || {};
                 if (!response.ok) throw new Error(Object.values(result.errors || {}).flat().join(' ') || 'Reference photos could not be saved.');
                 this.items[0].staged_images=result.staged_images;
                 files.forEach(input => input.value='');
                 this.uploadStatus='Reference photos saved with this package draft.';
+                this.savedSignature=signature;
             } catch(error) { this.error=error.message; }
-            finally { files.forEach(input => input.disabled=false); this.uploading=false; }
+            finally { files.forEach(input => input.disabled=false); this.uploading=false; if (staff && !this.error && signature !== this.editorSignature()) this.scheduleSave(); }
         },
         product(item) { return this.products.find(product => String(product.id) === String(item.product_id)); },
         option(item) { return this.product(item)?.options.find(option => String(option.id) === String(item.package_option_id)); },
@@ -99,7 +113,7 @@ window.catalogOrder = function (products, previousItems, quoteUrl, staff = false
                 const response = await fetch(quoteUrl, {
                     method: 'POST', credentials: 'same-origin',
                     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-TOKEN': event.target.querySelector('[name="_token"]').value },
-                    body: JSON.stringify({ items: this.items.map(({ uid, images, ...item }) => item) }),
+                    body: JSON.stringify({ items: this.items.map(({ uid, images, ...item }) => item), draft_id:event.target.querySelector('[name="draft_id"]')?.value }),
                 });
                 const result = await response.json();
                 if (!response.ok) throw new Error(Object.values(result.errors || {}).flat().join(' ') || result.message || 'The total could not be checked. Please try again.');

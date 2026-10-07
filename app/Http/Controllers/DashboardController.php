@@ -20,10 +20,8 @@ class DashboardController extends Controller
         $awaitingReceiptCount = Order::workflowQueue('receipts')->count();
         $completedCount = Order::where('status', 'completed')->count();
 
-        // Low stock: current_quantity <= reorder_level
-        $lowStockCount = Supply::where('is_active', true)
-            ->whereColumn('current_quantity', '<=', 'reorder_level')
-            ->count();
+        // Count each supply once using usable entry quantities.
+        $lowStockCount = Supply::active()->lowStock()->count();
 
         // Pickups today
         $todayPickups = Order::with(['customer', 'payments', 'paymentProofs'])

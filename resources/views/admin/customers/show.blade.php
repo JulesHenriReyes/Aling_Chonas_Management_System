@@ -3,13 +3,23 @@
 @section('title', 'Customer: ' . $customer->full_name)
 
 @section('content')
-<div class="space-y-6">
+<div class="space-y-6" x-data="{
+    editModalOpen: {{ $errors->any() && old('_form') === 'edit_customer' ? 'true' : 'false' }},
+    editCustomer: {
+        id: {{ $customer->id }},
+        first_name: @js(old('_form') === 'edit_customer' ? old('first_name', $customer->first_name) : $customer->first_name),
+        middle_name: @js(old('_form') === 'edit_customer' ? old('middle_name', $customer->middle_name ?? '') : ($customer->middle_name ?? '')),
+        last_name: @js(old('_form') === 'edit_customer' ? old('last_name', $customer->last_name) : $customer->last_name),
+        phone_number: @js(old('_form') === 'edit_customer' ? old('phone_number', $customer->phone_number) : $customer->phone_number),
+        update_url: @js(route('customers.update', $customer))
+    }
+}">
     <div class="page-heading">
         <a href="{{ route('customers.index') }}" class="text-cocoa-500 hover:text-cocoa-600 font-medium text-sm transition">
             <x-icon name="arrow-left" class="mr-1" /> Back to Customers
         </a>
         @can('manage-customers')
-<a href="{{ route('customers.edit', $customer) }}" class="bg-white border border-cocoa-100 text-cocoa-500 hover:bg-cream-100 font-medium text-sm px-4 py-2 rounded-lg transition">
+<a href="{{ route('customers.edit', $customer) }}" @click.prevent="editModalOpen = true" class="bg-white border border-cocoa-100 text-cocoa-500 hover:bg-cream-100 font-medium text-sm px-4 py-2 rounded-lg transition">
             Edit Details
         </a>
 @endcan
@@ -100,5 +110,8 @@
             @endif
         @endif
     </div>
+    @can('manage-customers')
+        @include('admin.customers.edit-modal')
+    @endcan
 </div>
 @endsection

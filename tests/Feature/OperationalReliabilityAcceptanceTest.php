@@ -64,7 +64,7 @@ class OperationalReliabilityAcceptanceTest extends TestCase
         try {
             app(InventoryService::class)->post(['submission_key' => (string) Str::uuid(), 'type' => 'receipt',
                 'operation_date' => '2026-10-05', 'notes' => 'Rollback acceptance',
-                'lines' => [['supply_id' => $one->id, 'quantity' => 2], ['supply_id' => $two->id, 'quantity' => 3]]], $actor);
+                'lines' => [['supply_id' => $one->id, 'quantity' => 2, 'expiry_date'=>'2099-12-31'], ['supply_id' => $two->id, 'quantity' => 3, 'expiry_date'=>'2099-12-31']]], $actor);
             $this->fail('The injected failure did not fire.');
         } catch (\RuntimeException $error) {
             $this->assertStringStartsWith('Injected after', $error->getMessage());

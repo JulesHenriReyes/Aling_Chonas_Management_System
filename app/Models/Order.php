@@ -164,11 +164,6 @@ class Order extends Model
         return $this->hasMany(PaymentProof::class)->latest('id');
     }
 
-    public function refund(): \Illuminate\Database\Eloquent\Relations\HasOne
-    {
-        return $this->hasOne(Refund::class);
-    }
-
     public function pickupDeadline(): \Carbon\Carbon
     {
         return \Carbon\Carbon::parse($this->pickup_date->toDateString().' '.$this->pickup_time, config('bakery.pickup_timezone'));
@@ -265,6 +260,18 @@ class Order extends Model
     {
         return $this->relationLoaded('payments') ? $this->payments->contains('payment_type', 'down_payment')
             : $this->payments()->where('payment_type', 'down_payment')->exists();
+    }
+
+    /** Payment ledger rows are verified collections; uploaded proofs are separate. */
+    public function hasVerifiedPayment(): bool
+    {
+        return $this->relationLoaded('payments') ? $this->payments->isNotEmpty() : $this->payments()->exists();
+    }
+
+    public function canBeCancelled(): bool
+    {
+        return !in_array($this->status, ['completed', 'cancelled'], true)
+            && (!$this->hasVerifiedPayment() || ($this->hasVerifiedDeposit() && $this->amount_paid === $this->required_down_payment));
     }
 
     public function hasReportedTransfer(): bool

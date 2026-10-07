@@ -33,7 +33,7 @@ class ReportsController extends Controller
         $report = $this->reports->report($period);
         return response()->streamDownload(function () use ($period, $report) {
             $file = fopen('php://output', 'w');
-            $columns = ['section', 'period', 'label', 'sales', 'gross_collections', 'refunds_completed', 'payment_collections', 'cancellation_income', 'expenses', 'operational_net_income', 'completed_order_count', 'package_quantity', 'package_amount', 'extras_amount', 'amount'];
+            $columns = ['section', 'period', 'label', 'sales', 'gross_collections', 'payment_collections', 'cancellation_income', 'expenses', 'operational_net_income', 'completed_order_count', 'package_quantity', 'package_amount', 'extras_amount', 'amount'];
             fputcsv($file, $columns, ',', '"', '');
             $row = function (array $values) use ($file, $columns) {
                 $cells = array_map(function ($key) use ($values) {
@@ -46,9 +46,8 @@ class ReportsController extends Controller
             $row(['section' => 'summary'] + $report['summary']);
             foreach ($report['trends'] as $trend) $row(['section' => 'trend'] + $trend);
             foreach ($report['expensesByCategory'] as $category) $row(['section' => 'expense_category', 'label' => $category->category, 'amount' => (float) $category->total_amount]);
-            foreach ($report['methods'] as $method) $row(['section' => 'payment_method', 'label' => $method['method'], 'gross_collections' => $method['gross'], 'refunds_completed' => $method['refunds'], 'payment_collections' => $method['net']]);
+            foreach ($report['methods'] as $method) $row(['section' => 'payment_method', 'label' => $method['method'], 'gross_collections' => $method['gross'], 'payment_collections' => $method['net']]);
             foreach ($report['packages'] as $package) $row(['section' => 'package', 'label' => $package->product_name_snapshot ?: 'Legacy package #'.$package->product_id, 'amount' => (float) $package->total_amount, 'package_quantity' => (int) $package->package_quantity, 'completed_order_count' => (int) $package->order_count, 'package_amount' => (float) $package->package_amount, 'extras_amount' => (float) $package->extras_amount]);
-            $row(['section' => 'current_snapshot', 'period' => $report['asOf']->toIso8601String(), 'label' => 'Outstanding refunds across all dates', 'amount' => $report['summary']['refunds_pending']]);
             $row(['section' => 'definition', 'label' => 'Operational result = completed sales + retained cancellation deposits - valid expenses. Not accounting profit; COGS and other accounting costs are unavailable.']);
             fclose($file);
         }, 'bakery-report-'.$period->start->format('Y-m-d').'-'.$period->end->format('Y-m-d').'.csv', ['Content-Type' => 'text/csv; charset=UTF-8']);

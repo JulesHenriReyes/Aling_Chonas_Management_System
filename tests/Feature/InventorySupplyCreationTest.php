@@ -29,7 +29,7 @@ class InventorySupplyCreationTest extends TestCase
         $this->assertDatabaseCount('inventory_transactions', 0);
 
         $stock = ['submission_key' => (string) Str::uuid(), 'type' => 'receipt', 'operation_date' => '2026-10-05',
-            'lines' => [['supply_id' => $supply->id, 'quantity' => 24]]];
+            'lines' => [['supply_id' => $supply->id, 'quantity' => 24, 'expiry_date'=>'2099-12-31']]];
         $this->post(route('inventory.store'), $stock)->assertRedirect();
         $this->post(route('inventory.store'), $stock)->assertRedirect();
         $this->assertEquals(24, $supply->fresh()->current_quantity);
@@ -72,10 +72,10 @@ class InventorySupplyCreationTest extends TestCase
     public function test_save_only_and_inactive_supplies_do_not_open_an_unusable_stock_form(): void
     {
         $this->actingAs(User::factory()->create(['role' => 'owner', 'is_active' => true]));
-        $this->post(route('supplies.store'), $this->definition())->assertRedirect(route('supplies.show', 1));
+        $this->post(route('supplies.store'), $this->definition())->assertRedirect(route('supplies.show', Supply::where('supply_name','Egg')->sole()));
         $this->post(route('supplies.store'), $this->definition(['supply_name' => 'Inactive eggs', 'is_active' => false, 'next' => 'stock_in']))
-            ->assertRedirect(route('supplies.show', 2));
-        $this->get(route('inventory.create', ['type' => 'receipt', 'supply_id' => 2]))->assertNotFound();
+            ->assertRedirect(route('supplies.show', Supply::where('supply_name','Inactive eggs')->sole()));
+        $this->get(route('inventory.create', ['type' => 'receipt', 'supply_id' => Supply::where('supply_name','Inactive eggs')->sole()->id]))->assertNotFound();
         $this->assertDatabaseCount('inventory_transactions', 0);
     }
 
@@ -101,7 +101,7 @@ class InventorySupplyCreationTest extends TestCase
         $egg = Supply::where('supply_name', 'Egg')->sole();
         $stock = app(\App\Services\InventoryService::class)->post([
             'submission_key' => (string) Str::uuid(), 'type' => 'receipt', 'operation_date' => '2026-10-05',
-            'lines' => [['supply_id' => $flour->id, 'quantity' => 12.5], ['supply_id' => $egg->id, 'quantity' => 75]],
+            'lines' => [['supply_id' => $flour->id, 'quantity' => 12.5, 'expiry_date'=>'2099-12-31'], ['supply_id' => $egg->id, 'quantity' => 75, 'expiry_date'=>'2099-12-31']],
         ], User::where('role', 'owner')->sole());
         $this->seed(\Database\Seeders\DatabaseSeeder::class);
         $this->assertDatabaseCount('inventory_operations', 1);

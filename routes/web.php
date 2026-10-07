@@ -11,7 +11,6 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaymentReviewController;
 use App\Http\Controllers\PickupScheduleController;
 use App\Http\Controllers\PublicOrderController;
-use App\Http\Controllers\RefundController;
 use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\SupplyController;
 use App\Http\Controllers\UserManagementController;
@@ -71,12 +70,22 @@ Route::middleware(['auth', 'role:owner,assistant'])->group(function () {
     });
 
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
-    Route::get('/orders/create', [OrderController::class, 'create'])->middleware('can:manage-orders')->name('orders.create');
-    Route::post('/orders/create/details', [OrderController::class, 'saveSelection'])->middleware('can:manage-orders')->name('orders.continue');
-    Route::get('/orders/create/details', [OrderController::class, 'details'])->middleware('can:manage-orders')->name('orders.details');
-    Route::post('/orders/create/details/back', [OrderController::class, 'backToSelection'])->middleware('can:manage-orders')->name('orders.back');
+    Route::middleware(['role:owner', 'can:manage-orders', PrivateOrderResponse::class])->group(function () {
+        Route::get('/orders/create/packages/{product}/customize/{line}', [OrderController::class, 'customize'])->block()->name('orders.package.customize');
+        Route::post('/orders/create/packages/{product}/customize/{line}', [OrderController::class, 'savePackage'])->block()->name('orders.package.save');
+        Route::post('/orders/create/packages/{product}/draft/{line}', [OrderController::class, 'saveEditor'])->middleware('throttle:60,1')->block()->name('orders.package.draft');
+        Route::post('/orders/create/packages/{line}/remove', [OrderController::class, 'removePackage'])->block()->name('orders.package.remove');
+        Route::get('/orders/create/references/{draft}/{line}/{image}', [OrderController::class, 'draftImage'])->whereUuid(['draft', 'line', 'image'])->name('orders.package.image');
+        Route::post('/orders/create/quote', [OrderController::class, 'quote'])->middleware('throttle:60,1')->name('orders.package.quote');
+        Route::post('/orders/create/details/draft', [OrderController::class, 'saveDetailsDraft'])->middleware('throttle:60,1')->block()->name('orders.details.draft');
+    });
+    Route::get('/orders/create', [OrderController::class, 'create'])->middleware(['can:manage-orders', PrivateOrderResponse::class])->block()->name('orders.create');
+    Route::post('/orders/create/details', [OrderController::class, 'saveSelection'])->middleware(['can:manage-orders', PrivateOrderResponse::class])->block()->name('orders.continue');
+    Route::get('/orders/create/details', [OrderController::class, 'details'])->middleware(['can:manage-orders', PrivateOrderResponse::class])->block()->name('orders.details');
+    Route::post('/orders/create/details/back', [OrderController::class, 'backToSelection'])->middleware(['can:manage-orders', PrivateOrderResponse::class])->block()->name('orders.back');
     Route::post('/orders/create/customer', [OrderController::class, 'inlineCustomer'])->middleware('can:manage-customers')->name('orders.inlineCustomer');
-    Route::post('/orders', [OrderController::class, 'store'])->middleware('can:manage-orders')->name('orders.store');
+    Route::post('/orders', [OrderController::class, 'store'])->middleware('can:manage-orders')->block()->name('orders.store');
+    Route::get('/orders/{order}/references/{image}', [OrderController::class, 'referenceImage'])->middleware(PrivateOrderResponse::class)->name('orders.images.show');
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
     Route::patch('/orders/{order}/status', [OrderController::class, 'updateStatus'])->middleware('can:update-order-status')->name('orders.updateStatus');
     Route::post('/orders/{order}/confirm', [OrderController::class, 'confirm'])->middleware('can:confirm-orders')->name('orders.confirm');
@@ -88,9 +97,6 @@ Route::middleware(['auth', 'role:owner,assistant'])->group(function () {
     Route::get('/payment-proofs/{proof}/receipt', [PaymentReviewController::class, 'receipt'])->middleware(PrivateOrderResponse::class)->name('proofs.receipt');
     Route::post('/payment-proofs/{proof}/accept', [PaymentReviewController::class, 'accept'])->middleware('can:review-proofs')->name('proofs.accept');
     Route::post('/payment-proofs/{proof}/reject', [PaymentReviewController::class, 'reject'])->middleware('can:review-proofs')->name('proofs.reject');
-    Route::post('/payment-proofs/{proof}/reconcile-refund', [PaymentReviewController::class, 'reconcileRefund'])->middleware('can:review-proofs')->name('proofs.reconcileRefund');
-    Route::post('/orders/{order}/bakery-failure', [RefundController::class, 'store'])->middleware('can:manage-refunds')->name('orders.bakeryFailure');
-    Route::post('/refunds/{refund}/complete', [RefundController::class, 'complete'])->middleware('can:manage-refunds')->name('refunds.complete');
 
     Route::get('/supplies', [SupplyController::class, 'index'])->name('supplies.index');
     Route::get('/supplies/create', [SupplyController::class, 'create'])->name('supplies.create');
@@ -98,6 +104,9 @@ Route::middleware(['auth', 'role:owner,assistant'])->group(function () {
     Route::get('/supplies/{supply}/edit', [SupplyController::class, 'edit'])->name('supplies.edit');
     Route::get('/supplies/{supply}', [SupplyController::class, 'show'])->name('supplies.show');
     Route::get('/inventory/history', [SupplyController::class, 'history'])->name('inventory.history');
+    Route::post('/inventory/preview', [SupplyController::class, 'preview'])->name('inventory.preview');
+    Route::get('/inventory/verify-opening', [SupplyController::class, 'verifyForm'])->name('inventory.verify');
+    Route::post('/inventory/verify-opening', [SupplyController::class, 'verifyOpening'])->name('inventory.verify.store');
     Route::get('/inventory/create/{type}', [SupplyController::class, 'operationForm'])->name('inventory.create');
     Route::get('/inventory/movements/{movement}', [SupplyController::class, 'legacyMovement'])->name('inventory.movement');
     Route::post('/inventory/movements/{movement}/reverse', [SupplyController::class, 'reverseLegacy'])->name('inventory.movement.reverse');
@@ -112,8 +121,6 @@ Route::middleware(['auth', 'role:owner,assistant'])->group(function () {
     Route::get('/expenses/create', [ExpenseController::class, 'create'])->name('expenses.create');
     Route::get('/expenses/history', [ExpenseController::class, 'history'])->name('expenses.history');
     Route::get('/expenses/{expense}', [ExpenseController::class, 'show'])->name('expenses.show');
-    Route::get('/expenses/{expense}/edit', [ExpenseController::class, 'edit'])->name('expenses.edit');
-    Route::patch('/expenses/{expense}', [ExpenseController::class, 'update'])->name('expenses.update');
     Route::delete('/expenses/{expense}', [ExpenseController::class, 'destroy'])->name('expenses.destroy');
     Route::post('/expenses', [ExpenseController::class, 'store'])->name('expenses.store');
 

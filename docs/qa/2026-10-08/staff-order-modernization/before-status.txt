@@ -1,0 +1,96 @@
+ M app/Http/Controllers/CustomerController.php
+ M app/Http/Controllers/DashboardController.php
+ M app/Http/Controllers/ExpenseController.php
+ M app/Http/Controllers/OrderController.php
+ M app/Http/Controllers/OrderPaymentPageController.php
+ M app/Http/Controllers/PaymentReviewController.php
+ D app/Http/Controllers/RefundController.php
+ M app/Http/Controllers/ReportsController.php
+ M app/Http/Controllers/SupplyController.php
+ M app/Http/Requests/CatalogOrderRules.php
+ M app/Models/InventoryTransaction.php
+ M app/Models/Order.php
+ D app/Models/Refund.php
+ M app/Models/Supply.php
+ M app/Providers/AppServiceProvider.php
+ M app/Services/FinancialReportService.php
+ M app/Services/InventoryService.php
+ M app/Services/OrderReviewService.php
+ M app/Services/OrderService.php
+ D app/Services/RefundService.php
+ M config/bakery.php
+ M config/inventory.php
+ M docs/workflow-upgrade.md
+ M docs/workflow-verification.md
+ M public/css/bakery-ui.css
+ M public/js/bakery-ui.js
+ M public/js/inventory-workspace.js
+ M public/js/public-checkout-draft.js
+ M resources/views/admin/customers/index.blade.php
+ M resources/views/admin/customers/show.blade.php
+ M resources/views/admin/expenses/form.blade.php
+ M resources/views/admin/expenses/index.blade.php
+ M resources/views/admin/expenses/show.blade.php
+ M resources/views/admin/orders/index.blade.php
+ M resources/views/admin/orders/proof-review.blade.php
+ D resources/views/admin/orders/refund.blade.php
+ M resources/views/admin/orders/show.blade.php
+ M resources/views/admin/orders/staff-review.blade.php
+ M resources/views/admin/reports/index.blade.php
+ M resources/views/admin/reports/records.blade.php
+ M resources/views/admin/schedule/index.blade.php
+ M resources/views/admin/supplies/definition-fields.blade.php
+ M resources/views/admin/supplies/form.blade.php
+ M resources/views/admin/supplies/history.blade.php
+ M resources/views/admin/supplies/index.blade.php
+ M resources/views/admin/supplies/legacy-movement.blade.php
+ M resources/views/admin/supplies/movement-table.blade.php
+ M resources/views/admin/supplies/operation-form.blade.php
+ M resources/views/admin/supplies/operation.blade.php
+ M resources/views/admin/supplies/show.blade.php
+ M resources/views/components/status.blade.php
+ M resources/views/layouts/admin.blade.php
+ M resources/views/partials/catalog-order-details.blade.php
+ M resources/views/partials/order-item-summary.blade.php
+ M resources/views/partials/order-private-link.blade.php
+ M resources/views/partials/package-line-fields.blade.php
+ M resources/views/public/index.blade.php
+ M resources/views/public/layout.blade.php
+ M resources/views/public/payment.blade.php
+ M routes/web.php
+ M tests/Feature/ApprovedWorkflowReportAcceptanceTest.php
+ M tests/Feature/FinancialReportingTest.php
+ M tests/Feature/FixedCatalogAndPaymentReviewTest.php
+ M tests/Feature/ImplementationPolicyTest.php
+ M tests/Feature/InventoryAndAuthorizationBusinessRulesTest.php
+ M tests/Feature/InventorySupplyCreationTest.php
+ M tests/Feature/OperationalReliabilityAcceptanceTest.php
+ M tests/Feature/OrderAndPaymentBusinessRulesTest.php
+ M tests/Feature/ReceiptOrderIdentityTest.php
+ M tests/Feature/ReportPeriodsAndReconciliationTest.php
+ M tests/Feature/StaffConfirmationBeforePaymentTest.php
+ M tests/Feature/StockConcurrencyAndMigrationTest.php
+ M tests/Feature/StockOperationsAndExpensesTest.php
+ M tests/Feature/UiPresentationTest.php
+ M tests/Support/DisposableDatabase.php
+ M tests/Support/mariadb-concurrency-worker.php
+ M tests/Support/staff-review-concurrency-worker.php
+?? app/Models/StockAllocation.php
+?? app/Models/StockEntry.php
+?? app/Rules/PickupTime.php
+?? app/Services/StockEntryLedger.php
+?? app/Support/InventoryCalendar.php
+?? app/Support/PickupHours.php
+?? database/migrations/2026_10_07_000001_remove_refunds_feature.php
+?? database/migrations/2026_10_08_000001_add_inventory_stock_entries.php
+?? docs/inventory-expiration.md
+?? docs/qa/2026-10-07/
+?? docs/qa/2026-10-08/
+?? public/js/pickup-time-picker.js
+?? resources/views/admin/customers/edit-modal.blade.php
+?? resources/views/admin/supplies/entry-reconciliation.blade.php
+?? resources/views/admin/supplies/verify-opening.blade.php
+?? resources/views/components/pickup-time.blade.php
+?? tests/Feature/IngredientExpiryTest.php
+?? tests/Feature/PickupTimePickerTest.php
+?? tests/Feature/RefundFeatureRemovalTest.php

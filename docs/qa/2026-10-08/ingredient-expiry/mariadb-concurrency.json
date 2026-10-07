@@ -1,0 +1,27 @@
+{
+    "held_supply_lock_blocked_workers": true,
+    "usage": [
+        {
+            "status": "rejected",
+            "fields": [
+                "lines.0.quantity"
+            ]
+        },
+        {
+            "status": "posted",
+            "id": 13
+        }
+    ],
+    "duplicate_receipt": [
+        {
+            "status": "posted",
+            "id": 15
+        },
+        {
+            "status": "posted",
+            "id": 15
+        }
+    ],
+    "on_hand": 5,
+    "entry_total": 5
+}

@@ -35,6 +35,8 @@ class InventoryTransaction extends Model
         return $this->belongsTo(InventoryOperation::class, 'inventory_operation_id');
     }
 
+    public function allocations() { return $this->hasMany(StockAllocation::class); }
+
     public function reversal() { return $this->hasOne(self::class, 'reversal_of_id'); }
 
     protected static function booted(): void

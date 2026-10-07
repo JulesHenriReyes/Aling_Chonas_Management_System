@@ -107,7 +107,7 @@ class ReceiptOrderIdentityTest extends TestCase
         $this->post(route('proofs.accept', $proof), ['amount' => 1000, 'reference_number' => 'OLD-RECEIPT', 'account_checked' => 1])
             ->assertNotFound();
         $this->post(route('proofs.reject', $proof), ['reason' => 'Stale receipt'])->assertNotFound();
-        $this->post(route('proofs.reconcileRefund', $proof), [])->assertNotFound();
+        $this->post('/payment-proofs/'.$proof->id.'/reconcile-refund', [])->assertNotFound();
         try {
             app(PaymentReviewService::class)->accept($proof, 1000, 'OLD-RECEIPT', $this->owner);
             $this->fail('Stale receipt must not be verified through the service.');

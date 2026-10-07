@@ -1,0 +1,131 @@
+{
+    "target": {
+        "database": "aling_chona_db",
+        "port": 3306,
+        "version": "10.4.32-MariaDB"
+    },
+    "backup": {
+        "path": "C:\\Users\\User\\AppData\\Local\\Temp\/bakery-expiry-backup-20261007-165625-10151d22\/before-expiry.sql",
+        "bytes": 56443,
+        "sha256": "78441cafddc3ed454a2a3842df9a1dd1901f19fa2d48e741f80be776dac74265",
+        "restore_verified": true
+    },
+    "original_tables": {
+        "add_on_product": {
+            "count": 18,
+            "sha256": "48cc18b8729ba84f0c8ec8b6d5fa6d210e17724afc4f74b71b7c26f7ec70dbd8"
+        },
+        "add_ons": {
+            "count": 5,
+            "sha256": "9dd710f231659717369e3960ffb77f117dd9040a205e05ec940043f2ac4240dc"
+        },
+        "customers": {
+            "count": 6,
+            "sha256": "b59d4c61574dba47573725dfd93764caba93103b28579f332d929488d1c934e5"
+        },
+        "expense_audits": {
+            "count": 3,
+            "sha256": "a495bb66a60766904e920971bcd21cbb8a119a2836717e9ed11faf5d88df17f0"
+        },
+        "expenses": {
+            "count": 2,
+            "sha256": "6dd3bdf19f7d4f52c9bcf46a5bcfd807cb61babef008dd9c5528a4980ca968a9"
+        },
+        "failed_jobs": {
+            "count": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "gcash_references": {
+            "count": 2,
+            "sha256": "23a0b42aa8da55b3aeda03d7deea461f160d8d5e46de89b4b7a17c14a5f7242b"
+        },
+        "inventory_baselines": {
+            "count": 12,
+            "sha256": "6728ec23aed4f5d9564b9dff8e92c657f495555d4824a63bf4266abe75564414"
+        },
+        "inventory_operations": {
+            "count": 4,
+            "sha256": "598e61c34e33fa3b1446ea483b69046ee43b2948bf00ab76d72d9c0c54f925ed"
+        },
+        "inventory_transactions": {
+            "count": 4,
+            "sha256": "ce28e4dc56a262926c081ebb4965c0e50193ad8c0653d3c61d0db5aac69c26ad"
+        },
+        "job_batches": {
+            "count": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "jobs": {
+            "count": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "order_add_ons": {
+            "count": 4,
+            "sha256": "252ed3ceed71a71f6d87770f2e35e5dfd9e4cde9296f8119a2eeb3497386e0d4"
+        },
+        "order_details": {
+            "count": 7,
+            "sha256": "774bc20987816dbe34f4710209a6ead568bd675c87570fa1fff4bc29a40f7be3"
+        },
+        "order_images": {
+            "count": 2,
+            "sha256": "be1bff97e10dddfcf9f0f6f3752d8507bfeba99e911e76678b0368649785adca"
+        },
+        "orders": {
+            "count": 7,
+            "sha256": "4535c474ff70a2ea7311bb984b61932ee410b44a6abaed78cb9ba187829d9438"
+        },
+        "package_option_inclusions": {
+            "count": 5,
+            "sha256": "00f3e899d7facc0c1c1399a5bae2f1d3f31a30616d35ede0b5b0d077211d4cc8"
+        },
+        "package_options": {
+            "count": 6,
+            "sha256": "13e589c8e9adfd58069e94f79f8008b07cd55abd3fcd48632832c78882753906"
+        },
+        "password_reset_tokens": {
+            "count": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "payment_proofs": {
+            "count": 4,
+            "sha256": "74e4cbe6c6765c19052928c82ee38722aeff0e61b3ce4ee7512772995ecbdff1"
+        },
+        "payment_settings": {
+            "count": 1,
+            "sha256": "3d86d3145b09f5050d0630eb2ef995177fdd90a69e9f2fd9c52b43d41417218a"
+        },
+        "payments": {
+            "count": 5,
+            "sha256": "d4fae39a40ca5edb3fbf23cb6c703a59ee9590106ce9e8da5013c8acfcf4f5d1"
+        },
+        "products": {
+            "count": 4,
+            "sha256": "53a7fc4279a626b28bea7ac06637d2172a55208a8619751aa40f7eef13d03c39"
+        },
+        "supplies": {
+            "count": 12,
+            "sha256": "28b17a2ef9c6d183e8e5209fc12a2e9d3db088e5aebd4d25645e84cfee0688a0"
+        },
+        "users": {
+            "count": 2,
+            "sha256": "002b53ca91ffb2492fc607f445cd163ca4d41d70e52aad56e165ac6dff9671c1"
+        }
+    },
+    "clone_rehearsal": {
+        "mismatches": 0,
+        "supplies": 12,
+        "entries": 12,
+        "on_hand": "955.75",
+        "entry_total": "955.75"
+    },
+    "resume_safe": true,
+    "active_migrated": true,
+    "active_reconciliation": {
+        "mismatches": 0,
+        "supplies": 12,
+        "entries": 12,
+        "on_hand": "955.75",
+        "entry_total": "955.75"
+    }
+}

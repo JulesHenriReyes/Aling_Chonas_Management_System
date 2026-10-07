@@ -1,0 +1,775 @@
+PHPUnit 11.5.56 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.2.12
+Configuration: C:\Users\User\Desktop\IT12_Project\phpunit.xml
+
+F..F..F............................F.....E..F......               51 / 51 (100%)
+
+Time: 00:22.748, Memory: 60.00 MB
+
+There was 1 error:
+
+1) Tests\Feature\StaffConfirmationBeforePaymentTest::test_review_and_decline_have_no_financial_effect_and_queues_are_distinct
+Illuminate\Validation\ValidationException: Only an unpaid request awaiting review can be declined. Use the existing cancellation workflow for approved or paid orders.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Validation\ValidationException.php:70
+C:\Users\User\Desktop\IT12_Project\app\Services\OrderReviewService.php:55
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Concerns\ManagesTransactions.php:35
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\DatabaseManager.php:491
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\Facades\Facade.php:363
+C:\Users\User\Desktop\IT12_Project\app\Services\OrderReviewService.php:49
+C:\Users\User\Desktop\IT12_Project\tests\Feature\StaffConfirmationBeforePaymentTest.php:228
+
+--
+
+There were 5 failures:
+
+1) Tests\Feature\OrderAndPaymentBusinessRulesTest::test_exact_deposit_is_accepted_after_staff_confirmation
+Failed asserting that two strings are equal.
+--- Expected
++++ Actual
+@@ @@
+-'pending'
++'confirmed'
+
+C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderAndPaymentBusinessRulesTest.php:88
+
+2) Tests\Feature\OrderAndPaymentBusinessRulesTest::test_generic_status_update_cannot_bypass_staff_review
+Failed asserting that two strings are equal.
+--- Expected
++++ Actual
+@@ @@
+-'pending'
++'confirmed'
+
+C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderAndPaymentBusinessRulesTest.php:149
+
+3) Tests\Feature\OrderAndPaymentBusinessRulesTest::test_verified_deposit_blocks_cancellation_in_ui_http_and_stale_service_requests
+Failed asserting that '<!DOCTYPE html>\n
+<html lang="en">\n
+<head>\n
+    <meta charset="UTF-8">\n
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n
+    <title>Order ORD-20261007-8B8B6F60B6 - Aling Chona Cakes & Cupcakes</title>\n
+    <script src="https://cdn.tailwindcss.com"></script>\n
+    <script>\n
+        tailwind.config = {\n
+            theme: {\n
+                extend: {\n
+                    fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },\n
+                    colors: {\n
+                        cream: { 50: '#FDFBF7', 100: '#F5F1EB' },\n
+                        cocoa: { 50: '#F5F1EB', 100: '#E8E0D4', 200: '#D4C4B0', 300: '#C2956B', 400: '#716153', 500: '#5C4A3A', 600: '#3C2415', 700: '#2C1810', 800: '#1A0E08' },\n
+                    }\n
+                }\n
+            }\n
+        }\n
+    </script>\n
+    <link rel="preconnect" href="https://fonts.googleapis.com">\n
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">\n
+    <script defer src="http://127.0.0.1:8000/js/alpine.min.js"></script>\n
+    <style>\n
+        [x-cloak] { display: none !important; }\n
+        /* Custom scrollbar for sidebar */\n
+        .sidebar-scroll::-webkit-scrollbar { width: 4px; }\n
+        .sidebar-scroll::-webkit-scrollbar-track { background: transparent; }\n
+        .sidebar-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }\n
+    </style>\n
+    <link rel="stylesheet" href="http://127.0.0.1:8000/css/bakery-ui.css?v=1791403053">\n
+<script defer src="http://127.0.0.1:8000/js/bakery-ui.js?v=1791384325"></script>\n
+</head>\n
+<body class="bg-cream-50 text-cocoa-500 font-sans min-h-screen" x-data="{ sidebarOpen: false }">\n
+    <a class="skip-link" href="#main-content">Skip to main content</a>\n
+\n
+    \n
+    <div x-show="sidebarOpen" x-transition:enter="transition-opacity ease-out duration-200" x-transition:leave="transition-opacity ease-in duration-150"\n
+         data-sidebar-backdrop class="fixed inset-0 z-40 bg-black/40 lg:hidden" @click="sidebarOpen = false" x-cloak></div>\n
+\n
+    \n
+    <aside id="staff-navigation" data-sidebar :data-open="sidebarOpen.toString()" aria-label="Staff navigation" :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"\n
+           class="fixed top-0 left-0 z-50 h-full w-60 bg-cocoa-700 text-cocoa-100 flex flex-col transition-transform duration-200 lg:translate-x-0">\n
+\n
+        <button type="button" data-sidebar-close @click="sidebarOpen = false" aria-label="Close navigation" class="sidebar-close self-end p-3 text-white"><svg class="ui-icon" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m6 6 12 12M6 18 18 6" /></svg>\n
+</button>\n
+        \n
+        <div class="px-5 py-5 border-b border-white/10">\n
+            <a href="http://127.0.0.1:8000/dashboard" class="flex items-center gap-3">\n
+                <span class="w-9 h-9 rounded-lg bg-cocoa-300 flex items-center justify-center text-white text-lg font-bold">A</span>\n
+                <div>\n
+                    <span class="font-bold text-white text-sm tracking-tight block leading-tight">Aling Chona</span>\n
+                    <span class="text-xs text-cocoa-100 leading-tight">Cakes & Cupcakes</span>\n
+                </div>\n
+            </a>\n
+        </div>\n
+\n
+        \n
+        <nav class="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto sidebar-scroll">\n
+            <a href="http://127.0.0.1:8000/dashboard"\n
+               class="flex items-center gap-3 px-3 py-2.5 rounded-r-lg rounded-l-none text-sm transition\n
+                      border-l-[3px] border-transparent text-cocoa-100 hover:bg-white/5 hover:text-white">\n
+                <svg class="ui-icon w-[18px] h-[18px] flex-shrink-0" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" /></svg>\n
+                Dashboard\n
+            </a>\n
+\n
+            <a href="http://127.0.0.1:8000/orders"\n
+               class="flex items-center gap-3 px-3 py-2.5 rounded-r-lg rounded-l-none text-sm transition\n
+                      border-l-[3px] border-cocoa-300 bg-white/10 text-white font-semibold">\n
+                <svg class="ui-icon w-[18px] h-[18px] flex-shrink-0" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15a2.25 2.25 0 012.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25z" /></svg>\n
+                Orders\n
+            </a>\n
+\n
+            <a href="http://127.0.0.1:8000/pickup-schedule"\n
+               class="flex items-center gap-3 px-3 py-2.5 rounded-r-lg rounded-l-none text-sm transition\n
+                      border-l-[3px] border-transparent text-cocoa-100 hover:bg-white/5 hover:text-white">\n
+                <svg class="ui-icon w-[18px] h-[18px] flex-shrink-0" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" /></svg>\n
+                Pickup Schedule\n
+            </a>\n
+\n
+            <div class="pt-4 pb-1.5 px-3">\n
+                <span class="sidebar-label">Manage</span>\n
+            </div>\n
+\n
+            <a href="http://127.0.0.1:8000/customers"\n
+               class="flex items-center gap-3 px-3 py-2.5 rounded-r-lg rounded-l-none text-sm transition\n
+                      border-l-[3px] border-transparent text-cocoa-100 hover:bg-white/5 hover:text-white">\n
+                <svg class="ui-icon w-[18px] h-[18px] flex-shrink-0" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" /></svg>\n
+                Customers\n
+            </a>\n
+\n
+            <a href="http://127.0.0.1:8000/products"\n
+               class="flex items-center gap-3 px-3 py-2.5 rounded-r-lg rounded-l-none text-sm transition\n
+                      border-l-[3px] border-transparent text-cocoa-100 hover:bg-white/5 hover:text-white">\n
+                <svg class="ui-icon w-[18px] h-[18px] flex-shrink-0" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" /></svg>\n
+                Products\n
+            </a>\n
+\n
+            <a href="http://127.0.0.1:8000/supplies"\n
+               class="flex items-center gap-3 px-3 py-2.5 rounded-r-lg rounded-l-none text-sm transition\n
+                      border-l-[3px] border-transparent text-cocoa-100 hover:bg-white/5 hover:text-white">\n
+                <svg class="ui-icon w-[18px] h-[18px] flex-shrink-0" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-2.25-1.313M21 7.5v2.25m0-2.25l-2.25 1.313M3 7.5l2.25-1.313M3 7.5l2.25 1.313M3 7.5v2.25m9 3l2.25-1.313M12 12.75l-2.25-1.313M12 12.75V15m0 6.75l2.25-1.313M12 21.75V19.5m0 2.25l-2.25-1.313m0-16.875L12 2.25l2.25 1.313M21 14.25v2.25l-2.25 1.313m-13.5 0L3 16.5v-2.25" /></svg>\n
+                Inventory\n
+            </a>\n
+\n
+            <div class="pt-4 pb-1.5 px-3">\n
+                <span class="sidebar-label">Finance</span>\n
+            </div>\n
+\n
+            <a href="http://127.0.0.1:8000/expenses"\n
+               class="flex items-center gap-3 px-3 py-2.5 rounded-r-lg rounded-l-none text-sm transition\n
+                      border-l-[3px] border-transparent text-cocoa-100 hover:bg-white/5 hover:text-white">\n
+                <svg class="ui-icon w-[18px] h-[18px] flex-shrink-0" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" /></svg>\n
+                Expenses\n
+            </a>\n
+\n
+                        <a href="http://127.0.0.1:8000/reports"\n
+               class="flex items-center gap-3 px-3 py-2.5 rounded-r-lg rounded-l-none text-sm transition\n
+                      border-l-[3px] border-transparent text-cocoa-100 hover:bg-white/5 hover:text-white">\n
+                <svg class="ui-icon w-[18px] h-[18px] flex-shrink-0" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" /></svg>\n
+                Reports\n
+            </a>\n
+            \n
+                            <div class="pt-4 pb-1.5 px-3">\n
+                    <span class="sidebar-label">Admin</span>\n
+                </div>\n
+\n
+                <a href="http://127.0.0.1:8000/users"\n
+                   class="flex items-center gap-3 px-3 py-2.5 rounded-r-lg rounded-l-none text-sm transition\n
+                          border-l-[3px] border-transparent text-cocoa-100 hover:bg-white/5 hover:text-white">\n
+                    <svg class="ui-icon w-[18px] h-[18px] flex-shrink-0" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" /></svg>\n
+                    <span>Users (Owner)</span>\n
+                </a>\n
+                    </nav>\n
+\n
+    </aside>\n
+\n
+    \n
+    <div class="lg:pl-60 min-h-screen flex flex-col">\n
+        \n
+        <header id="admin-topbar" class="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-cocoa-100">\n
+            <div class="flex items-center justify-between px-4 sm:px-6 lg:px-8 h-14">\n
+                \n
+                <button type="button" aria-label="Open navigation" aria-controls="staff-navigation" :aria-expanded="sidebarOpen.toString()" @click="sidebarOpen = true" class="lg:hidden p-2 -ml-2 rounded-lg text-cocoa-400 hover:text-cocoa-600 hover:bg-cream-100 transition">\n
+                    <svg class="ui-icon w-5 h-5" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>\n
+                </button>\n
+\n
+                \n
+                <span class="hidden lg:block text-sm text-cocoa-500">Staff workspace</span>\n
+\n
+                \n
+                <div class="flex items-center gap-3 text-sm min-w-0">\n
+                    <span class="text-cocoa-500 text-xs min-w-0">Chona  Hinay <span class="text-cocoa-500">&middot;</span> <span class="capitalize">owner</span></span>\n
+                    <form action="http://127.0.0.1:8000/logout" method="POST" class="inline">\n
+                        <input type="hidden" name="_token" value="SADJN1vG7EtbBXOU1Sa6nXLzZDqc5mpyjk3eyrPx" autocomplete="off">                        <button type="submit" class="px-3 py-1.5 text-xs font-medium text-cocoa-500 hover:text-cocoa-700 border border-cocoa-100 rounded-lg hover:bg-cream-100 transition">\n
+                            Sign Out\n
+                        </button>\n
+                    </form>\n
+                </div>\n
+            </div>\n
+        </header>\n
+\n
+        \n
+        <main id="main-content" tabindex="-1" class="flex-grow px-4 sm:px-6 lg:px-8 py-6">\n
+            <div class="max-w-7xl mx-auto staff-content-container">\n
+                \n
+                \n
+                \n
+                <div class="space-y-4">\r\n
+    \r\n
+    <div class="page-heading">\r\n
+        <div class="flex items-center gap-2 text-sm">\r\n
+            <a href="http://127.0.0.1:8000/orders" class="text-cocoa-500 hover:text-cocoa-600 font-medium transition"><svg class="ui-icon mr-1" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" /></svg>\n
+ Orders</a>\r\n
+            <span class="text-cocoa-200">/</span>\r\n
+            <span class="text-cocoa-400 font-mono">ORD-20261007-8B8B6F60B6</span>\r\n
+        </div>\r\n
+        <div x-data="{ show: false }"\n
+     x-id="['tooltip']"\n
+     @mouseenter="show = true"\n
+     @mouseleave="show = false"\n
+     @focusin="show = true"\n
+     @focusout="show = false"\n
+     @click.outside="show = false"\n
+     @keydown.escape.window="show = false"\n
+     @scroll.window.capture.passive="if (show) show = false"\n
+     @resize.window.passive="if (show) show = false"\n
+     x-effect="if (typeof window.positionTooltip === 'function') { window.positionTooltip($el, $refs, show, 'top', 'top-right'); } else if (show) { const p = $refs.panel; if (p) p.style.visibility = 'visible'; } else { const p = $refs.panel; if (p) p.style.visibility = 'hidden'; }"\n
+     class="inline-flex items-center align-middle ui-tooltip">\n
+            <span tabindex="0"\n
+              role="button"\n
+              x-ref="trigger"\n
+              aria-describedby="tooltip-ikfwYPe2"\n
+              :aria-describedby="$id('tooltip')"\n
+                            @click.prevent.stop="show = !show"\n
+              @mousedown.stop\n
+              @focus="show = true"\n
+              @blur="show = false"\n
+              @keydown.enter.prevent.stop="show = !show"\n
+              @keydown.space.prevent.stop="show = !show"\n
+              class="inline-flex items-center cursor-help focus:outline-none focus-visible:ring-1 focus-visible:ring-cocoa-400 rounded">\n
+            <span class="px-3 py-1 rounded-full text-xs font-semibold cursor-help inline-flex items-center gap-1\r\n
+                bg-cocoa-50 text-cocoa-500 ">\r\n
+                Staff Created (Chona)\r\n
+            </span>\n
+        </span>\n
+    \n
+    <div x-show="show"\n
+         x-cloak\n
+         x-ref="panel"\n
+         style="visibility: hidden;"\n
+         x-transition:enter="transition ease-out duration-150"\n
+         x-transition:enter-start="opacity-0 scale-95"\n
+         x-transition:enter-end="opacity-100 scale-100"\n
+         x-transition:leave="transition ease-in duration-100"\n
+         x-transition:leave-start="opacity-100 scale-100"\n
+         x-transition:leave-end="opacity-0 scale-95"\n
+         id="tooltip-ikfwYPe2"\n
+         :id="$id('tooltip')"\n
+         role="tooltip"\n
+         aria-label="Order manually created by staff member Chona."\n
+         class="fixed z-[9999] bg-cocoa-800 text-white rounded-lg p-2.5 text-xs shadow-lg leading-relaxed w-max max-w-xs sm:max-w-sm max-w-[calc(100vw-2rem)] ui-tooltip-panel">\n
+        Order manually created by staff member Chona.\n
+    </div>\n
+</div>\n
+    </div>\r\n
+\r\n
+    \r\n
+    <div class="bg-white border border-cocoa-100 rounded-xl p-6">\r\n
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">\r\n
+            <div>\r\n
+                <div class="flex items-center gap-3 flex-wrap">\r\n
+                    <h1 class="text-2xl font-bold text-cocoa-600 font-mono">ORD-20261007-8B8B6F60B6</h1>\r\n
+                    <div x-data="{ show: false }"\n
+     x-id="['tooltip']"\n
+     @mouseenter="show = true"\n
+     @mouseleave="show = false"\n
+     @focusin="show = true"\n
+     @focusout="show = false"\n
+     @click.outside="show = false"\n
+     @keydown.escape.window="show = false"\n
+     @scroll.window.capture.passive="if (show) show = false"\n
+     @resize.window.passive="if (show) show = false"\n
+     x-effect="if (typeof window.positionTooltip === 'function') { window.positionTooltip($el, $refs, show, 'top', 'top-right'); } else if (show) { const p = $refs.panel; if (p) p.style.visibility = 'visible'; } else { const p = $refs.panel; if (p) p.style.visibility = 'hidden'; }"\n
+     class="inline-flex items-center align-middle ui-tooltip">\n
+            <span tabindex="0"\n
+              role="button"\n
+              x-ref="trigger"\n
+              aria-describedby="tooltip-WCFMJ62m"\n
+              :aria-describedby="$id('tooltip')"\n
+                            @click.prevent.stop="show = !show"\n
+              @mousedown.stop\n
+              @focus="show = true"\n
+              @blur="show = false"\n
+              @keydown.enter.prevent.stop="show = !show"\n
+              @keydown.space.prevent.stop="show = !show"\n
+              class="inline-flex items-center cursor-help focus:outline-none focus-visible:ring-1 focus-visible:ring-cocoa-400 rounded">\n
+            <span class="status  cursor-help order-workflow-status">Deposit verified — booking secured</span>\n
+        </span>\n
+    \n
+    <div x-show="show"\n
+         x-cloak\n
+         x-ref="panel"\n
+         style="visibility: hidden;"\n
+         x-transition:enter="transition ease-out duration-150"\n
+         x-transition:enter-start="opacity-0 scale-95"\n
+         x-transition:enter-end="opacity-100 scale-100"\n
+         x-transition:leave="transition ease-in duration-100"\n
+         x-transition:leave-start="opacity-100 scale-100"\n
+         x-transition:leave-end="opacity-0 scale-95"\n
+         id="tooltip-WCFMJ62m"\n
+         :id="$id('tooltip')"\n
+         role="tooltip"\n
+         aria-label="Down payment received and verified; baking schedule slot is officially reserved."\n
+         class="fixed z-[9999] bg-cocoa-800 text-white rounded-lg p-2.5 text-xs shadow-lg leading-relaxed w-max max-w-xs sm:max-w-sm max-w-[calc(100vw-2rem)] ui-tooltip-panel">\n
+        Down payment received and verified; baking schedule slot is officially reserved.\n
+    </div>\n
+</div>\n
+                                            <div x-data="{ show: false }"\n
+     x-id="['tooltip']"\n
+     @mouseenter="show = true"\n
+     @mouseleave="show = false"\n
+     @focusin="show = true"\n
+     @focusout="show = false"\n
+     @click.outside="show = false"\n
+     @keydown.escape.window="show = false"\n
+     @scroll.window.capture.passive="if (show) show = false"\n
+     @resize.window.passive="if (show) show = false"\n
+     x-effect="if (typeof window.positionTooltip === 'function') { window.positionTooltip($el, $refs, show, 'top', 'top-right'); } else if (show) { const p = $refs.panel; if (p) p.style.visibility = 'visible'; } else { const p = $refs.panel; if (p) p.style.visibility = 'hidden'; }"\n
+     class="inline-flex items-center align-middle ui-tooltip">\n
+            <span tabindex="0"\n
+              role="button"\n
+              x-ref="trigger"\n
+              aria-describedby="tooltip-71vgmQOj"\n
+              :aria-describedby="$id('tooltip')"\n
+                            @click.prevent.stop="show = !show"\n
+              @mousedown.stop\n
+              @focus="show = true"\n
+              @blur="show = false"\n
+              @keydown.enter.prevent.stop="show = !show"\n
+              @keydown.space.prevent.stop="show = !show"\n
+              class="inline-flex items-center cursor-help focus:outline-none focus-visible:ring-1 focus-visible:ring-cocoa-400 rounded">\n
+            <span class="status status-attention cursor-help">Partially paid</span>\n
+        </span>\n
+    \n
+    <div x-show="show"\n
+         x-cloak\n
+         x-ref="panel"\n
+         style="visibility: hidden;"\n
+         x-transition:enter="transition ease-out duration-150"\n
+         x-transition:enter-start="opacity-0 scale-95"\n
+         x-transition:enter-end="opacity-100 scale-100"\n
+         x-transition:leave="transition ease-in duration-100"\n
+         x-transition:leave-start="opacity-100 scale-100"\n
+         x-transition:leave-end="opacity-0 scale-95"\n
+         id="tooltip-71vgmQOj"\n
+         :id="$id('tooltip')"\n
+         role="tooltip"\n
+         aria-label="50% down payment received; remaining balance due upon pickup."\n
+         class="fixed z-[9999] bg-cocoa-800 text-white rounded-lg p-2.5 text-xs shadow-lg leading-relaxed w-max max-w-xs sm:max-w-sm max-w-[calc(100vw-2rem)] ui-tooltip-panel">\n
+        50% down payment received; remaining balance due upon pickup.\n
+    </div>\n
+</div>\n
+                                    </div>\r\n
+                <div class="text-xs text-cocoa-400 mt-2 flex flex-wrap gap-x-4 gap-y-1">\r\n
+                    <span>Submitted: <strong class="text-cocoa-500">Oct 07, 2026 07:59 PM</strong></span>\r\n
+                                                        </div>\r\n
+            </div>\r\n
+\r\n
+            \r\n
+            <div class="order-money border-t md:border-t-0 md:border-l border-cocoa-100 md:pl-6 pt-4 md:pt-0">\r\n
+                <div>\r\n
+                    <span class="text-xs text-cocoa-500  font-bold block">Total</span>\r\n
+                    <span class="text-xl font-bold text-cocoa-600">₱1,500.00</span>\r\n
+                </div>\r\n
+                <div>\r\n
+                    <span class="text-xs text-cocoa-500  font-bold block">Paid</span>\r\n
+                    <span class="text-base font-bold text-emerald-700">₱750.00</span>\r\n
+                </div>\r\n
+                <div>\r\n
+                    <span class="text-xs text-cocoa-500  font-bold block">Balance</span>\r\n
+                    <span class="text-base font-bold text-red-600">\r\n
+                        ₱750.00\r\n
+                    </span>\r\n
+                </div>\r\n
+            </div>\r\n
+        </div>\r\n
+    </div>\r\n
+\r\n
+    \r\n
+    <div class="review-layout">\r\n
+        \r\n
+        <div class="review-main space-y-4">\r\n
+            \r\n
+            <div class="bg-white border border-cocoa-100 rounded-xl p-4">\r\n
+                <div class="flex items-center justify-between border-b border-cocoa-100 pb-4 mb-5">\r\n
+                    <h2 class="text-sm font-semibold text-cocoa-600">Order Items & Customizations</h2>\r\n
+                    <span class="text-sm text-cocoa-500">Saved prices</span>\r\n
+                </div>\r\n
+\r\n
+                <div class="space-y-5">\r\n
+                                            <div class="item-section space-y-3">\r\n
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-cocoa-100/60 pb-3">\r\n
+                                <div>\r\n
+                                    <div class="flex items-center gap-2 flex-wrap">\r\n
+                                        <h3 class="font-semibold text-cocoa-700 text-sm sm:text-base">Custom Birthday Cake</h3>\r\n
+                                                                                    <span class="text-xs font-semibold text-cocoa-600 bg-cream-100 px-2.5 py-0.5 rounded-full border border-cocoa-200/80">2 layer(s)</span>\r\n
+                                                                            </div>\r\n
+                                    <span class="text-xs text-cocoa-400">Saved package price: ₱1,000.00</span>\r\n
+                                </div>\r\n
+                                <div class="text-right">\r\n
+                                    <span class="text-xs text-cocoa-400 block">Subtotal (1 qty)</span>\r\n
+                                    <span class="text-base font-bold text-cocoa-600">₱1,000.00</span>\r\n
+                                </div>\r\n
+                            </div>\r\n
+\r\n
+                            \r\n
+                            <div class="space-y-2 text-xs">\r\n
+                                                                    <div class="p-3 rounded-xl bg-cream-50/70 border border-cocoa-100/80">\r\n
+                                        <span class="font-bold text-cocoa-600 block text-xs mb-1">Theme / Colors</span>\r\n
+                                        <p class="text-cocoa-800 font-medium leading-relaxed break-words text-xs sm:text-sm">Floral</p>\r\n
+                                    </div>\r\n
+                                \r\n
+                                \r\n
+                                                            </div>\r\n
+\r\n
+                            \r\n
+                            \r\n
+                            \r\n
+                            <div class="included-items text-sm space-y-1">\n
+        <p class="font-semibold inline-flex items-center gap-1 text-cocoa-700">Included per package (Free) <div x-data="{ show: false }"\n
+     x-id="['tooltip']"\n
+     @mouseenter="show = true"\n
+     @mouseleave="show = false"\n
+     @focusin="show = true"\n
+     @focusout="show = false"\n
+     @click.outside="show = false"\n
+     @keydown.escape.window="show = false"\n
+     @scroll.window.capture.passive="if (show) show = false"\n
+     @resize.window.passive="if (show) show = false"\n
+     x-effect="if (typeof window.positionTooltip === 'function') { window.positionTooltip($el, $refs, show, 'top', 'top-right'); } else if (show) { const p = $refs.panel; if (p) p.style.visibility = 'visible'; } else { const p = $refs.panel; if (p) p.style.visibility = 'hidden'; }"\n
+     class="inline-flex items-center align-middle ui-tooltip">\n
+            <button type="button"\n
+                x-ref="trigger"\n
+                aria-describedby="tooltip-O2aBM1sN"\n
+                :aria-describedby="$id('tooltip')"\n
+                aria-label="Complimentary items (e.g. candles, toppers, or boxes) bundled with this package at no extra charge."\n
+                @click.prevent.stop="show = !show"\n
+                @mousedown.stop\n
+                @focus="show = true"\n
+                @blur="show = false"\n
+                class="inline-flex items-center justify-center w-4 h-4 text-cocoa-400 hover:text-cocoa-600 focus:outline-none focus-visible:ring-1 focus-visible:ring-cocoa-400 rounded-full transition-colors cursor-help">\n
+            <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" focusable="false">\n
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5h.253a.25.25 0 01.244.304l-.459 2.066A1.75 1.75 0 0010.747 15H11a.75.75 0 000-1.5h-.253a.25.25 0 01-.244-.304l.459-2.066A1.75 1.75 0 009.253 9H9z" clip-rule="evenodd" />\n
+            </svg>\n
+        </button>\n
+    \n
+    <div x-show="show"\n
+         x-cloak\n
+         x-ref="panel"\n
+         style="visibility: hidden;"\n
+         x-transition:enter="transition ease-out duration-150"\n
+         x-transition:enter-start="opacity-0 scale-95"\n
+         x-transition:enter-end="opacity-100 scale-100"\n
+         x-transition:leave="transition ease-in duration-100"\n
+         x-transition:leave-start="opacity-100 scale-100"\n
+         x-transition:leave-end="opacity-0 scale-95"\n
+         id="tooltip-O2aBM1sN"\n
+         :id="$id('tooltip')"\n
+         role="tooltip"\n
+         aria-label="Complimentary items (e.g. candles, toppers, or boxes) bundled with this package at no extra charge."\n
+         class="fixed z-[9999] bg-cocoa-800 text-white rounded-lg p-2.5 text-xs shadow-lg leading-relaxed w-max max-w-xs sm:max-w-sm max-w-[calc(100vw-2rem)] ui-tooltip-panel">\n
+        Complimentary items (e.g. candles, toppers, or boxes) bundled with this package at no extra charge.\n
+    </div>\n
+</div>\n
+</p>\n
+                <p class="whitespace-pre-line">Two-layer cake and 8 included cupcakes</p>    </div>\n\r
+\n
+                                                    </div>\r\n
+                                            <div class="item-section space-y-3">\r\n
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-cocoa-100/60 pb-3">\r\n
+                                <div>\r\n
+                                    <div class="flex items-center gap-2 flex-wrap">\r\n
+                                        <h3 class="font-semibold text-cocoa-700 text-sm sm:text-base">Box of 12 Cupcakes</h3>\r\n
+                                                                                    <span class="text-xs font-semibold text-cocoa-600 bg-cream-100 px-2.5 py-0.5 rounded-full border border-cocoa-200/80">2 layer(s)</span>\r\n
+                                                                            </div>\r\n
+                                    <span class="text-xs text-cocoa-400">Saved package price: ₱500.00</span>\r\n
+                                </div>\r\n
+                                <div class="text-right">\r\n
+                                    <span class="text-xs text-cocoa-400 block">Subtotal (1 qty)</span>\r\n
+                                    <span class="text-base font-bold text-cocoa-600">₱500.00</span>\r\n
+                                </div>\r\n
+                            </div>\r\n
+\r\n
+                            \r\n
+                            <div class="space-y-2 text-xs">\r\n
+                                                                    <div class="p-3 rounded-xl bg-cream-50/70 border border-cocoa-100/80">\r\n
+                                        <span class="font-bold text-cocoa-600 block text-xs mb-1">Theme / Colors</span>\r\n
+                                        <p class="text-cocoa-800 font-medium leading-relaxed break-words text-xs sm:text-sm">Pastel</p>\r\n
+                                    </div>\r\n
+                                \r\n
+                                \r\n
+                                                            </div>\r\n
+\r\n
+                            \r\n
+                            \r\n
+                            \r\n
+                            <div class="included-items text-sm space-y-1">\n
+        <p class="font-semibold inline-flex items-center gap-1 text-cocoa-700">Included per package (Free) <div x-data="{ show: false }"\n
+     x-id="['tooltip']"\n
+     @mouseenter="show = true"\n
+     @mouseleave="show = false"\n
+     @focusin="show = true"\n
+     @focusout="show = false"\n
+     @click.outside="show = false"\n
+     @keydown.escape.window="show = false"\n
+     @scroll.window.capture.passive="if (show) show = false"\n
+     @resize.window.passive="if (show) show = false"\n
+     x-effect="if (typeof window.positionTooltip === 'function') { window.positionTooltip($el, $refs, show, 'top', 'top-right'); } else if (show) { const p = $refs.panel; if (p) p.style.visibility = 'visible'; } else { const p = $refs.panel; if (p) p.style.visibility = 'hidden'; }"\n
+     class="inline-flex items-center align-middle ui-tooltip">\n
+            <button type="button"\n
+                x-ref="trigger"\n
+                aria-describedby="tooltip-G67oAfff"\n
+                :aria-describedby="$id('tooltip')"\n
+                aria-label="Complimentary items (e.g. candles, toppers, or boxes) bundled with this package at no extra charge."\n
+                @click.prevent.stop="show = !show"\n
+                @mousedown.stop\n
+                @focus="show = true"\n
+                @blur="show = false"\n
+                class="inline-flex items-center justify-center w-4 h-4 text-cocoa-400 hover:text-cocoa-600 focus:outline-none focus-visible:ring-1 focus-visible:ring-cocoa-400 rounded-full transition-colors cursor-help">\n
+            <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" focusable="false">\n
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5h.253a.25.25 0 01.244.304l-.459 2.066A1.75 1.75 0 0010.747 15H11a.75.75 0 000-1.5h-.253a.25.25 0 01-.244-.304l.459-2.066A1.75 1.75 0 009.253 9H9z" clip-rule="evenodd" />\n
+            </svg>\n
+        </button>\n
+    \n
+    <div x-show="show"\n
+         x-cloak\n
+         x-ref="panel"\n
+         style="visibility: hidden;"\n
+         x-transition:enter="transition ease-out duration-150"\n
+         x-transition:enter-start="opacity-0 scale-95"\n
+         x-transition:enter-end="opacity-100 scale-100"\n
+         x-transition:leave="transition ease-in duration-100"\n
+         x-transition:leave-start="opacity-100 scale-100"\n
+         x-transition:leave-end="opacity-0 scale-95"\n
+         id="tooltip-G67oAfff"\n
+         :id="$id('tooltip')"\n
+         role="tooltip"\n
+         aria-label="Complimentary items (e.g. candles, toppers, or boxes) bundled with this package at no extra charge."\n
+         class="fixed z-[9999] bg-cocoa-800 text-white rounded-lg p-2.5 text-xs shadow-lg leading-relaxed w-max max-w-xs sm:max-w-sm max-w-[calc(100vw-2rem)] ui-tooltip-panel">\n
+        Complimentary items (e.g. candles, toppers, or boxes) bundled with this package at no extra charge.\n
+    </div>\n
+</div>\n
+</p>\n
+                <p class="whitespace-pre-line">Two-layer cake and 8 included cupcakes</p>    </div>\n\r
+\n
+                                                    </div>\r\n
+                                    </div>\r\n
+            </div>\r\n
+\r\n
+\r\n
+            <section class="section-form" aria-label="Review history">\n
+        <details>\n
+        <summary class="cursor-pointer py-2 font-semibold text-cocoa-600">Review history</summary>\n
+        <p class="text-sm mt-2">Approved by Chona  Hinay on Oct 8, 2026 3:59 AM.</p>\n
+    </details>\n
+</section>\n
+            \r\n
+            \r\n
+            <div class="bg-white border border-cocoa-100 rounded-xl p-6 space-y-4">\r\n
+                <div class="flex items-center justify-between border-b border-cocoa-100 pb-4">\r\n
+                    <h2 class="text-sm font-semibold text-cocoa-600">Payments</h2>\r\n
+                    <span class="text-xs font-mono font-semibold text-emerald-700">\r\n
+                        Paid: ₱750.00 / ₱1,500.00\r\n
+                    </span>\r\n
+                </div>\r\n
+\r\n
+                \r\n
+                \r\n
+                \r\n
+                                                    <p class="text-sm text-cocoa-500">Collect the remaining balance when the customer picks up the order.</p>\r\n
+                \r\n
+                \r\n
+                <div class="table-scroll" role="region" aria-label="Scrollable data table" tabindex="0">\r\n
+                    <table class="w-full text-left">\r\n
+                        <thead>\r\n
+                            <tr class="bg-cream-100 text-cocoa-600 text-xs  font-bold">\r\n
+                                <th class="px-4 py-3">Date</th>\r\n
+                                <th class="px-4 py-3">Type</th>\r\n
+                                <th class="px-4 py-3">Method</th>\r\n
+                                <th class="px-4 py-3">Ref #</th>\r\n
+                                <th class="px-4 py-3">Recorded By</th>\r\n
+                                <th class="px-4 py-3 text-right">Amount</th>\r\n
+                            </tr>\r\n
+                        </thead>\r\n
+                        <tbody class="divide-y divide-cocoa-100/60">\r\n
+                                                            <tr class="text-sm hover:bg-cream-50 transition">\r\n
+                                    <td class="px-4 py-3 text-xs text-cocoa-500">Oct 07, 2026 07:59 PM</td>\r\n
+                                    <td class="px-4 py-3">\r\n
+                                        <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold\r\n
+                                            bg-amber-50 text-cocoa-500 ring-1 ring-amber-200">\r\n
+                                            down payment\r\n
+                                        </span>\r\n
+                                    </td>\r\n
+                                    <td class="px-4 py-3 font-medium text-cocoa-500 text-xs">gcash</td>\r\n
+                                    <td class="px-4 py-3 font-mono text-cocoa-400 text-xs">SECURED-BOOKING</td>\r\n
+                                    <td class="px-4 py-3 text-cocoa-400 text-xs">Chona</td>\r\n
+                                    <td class="px-4 py-3 text-right font-semibold text-cocoa-600">₱750.00</td>\r\n
+                                </tr>\r\n
+                                                    </tbody>\r\n
+                    </table>\r\n
+                </div>\r\n
+            </div>\r\n
+        </div>\r\n
+        \r\n
+        <div class="review-context space-y-6">\r\n
+            \r\n
+            <div class="bg-white border border-cocoa-100 rounded-xl p-5">\r\n
+                <h2 class="text-sm font-semibold text-cocoa-600 mb-3">Customer and pickup</h2>\r\n
+                <div class="space-y-2.5 text-sm">\r\n
+                    <div>\r\n
+                        <span class="text-xs text-cocoa-400 block font-medium">Name</span>\r\n
+                        <a href="http://127.0.0.1:8000/customers/1" class="font-semibold text-cocoa-600 hover:text-cocoa-500 transition">\r\n
+                            Maria Santos\r\n
+                        </a>\r\n
+                    </div>\r\n
+                    <div>\r\n
+                        <span class="text-xs text-cocoa-400 block font-medium">Phone</span>\r\n
+                        <span class="font-mono font-medium text-cocoa-600">09171234567</span>\r\n
+                    </div>\r\n
+                </div>\r\n
+                <div class="border-t border-cocoa-100 my-4"></div>\r\n
+                <h3 class="text-xs font-semibold text-cocoa-500 mb-3">Pickup Schedule</h3>\r\n
+                <div class="space-y-2.5 text-sm">\r\n
+                    <div>\r\n
+                        <span class="text-xs text-cocoa-400 block font-medium">Pickup Date</span>\r\n
+                        <span class="font-semibold text-cocoa-600">October 10, 2026 (Saturday)</span>\r\n
+                    </div>\r\n
+                    <div>\r\n
+                        <span class="text-xs text-cocoa-400 block font-medium">Pickup Time</span>\r\n
+                        <span class="font-semibold text-cocoa-600">02:00 PM</span>\r\n
+                    </div>\r\n
+                                    </div>\r\n
+            </div>\r\n
+\r\n
+            \r\n
+                        <div class="bg-white border border-cocoa-100 rounded-xl p-5 space-y-3">\r\n
+                <h2 class="text-sm font-semibold text-cocoa-600">Order actions</h2>\r\n
+\r\n
+                                    <form action="http://127.0.0.1:8000/orders/1/status" method="POST">\r\n
+                        <input type="hidden" name="_token" value="SADJN1vG7EtbBXOU1Sa6nXLzZDqc5mpyjk3eyrPx" autocomplete="off">                        <input type="hidden" name="_method" value="PATCH">                        <input type="hidden" name="status" value="preparing">\r\n
+                        <button type="submit" class="w-full py-2.5 bg-cocoa-600 hover:bg-cocoa-700 text-white font-semibold text-sm rounded-lg transition flex items-center justify-center gap-2 ">\r\n
+                            <span>Start Preparing (Baking)</span>\r\n
+                        </button>\r\n
+                    </form>\r\n
+                \r\n
+                                    <div x-data="{ cancelModalOpen: false }" class="pt-2">\r\n
+                        <button type="button" @click="cancelModalOpen = true" class="w-full py-2 bg-white hover:bg-red-50 text-red-600 font-medium text-sm rounded-lg border border-red-200 transition">\r\n
+                            <span>Customer cancellation</span>\r\n
+                        </button>\r\n
+\r\n
+                        <div x-show="cancelModalOpen"\r\n
+                             x-cloak\r\n
+                             data-dialog\r\n
+                             role="dialog"\r\n
+                             aria-modal="true"\r\n
+                             aria-labelledby="cancel-order-dialog-title"\r\n
+                             @keydown.escape.window="cancelModalOpen = false"\r\n
+                             class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs">\r\n
+                            <div @click.outside="cancelModalOpen = false"\r\n
+                                 class="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl border border-cocoa-100 space-y-4">\r\n
+                                <div class="flex items-center gap-3">\r\n
+                                    <div class="w-10 h-10 rounded-full bg-red-100 text-red-600 flex items-center justify-center shrink-0">\r\n
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>\r\n
+                                    </div>\r\n
+                                    <div>\r\n
+                                        <h3 id="cancel-order-dialog-title" class="font-bold text-cocoa-700 text-base">Cancel Order ORD-20261007-8B8B6F60B6</h3>\r\n
+                                        <p class="text-xs text-cocoa-500">Customer cancellation policy</p>\r\n
+                                    </div>\r\n
+                                </div>\r\n
+\r\n
+                                <p class="text-sm text-cocoa-600 leading-relaxed">\r\n
+                                                                            Cancel this order? The verified 50% deposit of ₱750.00 is retained as cancellation collection. The remaining balance is no longer due.\r\n
+                                                                    </p>\r\n
+\r\n
+                                <form action="http://127.0.0.1:8000/orders/1/cancel" method="POST" class="space-y-4 pt-2">\r\n
+                                    <input type="hidden" name="_token" value="SADJN1vG7EtbBXOU1Sa6nXLzZDqc5mpyjk3eyrPx" autocomplete="off">                                    \r\n
+                                    <div class="flex items-center justify-end gap-3 pt-2">\r\n
+                                        <button type="button" @click="cancelModalOpen = false" class="px-4 py-2 text-sm font-medium text-cocoa-600 hover:text-cocoa-800 bg-cream-100 hover:bg-cream-200 rounded-lg transition">\r\n
+                                            Keep order\r\n
+                                        </button>\r\n
+                                        <button type="submit" class="px-4 py-2 text-sm font-semibold text-white bg-red-600 hover:bg-red-700 active:bg-red-800 rounded-lg transition shadow-xs">\r\n
+                                            Yes, cancel order\r\n
+                                        </button>\r\n
+                                    </div>\r\n
+                                </form>\r\n
+                            </div>\r\n
+                        </div>\r\n
+                    </div>\r\n
+                            </div>\r\n
+                    </div>\r\n
+\r\n
+    </div>\r\n
+</div>\r\n
+            </div>\n
+        </main>\n
+\n
+        \n
+        <footer class="border-t border-cocoa-100 px-4 sm:px-6 lg:px-8 py-3 mt-auto">\n
+            <div class="text-xs text-cocoa-500 flex items-center justify-between">\n
+                <span>Aling Chona Cakes & Cupcakes — Staff System</span>\n
+                \n
+            </div>\n
+        </footer>\n
+    </div>\n
+\n
+    \n
+    <script type="application/json" id="validation-errors">[]</script>\n
+</body>\n
+</html>\n
+' [UTF-8](length: 44519) does not contain "Customer cancellation" [ASCII](length: 21).
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponseAssert.php:45
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:806
+C:\Users\User\Desktop\IT12_Project\tests\Feature\OrderAndPaymentBusinessRulesTest.php:213
+
+4) Tests\Feature\StaffConfirmationBeforePaymentTest::test_unreviewed_qr_receipt_and_staff_deposit_paths_leave_no_side_effects
+Session is missing expected key [errors].
+Failed asserting that false is true.
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponseAssert.php:45
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:1547
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:1634
+C:\Users\User\Desktop\IT12_Project\tests\Feature\StaffConfirmationBeforePaymentTest.php:118
+
+5) Tests\Feature\StaffConfirmationBeforePaymentTest::test_previously_paid_work_is_preserved_and_unpaid_legacy_confirmation_needs_review
+Failed asserting that Illuminate\Support\Carbon Object #3371 (
+    'endOfTime' => false,
+    'startOfTime' => false,
+    'constructedObjectId' => 3371,
+    'clock' => null,
+    'localMonthsOverflow' => null,
+    'localYearsOverflow' => null,
+    'localStrictModeEnabled' => null,
+    'localHumanDiffOptions' => null,
+    'localToStringFormat' => null,
+    'localSerializer' => null,
+    'localMacros' => null,
+    'localGenericMacros' => null,
+    'localFormatFunction' => null,
+    'localTranslator' => null,
+    'dumpProperties' => Array &0 [
+        0 => 'date',
+        1 => 'timezone_type',
+        2 => 'timezone',
+    ],
+    'dumpLocale' => null,
+    'dumpDateProperties' => null,
+    'date' => '2026-10-07 19:59:55.000000',
+    'timezone_type' => 3,
+    'timezone' => 'UTC',
+) is null.
+
+C:\Users\User\Desktop\IT12_Project\tests\Feature\StaffConfirmationBeforePaymentTest.php:272
+
+ERRORS!
+Tests: 51, Assertions: 446, Errors: 1, Failures: 5.

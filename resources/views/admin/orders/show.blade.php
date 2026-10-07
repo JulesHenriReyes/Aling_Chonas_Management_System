@@ -3,6 +3,11 @@
 @section('title', 'Order ' . $order->order_number)
 
 @section('content')
+@if(session('completed_staff_browser_prefix'))
+<script>
+try { const prefix=@js(session('completed_staff_browser_prefix')); for (const key of Object.keys(sessionStorage)) if (key.startsWith(prefix+'-')) sessionStorage.removeItem(key); } catch {}
+</script>
+@endif
 <div class="space-y-4">
     {{-- Breadcrumb --}}
     <div class="page-heading">
@@ -124,7 +129,7 @@
                                         @foreach ($detail->images as $img)
                                             <div x-data="{ expanded: false }" class="relative">
                                                 <button type="button" @click="expanded = true" class="group relative block w-16 h-16 rounded-xl overflow-hidden border border-cocoa-200/80 bg-cream-100 hover:border-amber-400 focus:outline-none cursor-pointer transition shadow-xs" title="Click to view full photo: {{ $img->original_filename }}" aria-label="View reference photo {{ $img->original_filename }}">
-                                                    <img src="{{ asset('storage/' . $img->file_path) }}" alt="{{ $img->original_filename }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200">
+                                                    <img src="{{ $img->url() }}" alt="{{ $img->original_filename }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200">
                                                     <div class="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white drop-shadow" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" /></svg>
                                                     </div>
@@ -135,7 +140,7 @@
                                                             <button @click="expanded = false" class="absolute top-4 right-4 text-white hover:text-gray-300 focus:outline-none z-[110]" aria-label="Close image preview">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 drop-shadow-md" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
                                                             </button>
-                                                            <img src="{{ asset('storage/' . $img->file_path) }}" alt="{{ $img->original_filename }}" class="max-w-full max-h-full object-contain rounded drop-shadow-2xl">
+                                                            <img src="{{ $img->url() }}" alt="{{ $img->original_filename }}" class="max-w-full max-h-full object-contain rounded drop-shadow-2xl">
                                                         </div>
                                                     </div>
                                                 </template>
@@ -219,10 +224,10 @@
                             </span>
                         </div>
                         <p class="text-xs text-cocoa-500">
-                            Staff has confirmed this request. Recording the verified deposit secures the booking and allows preparation.
+                            The Owner approved this staff order at creation. Record the verified Cash or GCash deposit to secure the booking and allow preparation.
                         </p>
 
-                        <form action="{{ route('orders.payments.store', $order) }}" method="POST" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3 pt-2">
+                        <form action="{{ route('orders.payments.store', $order) }}" method="POST" x-data="{ method: 'cash' }" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3 pt-2">
                             @csrf
                             <input type="hidden" name="payment_type" value="down_payment">
 
@@ -234,7 +239,7 @@
 
                             <div>
                                 <label class="block text-xs font-bold text-cocoa-600 mb-1" for="deposit-method">Payment Method</label>
-                                <select id="deposit-method" name="payment_method" required class="w-full text-xs rounded-lg border-cocoa-100 focus:border-cocoa-300 focus:ring-cocoa-300">
+                                <select id="deposit-method" x-model="method" name="payment_method" required class="w-full text-xs rounded-lg border-cocoa-100 focus:border-cocoa-300 focus:ring-cocoa-300">
                                     <option value="cash">Cash</option>
                                     <option value="gcash">GCash</option>
                                 </select>
@@ -242,7 +247,7 @@
 
                             <div>
                                 <label class="block text-xs font-bold text-cocoa-600 mb-1" for="deposit-reference">Reference Number</label>
-                                <input id="deposit-reference" type="text" name="reference_number" placeholder="Required if GCash"
+                                <input id="deposit-reference" type="text" name="reference_number" :required="method === 'gcash'" value="{{ old('reference_number') }}" placeholder="Required if GCash"
                                        class="w-full text-xs rounded-lg border-cocoa-100 focus:border-cocoa-300 focus:ring-cocoa-300 placeholder-cocoa-400/50">
                             </div>
 
@@ -306,8 +311,10 @@
                         </form>
                     </div>
                 @endif
-                @if (in_array($order->status, ['pending', 'confirmed', 'preparing'], true))
-                    <p class="text-sm text-cocoa-500">Staff confirmation opens the exact 50% deposit. Verification secures the booking. The remaining balance is collected at actual pickup after Ready for pickup.</p>
+                @if ($order->needsStaffReview())
+                    <p class="text-sm text-cocoa-500">Payment opens after staff confirms this request.</p>
+                @elseif (in_array($order->status, ['confirmed', 'preparing'], true) && $order->remaining_balance > 0 && $order->amount_paid > 0)
+                    <p class="text-sm text-cocoa-500">Collect the remaining balance when the customer picks up the order.</p>
                 @endif
 
                 {{-- Payment History Table --}}
@@ -385,9 +392,8 @@
                 </div>
             </div>
 
-            @include('admin.orders.refund')
-
             {{-- Lifecycle Actions --}}
+            @if (!in_array($order->status, ['completed', 'cancelled'], true))
             <div class="bg-white border border-cocoa-100 rounded-xl p-5 space-y-3">
                 <h2 class="text-sm font-semibold text-cocoa-600">Order actions</h2>
 
@@ -401,7 +407,7 @@
                         </button>
                     </form>
                 @elseif ($order->status === 'confirmed')
-                    <p class="p-3 bg-amber-50 rounded-lg text-sm">Preparation is locked until staff confirmation and the exact 50% deposit are verified.</p>
+                    <p class="p-3 bg-amber-50 rounded-lg text-sm">{{ $order->needsStaffReview() ? 'Confirm this request before accepting a deposit.' : ($order->amount_paid === 0.0 ? 'Verify the exact 50% deposit before starting preparation.' : 'The Owner must reconcile this payment record before starting preparation.') }}</p>
                 @elseif ($order->status === 'preparing')
                     <form action="{{ route('orders.updateStatus', $order) }}" method="POST">
                         @csrf
@@ -426,28 +432,66 @@
                             </button>
                         </form>
                     @endif
-                @elseif ($order->status === 'completed')
-                    <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-lg text-xs text-emerald-800 font-semibold text-center">
-                        Order Completed
-                    </div>
-                @elseif ($order->status === 'cancelled')
-                    <div class="p-3 bg-red-50 border border-red-200 rounded-lg text-xs text-red-800 font-semibold text-center">
-                        {{ $order->cancellation_kind === 'staff_rejected' ? 'Request declined' : 'Order Cancelled' }}
-                    </div>
                 @endif
 
-                @if (Gate::allows('cancel-orders') && $order->status !== 'completed' && $order->status !== 'cancelled')
-                    <form action="{{ route('orders.cancel', $order) }}" method="POST" onsubmit="return confirm('Are you sure you want to cancel this order? The deposit is retained under the customer-cancellation policy. For bakery failure, use the full-refund action instead.');">
-                        @csrf
-                        @if ($order->amount_paid === 0.0 && $order->paymentProofs->isNotEmpty())
-                            <label class="flex items-start gap-3 my-3 text-sm"><input type="checkbox" name="no_funds_checked" value="1" required><span>I checked every reported transfer in the business account and no funds were received. If funds arrived, I must verify them before closing this order.</span></label>
-                        @endif
-                        <button type="submit" class="w-full py-2 bg-white hover:bg-red-50 text-red-600 font-medium text-sm rounded-lg border border-red-200 transition">
+                @if (Gate::allows('cancel-orders') && $order->canBeCancelled())
+                    <div x-data="{ cancelModalOpen: false }" class="pt-2">
+                        <button type="button" @click="cancelModalOpen = true" class="w-full py-2 bg-white hover:bg-red-50 text-red-600 font-medium text-sm rounded-lg border border-red-200 transition">
                             <span>Customer cancellation</span>
                         </button>
-                    </form>
+
+                        <div x-show="cancelModalOpen"
+                             x-cloak
+                             data-dialog
+                             role="dialog"
+                             aria-modal="true"
+                             aria-labelledby="cancel-order-dialog-title"
+                             @keydown.escape.window="cancelModalOpen = false"
+                             class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs">
+                            <div @click.outside="cancelModalOpen = false"
+                                 class="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl border border-cocoa-100 space-y-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-full bg-red-100 text-red-600 flex items-center justify-center shrink-0">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                                    </div>
+                                    <div>
+                                        <h3 id="cancel-order-dialog-title" class="font-bold text-cocoa-700 text-base">Cancel Order {{ $order->order_number }}</h3>
+                                        <p class="text-xs text-cocoa-500">Customer cancellation policy</p>
+                                    </div>
+                                </div>
+
+                                <p class="text-sm text-cocoa-600 leading-relaxed">
+                                    @if($order->hasVerifiedDeposit())
+                                        Cancel this order? The verified 50% deposit of ₱{{ number_format($order->required_down_payment, 2) }} is retained as cancellation collection. The remaining balance is no longer due.
+                                    @else
+                                        Cancel this unpaid order? This closes the customer's request.
+                                    @endif
+                                </p>
+
+                                <form action="{{ route('orders.cancel', $order) }}" method="POST" class="space-y-4 pt-2">
+                                    @csrf
+                                    @if ($order->amount_paid === 0.0 && $order->paymentProofs->isNotEmpty())
+                                        <label class="flex items-start gap-2.5 p-3 rounded-lg bg-amber-50 border border-amber-200 text-xs text-amber-900 cursor-pointer">
+                                            <input type="checkbox" name="no_funds_checked" value="1" required class="mt-0.5 rounded border-amber-300 text-red-600 focus:ring-red-500">
+                                            <span>I checked every reported transfer in the business account and no funds were received. If funds arrived, I must verify and record the exact deposit before cancelling under the retained-deposit policy.</span>
+                                        </label>
+                                    @endif
+
+                                    <div class="flex items-center justify-end gap-3 pt-2">
+                                        <button type="button" @click="cancelModalOpen = false" class="px-4 py-2 text-sm font-medium text-cocoa-600 hover:text-cocoa-800 bg-cream-100 hover:bg-cream-200 rounded-lg transition">
+                                            Keep order
+                                        </button>
+                                        <button type="submit" class="px-4 py-2 text-sm font-semibold text-white bg-red-600 hover:bg-red-700 active:bg-red-800 rounded-lg transition shadow-xs">
+                                            Yes, cancel order
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 @endif
             </div>
+            @endif
         </div>
 
     </div>

@@ -42,7 +42,28 @@ class Supply extends Model
 
     public function scopeLowStock(Builder $query): Builder
     {
-        return $query->whereColumn('current_quantity', '<=', 'reorder_level');
+        return $query->whereRaw(self::usableSql().' <= supplies.reorder_level', [\App\Support\InventoryCalendar::date()]);
+    }
+
+    public function stockEntries(): HasMany { return $this->hasMany(StockEntry::class); }
+
+    public static function usableSql(): string
+    {
+        return "COALESCE((SELECT SUM(se.remaining_quantity) FROM stock_entries se WHERE se.supply_id = supplies.id AND (supplies.category = 'packaging' OR se.expiry_date >= ?)), 0)";
+    }
+
+    public function scopeWithUsableQuantity(Builder $query): Builder
+    {
+        return $query->addSelect('supplies.*')->selectRaw(self::usableSql().' AS available_quantity', [\App\Support\InventoryCalendar::date()]);
+    }
+
+    public function getUsableQuantityAttribute(): float
+    {
+        if (array_key_exists('available_quantity', $this->attributes)) return (float)$this->attributes['available_quantity'];
+        if ($this->relationLoaded('stockEntries')) return (float)$this->stockEntries->filter(fn ($e) => $this->category === 'packaging' || ($e->expiry_date && $e->expiry_date->toDateString() >= \App\Support\InventoryCalendar::date()))->sum('remaining_quantity');
+        $query = $this->stockEntries();
+        if ($this->category === 'ingredients') $query->where('expiry_date', '>=', \App\Support\InventoryCalendar::date());
+        return (float)$query->sum('remaining_quantity');
     }
 
     /**
@@ -51,7 +72,7 @@ class Supply extends Model
     protected function isLowStock(): Attribute
     {
         return Attribute::make(
-            get: fn () => (float) $this->current_quantity <= (float) $this->reorder_level
+            get: fn () => $this->usable_quantity <= (float) $this->reorder_level
         );
     }
 }

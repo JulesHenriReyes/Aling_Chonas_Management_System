@@ -1,0 +1,10 @@
+{
+    "app_up": true,
+    "migration_recorded": true,
+    "original_business_tables_changed": [],
+    "supply_entry_mismatches": 0,
+    "unknown_ingredient_entries": 10,
+    "packaging_entries": 2,
+    "stock_allocations": 0,
+    "backup_hash_verified": true
+}

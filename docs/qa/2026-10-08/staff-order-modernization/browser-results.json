@@ -1,0 +1,422 @@
+{
+  "checks": [
+    "Reference upload is staged and displayed once",
+    "Unsaved design survives reload",
+    "Reference upload survives reload",
+    "Different designs of the same package remain two saved lines",
+    "selection has no horizontal overflow at 390",
+    "selection photos load at 390",
+    "selection actions stay within 390",
+    "selection actions have 44px targets at 390",
+    "selection has no horizontal overflow at 768",
+    "selection photos load at 768",
+    "selection actions stay within 768",
+    "selection actions have 44px targets at 768",
+    "selection has no horizontal overflow at 1440",
+    "selection photos load at 1440",
+    "selection actions stay within 1440",
+    "selection actions have 44px targets at 1440",
+    "selection keeps the desktop admin sidebar",
+    "customization has no horizontal overflow at 390",
+    "customization photos load at 390",
+    "customization actions stay within 390",
+    "customization actions have 44px targets at 390",
+    "customization has no horizontal overflow at 768",
+    "customization photos load at 768",
+    "customization actions stay within 768",
+    "customization actions have 44px targets at 768",
+    "customization has no horizontal overflow at 1440",
+    "customization photos load at 1440",
+    "customization actions stay within 1440",
+    "customization actions have 44px targets at 1440",
+    "customization keeps the desktop admin sidebar",
+    "Editing and repeatedly saving does not duplicate a line",
+    "Remove dialog focuses the safe action",
+    "Remove dialog traps keyboard focus",
+    "Remove dialog restores keyboard focus",
+    "Remove deletes the chosen line and keeps the other design",
+    "Removing another line preserves the saved photo",
+    "Inline customer errors identify the affected field",
+    "Inline customer creation selects the saved customer",
+    "Customer keyboard navigation exposes the active option",
+    "Enter selects the matching existing customer",
+    "Checkout notes survive reload",
+    "Pickup time survives reload",
+    "Selected customer survives reload",
+    "checkout has no horizontal overflow at 390",
+    "checkout photos load at 390",
+    "checkout actions stay within 390",
+    "checkout actions have 44px targets at 390",
+    "checkout has no horizontal overflow at 768",
+    "checkout photos load at 768",
+    "checkout actions stay within 768",
+    "checkout actions have 44px targets at 768",
+    "checkout has no horizontal overflow at 1440",
+    "checkout photos load at 1440",
+    "checkout actions stay within 1440",
+    "checkout actions have 44px targets at 1440",
+    "checkout keeps the desktop admin sidebar",
+    "Back navigation preserves customer and pickup details",
+    "Public draft has its own saved package",
+    "Staff order is approved at creation and awaits deposit",
+    "Staff creation needs no second confirmation",
+    "Awaiting deposit provides Cash and GCash",
+    "Repeated submission after draft cleanup returns the original order",
+    "Staff completion keeps the public draft",
+    "GCash requires its payment reference",
+    "Cash does not require a GCash reference",
+    "Deposit cancellation preserves one original payment in the browser",
+    "Cancelled order cannot record another deposit",
+    "Ordering pages produce no JavaScript errors",
+    "Ordering pages produce no server errors"
+  ],
+  "screenshots": [
+    "selection-390.png",
+    "selection-768.png",
+    "selection-1440.png",
+    "customization-390.png",
+    "customization-768.png",
+    "customization-1440.png",
+    "checkout-390.png",
+    "checkout-768.png",
+    "checkout-1440.png"
+  ],
+  "layouts": [
+    {
+      "name": "selection",
+      "width": 390,
+      "contentWidth": 375,
+      "overflow": -15,
+      "sidebarLeft": -240,
+      "brokenImages": [],
+      "actions": [
+        {
+          "text": "Back to orders",
+          "height": 44,
+          "left": 16,
+          "right": 129.828125,
+          "position": "static"
+        },
+        {
+          "text": "Select package",
+          "height": 44,
+          "left": 27.390625,
+          "right": 347.609375,
+          "position": "static"
+        },
+        {
+          "text": "Select package",
+          "height": 44,
+          "left": 27.390625,
+          "right": 347.609375,
+          "position": "static"
+        },
+        {
+          "text": "Add another package",
+          "height": 44,
+          "left": 180.875,
+          "right": 342,
+          "position": "static"
+        },
+        {
+          "text": "Edit",
+          "height": 44,
+          "left": 33,
+          "right": 89.609375,
+          "position": "static"
+        },
+        {
+          "text": "Edit",
+          "height": 44,
+          "left": 33,
+          "right": 89.609375,
+          "position": "static"
+        },
+        {
+          "text": "Continue to customer and pickup",
+          "height": 44,
+          "left": 33,
+          "right": 342,
+          "position": "static"
+        }
+      ]
+    },
+    {
+      "name": "selection",
+      "width": 768,
+      "contentWidth": 753,
+      "overflow": -15,
+      "sidebarLeft": -240,
+      "brokenImages": [],
+      "actions": [
+        {
+          "text": "Back to orders",
+          "height": 44,
+          "left": 615.171875,
+          "right": 729,
+          "position": "static"
+        },
+        {
+          "text": "Select package",
+          "height": 44,
+          "left": 38.59375,
+          "right": 233.734375,
+          "position": "static"
+        },
+        {
+          "text": "Select package",
+          "height": 44,
+          "left": 278.921875,
+          "right": 474.0625,
+          "position": "static"
+        },
+        {
+          "text": "Add another package",
+          "height": 44,
+          "left": 546.875,
+          "right": 708,
+          "position": "static"
+        },
+        {
+          "text": "Edit",
+          "height": 44,
+          "left": 45,
+          "right": 101.609375,
+          "position": "static"
+        },
+        {
+          "text": "Edit",
+          "height": 44,
+          "left": 45,
+          "right": 101.609375,
+          "position": "static"
+        },
+        {
+          "text": "Continue to customer and pickup",
+          "height": 44,
+          "left": 452.984375,
+          "right": 708,
+          "position": "static"
+        }
+      ]
+    },
+    {
+      "name": "selection",
+      "width": 1440,
+      "contentWidth": 1185,
+      "overflow": -15,
+      "sidebarLeft": 0,
+      "brokenImages": [],
+      "actions": [
+        {
+          "text": "Back to orders",
+          "height": 44,
+          "left": 1279.171875,
+          "right": 1393,
+          "position": "static"
+        },
+        {
+          "text": "Select package",
+          "height": 44,
+          "left": 286.59375,
+          "right": 525.65625,
+          "position": "static"
+        },
+        {
+          "text": "Select package",
+          "height": 44,
+          "left": 570.84375,
+          "right": 809.90625,
+          "position": "static"
+        },
+        {
+          "text": "Add another package",
+          "height": 44,
+          "left": 1210.875,
+          "right": 1372,
+          "position": "static"
+        },
+        {
+          "text": "Edit",
+          "height": 44,
+          "left": 1237.046875,
+          "right": 1293.65625,
+          "position": "static"
+        },
+        {
+          "text": "Edit",
+          "height": 44,
+          "left": 1237.046875,
+          "right": 1293.65625,
+          "position": "static"
+        },
+        {
+          "text": "Continue to customer and pickup",
+          "height": 44,
+          "left": 1116.984375,
+          "right": 1372,
+          "position": "static"
+        }
+      ]
+    },
+    {
+      "name": "customization",
+      "width": 390,
+      "contentWidth": 375,
+      "overflow": -15,
+      "sidebarLeft": -240,
+      "brokenImages": [],
+      "actions": [
+        {
+          "text": "Save package to order",
+          "height": 44,
+          "left": 33,
+          "right": 342,
+          "position": "static"
+        },
+        {
+          "text": "Back to packages",
+          "height": 44,
+          "left": 33,
+          "right": 342,
+          "position": "static"
+        }
+      ]
+    },
+    {
+      "name": "customization",
+      "width": 768,
+      "contentWidth": 753,
+      "overflow": -15,
+      "sidebarLeft": -240,
+      "brokenImages": [],
+      "actions": [
+        {
+          "text": "Save package to order",
+          "height": 44,
+          "left": 45,
+          "right": 708,
+          "position": "static"
+        },
+        {
+          "text": "Back to packages",
+          "height": 44,
+          "left": 45,
+          "right": 708,
+          "position": "static"
+        }
+      ]
+    },
+    {
+      "name": "customization",
+      "width": 1440,
+      "contentWidth": 1185,
+      "overflow": -15,
+      "sidebarLeft": 0,
+      "brokenImages": [],
+      "actions": [
+        {
+          "text": "Save package to order",
+          "height": 44,
+          "left": 990.53125,
+          "right": 1372,
+          "position": "static"
+        },
+        {
+          "text": "Back to packages",
+          "height": 44,
+          "left": 990.53125,
+          "right": 1372,
+          "position": "static"
+        }
+      ]
+    },
+    {
+      "name": "checkout",
+      "width": 390,
+      "contentWidth": 375,
+      "overflow": -15,
+      "sidebarLeft": -240,
+      "brokenImages": [],
+      "actions": [
+        {
+          "text": "Create staff order",
+          "height": 48,
+          "left": 33,
+          "right": 342,
+          "position": "static"
+        },
+        {
+          "text": "Back to packages",
+          "height": 44,
+          "left": 33,
+          "right": 342,
+          "position": "static"
+        }
+      ]
+    },
+    {
+      "name": "checkout",
+      "width": 768,
+      "contentWidth": 753,
+      "overflow": -15,
+      "sidebarLeft": -240,
+      "brokenImages": [],
+      "actions": [
+        {
+          "text": "Create staff order",
+          "height": 48,
+          "left": 53,
+          "right": 700,
+          "position": "static"
+        },
+        {
+          "text": "Back to packages",
+          "height": 44,
+          "left": 53,
+          "right": 700,
+          "position": "static"
+        }
+      ]
+    },
+    {
+      "name": "checkout",
+      "width": 1440,
+      "contentWidth": 1185,
+      "overflow": -15,
+      "sidebarLeft": 0,
+      "brokenImages": [],
+      "actions": [
+        {
+          "text": "Create staff order",
+          "height": 48,
+          "left": 990.234375,
+          "right": 1364,
+          "position": "static"
+        },
+        {
+          "text": "Back to packages",
+          "height": 44,
+          "left": 990.234375,
+          "right": 1364,
+          "position": "static"
+        }
+      ]
+    }
+  ],
+  "javascriptErrors": [],
+  "browserWarnings": [
+    "Transition was aborted because of invalid state. ViewTransition opt-in disabled",
+    "Transition was aborted because of invalid state. ViewTransition opt-in disabled",
+    "Transition was aborted because of invalid state. ViewTransition opt-in disabled",
+    "Transition was aborted because of invalid state. ViewTransition opt-in disabled",
+    "Transition was aborted because of invalid state. ViewTransition opt-in disabled",
+    "Transition was aborted because of invalid state. ViewTransition opt-in disabled",
+    "Transition was aborted because of invalid state. ViewTransition opt-in disabled",
+    "Transition was aborted because of invalid state. ViewTransition opt-in disabled",
+    "Transition was aborted because of invalid state. ViewTransition opt-in disabled",
+    "Transition was aborted because of invalid state. ViewTransition opt-in disabled"
+  ],
+  "failedResponses": [],
+  "orderUrl": "http://127.0.0.1:8138/orders/3"
+}

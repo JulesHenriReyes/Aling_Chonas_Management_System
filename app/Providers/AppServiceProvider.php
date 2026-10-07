@@ -30,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
             Gate::define($capability, $staffCanOperate);
         }
         foreach (['manage-users', 'manage-products', 'view-reports', 'manage-customers', 'manage-orders',
-            'cancel-orders', 'decline-orders', 'record-payments', 'review-proofs', 'manage-refunds'] as $capability) {
+            'cancel-orders', 'decline-orders', 'record-payments', 'review-proofs'] as $capability) {
             Gate::define($capability, $ownerCanManage);
         }
 

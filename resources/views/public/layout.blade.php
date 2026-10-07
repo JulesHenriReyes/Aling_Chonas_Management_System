@@ -72,19 +72,132 @@
     </main>
 
     {{-- Footer --}}
-    <footer class="bg-cocoa-700 text-cocoa-100 py-8 px-4 sm:px-6 lg:px-8 2xl:px-12 mt-6">
-        <div class="max-w-[1216px] 2xl:max-w-[1504px] w-full mx-auto">
-            <div class="flex flex-wrap items-center justify-between gap-6 text-xs">
-                <div class="flex items-center gap-3 min-w-0">
-                    <span class="w-8 h-8 rounded-lg bg-cocoa-300/20 flex items-center justify-center text-cocoa-100 text-sm font-bold shrink-0">A</span>
-                    <div class="min-w-0">
-                        <span class="font-semibold text-white block">Aling Chona Cakes & Cupcakes</span>
-                        <span class="text-cocoa-100 block">Custom Bakes & Celebration Delights</span>
+    <footer x-data="{ showLocationMap: false }" class="bg-cocoa-700 text-cocoa-100 py-8 px-4 sm:px-6 lg:px-8 2xl:px-12 mt-6">
+        <div class="max-w-[1216px] 2xl:max-w-[1504px] w-full mx-auto space-y-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-xs">
+                {{-- Column 1: Brand & Tagline --}}
+                <div class="space-y-2">
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-8 rounded-lg bg-cocoa-300/20 flex items-center justify-center text-cocoa-100 text-sm font-bold shrink-0">A</span>
+                        <div class="min-w-0">
+                            <span class="font-bold text-white text-sm block">Aling Chona Cakes & Cupcakes</span>
+                            <span class="text-cocoa-200 text-xs block">Custom Bakes & Celebration Delights</span>
+                        </div>
                     </div>
+                    <p class="text-cocoa-200/90 leading-relaxed text-[11px] pt-1">
+                        Specializing in freshly baked customized cakes and party cupcakes for birthdays, weddings, and family celebrations.
+                    </p>
+                    <p class="text-cocoa-300/80 text-[11px] pt-1">
+                        &copy; {{ date('Y') }} Aling Chona Cakes & Cupcakes
+                    </p>
                 </div>
-                <div class="flex flex-wrap items-center gap-4 text-cocoa-100 shrink-0">
-                    <span>Cash & GCash Accepted</span>
-                    <span>&copy; {{ date('Y') }}</span>
+
+                {{-- Column 2: Contact & Inquiries --}}
+                <div class="space-y-2">
+                    <h3 class="text-xs font-bold text-white uppercase tracking-wider">Contact & Inquiries</h3>
+                    <ul class="space-y-2 text-cocoa-200">
+                        <li class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-cocoa-300 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                            <span>Phone: <strong class="text-white">{{ config('bakery.contact_phone', '0917 123 4567') }}</strong></span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-cocoa-300 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                            <span>Facebook: <a href="{{ config('bakery.facebook_url', 'https://www.facebook.com/chonaejay.hinay#') }}" target="_blank" rel="noopener noreferrer" class="text-white hover:underline font-semibold">{{ config('bakery.facebook_name', 'Aling Chona Cake & Cupcake') }}</a></span>
+                        </li>
+                        <li class="flex items-center gap-2 text-[11px] text-cocoa-200">
+                            <svg class="w-4 h-4 text-cocoa-300 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                            <span>Payment: <strong class="text-white font-medium">Cash & GCash Accepted</strong></span>
+                        </li>
+                    </ul>
+                </div>
+
+                {{-- Column 3: Store & Pickups --}}
+                <div class="space-y-2">
+                    <h3 class="text-xs font-bold text-white uppercase tracking-wider">Pickup Location</h3>
+                    <ul class="space-y-1.5 text-cocoa-200">
+                        <li class="flex items-start gap-2">
+                            <svg class="w-4 h-4 text-cocoa-300 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            <div>
+                                <button type="button"
+                                        @click="showLocationMap = true"
+                                        class="text-left font-semibold text-white hover:text-amber-200 transition cursor-pointer inline-flex items-center gap-1.5 group"
+                                        title="Click to view pickup map">
+                                    <span class="group-hover:underline underline-offset-2">{{ config('bakery.location', 'Aling Chona Store & Residence') }}</span>
+                                    <span class="text-[10px] bg-cocoa-600 group-hover:bg-cocoa-500 text-amber-200 px-1.5 py-0.5 rounded font-normal shrink-0">Map ↗</span>
+                                </button>
+                                <p class="text-[11px] text-cocoa-300 mt-1">Available for scheduled order pickups upon confirmation.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        {{-- Pickup Location Map Modal --}}
+        <div x-show="showLocationMap"
+             x-cloak
+             data-dialog
+             role="dialog"
+             aria-modal="true"
+             aria-labelledby="map-modal-title"
+             @keydown.escape.window="showLocationMap = false"
+             class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-[2px]"
+             x-transition:enter="transition ease-out duration-200"
+             x-transition:enter-start="opacity-0"
+             x-transition:enter-end="opacity-100"
+             x-transition:leave="transition ease-in duration-150"
+             x-transition:leave-start="opacity-100"
+             x-transition:leave-end="opacity-0"
+             style="display: none;">
+            <div class="relative w-full max-w-lg sm:max-w-xl bg-white text-cocoa-600 rounded-2xl shadow-2xl border border-cocoa-100 overflow-hidden"
+                 @click.away="showLocationMap = false"
+                 x-show="showLocationMap"
+                 x-transition:enter="transition ease-out duration-200"
+                 x-transition:enter-start="opacity-0 scale-[0.97] -translate-y-1"
+                 x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                 x-transition:leave="transition ease-in duration-150"
+                 x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                 x-transition:leave-end="opacity-0 scale-[0.97] -translate-y-1">
+                <div class="px-5 py-3.5 border-b border-cocoa-100/70 flex items-center justify-between gap-3 bg-cream-50/60">
+                    <div class="flex items-center gap-2">
+                        <div class="w-7 h-7 rounded-lg bg-cocoa-600 text-white flex items-center justify-center text-xs shrink-0">📍</div>
+                        <div>
+                            <h3 id="map-modal-title" class="text-sm font-bold text-cocoa-700 leading-tight">Aling Chona Store & Residence</h3>
+                            <p class="text-[11px] text-cocoa-400">Order pickup location & directions</p>
+                        </div>
+                    </div>
+                    <button type="button"
+                            @click="showLocationMap = false"
+                            class="text-cocoa-400 hover:text-cocoa-600 p-1.5 rounded-lg hover:bg-cream-100 transition focus:outline-none"
+                            aria-label="Close map dialog">
+                        <x-icon name="close" class="w-5 h-5" />
+                    </button>
+                </div>
+                <div class="p-4 sm:p-5">
+                    <div class="w-full h-64 sm:h-80 rounded-xl overflow-hidden border border-cocoa-100 shadow-inner bg-cream-100">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d629.5647360970282!2d125.45279986724623!3d7.104244596689173!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sph!4v1791385945199!5m2!1sen!2sph"
+                                class="w-full h-full border-0"
+                                style="border:0;"
+                                allowfullscreen=""
+                                loading="lazy"
+                                referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                    </div>
+                    <div class="mt-3.5 flex flex-wrap items-center justify-between gap-3 text-xs">
+                        <span class="text-cocoa-400 text-[11px]">Available for scheduled pickups upon order confirmation.</span>
+                        <div class="flex items-center gap-2">
+                            <a href="https://www.google.com/maps/search/?api=1&query=7.104244596689173,125.45279986724623"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="ui-button text-xs py-1.5 px-3 inline-flex items-center gap-1.5">
+                                Open in Google Maps ↗
+                            </a>
+                            <button type="button"
+                                    @click="showLocationMap = false"
+                                    class="ui-button quiet text-xs py-1.5 px-3">
+                                Close
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

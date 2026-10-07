@@ -182,6 +182,7 @@ class Phase3QAFixesTest extends TestCase
     public function test_internal_staff_order_creation_handles_per_item_image_uploads(): void
     {
         Storage::fake('public');
+        Storage::fake('staff_references');
         $this->actingAs($this->owner);
 
         $imageFile = UploadedFile::fake()->image('staff_custom_cake_peg.png');
@@ -210,7 +211,8 @@ class Phase3QAFixesTest extends TestCase
         $this->assertCount(1, $detail->images);
         $uploaded = $detail->images->first();
         $this->assertSame($this->owner->id, $uploaded->uploaded_by);
-        Storage::disk('public')->assertExists($uploaded->file_path);
+        Storage::disk('staff_references')->assertExists($uploaded->file_path);
+        Storage::disk('public')->assertMissing($uploaded->file_path);
     }
 
     public function test_public_storage_symlink_is_established(): void

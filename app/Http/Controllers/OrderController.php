@@ -5,17 +5,24 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CatalogOrderRules;
 use App\Models\Customer;
 use App\Models\Order;
+use App\Models\OrderImage;
 use App\Models\Product;
 use App\Services\CatalogPricingService;
 use App\Services\OrderDraftService;
 use App\Services\OrderService;
 use App\Services\OrderReviewService;
+use App\Services\PackageDraftService;
+use App\Services\StaffAccess;
 use App\Support\PhilippineContact;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\UniqueConstraintViolationException;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
@@ -87,9 +94,121 @@ class OrderController extends Controller
             ->with(['options' => fn ($query) => $query->where('is_active', true)->with('includedItems'), 'addOns' => fn ($query) => $query->where('is_active', true)])
             ->orderBy('product_name')->get();
 
-        $draft = $drafts->get($request, true);
+        $draft = $drafts->start($request);
+        $workspace = app(PackageDraftService::class);
+        $draftLines = $this->draftLines($draft, $products, $workspace);
+        $drafts->put($request, true, $draft);
+        $context = $workspace->context($request, true, $draft);
+        $packageLinks = [];
+        foreach ($products as $product) {
+            $packageLinks[$product->id] = route('orders.package.customize', ['product' => $product,
+                'line' => $workspace->issueLine($request, $product), 'draft_id' => $draft['draft_id']]);
+        }
+        return view('admin.orders.create', compact('products', 'draft', 'draftLines', 'context', 'packageLinks'));
+    }
 
-        return view('admin.orders.create', compact('customers', 'products', 'draft'));
+    private function draftLines(array &$draft, $products, PackageDraftService $workspace): array
+    {
+        $lines = [];
+        foreach ($draft['items'] as $index => $item) {
+            $error = null;
+            $quote = null;
+            try {
+                $quote = app(CatalogPricingService::class)->quote([$item]);
+                $signature = $workspace->signature($quote['lines'][0]);
+                if (isset($item['catalog_signature']) && $item['catalog_signature'] !== $signature) {
+                    $error = 'The catalog changed. Edit this package to review its current prices and inclusions.';
+                } else {
+                    $draft['items'][$index]['catalog_signature'] = $signature;
+                }
+            } catch (ValidationException $exception) {
+                $error = collect($exception->errors())->flatten()->first();
+            }
+            $lines[] = ['item' => $item, 'quote' => $quote, 'error' => $error,
+                'product' => $products->firstWhere('id', $item['product_id']) ?? Product::find($item['product_id'])];
+        }
+        return $lines;
+    }
+
+    private function requireDraft(Request $request, OrderDraftService $drafts): array
+    {
+        $request->validate(['draft_id' => ['required', 'uuid']]);
+        $draft = $drafts->get($request, true);
+        abort_unless($draft && hash_equals($draft['draft_id'], (string) $request->input('draft_id')), 404);
+        return $draft;
+    }
+
+    public function customize(Request $request, Product $product, string $line, OrderDraftService $drafts, PackageDraftService $workspace)
+    {
+        $draft = $this->requireDraft($request, $drafts);
+        if (isset($draft['removed_lines'][$line])) return redirect()->route('orders.create')->with('success', 'This package line was removed. Select a package to add a new line.');
+        $product->load(['options' => fn ($q) => $q->where('is_active', true)->with('includedItems'),
+            'addOns' => fn ($q) => $q->where('is_active', true)]);
+        $editor = $workspace->editor($request, $product, $line, true);
+        $editor['staged_images'] = $workspace->imagesForBrowser($request, $editor, true);
+        return view('admin.orders.customize', ['products' => collect([$product]), 'product' => $product,
+            'line' => $line, 'editor' => $editor, 'context' => $workspace->context($request, true, $draft)]);
+    }
+
+    public function savePackage(Request $request, Product $product, string $line, OrderDraftService $drafts, PackageDraftService $workspace, CatalogPricingService $pricing)
+    {
+        $this->requireDraft($request, $drafts);
+        $product->load('options');
+        $workspace->save($request, $product, $line, $pricing, true);
+        return redirect()->route('orders.create', ['saved_line' => $line])->with('success', 'Package saved to the staff order.');
+    }
+
+    public function saveEditor(Request $request, Product $product, string $line, OrderDraftService $drafts, PackageDraftService $workspace)
+    {
+        $this->requireDraft($request, $drafts);
+        $product->load('options');
+        $editor = $workspace->remember($request, $product, $line, true);
+        return response()->json(['staged_images' => $workspace->imagesForBrowser($request, $editor, true)]);
+    }
+
+    public function removePackage(Request $request, string $line, OrderDraftService $drafts, PackageDraftService $workspace)
+    {
+        $this->requireDraft($request, $drafts);
+        $workspace->remove($request, $line, true);
+        return redirect()->route('orders.create')->with('success', 'Package removed from the staff order.')->with('removed_staff_line', $line);
+    }
+
+    public function draftImage(Request $request, string $draft, string $line, string $image, OrderDraftService $drafts)
+    {
+        $current = $drafts->get($request, true);
+        abort_unless($current && hash_equals($current['draft_id'], $draft) && !isset($current['removed_lines'][$line]), 404);
+        $saved = collect($current['items'])->firstWhere('draft_key', $line);
+        $images = array_merge($saved['staged_images'] ?? [], $current['package_editors'][$line]['staged_images'] ?? []);
+        $reference = collect($images)->firstWhere('image_id', $image);
+        $prefix = $current['owner_id'].'/'.$current['scope'].'/'.$draft.'/'.$line.'/';
+        abort_unless($reference && str_starts_with($reference['staged_path'], $prefix)
+            && Storage::disk('staff_drafts')->exists($reference['staged_path']), 404);
+        return Storage::disk('staff_drafts')->response($reference['staged_path']);
+    }
+
+    public function referenceImage(Order $order, OrderImage $image)
+    {
+        abort_unless((int) $image->order_id === $order->id && str_starts_with($image->file_path, 'staff/'.$order->id.'/')
+            && Storage::disk('staff_references')->exists($image->file_path), 404);
+        return Storage::disk('staff_references')->response($image->file_path);
+    }
+
+    public function saveDetailsDraft(Request $request, OrderDraftService $drafts)
+    {
+        $this->requireDraft($request, $drafts);
+        $request->validate(['customer_id' => ['nullable', 'integer'], 'pickup_date' => ['nullable', 'string', 'max:100'],
+            'pickup_time' => ['nullable', 'string', 'max:100'], 'notes_text' => ['nullable', 'string', 'max:2000'],
+            'customer_picker' => ['nullable', 'array:first_name,middle_name,last_name,phone_number,search,showAdd'],
+            'customer_picker.*' => ['nullable', 'string', 'max:500']]);
+        $drafts->saveDetails($request, true);
+        return response()->json(['saved' => true]);
+    }
+
+    public function quote(Request $request, OrderDraftService $drafts, CatalogPricingService $pricing)
+    {
+        $this->requireDraft($request, $drafts);
+        $data = $request->validate(CatalogOrderRules::items());
+        return response()->json(DB::transaction(fn () => $pricing->quote($data['items'])));
     }
 
     public function saveSelection(Request $request, OrderDraftService $drafts, CatalogPricingService $pricing): RedirectResponse
@@ -105,10 +224,16 @@ class OrderController extends Controller
         if (! $draft || empty($draft['items'])) {
             return redirect()->route('orders.create');
         }
+        $workspace = app(PackageDraftService::class);
+        $lines = $this->draftLines($draft, collect(), $workspace);
+        $drafts->put($request, true, $draft);
+        if (collect($lines)->contains(fn ($line) => $line['error'])) {
+            return redirect()->route('orders.create')->withErrors(['items' => 'Review the affected packages before continuing. Your customer and pickup details are kept.']);
+        }
         $quote = $pricing->quote($draft['items']);
         $customers = Customer::orderBy('last_name')->get();
-
-        return view('admin.orders.details', compact('draft', 'quote', 'customers'));
+        $context = $workspace->context($request, true, $draft);
+        return view('admin.orders.details', compact('draft', 'quote', 'customers', 'context'));
     }
 
     public function backToSelection(Request $request, OrderDraftService $drafts): RedirectResponse
@@ -136,28 +261,50 @@ class OrderController extends Controller
      */
     public function store(Request $request, OrderDraftService $drafts): RedirectResponse
     {
+        $staffUser = StaffAccess::requireOwner($request->user());
         $draft = $drafts->get($request, true);
-        $rules = ($draft ? array_diff_key(CatalogOrderRules::order(), CatalogOrderRules::items()) : CatalogOrderRules::order()) + ['customer_id' => ['required', 'exists:customers,id']];
-        $validated = $request->validate($rules);
-        if ($draft) {
-            $validated['items'] = $drafts->itemsForOrder($draft);
+        $submissionKey = $drafts->submissionKey($request, $draft);
+        if ($existing = Order::where('submission_key', $submissionKey)->where('user_id', $staffUser->id)->first()) {
+            return redirect()->route('orders.show', $existing)
+                ->with('completed_staff_browser_prefix', $drafts->submissionBrowserPrefix($request, $draft));
         }
-
-        // Internal staff order must strictly assign user_id = Auth::id()
-        $staffUser = Auth::user();
-        if (! $staffUser) {
-            abort(403, 'Unauthorized staff action.');
+        if (collect($request->input('items', []))->contains(fn ($item) => is_array($item) && array_key_exists('draft_key', $item))) {
+            throw ValidationException::withMessages(['items' => 'Package lines must be saved on the customization page. Return to the saved staff order before creating it.']);
+        }
+        if ($request->has('draft_id')) {
+            $this->requireDraft($request, $drafts);
+            if ($request->has('items') || empty($draft['items'])) {
+                throw ValidationException::withMessages(['items' => 'Save packages to the staff order before creating it. Package changes must be saved on the customization page.']);
+            }
+        }
+        $draft ??= $drafts->get($request, true);
+        $drafts->saveDetails($request, true);
+        $hasDraftItems = !empty($draft['items']);
+        $rules = ($hasDraftItems ? array_diff_key(CatalogOrderRules::order(), CatalogOrderRules::items()) : CatalogOrderRules::order()) + ['customer_id' => ['required', 'exists:customers,id']];
+        $validated = $request->validate($rules);
+        if ($hasDraftItems) {
+            $validated['items'] = $drafts->itemsForOrder($draft);
         }
 
         $items = $validated['items'];
         foreach ($items as $index => &$item) {
-            if ($request->hasFile("items.{$index}.images")) {
+            if (!$hasDraftItems && $request->hasFile("items.{$index}.images")) {
                 $item['images'] = $request->file("items.{$index}.images");
             }
         }
         unset($item);
 
-        $order = $this->orderService->createInternalOrder([
+        try {
+            $order = DB::transaction(function () use ($draft, $hasDraftItems, $validated, $items, $submissionKey, $request, $staffUser) {
+                if ($hasDraftItems) {
+                    $quote = app(CatalogPricingService::class)->quote($draft['items']);
+                    foreach ($quote['lines'] as $index => $line) {
+                        if (isset($draft['items'][$index]['catalog_signature']) && $draft['items'][$index]['catalog_signature'] !== app(PackageDraftService::class)->signature($line)) {
+                            throw ValidationException::withMessages(['items' => 'A catalog price or inclusion changed. Edit the affected package before creating the order.']);
+                        }
+                    }
+                }
+                return $this->orderService->createInternalOrder([
             'customer_id' => $validated['customer_id'],
             'pickup_date' => $validated['pickup_date'],
             'pickup_time' => $validated['pickup_time'],
@@ -165,14 +312,26 @@ class OrderController extends Controller
             'items' => $items,
             'expected_total' => $validated['expected_total'],
             'images' => $request->file('images', []),
-        ], $staffUser);
+            'submission_key' => $submissionKey,
+                ], $staffUser);
+            });
+        } catch (UniqueConstraintViolationException $exception) {
+            $order = Order::where('submission_key', $submissionKey)->where('user_id', $staffUser->id)->first();
+            if (!$order) throw $exception;
+        } catch (ValidationException $exception) {
+            if ($hasDraftItems && collect(array_keys($exception->errors()))->contains(fn ($key) => $key === 'items' || str_starts_with($key, 'items.'))) {
+                return redirect()->route('orders.create')->withErrors($exception->errors())->withInput();
+            }
+            throw $exception;
+        }
 
         if ($draft) {
             $drafts->finish($request, true);
         }
 
         return redirect()->route('orders.show', $order)
-            ->with('success', "Order {$order->order_number} created successfully.");
+            ->with('success', "Order {$order->order_number} created. Record the Cash or GCash deposit to secure the booking.")
+            ->with('completed_staff_browser_prefix', $draft ? app(PackageDraftService::class)->context($request, true, $draft)['browser_prefix'] : null);
     }
 
     /**
@@ -189,8 +348,6 @@ class OrderController extends Controller
             'payments.user',
             'orderDetails.addOns',
             'paymentProofs.reviewer',
-            'refund.requestedBy',
-            'refund.completedBy',
             'reviewer',
         ]);
 
@@ -244,7 +401,7 @@ class OrderController extends Controller
                     })->values(),
                     'images' => $order->images->map(fn ($img) => [
                         'id' => $img->id,
-                        'url' => asset('storage/' . $img->file_path),
+                        'url' => $img->url(),
                     ])->values(),
                     'payments' => $order->payments->map(function ($payment) {
                         return [
@@ -261,7 +418,9 @@ class OrderController extends Controller
                         return [
                             'id' => $proof->id,
                             'status' => $proof->status,
-                            'review_url' => route('orders.show', $order),
+                            'reference_number' => $proof->reference_number,
+                            'rejection_reason' => $proof->rejection_reason,
+                            'review_url' => route('orders.show', $order) . '#proof-review',
                             'receipt_url' => route('proofs.receipt', $proof),
                             'uploaded_at' => $proof->created_at->format('M d, Y h:i A'),
                         ];
@@ -338,10 +497,15 @@ class OrderController extends Controller
         }
 
         $imageFile = $request->file('image');
-        $path = $imageFile->store("order_images/{$order->id}", 'public');
+        $path = $imageFile->store("staff/{$order->id}", 'staff_references');
         $filename = $imageFile->getClientOriginalName();
 
-        $this->orderService->attachImage($order, $path, $filename, $orderDetail, Auth::user());
+        try {
+            $this->orderService->attachImage($order, $path, $filename, $orderDetail, Auth::user());
+        } catch (\Throwable $exception) {
+            Storage::disk('staff_references')->delete($path);
+            throw $exception;
+        }
 
         return back()->with('success', 'Reference image attached successfully.');
     }

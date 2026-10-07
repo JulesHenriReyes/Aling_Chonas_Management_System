@@ -117,9 +117,35 @@ document.addEventListener('DOMContentLoaded', () => {
             form.querySelectorAll('button[type=submit], button:not([type])').forEach(button => disabledBeforeSubmit.set(button,button.disabled));
             setTimeout(() => form.querySelectorAll('button[type=submit], button:not([type])').forEach(button => button.disabled = true), 0);
         });
-        if (form.hasAttribute('data-safe-form')) window.addEventListener('beforeunload', event => { if (dirty && !submitting) { event.preventDefault(); event.returnValue = ''; } });
+
+        // Intentional cancellations via Cancel buttons, back links, or data-cancel/data-discard
+        // must not be blocked by unsaved changes beforeunload confirmation dialogs.
+        document.addEventListener('click', event => {
+            const cancelTrigger = event.target.closest('[data-cancel], [data-discard], a.back-link');
+            const isStockCancel = event.target.closest('a, button') &&
+                event.target.closest('a, button').textContent.trim().toLowerCase() === 'cancel' &&
+                (form.matches('[x-ref="stockForm"]') || form.action?.includes('/inventory') || form.action?.includes('/supplies'));
+            if (cancelTrigger || isStockCancel || window.__suppressUnload) {
+                dirty = false;
+                window.__suppressUnload = true;
+            }
+        }, true);
+
+        if (form.hasAttribute('data-safe-form')) {
+            window.addEventListener('beforeunload', event => {
+                if (window.__suppressUnload) {
+                    dirty = false;
+                    return;
+                }
+                if (dirty && !submitting) {
+                    event.preventDefault();
+                    event.returnValue = '';
+                }
+            });
+        }
         window.addEventListener('pageshow', () => {
             submitting = false;
+            window.__suppressUnload = false;
             for (const [button,disabled] of disabledBeforeSubmit) button.disabled=disabled;
             disabledBeforeSubmit.clear();
             const status = form.querySelector('[data-submit-status]');
@@ -157,12 +183,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
             const rect = menu.getBoundingClientRect();
-            const scrollContainer = menu.closest('.table-scroll') || document.documentElement;
-            const containerRect = scrollContainer.getBoundingClientRect();
-            const spaceBelow = Math.min(window.innerHeight, containerRect.bottom) - rect.bottom;
-            const spaceAbove = rect.top - Math.max(0, containerRect.top);
+            const spaceBelow = window.innerHeight - rect.bottom;
+            const spaceAbove = rect.top;
             const dropdownHeight = 160;
-            if (spaceBelow < dropdownHeight && spaceAbove > spaceBelow) {
+            if (spaceBelow < dropdownHeight && spaceAbove >= dropdownHeight) {
                 menu.classList.add('drop-up');
             } else {
                 menu.classList.remove('drop-up');

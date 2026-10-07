@@ -23,7 +23,7 @@ class InventoryAndAuthorizationBusinessRulesTest extends TestCase
     {
         parent::setUp();
 
-        $this->inventoryService = new InventoryService();
+        $this->inventoryService = app(InventoryService::class);
 
         $this->owner = User::create([
             'first_name' => 'Chona',
@@ -49,6 +49,7 @@ class InventoryAndAuthorizationBusinessRulesTest extends TestCase
             'reorder_level' => 5.00,
             'is_active' => true,
         ]);
+        \App\Models\StockEntry::create(['supply_id'=>$this->flour->id,'source'=>'verified_opening','expiry_date'=>'2099-12-31','opening_quantity'=>10,'remaining_quantity'=>10]);
     }
 
     public function test_inventory_stock_in_increases_stock_and_creates_transaction(): void
@@ -60,7 +61,7 @@ class InventoryAndAuthorizationBusinessRulesTest extends TestCase
             'stock_in',
             5.00,
             $this->assistant,
-            'Weekly grocery restock'
+            'Weekly grocery restock', null, null, ['expiry_date'=>'2099-12-31']
         );
 
         $this->flour->refresh();
@@ -109,7 +110,7 @@ class InventoryAndAuthorizationBusinessRulesTest extends TestCase
             'adjustment',
             3.50,
             $this->owner,
-            'Found extra unopened pack'
+            'Found extra unopened pack', null, null, ['expiry_date'=>'2099-12-31']
         );
 
         $this->flour->refresh();
@@ -123,7 +124,7 @@ class InventoryAndAuthorizationBusinessRulesTest extends TestCase
             'adjustment',
             -2.00,
             $this->owner,
-            'Spilled bag'
+            'Spilled bag', null, null, ['entries'=>[['stock_entry_id'=>$this->flour->stockEntries()->first()->id,'quantity'=>2]]]
         );
 
         $this->flour->refresh();
@@ -147,9 +148,9 @@ class InventoryAndAuthorizationBusinessRulesTest extends TestCase
     {
         $initial = (float) $this->flour->current_quantity;
 
-        $this->inventoryService->recordTransaction($this->flour, 'stock_in', 10.00, $this->assistant);
+        $this->inventoryService->recordTransaction($this->flour, 'stock_in', 10.00, $this->assistant, null, null, null, ['expiry_date'=>'2099-12-31']);
         $this->inventoryService->recordTransaction($this->flour, 'stock_out', 3.00, $this->assistant);
-        $this->inventoryService->recordTransaction($this->flour, 'adjustment', -1.00, $this->owner, 'Counted one kg less');
+        $this->inventoryService->recordTransaction($this->flour, 'adjustment', -1.00, $this->owner, 'Counted one kg less', null, null, ['entries'=>[['stock_entry_id'=>$this->flour->stockEntries()->first()->id,'quantity'=>1]]]);
 
         $this->flour->refresh();
         $expected = $initial + 10.00 - 3.00 - 1.00; // 16.00

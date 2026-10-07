@@ -10,7 +10,6 @@ use App\Models\User;
 use App\Services\FinancialReportService;
 use App\Services\OrderService;
 use App\Services\PaymentReviewService;
-use App\Services\RefundService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -182,36 +181,10 @@ class FixedCatalogAndPaymentReviewTest extends TestCase
         $ready = $order->fresh()->ready_at;
         $this->assertNotNull($ready);
         $this->travel(3)->days();
-        $this->rejected(fn () => app(RefundService::class)->markBakeryFailure($order, 'Customer collected late', $this->owner));
         $this->orders->completePickup($order, 'cash', null, $this->owner, true);
         $this->assertSame('completed', $order->fresh()->status);
         $this->assertTrue($order->fresh()->ready_at->equalTo($ready));
         $this->assertSame(2700.0, app(FinancialReportService::class)->getSales(today(), today()));
-    }
-
-    public function test_bakery_failure_refunds_all_verified_money_only_after_transfer_confirmation(): void
-    {
-        $order = $this->orders->createInternalOrder($this->data(), $this->owner);
-        $this->confirmPaymentFixture($order);
-        $this->orders->recordDownPayment($order, 1350, 'cash', null, $this->owner);
-        // Explicit legacy full prepayment, not a supported advance-payment path.
-        $order->payments()->create(['user_id' => $this->owner->id, 'amount' => 1350, 'payment_type' => 'final_payment', 'payment_method' => 'gcash', 'reference_number' => 'FINAL-1', 'payment_date' => now()]);
-        $refunds = app(RefundService::class);
-        $refund = $refunds->markBakeryFailure($order, 'Oven failure; cannot finish by pickup.', $this->owner, true);
-        $this->assertSame('pending', $refund->status);
-        $this->assertEquals(2700, $refund->amount);
-        $reports = app(FinancialReportService::class);
-        $this->assertSame(0.0, $reports->getCancellationIncome(today(), today()));
-        $this->assertSame(2700.0, $reports->getPaymentCollections(today(), today()));
-        $this->rejected(fn () => $refunds->complete($refund, ['method' => 'gcash', 'reference_number' => 'REFUND-1'], $this->owner));
-        $data = ['method' => 'gcash', 'reference_number' => 'REFUND-1', 'transfer_confirmed' => '1'];
-        $refunds->complete($refund, $data, $this->owner);
-        $this->assertSame(0.0, $reports->getPaymentCollections(today(), today()));
-        $this->assertSame('completed', $refund->fresh()->status);
-        $this->assertEquals($this->owner->id, $refund->fresh()->completed_by);
-        $this->assertDatabaseCount('payments', 2);
-        $this->rejected(fn () => $refunds->complete($refund, $data, $this->owner));
-        $this->rejected(fn () => $this->orders->recordFinalPayment($order, 1350, 'cash', null, $this->owner));
     }
 
     public function test_receipts_reject_non_images_and_oversized_images(): void
@@ -285,7 +258,7 @@ class FixedCatalogAndPaymentReviewTest extends TestCase
         $this->get(route('public.order.payment', $order->private_token))->assertOk()->assertDontSee('TEST ACCOUNT ONLY')->assertDontSee('TEST-ACCOUNT-NOT-REAL')->assertSee('Save QR image');
         $this->get(route('public.order.qr', $order->private_token))->assertOk()->assertDownload();
         $this->get(route('orders.create'))->assertOk()->assertDontSee('name="unit_price"', false);
-        $this->get(route('reports.index'))->assertOk()->assertSee('Verified payments less completed refunds');
+        $this->get(route('reports.index'))->assertOk()->assertSee('Verified cash and GCash payments');
     }
 
     public function test_http_price_changes_require_review_again_and_do_not_create_partial_records(): void
@@ -335,34 +308,6 @@ class FixedCatalogAndPaymentReviewTest extends TestCase
         $this->assertDatabaseCount('payments', 0);
     }
 
-    public function test_late_readiness_allows_full_refund_and_private_page_keeps_refund_history(): void
-    {
-        $this->travelTo(\Carbon\Carbon::parse('2026-09-24 06:00:00', 'UTC'));
-        $data = $this->data();
-        $data['pickup_date'] = '2026-09-24';
-        $data['pickup_time'] = '15:00'; // 07:00 UTC at the bakery.
-        $order = $this->orders->createPublicOrder($data);
-        $this->confirmPaymentFixture($order);
-        $proof = $this->reviews->submit($order, UploadedFile::fake()->image('receipt.jpg'), 'LATE-1');
-        $this->reviews->accept($proof, 1350, 'LATE-1', $this->owner);
-        $this->orders->updateStatus($order, 'preparing', $this->owner);
-        $this->travelTo(\Carbon\Carbon::parse('2026-09-24 07:01:00', 'UTC'));
-        $this->orders->updateStatus($order, 'ready_for_pickup', $this->owner);
-        $refunds = app(RefundService::class);
-        $refund = $refunds->markBakeryFailure($order, 'Order was not ready at the agreed pickup time.', $this->owner, true);
-        $url = route('public.order.payment', $order->private_token);
-        $this->get($url)->assertOk()->assertSee('Full refund · Pending')->assertSee('1,350.00');
-        $this->travel(1)->days();
-        $refunds->complete($refund, ['method' => 'gcash', 'reference_number' => 'RETURN-1', 'transfer_confirmed' => 1], $this->owner);
-        $this->get($url)->assertOk()->assertSee('Full refund · Completed')->assertSee('RETURN-1');
-        $this->assertSame('verified', $proof->fresh()->status);
-        $this->assertDatabaseCount('payments', 1);
-        $reports = app(FinancialReportService::class);
-        $this->assertSame(-1350.0, $reports->getPaymentCollections(today(), today()));
-        $this->assertSame(0.0, $reports->getPaymentCollections(today()->subDay(), today()));
-        $this->assertSame(0.0, $reports->getCancellationIncome(today()->subDay(), today()));
-    }
-
     public function test_historical_completed_pickup_remains_terminal_even_without_readiness_timestamp(): void
     {
         $order = $this->orders->createInternalOrder($this->data(), $this->owner);
@@ -372,10 +317,7 @@ class FixedCatalogAndPaymentReviewTest extends TestCase
         $order->payments()->create(['user_id' => $this->owner->id, 'amount' => 1350, 'payment_type' => 'final_payment', 'payment_method' => 'cash', 'payment_date' => now()]);
         // Simulate a pre-upgrade completed order with no readiness timestamp.
         $order->update(['fixed_catalog_pricing' => false, 'status' => 'completed', 'completed_at' => now(), 'ready_at' => null]);
-        $this->assertNull($order->refund);
-        $this->rejected(fn () => app(RefundService::class)->markBakeryFailure($order, 'A completed pickup is terminal.', $this->owner, true));
         $this->assertSame('completed', $order->fresh()->status);
-        $this->assertNull($order->fresh()->refund);
         $this->assertSame(2700.0, $order->fresh()->amount_paid);
         $this->assertDatabaseCount('payments', 2);
     }

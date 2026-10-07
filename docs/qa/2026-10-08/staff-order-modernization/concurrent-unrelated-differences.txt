@@ -1,0 +1,709 @@
+--- app/Http/Controllers/SupplyController.php initial
++++ app/Http/Controllers/SupplyController.php current
+@@ -1,5 +1,5 @@
+ diff --git a/app/Http/Controllers/SupplyController.php b/app/Http/Controllers/SupplyController.php
+-index aa3e64c..eced462 100644
++index aa3e64c..4f96ec3 100644
+ --- a/app/Http/Controllers/SupplyController.php
+ +++ b/app/Http/Controllers/SupplyController.php
+ @@ -2,8 +2,9 @@
+@@ -14,12 +14,13 @@
+  use Illuminate\Http\Request;
+  use Illuminate\Support\Facades\{DB, Gate};
+  use Illuminate\Validation\{Rule, ValidationException};
+-@@ -17,18 +18,34 @@ public function index(Request $request)
++@@ -17,18 +18,73 @@ public function index(Request $request)
+          $request->validate([
+              'q' => ['nullable', 'string', 'max:255'], 'category' => ['nullable', 'in:ingredients,packaging'],
+              'status' => ['nullable', 'in:healthy,low,out'], 'active' => ['nullable', 'in:active,inactive,all'],
++-            'sort' => ['nullable', 'in:supply_name,category,unit,current_quantity,reorder_level'], 'direction' => ['nullable', 'in:asc,desc'],
+ +            'expiry' => ['nullable', 'in:available,expiring,expired,unknown'],
+-             'sort' => ['nullable', 'in:supply_name,category,unit,current_quantity,reorder_level'], 'direction' => ['nullable', 'in:asc,desc'],
+++            'sort' => ['nullable', 'in:expiry,supply_name,category,unit,current_quantity,reorder_level'], 'direction' => ['nullable', 'in:asc,desc'],
+          ]);
+ -        $query = Supply::query();
+ +        $query = Supply::withUsableQuantity()->with(['stockEntries' => fn ($q) => $q->where('remaining_quantity', '>', 0)->orderBy('expiry_date')->orderBy('stock_in_date')->orderBy('id')]);
+@@ -37,8 +38,47 @@
+          if ($request->boolean('low_stock')) $query->lowStock();
+ -        $supplies = $query->orderBy($request->input('sort', 'supply_name'), $request->input('direction', 'asc'))->orderBy('id')->paginate(20)->withQueryString();
+ -        return view('admin.supplies.index', compact('supplies'));
+-+        $sort = $request->input('sort', 'supply_name');
+-+        $supplies = $query->orderBy($sort === 'current_quantity' ? 'available_quantity' : $sort, $request->input('direction', 'asc'))->orderBy('id')->paginate(20)->withQueryString();
+++        $sort = $request->input('sort', 'expiry');
+++        if ($sort === 'expiry') {
+++            $dir = $request->input('direction', 'asc') === 'desc' ? 'DESC' : 'ASC';
+++            $supplies = $query->orderByRaw("
+++                CASE
+++                    WHEN EXISTS (
+++                        SELECT 1 FROM stock_entries se
+++                        WHERE se.supply_id = supplies.id
+++                          AND se.remaining_quantity > 0
+++                          AND se.expiry_date >= ?
+++                    ) THEN 0
+++                    WHEN EXISTS (
+++                        SELECT 1 FROM stock_entries se
+++                        WHERE se.supply_id = supplies.id
+++                          AND se.remaining_quantity > 0
+++                          AND se.expiry_date < ?
+++                    ) THEN 1
+++                    WHEN EXISTS (
+++                        SELECT 1 FROM stock_entries se
+++                        WHERE se.supply_id = supplies.id
+++                          AND se.remaining_quantity > 0
+++                          AND se.expiry_date IS NULL
+++                          AND supplies.category = 'ingredients'
+++                    ) THEN 2
+++                    ELSE 3
+++                END {$dir}
+++            ", [$today, $today])
+++            ->orderByRaw("
+++                (SELECT MIN(se.expiry_date)
+++                 FROM stock_entries se
+++                 WHERE se.supply_id = supplies.id
+++                   AND se.remaining_quantity > 0
+++                   AND se.expiry_date >= ?) {$dir}
+++            ", [$today])
+++            ->orderBy('supply_name', 'asc')
+++            ->orderBy('id', 'asc')
+++            ->paginate(20)
+++            ->withQueryString();
+++        } else {
+++            $supplies = $query->orderBy($sort === 'current_quantity' ? 'available_quantity' : $sort, $request->input('direction', 'asc'))->orderBy('id')->paginate(20)->withQueryString();
+++        }
+ +        $expiryCounts = [];
+ +        foreach (['expiring','expired','unknown'] as $state) $expiryCounts[$state] = $this->expiryQuery(StockEntry::whereHas('supply', fn ($q) => $q->active()->where('category','ingredients')), $state)->count();
+ +        return view('admin.supplies.index', compact('supplies','expiryCounts'));
+@@ -55,7 +95,7 @@
+      }
+      public function create()
+      {
+-@@ -46,7 +63,7 @@ public function store(Request $request)
++@@ -46,7 +102,7 @@ public function store(Request $request)
+          $data = $this->validateSupply($request);
+          // Quick creation defines an item; the stock form records its quantity later.
+          $data += $request->validate(['current_quantity' => ['required', 'numeric', 'decimal:0,2',
+@@ -64,7 +104,7 @@
+              ['current_quantity.size' => 'Create the supply with zero stock, then record its quantity through Stock in.']);
+          $supply = DB::transaction(function () use ($data) {
+              $supply = Supply::create($data);
+-@@ -54,7 +71,7 @@ public function store(Request $request)
++@@ -54,7 +110,7 @@ public function store(Request $request)
+              return $supply;
+          });
+          if ($request->expectsJson()) {
+@@ -73,15 +113,20 @@
+          }
+          if ($request->input('next') === 'stock_in' && $supply->is_active) {
+              return redirect()->route('inventory.create', ['type' => 'receipt', 'supply_id' => $supply->id])
+-@@ -69,6 +86,7 @@ public function update(Request $request, Supply $supply)
++@@ -69,8 +125,12 @@ public function update(Request $request, Supply $supply)
+          DB::transaction(function () use ($supply, $data) {
+              $supply = Supply::whereKey($supply->id)->lockForUpdate()->firstOrFail();
+              if ($data['unit'] !== $supply->unit) throw ValidationException::withMessages(['unit' => 'The stock unit is fixed. Add a separate supply for a different unit.']);
+ +            if ($data['category'] !== $supply->category && ($supply->stockEntries()->exists() || $supply->inventoryTransactions()->exists())) throw ValidationException::withMessages(['category' => 'Category is fixed after stock history exists. It cannot be changed to bypass expiry tracking.']);
+              $supply->update($data);
+          }, 5);
+++        if ($request->input('_from') === 'index') {
+++            return redirect()->route('supplies.index')->with('success', 'Supply updated.');
+++        }
+          return redirect()->route('supplies.show', $supply)->with('success', 'Supply updated.');
+-@@ -86,11 +104,15 @@ private function validateSupply(Request $request, ?Supply $supply = null): array
++     }
++     private function validateSupply(Request $request, ?Supply $supply = null): array
++@@ -86,11 +146,15 @@ private function validateSupply(Request $request, ?Supply $supply = null): array
+      public function show(Request $request, Supply $supply)
+      {
+          Gate::authorize('manage-inventory');
+@@ -98,7 +143,7 @@
+              return response()->json([
+                  'supply' => [
+                      'id' => $supply->id,
+-@@ -103,7 +125,9 @@ public function show(Request $request, Supply $supply)
++@@ -103,7 +167,9 @@ public function show(Request $request, Supply $supply)
+                      'formatted_reorder_level' => number_format($supply->reorder_level, 2),
+                      'is_active' => (bool) $supply->is_active,
+                      'is_low_stock' => (bool) $supply->is_low_stock,
+@@ -109,7 +154,7 @@
+                      'created_at' => $supply->created_at?->format('M d, Y'),
+                  ],
+                  'baseline' => $baseline ? [
+-@@ -116,6 +140,9 @@ public function show(Request $request, Supply $supply)
++@@ -116,6 +182,9 @@ public function show(Request $request, Supply $supply)
+                  ] : null,
+                  'net_movement' => $netMovement,
+                  'formatted_net_movement' => number_format($netMovement, 2),
+@@ -119,7 +164,7 @@
+                  'movements' => $movements->take(5)->map(fn ($m) => [
+                      'id' => $m->id,
+                      'operation_type' => $m->operation?->type ?? 'manual',
+-@@ -143,8 +170,36 @@ public function lookup(Request $request)
++@@ -143,8 +212,36 @@ public function lookup(Request $request)
+      {
+          Gate::authorize('manage-inventory');
+          $request->validate(['q' => ['nullable', 'string', 'max:255']]);
+@@ -158,7 +203,7 @@
+      }
+      public function operationForm(Request $request, string $type)
+      {
+-@@ -152,7 +207,7 @@ public function operationForm(Request $request, string $type)
++@@ -152,7 +249,7 @@ public function operationForm(Request $request, string $type)
+          abort_unless(in_array($type, ['receipt', 'usage', 'waste', 'stocktake']), 404);
+          $type = $request->old('type', $type);
+          $lines = $request->old('lines', []);
+@@ -167,7 +212,7 @@
+              $request->validate(['supply_id' => ['integer']]);
+              $supply = Supply::active()->findOrFail($request->integer('supply_id'));
+              $lines = [['supply_id' => $supply->id, 'quantity' => '']];
+-@@ -160,8 +215,11 @@ public function operationForm(Request $request, string $type)
++@@ -160,8 +257,11 @@ public function operationForm(Request $request, string $type)
+          $selected = Supply::whereIn('id', array_slice(array_column($lines, 'supply_id'), 0, 100))->get()->keyBy('id');
+          $initialLines = array_map(function ($line) use ($selected) {
+              $supply = $selected->get($line['supply_id'] ?? null);
+@@ -181,7 +226,7 @@
+          }, $lines);
+          return view('admin.supplies.operation-form', compact('type', 'initialLines'));
+      }
+-@@ -175,45 +233,47 @@ public function postOperation(Request $request)
++@@ -175,45 +275,47 @@ public function postOperation(Request $request)
+      public function operation(InventoryOperation $operation)
+      {
+          Gate::authorize('manage-inventory');
+
+--- public/js/bakery-ui.js initial
++++ public/js/bakery-ui.js current
+@@ -1,5 +1,5 @@
+ diff --git a/public/js/bakery-ui.js b/public/js/bakery-ui.js
+-index 79e83d8..806c3eb 100644
++index 79e83d8..7e50200 100644
+ --- a/public/js/bakery-ui.js
+ +++ b/public/js/bakery-ui.js
+ @@ -117,9 +117,35 @@ document.addEventListener('DOMContentLoaded', () => {
+@@ -39,3 +39,19 @@
+              for (const [button,disabled] of disabledBeforeSubmit) button.disabled=disabled;
+              disabledBeforeSubmit.clear();
+              const status = form.querySelector('[data-submit-status]');
++@@ -157,12 +183,10 @@ document.addEventListener('DOMContentLoaded', () => {
++                 }
++             });
++             const rect = menu.getBoundingClientRect();
++-            const scrollContainer = menu.closest('.table-scroll') || document.documentElement;
++-            const containerRect = scrollContainer.getBoundingClientRect();
++-            const spaceBelow = Math.min(window.innerHeight, containerRect.bottom) - rect.bottom;
++-            const spaceAbove = rect.top - Math.max(0, containerRect.top);
+++            const spaceBelow = window.innerHeight - rect.bottom;
+++            const spaceAbove = rect.top;
++             const dropdownHeight = 160;
++-            if (spaceBelow < dropdownHeight && spaceAbove > spaceBelow) {
+++            if (spaceBelow < dropdownHeight && spaceAbove >= dropdownHeight) {
++                 menu.classList.add('drop-up');
++             } else {
++                 menu.classList.remove('drop-up');
+
+--- resources/views/admin/expenses/index.blade.php initial
++++ resources/views/admin/expenses/index.blade.php current
+@@ -1,8 +1,8 @@
+ diff --git a/resources/views/admin/expenses/index.blade.php b/resources/views/admin/expenses/index.blade.php
+-index 32b8ff7..ab11316 100644
++index 32b8ff7..0c2b045 100644
+ --- a/resources/views/admin/expenses/index.blade.php
+ +++ b/resources/views/admin/expenses/index.blade.php
+-@@ -1,7 +1,15 @@
++@@ -1,7 +1,36 @@
+  @extends('layouts.admin')
+  @section('title', 'Expenses')
+  @section('content')
+@@ -15,11 +15,32 @@
+ +        'miscellaneous' => 'Miscellaneous',
+ +    ];
+ +@endphp
+-+<div class="workspace" x-data="{ createModalOpen: {{ $errors->any() && old('_form') === 'create' ? 'true' : 'false' }}, deleteModalOpen: false, deleteAction: '', expenseDesc: '', expenseVersion: 0 }">
+++<div class="workspace" x-data="{
+++    createModalOpen: {{ $errors->any() && old('_form') === 'create' ? 'true' : 'false' }},
+++    editModalOpen: {{ $errors->any() && old('_form') === 'edit_expense' ? 'true' : 'false' }},
+++    deleteModalOpen: false,
+++    deleteAction: '',
+++    expenseDesc: '',
+++    expenseVersion: 0,
+++    editExpense: {
+++        id: {{ old('_form') === 'edit_expense' ? old('expense_id', 'null') : 'null' }},
+++        description: @js(old('_form') === 'edit_expense' ? old('description', '') : ''),
+++        category: @js(old('_form') === 'edit_expense' ? old('category', 'ingredients') : 'ingredients'),
+++        amount: @js(old('_form') === 'edit_expense' ? old('amount', '') : ''),
+++        expense_date: @js(old('_form') === 'edit_expense' ? old('expense_date', '') : ''),
+++        version: {{ old('_form') === 'edit_expense' ? (int) old('version', 0) : 0 }},
+++        reason: @js(old('_form') === 'edit_expense' ? old('reason', '') : ''),
+++        update_url: @js(old('_form') === 'edit_expense' && old('expense_id') ? route('expenses.update', old('expense_id')) : '')
+++    },
+++    openEditModal(expense) {
+++        this.editExpense = { ...expense };
+++        this.editModalOpen = true;
+++    }
+++}">
+      <header class="workspace-heading">
+          <div>
+              <h1>Expenses</h1>
+-@@ -9,7 +17,9 @@
++@@ -9,7 +38,9 @@
+          </div>
+          <div class="workspace-actions">
+              <a class="ui-button" href="{{ route('expenses.history') }}">Audit history</a>
+@@ -30,7 +51,7 @@
+          </div>
+      </header>
+  
+-@@ -23,7 +33,7 @@
++@@ -23,7 +54,7 @@
+              <select id="expense-category" name="category">
+                  <option value="">All categories</option>
+                  @foreach(['ingredients', 'packaging', 'equipment', 'miscellaneous'] as $category)
+@@ -39,7 +60,25 @@
+                  @endforeach
+              </select>
+          </div>
+-@@ -72,7 +82,7 @@
++@@ -55,7 +86,7 @@
++     </div>
++ 
++     <div class="workspace-table table-scroll" role="region" aria-label="Expenses table" tabindex="0">
++-        <table>
+++        <table class="expenses-table">
++             <thead>
++                 <tr>
++                     <th><x-sort-heading column="expense_date" label="Expense date" /></th>
++@@ -64,7 +95,7 @@
++                     <th class="numeric"><x-sort-heading column="amount" label="Amount" /></th>
++                     <th>Recorded by</th>
++                     <th>Status</th>
++-                    <th>Actions</th>
+++                    <th class="text-right" style="width: 56px;">Actions</th>
++                 </tr>
++             </thead>
++             <tbody>
++@@ -72,25 +103,37 @@
+                      <tr>
+                          <td class="nowrap">{{ $expense->expense_date->format('M d, Y') }}</td>
+                          <td><a class="record-link" href="{{ route('expenses.show', $expense) }}">{{ $expense->description }}</a></td>
+@@ -48,7 +87,42 @@
+                          <td class="numeric">₱{{ number_format($expense->amount, 2) }}</td>
+                          <td>{{ $expense->user->full_name }}</td>
+                          <td>
+-@@ -110,6 +120,135 @@ class="text-left w-full text-red-600 hover:text-red-700 text-xs px-3 py-1.5 tran
++                             <x-status :value="$expense->trashed() ? 'voided' : 'active'" :label="$expense->trashed() ? 'Voided' : 'Active'" />
++                         </td>
++-                        <td>
++-                            <details class="row-actions">
++-                                <summary>Actions</summary>
+++                        <td class="text-right" @click.stop>
+++                            <details class="row-actions supply-actions">
+++                                <summary aria-label="Actions for {{ $expense->description }}"><x-icon name="dots-vertical" /></summary>
++                                 <div>
++                                     <a href="{{ route('expenses.show', $expense) }}">View</a>
++                                     @unless($expense->trashed())
++-                                        <a href="{{ route('expenses.edit', $expense) }}">Edit</a>
+++                                        @php
+++    $expenseData = [
+++        'id' => $expense->id,
+++        'description' => $expense->description,
+++        'category' => $expense->category,
+++        'amount' => number_format($expense->amount, 2, '.', ''),
+++        'expense_date' => $expense->expense_date->toDateString(),
+++        'version' => $expense->version,
+++        'reason' => '',
+++        'update_url' => route('expenses.update', $expense),
+++    ];
+++@endphp
+++<a href="{{ route('expenses.edit', $expense) }}" @click.prevent="openEditModal(@js($expenseData)); $el.closest('details')?.removeAttribute('open')">Edit</a>
++                                         <button type="button"
++                                                 class="text-left w-full text-red-600 hover:text-red-700 text-xs px-3 py-1.5 transition"
++                                                 data-action="{{ route('expenses.destroy', $expense) }}"
++                                                 data-desc="{{ $expense->description }} (₱{{ number_format($expense->amount, 2) }})"
++                                                 data-version="{{ $expense->version }}"
++-                                                @click="deleteModalOpen = true; deleteAction = $el.dataset.action; expenseDesc = $el.dataset.desc; expenseVersion = $el.dataset.version">
+++                                                @click="deleteModalOpen = true; deleteAction = $el.dataset.action; expenseDesc = $el.dataset.desc; expenseVersion = $el.dataset.version; $el.closest('details')?.removeAttribute('open')">
++                                             Delete
++                                         </button>
++                                     @endunless
++@@ -110,6 +153,135 @@ class="text-left w-full text-red-600 hover:text-red-700 text-xs px-3 py-1.5 tran
+      
+      <x-workspace-pagination :records="$expenses" />
+  
+@@ -184,3 +258,10 @@
+      {{-- In-page Delete Confirmation Dialog --}}
+      <div x-show="deleteModalOpen"
+           x-cloak
++@@ -147,5 +319,6 @@ class="fixed inset-0 z-50 overflow-y-auto"
++             </div>
++         </div>
++     </div>
+++    @include('admin.expenses.edit-modal', ['fromIndex' => true])
++ </div>
++ @endsection
+
+--- resources/views/admin/expenses/show.blade.php initial
++++ resources/views/admin/expenses/show.blade.php current
+@@ -1,15 +1,29 @@
+ diff --git a/resources/views/admin/expenses/show.blade.php b/resources/views/admin/expenses/show.blade.php
+-index 2a70442..cd269a8 100644
++index 2a70442..96a99a4 100644
+ --- a/resources/views/admin/expenses/show.blade.php
+ +++ b/resources/views/admin/expenses/show.blade.php
+-@@ -1,8 +1,8 @@
++@@ -1,9 +1,22 @@
+  @extends('layouts.admin')
+  @section('title', 'Expense details')
+  @section('content')
+ -<div class="workspace form-workspace"><header class="workspace-heading"><div><a class="back-link" href="{{ route('expenses.index') }}">← Expenses</a><h1>Expense #{{ $expense->id }}</h1></div><div class="workspace-actions"><a class="ui-button" href="{{ route('expenses.history',['expense_id'=>$expense->id]) }}">Audit history</a>@unless($expense->trashed())<a class="ui-button primary" href="{{ route('expenses.edit',$expense) }}">Edit expense</a>@endunless</div></header>
+ -<section class="workspace-panel"><h2>{{ $expense->description }}</h2><dl class="detail-grid"><div><dt>Amount</dt><dd>₱{{ number_format($expense->amount,2) }}</dd></div><div><dt>Expense date</dt><dd>{{ $expense->expense_date->format('M d, Y') }}</dd></div><div><dt>Category</dt><dd>{{ ucfirst($expense->category) }}</dd></div><div><dt>Recorded by</dt><dd>{{ $expense->user->full_name }}</dd></div><div><dt>Status</dt><dd>{{ $expense->trashed() ? 'Voided' : 'Active' }}</dd></div>@if($expense->editor)<div><dt>Last edited by</dt><dd>{{ $expense->editor->full_name }}</dd></div>@endif</dl>
+-+<div class="workspace form-workspace"><header class="workspace-heading"><div><a class="back-link" data-cancel href="{{ route('expenses.index') }}">← Expenses</a><h1>Expense #{{ $expense->id }}</h1></div><div class="workspace-actions"><a class="ui-button" href="{{ route('expenses.history',['expense_id'=>$expense->id]) }}">Audit history</a>@unless($expense->trashed())<a class="ui-button primary" href="{{ route('expenses.edit',$expense) }}">Edit expense</a>@endunless</div></header>
+++<div class="workspace form-workspace" x-data="{
+++    editModalOpen: {{ $errors->any() && old('_form') === 'edit_expense' ? 'true' : 'false' }},
+++    editExpense: {
+++        id: {{ $expense->id }},
+++        description: @js(old('_form') === 'edit_expense' ? old('description', $expense->description) : $expense->description),
+++        category: @js(old('_form') === 'edit_expense' ? old('category', $expense->category) : $expense->category),
+++        amount: @js(old('_form') === 'edit_expense' ? old('amount', number_format($expense->amount, 2, '.', '')) : number_format($expense->amount, 2, '.', '')),
+++        expense_date: @js(old('_form') === 'edit_expense' ? old('expense_date', $expense->expense_date->toDateString()) : $expense->expense_date->toDateString()),
+++        version: {{ old('_form') === 'edit_expense' ? (int) old('version', $expense->version) : $expense->version }},
+++        reason: @js(old('_form') === 'edit_expense' ? old('reason', '') : ''),
+++        update_url: @js(route('expenses.update', $expense))
+++    }
+++}"><header class="workspace-heading"><div><a class="back-link" data-cancel href="{{ route('expenses.index') }}">← Expenses</a><h1>Expense #{{ $expense->id }}</h1></div><div class="workspace-actions"><a class="ui-button" href="{{ route('expenses.history',['expense_id'=>$expense->id]) }}">Audit history</a>@unless($expense->trashed())<a class="ui-button primary" href="{{ route('expenses.edit',$expense) }}" @click.prevent="editModalOpen = true">Edit expense</a>@endunless</div></header>
+ +<section class="workspace-panel"><h2>{{ $expense->description }}</h2><dl class="detail-grid"><div><dt>Amount</dt><dd>₱{{ number_format($expense->amount,2) }}</dd></div><div><dt>Expense date</dt><dd>{{ $expense->expense_date->format('M d, Y') }}</dd></div><div><dt>Category</dt><dd>{{ $expense->category === 'ingredients' ? 'Groceries' : ucfirst($expense->category) }}</dd></div><div><dt>Recorded by</dt><dd>{{ $expense->user->full_name }}</dd></div><div><dt>Status</dt><dd>{{ $expense->trashed() ? 'Voided' : 'Active' }}</dd></div>@if($expense->editor)<div><dt>Last edited by</dt><dd>{{ $expense->editor->full_name }}</dd></div>@endif</dl>
+  @if($expense->trashed())<p class="notice-danger">Voided {{ $expense->deleted_at->format('M d, Y H:i') }} · {{ $expense->deletion_reason }}</p>@endif</section>
+  @unless($expense->trashed())<details class="workspace-panel" id="delete-expense" @if(old('reason') || request()->has('delete')) open @endif><summary>Delete expense</summary><form data-safe-form class="workspace-form compact" action="{{ route('expenses.destroy',$expense) }}" method="POST">@csrf @method('DELETE')<input type="hidden" name="version" value="{{ old('version',$expense->version) }}"><p>This removes the expense from active totals. Its original record and history remain available.</p><div><label for="reason">Reason for deletion</label><textarea id="reason" name="reason" required maxlength="1000" rows="2">{{ old('reason') }}</textarea></div><button class="ui-button danger" type="submit">Delete and retain history</button><span role="status" data-submit-status></span></form></details>@endunless
+++@include('admin.expenses.edit-modal')
+  </div>
++ @endsection
+
+--- resources/views/admin/supplies/index.blade.php initial
++++ resources/views/admin/supplies/index.blade.php current
+@@ -1,14 +1,37 @@
+ diff --git a/resources/views/admin/supplies/index.blade.php b/resources/views/admin/supplies/index.blade.php
+-index 887ec55..b7d2477 100644
++index 887ec55..333ad3f 100644
+ --- a/resources/views/admin/supplies/index.blade.php
+ +++ b/resources/views/admin/supplies/index.blade.php
+-@@ -1,23 +1,31 @@
++@@ -1,23 +1,53 @@
+  @extends('layouts.admin')
+  @section('title', 'Inventory & supplies')
+  @section('content')
+ -<div class="workspace" x-data="{
++-    showCreateModal: {{ $errors->any() ? 'true' : 'false' }},
+ +<div class="workspace inventory-workspace" x-data="{
+-     showCreateModal: {{ $errors->any() ? 'true' : 'false' }},
+++    showCreateModal: {{ $errors->any() && old('_form') !== 'edit_supply' ? 'true' : 'false' }},
+++    showEditModal: {{ $errors->any() && old('_form') === 'edit_supply' ? 'true' : 'false' }},
+++    editSupply: {
+++        id: {{ old('_form') === 'edit_supply' ? old('supply_id', 'null') : 'null' }},
+++        supply_name: @js(old('_form') === 'edit_supply' ? old('supply_name', '') : ''),
+++        category: @js(old('_form') === 'edit_supply' ? old('category', 'ingredients') : 'ingredients'),
+++        unit: @js(old('_form') === 'edit_supply' ? old('unit', 'kg') : 'kg'),
+++        reorder_level: @js(old('_form') === 'edit_supply' ? old('reorder_level', '0.00') : '0.00'),
+++        is_active: {{ old('_form') === 'edit_supply' ? (old('is_active', true) ? 'true' : 'false') : 'true' }},
+++        update_url: @js(old('_form') === 'edit_supply' && old('supply_id') ? route('supplies.update', old('supply_id')) : '')
+++    },
+++    openEditSupply(supply) {
+++        this.editSupply = {
+++            id: supply.id,
+++            supply_name: supply.supply_name,
+++            category: supply.category,
+++            unit: supply.unit,
+++            reorder_level: Number(supply.reorder_level ?? 0).toFixed(2),
+++            is_active: Boolean(supply.is_active),
+++            update_url: '/supplies/' + supply.id
+++        };
+++        this.showEditModal = true;
+++    },
+      showDetailDrawer: false,
+      detailLoading: false,
+ +    detailSequence: 0,
+@@ -36,7 +59,7 @@
+              headers: {
+                  'Accept': 'application/json',
+                  'X-Requested-With': 'XMLHttpRequest'
+-@@ -28,20 +36,23 @@
++@@ -28,20 +58,23 @@
+              return res.json();
+          })
+          .then(data => {
+@@ -63,7 +86,7 @@
+      }
+  }">
+      <header class="workspace-heading">
+-@@ -60,6 +71,16 @@
++@@ -60,6 +93,16 @@
+          </div>
+      </header>
+  
+@@ -80,15 +103,16 @@
+      <form method="GET" class="workspace-filters" aria-label="Filter supplies">
+          <div class="filter-search">
+              <label for="supply-q">Search</label>
+-@@ -91,6 +112,7 @@
++@@ -91,90 +134,74 @@
+                  @endforeach
+              </select>
+          </div>
+-+        <div><label for="supply-expiry">Expiration</label><select id="supply-expiry" name="expiry"><option value="">All expirations</option>@foreach(['available'=>'Usable','expiring'=>'Expiring soon','expired'=>'Expired','unknown'=>'Expiry unknown'] as $value=>$label)<option value="{{ $value }}" @selected(request('expiry')===$value)>{{ $label }}</option>@endforeach</select></div>
+-         <input type="hidden" name="sort" value="{{ request('sort','supply_name') }}">
++-        <input type="hidden" name="sort" value="{{ request('sort','supply_name') }}">
+++        <div><label for="supply-expiry">Expiration</label><select id="supply-expiry" name="expiry"><option value="">All expirations</option>@foreach(['available'=>'Usable','expiring'=>'Expiring soon (within 7 days)','expired'=>'Expired','unknown'=>'Expiry unknown'] as $value=>$label)<option value="{{ $value }}" @selected(request('expiry')===$value)>{{ $label }}</option>@endforeach</select></div>
+++        <input type="hidden" name="sort" value="{{ request('sort','expiry') }}">
+          <input type="hidden" name="direction" value="{{ request('direction','asc') }}">
+          <button class="ui-button">Apply</button>
+-@@ -98,84 +120,49 @@
++         <a class="ui-button quiet" href="{{ route('supplies.index') }}">Reset</a>
+      </form>
+  
+      <div class="workspace-table table-scroll" role="region" aria-label="Supplies table" tabindex="0">
+@@ -111,7 +135,7 @@
+ -            </thead>
+ +        <table class="supplies-table inventory-entry-table">
+ +            <colgroup><col><col class="inventory-quantity-col"><col class="inventory-expiry-col"><col class="inventory-status-col"><col class="supplies-actions-col"></colgroup>
+-+            <thead><tr><th><x-sort-heading column="supply_name" label="Supply" /></th><th>Remaining</th><th>Expiration</th><th>Status <x-tooltip text="Availability uses combined usable stock. Expired and unknown ingredient entries stay on hand." /></th><th scope="col">Actions</th></tr></thead>
+++            <thead><tr><th><x-sort-heading column="supply_name" label="Supply" /></th><th>Remaining</th><th><x-sort-heading column="expiry" label="Expiration" /></th><th>Status <x-tooltip text="Availability uses combined usable stock. Expired and unknown ingredient entries stay on hand." /></th><th scope="col">Actions</th></tr></thead>
+              <tbody>
+                  @forelse($supplies as $supply)
+                      @php
+@@ -154,25 +178,6 @@
+ -                                <x-status value="out_of_stock" label="Out of stock" />
+ -                            @elseif($supply->is_low_stock)
+ -                                <x-status value="low_stock" label="Low stock" />
+--                            @else
+--                                <x-status value="in_stock" label="In stock" />
+--                            @endif
+--                        </td>
+--                        <td @click.stop>
+--                            <details class="row-actions supply-actions">
+--                                <summary aria-label="Options for {{ $supply->supply_name }}"><x-icon name="dots-vertical" /></summary>
+--                                <div>
+--                                    <a href="{{ route('supplies.edit', $supply) }}">Edit</a>
+--                                    <a href="{{ route('supplies.show', $supply) }}"
+--                                       role="button"
+--                                       @click.prevent="openSupplyDetail(@js($supplyData)); $el.closest('details').removeAttribute('open')">
+--                                        Details
+--                                    </a>
+--                                    <a href="{{ route('inventory.history', ['supply_id' => $supply->id]) }}">History</a>
+--                                </div>
+--                            </details>
+--                        </td>
+--                    </tr>
+ +                    @foreach($displayEntries as $entry)
+ +                        @php
+ +                            if($entry) $entry->setRelation('supply',$supply);
+@@ -199,19 +204,52 @@
+ +                                <a href="{{ route('supplies.show',$supply) }}" @click.prevent="openSupplyDetail(@js($supplyData)); $el.closest('details').removeAttribute('open')">Details</a>
+ +                                <a href="{{ route('inventory.create',['type'=>'usage','supply_id'=>$supply->id]) }}">Stock out</a>
+ +                                <a href="{{ route('inventory.history',['supply_id'=>$supply->id,'stock_entry_id'=>$entry?->id]) }}">History</a>
+-+                                <a href="{{ route('supplies.edit',$supply) }}">Edit supply</a>
+++                                <a href="{{ route('supplies.edit',$supply) }}" @click.prevent="openEditSupply(@js($supplyData)); $el.closest('details')?.removeAttribute('open')">Edit supply</a>
+ +                            </div></details></td>
+ +                        </tr>
+ +                    @endforeach
+-                 @empty
+++                @empty
+++                    <tr style="height: 100%;">
+++                        <td colspan="5" class="empty-state text-center" style="text-align: center !important; vertical-align: middle !important; padding: 4rem 1rem !important;">
+++                            @if(request('expiry') === 'expiring')
+++                                <div style="font-weight: 600; font-size: 1rem; color: var(--color-cocoa-900, #2c1a11); margin-bottom: 0.25rem;">No ingredients are expiring soon</div>
+++                                <div style="color: var(--color-cocoa-600, #7a5d4d); margin-bottom: 1rem; font-size: 0.875rem;">None of your active ingredient batches expire within the next 7 days.</div>
+++                                <a class="ui-button quiet" href="{{ route('supplies.index') }}">Clear filter</a>
+++                            @elseif(request('expiry') === 'expired')
+++                                <div style="font-weight: 600; font-size: 1rem; color: var(--color-cocoa-900, #2c1a11); margin-bottom: 0.25rem;">No ingredients are expired</div>
+++                                <div style="color: var(--color-cocoa-600, #7a5d4d); margin-bottom: 1rem; font-size: 0.875rem;">All active ingredient batches are currently within their expiration dates.</div>
+++                                <a class="ui-button quiet" href="{{ route('supplies.index') }}">Clear filter</a>
+++                            @elseif(request('expiry') === 'unknown')
+++                                <div style="font-weight: 600; font-size: 1rem; color: var(--color-cocoa-900, #2c1a11); margin-bottom: 0.25rem;">No ingredients with unknown expiry</div>
+++                                <div style="color: var(--color-cocoa-600, #7a5d4d); margin-bottom: 1rem; font-size: 0.875rem;">All active ingredient batches have recorded expiration dates.</div>
+++                                <a class="ui-button quiet" href="{{ route('supplies.index') }}">Clear filter</a>
++                             @else
++-                                <x-status value="in_stock" label="In stock" />
+++                                No supplies match these filters. <a href="{{ route('supplies.index') }}">Clear filters</a> or add a supply.
++                             @endif
++                         </td>
++-                        <td @click.stop>
++-                            <details class="row-actions supply-actions">
++-                                <summary aria-label="Options for {{ $supply->supply_name }}"><x-icon name="dots-vertical" /></summary>
++-                                <div>
++-                                    <a href="{{ route('supplies.edit', $supply) }}">Edit</a>
++-                                    <a href="{{ route('supplies.show', $supply) }}"
++-                                       role="button"
++-                                       @click.prevent="openSupplyDetail(@js($supplyData)); $el.closest('details').removeAttribute('open')">
++-                                        Details
++-                                    </a>
++-                                    <a href="{{ route('inventory.history', ['supply_id' => $supply->id]) }}">History</a>
++-                                </div>
++-                            </details>
++-                        </td>
++-                    </tr>
++-                @empty
+ -                    <tr>
+ -                        <td colspan="5" class="empty-state">No supplies match these filters. <a href="{{ route('supplies.index') }}">Clear filters</a> or add a supply.</td>
+--                    </tr>
+-+                    <tr><td colspan="5" class="empty-state">No supplies match these filters. <a href="{{ route('supplies.index') }}">Clear filters</a> or add a supply.</td></tr>
++                     </tr>
+                  @endforelse
+              </tbody>
+-         </table>
+-@@ -257,22 +244,48 @@ class="w-full text-sm rounded-lg border border-cocoa-100 bg-white px-3 py-2 text
++@@ -257,22 +284,48 @@ class="w-full text-sm rounded-lg border border-cocoa-100 bg-white px-3 py-2 text
+                          @enderror
+                      </div>
+  
+@@ -274,7 +312,7 @@
+                          <p class="text-[11px] text-cocoa-400 mt-1">Eggs: piece; milk: can; flour: kg.</p>
+                          @error('unit')
+                              <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
+-@@ -291,7 +304,7 @@ class="w-full text-sm rounded-lg border border-cocoa-100 bg-white px-3 py-2 text
++@@ -291,7 +344,7 @@ class="w-full text-sm rounded-lg border border-cocoa-100 bg-white px-3 py-2 text
+                             required
+                             value="{{ old('reorder_level', '0.00') }}"
+                             class="w-full text-sm rounded-lg border border-cocoa-100 bg-white px-3 py-2 text-cocoa-600 focus:border-cocoa-300 focus:ring-1 focus:ring-cocoa-300">
+@@ -283,7 +321,13 @@
+                      @error('reorder_level')
+                          <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
+                      @enderror
+-@@ -335,6 +348,7 @@ class="ui-button">
++@@ -331,10 +384,13 @@ class="ui-button">
++         </div>
++     </div>
++ 
+++    @include('admin.supplies.edit-modal', ['fromIndex' => true])
+++
++     <!-- Sliding Detail Drawer from Right (Anchored strictly below the header in all zoom/size states) -->
+      <div x-show="showDetailDrawer"
+           x-cloak
+           data-detail-drawer
+@@ -291,7 +335,7 @@
+           @keydown.escape.window="closeDetailDrawer"
+           class="fixed left-0 right-0 bottom-0 z-30 overflow-hidden"
+           style="top: var(--topbar-height, 3.5rem); height: calc(100dvh - var(--topbar-height, 3.5rem)); display: none;">
+-@@ -380,12 +394,12 @@ class="w-screen max-w-md sm:max-w-[420px] bg-white border-l border-cocoa-100 sha
++@@ -380,12 +436,12 @@ class="w-screen max-w-md sm:max-w-[420px] bg-white border-l border-cocoa-100 sha
+                                          <span class="inline-flex items-center text-[10px] font-semibold text-stone-500 bg-stone-100 px-2 py-0.5 rounded border border-stone-200">Inactive</span>
+                                      </template>
+                                  </div>
+@@ -306,7 +350,7 @@
+                                  <x-icon name="close" class="w-5 h-5" />
+                              </button>
+                          </div>
+-@@ -430,7 +444,7 @@ class="text-cocoa-400 hover:text-cocoa-600 p-1.5 rounded-lg hover:bg-cream-100 t
++@@ -430,7 +486,7 @@ class="text-cocoa-400 hover:text-cocoa-600 p-1.5 rounded-lg hover:bg-cream-100 t
+                                  <!-- Helpful advice alert -->
+                                  <template x-if="drawerSupply.is_out_of_stock">
+                                      <div class="text-xs bg-rose-50 text-rose-800 p-2.5 rounded-lg border border-rose-200/80">
+@@ -315,7 +359,7 @@
+                                      </div>
+                                  </template>
+                                  <template x-if="!drawerSupply.is_out_of_stock && drawerSupply.is_low_stock">
+-@@ -440,6 +454,19 @@ class="text-cocoa-400 hover:text-cocoa-600 p-1.5 rounded-lg hover:bg-cream-100 t
++@@ -440,6 +496,19 @@ class="text-cocoa-400 hover:text-cocoa-600 p-1.5 rounded-lg hover:bg-cream-100 t
+                                  </template>
+                              </div>
+  
+@@ -335,3 +379,12 @@
+                              <!-- Action Shortcuts -->
+                              <div class="space-y-1.5">
+                                  <span class="text-[11px] font-semibold text-cocoa-400 uppercase tracking-wider block">Quick Operations</span>
++@@ -450,7 +519,7 @@ class="text-cocoa-400 hover:text-cocoa-600 p-1.5 rounded-lg hover:bg-cream-100 t
++                                     <a :href="drawerSupply.stock_out_url" class="ui-button text-xs justify-center py-2">
++                                         Stock out
++                                     </a>
++-                                    <a :href="drawerSupply.edit_url" class="ui-button quiet text-xs justify-center py-2">
+++                                    <a :href="drawerSupply.edit_url" @click.prevent="openEditSupply(drawerSupply)" class="ui-button quiet text-xs justify-center py-2">
++                                         Edit
++                                     </a>
++                                 </div>
+
+--- resources/views/admin/supplies/operation-form.blade.php initial
++++ resources/views/admin/supplies/operation-form.blade.php current
+@@ -1,5 +1,5 @@
+ diff --git a/resources/views/admin/supplies/operation-form.blade.php b/resources/views/admin/supplies/operation-form.blade.php
+-index f57551b..47a9e6b 100644
++index f57551b..396e881 100644
+ --- a/resources/views/admin/supplies/operation-form.blade.php
+ +++ b/resources/views/admin/supplies/operation-form.blade.php
+ @@ -2,17 +2,18 @@
+@@ -34,7 +34,7 @@
+              </div>
+  
+              @if($type === 'receipt')
+-@@ -94,64 +95,62 @@
++@@ -94,64 +95,64 @@
+  
+          <p class="field-error" role="alert" x-show="error" x-text="error" x-cloak></p>
+  
+@@ -107,6 +107,9 @@
+ +                            <template x-if="type === 'usage'">
+ +                                <span x-text="' · ' + quantity(line.usable_quantity, line.unit) + ' usable'"></span>
+ +                            </template>
+++                            <template x-if="type !== 'usage'">
+++                                <span x-text="' · ' + quantity(line.current_quantity, line.unit) + ' on hand'"></span>
+++                            </template>
+ +                        </div>
+ +
+ +                        <input type="hidden" :name="'lines['+index+'][supply_id]'" :value="line.supply_id">
+@@ -116,7 +119,6 @@
+ +                    <div x-show="!entryMode(line)" class="inventory-stock-field">
+ +                        <label class="inventory-stock-label" :for="'stock-quantity-'+line.supply_id" x-text="type === 'stocktake' ? 'Counted quantity' : 'Quantity'"></label>
+ +                        <div class="stock-quantity-input">
+-+                            <span class="stock-current-quantity" x-text="format(line.current_quantity)" :title="'Actual quantity: ' + quantity(line.current_quantity, line.unit) + ' on hand'"></span>
+ +                            <input :id="'stock-quantity-'+line.supply_id" :name="'lines['+index+'][quantity]'" :aria-invalid="!!fieldError(index,'quantity')" :aria-describedby="'quantity-error-'+line.supply_id" type="number" inputmode="decimal" :min="type === 'stocktake' ? 0 : 0.01" max="99999999.99" step="0.01" :required="!entryMode(line)" :disabled="entryMode(line)" x-model="line.quantity" @input="changed()" @input.debounce.350ms="preview()">
+ +                            <span x-text="line.unit"></span>
+ +                        </div>
+@@ -138,7 +140,7 @@
+ +                        <template x-for="(entry,entryIndex) in line.entries" :key="entry.stock_entry_id"><div class="inventory-entry-input">
+ +                            <label :for="'entry-'+entry.stock_entry_id" x-text="'#'+entry.stock_entry_id+' · '+(entry.expiry_date || (line.category === 'packaging' ? 'No expiry applicable' : 'Expiry unknown'))+' · '+quantity(entry.remaining_quantity,line.unit)+' remaining'"></label>
+ +                            <div class="stock-quantity-input">
+-+                                <input type="hidden" :disabled="!entryMode(line)" :name="'lines['+index+'][entries]['+entryIndex+'][stock_entry_id]'" :value="entry.stock_entry_id">
+++                            <input type="hidden" :disabled="!entryMode(line)" :name="'lines['+index+'][entries]['+entryIndex+'][stock_entry_id]'" :value="entry.stock_entry_id">
+ +                                <input type="number" :id="'entry-'+entry.stock_entry_id" :disabled="!entryMode(line)" :name="'lines['+index+'][entries]['+entryIndex+'][quantity]'" :required="type === 'stocktake' && entryMode(line)" :value="entry.quantity === '' && type === 'waste' ? 0 : entry.quantity" @input="entry.quantity = $event.target.value" min="0" :max="type === 'waste' ? entry.remaining_quantity : 99999999.99" step="0.01" inputmode="decimal" placeholder="0">
+ +                                <span x-text="line.unit"></span>
+ +                            </div>
+@@ -155,7 +157,7 @@
+          </div>
+  
+          <div>
+-@@ -160,9 +159,10 @@
++@@ -160,9 +161,10 @@
+          </div>
+  
+          <div class="form-actions">
+
+--- resources/views/admin/supplies/show.blade.php initial
++++ resources/views/admin/supplies/show.blade.php current
+@@ -1,16 +1,29 @@
+ diff --git a/resources/views/admin/supplies/show.blade.php b/resources/views/admin/supplies/show.blade.php
+-index 031e103..65c3c45 100644
++index 031e103..7b5c904 100644
+ --- a/resources/views/admin/supplies/show.blade.php
+ +++ b/resources/views/admin/supplies/show.blade.php
+-@@ -1,8 +1,8 @@
++@@ -1,8 +1,21 @@
+  @extends('layouts.admin')
+  @section('title', 'Supply details')
+  @section('content')
+ -<div class="workspace"><header class="workspace-heading"><div><a class="back-link" href="{{ route('supplies.index') }}">← Inventory</a><h1>{{ $supply->supply_name }}</h1><p>{{ ucfirst($supply->category) }} · {{ $supply->is_active ? 'Active' : 'Inactive' }}</p></div><a class="ui-button" href="{{ route('supplies.edit',$supply) }}">Edit supply</a></header>
+ -<section class="workspace-panel"><dl class="detail-grid"><div><dt>On hand now</dt><dd>{{ number_format($supply->current_quantity,2) }} {{ $supply->unit }}</dd></div><div><dt>Reorder level</dt><dd>{{ number_format($supply->reorder_level,2) }} {{ $supply->unit }}</dd></div><div><dt>Opening balance</dt><dd>{{ $baseline ? number_format($baseline->opening_quantity,2).' '.$baseline->unit : 'Not established' }}</dd></div><div><dt>Net recorded movements</dt><dd>{{ number_format($netMovement,2) }} {{ $supply->unit }}</dd></div></dl>
+-+<div class="workspace inventory-workspace"><header class="workspace-heading"><div><a class="back-link" href="{{ route('supplies.index') }}">← Inventory</a><h1>{{ $supply->supply_name }}</h1><p>{{ ucfirst($supply->category) }} · {{ $supply->is_active ? 'Active' : 'Inactive' }}</p></div><a class="ui-button" href="{{ route('supplies.edit',$supply) }}">Edit supply</a></header>
+++<div class="workspace inventory-workspace" x-data="{
+++    showEditModal: {{ $errors->any() && old('_form') === 'edit_supply' ? 'true' : 'false' }},
+++    editSupply: {
+++        id: {{ $supply->id }},
+++        supply_name: @js(old('_form') === 'edit_supply' ? old('supply_name', $supply->supply_name) : $supply->supply_name),
+++        category: @js(old('_form') === 'edit_supply' ? old('category', $supply->category) : $supply->category),
+++        unit: @js($supply->unit),
+++        reorder_level: @js(old('_form') === 'edit_supply' ? old('reorder_level', number_format($supply->reorder_level, 2, '.', '')) : number_format($supply->reorder_level, 2, '.', '')),
+++        is_active: {{ old('_form') === 'edit_supply' ? (old('is_active', $supply->is_active) ? 'true' : 'false') : ($supply->is_active ? 'true' : 'false') }},
+++        update_url: @js(route('supplies.update', $supply))
+++    }
+++}"><header class="workspace-heading"><div><a class="back-link" href="{{ route('supplies.index') }}">← Inventory</a><h1>{{ $supply->supply_name }}</h1><p>{{ ucfirst($supply->category) }} · {{ $supply->is_active ? 'Active' : 'Inactive' }}</p></div><a class="ui-button" href="{{ route('supplies.edit',$supply) }}" @click.prevent="showEditModal = true">Edit supply</a></header>
+ +<section class="workspace-panel"><dl class="detail-grid"><div><dt>On hand now</dt><dd>{{ number_format($supply->current_quantity,2) }} {{ $supply->unit }}</dd></div><div><dt>Usable stock</dt><dd>{{ number_format($supply->usable_quantity,2) }} {{ $supply->unit }}</dd></div><div><dt>Reorder level</dt><dd>{{ number_format($supply->reorder_level,2) }} {{ $supply->unit }}</dd></div><div><dt>Opening balance</dt><dd>{{ $baseline ? number_format($baseline->opening_quantity,2).' '.$baseline->unit : 'Not established' }}</dd></div><div><dt>Net recorded movements</dt><dd>{{ number_format($netMovement,2) }} {{ $supply->unit }}</dd></div></dl>
+  @if($baseline)<p class="form-hint">{{ $baseline->source === 'legacy_reconciliation' ? 'Legacy reconciliation baseline' : 'Opening balance' }} established {{ $baseline->established_at }}. Opening balance + net movements = {{ number_format($baseline->opening_quantity + $netMovement,2) }} {{ $supply->unit }}.@if($baseline->source === 'legacy_reconciliation') Historical balances before this baseline cannot be verified; no historical receipt has been invented.@endif</p>@else<p>No baseline exists yet; the next recorded movement will establish a reconciliation baseline.</p>@endif</section>
+ -<h2>Movement history</h2>@include('admin.supplies.movement-table')<x-workspace-pagination :records="$movements" /></div>
+-+<section class="workspace-panel"><h2>Stock entries</h2>@forelse($supply->stockEntries as $entry)<p class="form-hint"><a class="record-link" href="{{ route('inventory.history',['supply_id'=>$supply->id,'stock_entry_id'=>$entry->id]) }}">Entry #{{ $entry->id }}</a> · {{ $entry->remaining_quantity }} {{ $supply->unit }} remaining · {{ $entry->expiry_date?->format('M j, Y') ?? ($supply->category === 'packaging' ? 'No expiry applicable' : 'Expiry unknown') }} · {{ str_replace('_',' ',$entry->source) }}</p>@empty<p>No stock entries yet.</p>@endforelse</section><h2>Movement history</h2>@include('admin.supplies.movement-table')<x-workspace-pagination :records="$movements" /></div>
+++<section class="workspace-panel"><h2>Stock entries</h2>@forelse($supply->stockEntries as $entry)<p class="form-hint"><a class="record-link" href="{{ route('inventory.history',['supply_id'=>$supply->id,'stock_entry_id'=>$entry->id]) }}">Entry #{{ $entry->id }}</a> · {{ $entry->remaining_quantity }} {{ $supply->unit }} remaining · {{ $entry->expiry_date?->format('M j, Y') ?? ($supply->category === 'packaging' ? 'No expiry applicable' : 'Expiry unknown') }} · {{ str_replace('_',' ',$entry->source) }}</p>@empty<p>No stock entries yet.</p>@endforelse</section><h2>Movement history</h2>@include('admin.supplies.movement-table')<x-workspace-pagination :records="$movements" />
+++@include('admin.supplies.edit-modal')
+++</div>
+  @endsection

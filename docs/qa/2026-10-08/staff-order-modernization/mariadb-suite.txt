@@ -1,0 +1,159 @@
+PHPUnit 11.5.56 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.2.12
+Configuration: C:\Users\User\Desktop\IT12_Project\phpunit.xml
+
+..E............................................................  63 / 207 ( 30%)
+............................................................... 126 / 207 ( 60%)
+.....................................................EEEE...... 189 / 207 ( 91%)
+..................                                              207 / 207 (100%)
+
+Time: 01:11.276, Memory: 68.00 MB
+
+There were 5 errors:
+
+1) Tests\Feature\CatalogMigrationSafetyTest::test_upgrade_and_rollback_preserve_historical_orders_payments_and_catalog
+PDOException: SQLSTATE[HY000]: General error: 1 unrecognized token: "@"
+
+C:\Users\User\Desktop\IT12_Project\tests\Support\DisposableMariaDb.php:34
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Events\Dispatcher.php:492
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Events\Dispatcher.php:319
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Events\Dispatcher.php:299
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\DatabaseManager.php:270
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\DatabaseManager.php:105
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\DatabaseServiceProvider.php:76
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Container\Container.php:1115
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Container\Container.php:933
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:1078
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Container\Container.php:864
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:1058
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Container\Container.php:1805
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\Facades\Facade.php:243
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\Facades\Facade.php:211
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\Facades\Facade.php:357
+C:\Users\User\Desktop\IT12_Project\database\migrations\0001_01_01_000000_create_users_table.php:14
+C:\Users\User\Desktop\IT12_Project\tests\Feature\CatalogMigrationSafetyTest.php:17
+
+2) Tests\Feature\StockConcurrencyAndMigrationTest::test_concurrent_receipts_have_no_lost_update
+ErrorException: Undefined array key "driver"
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\HandleExceptions.php:262
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\DatabaseManager.php:199
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\DatabaseManager.php:102
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Migrations\DatabaseMigrationRepository.php:227
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Migrations\DatabaseMigrationRepository.php:183
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Migrations\Migrator.php:758
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Console\Migrations\MigrateCommand.php:164
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\helpers.php:328
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Console\Migrations\MigrateCommand.php:164
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Console\Migrations\MigrateCommand.php:140
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Console\Migrations\MigrateCommand.php:110
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Migrations\Migrator.php:671
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Console\Migrations\MigrateCommand.php:109
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Console\Migrations\MigrateCommand.php:88
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php:36
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Container\Util.php:43
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php:35
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Container\Container.php:799
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Console\Command.php:211
+C:\Users\User\Desktop\IT12_Project\vendor\symfony\console\Command\Command.php:341
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Console\Command.php:180
+C:\Users\User\Desktop\IT12_Project\vendor\symfony\console\Application.php:1094
+C:\Users\User\Desktop\IT12_Project\vendor\symfony\console\Application.php:356
+C:\Users\User\Desktop\IT12_Project\vendor\symfony\console\Application.php:195
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Console\Application.php:165
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:447
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\Facades\Facade.php:363
+C:\Users\User\Desktop\IT12_Project\tests\Feature\StockConcurrencyAndMigrationTest.php:31
+C:\Users\User\Desktop\IT12_Project\tests\Feature\StockConcurrencyAndMigrationTest.php:58
+
+3) Tests\Feature\StockConcurrencyAndMigrationTest::test_concurrent_usage_cannot_overspend_stock
+ErrorException: Undefined array key "driver"
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\HandleExceptions.php:262
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\DatabaseManager.php:199
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\DatabaseManager.php:102
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Migrations\DatabaseMigrationRepository.php:227
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Migrations\DatabaseMigrationRepository.php:183
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Migrations\Migrator.php:758
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Console\Migrations\MigrateCommand.php:164
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\helpers.php:328
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Console\Migrations\MigrateCommand.php:164
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Console\Migrations\MigrateCommand.php:140
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Console\Migrations\MigrateCommand.php:110
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Migrations\Migrator.php:671
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Console\Migrations\MigrateCommand.php:109
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Console\Migrations\MigrateCommand.php:88
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php:36
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Container\Util.php:43
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php:35
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Container\Container.php:799
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Console\Command.php:211
+C:\Users\User\Desktop\IT12_Project\vendor\symfony\console\Command\Command.php:341
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Console\Command.php:180
+C:\Users\User\Desktop\IT12_Project\vendor\symfony\console\Application.php:1094
+C:\Users\User\Desktop\IT12_Project\vendor\symfony\console\Application.php:356
+C:\Users\User\Desktop\IT12_Project\vendor\symfony\console\Application.php:195
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Console\Application.php:165
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:447
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\Facades\Facade.php:363
+C:\Users\User\Desktop\IT12_Project\tests\Feature\StockConcurrencyAndMigrationTest.php:31
+C:\Users\User\Desktop\IT12_Project\tests\Feature\StockConcurrencyAndMigrationTest.php:68
+
+4) Tests\Feature\StockConcurrencyAndMigrationTest::test_concurrent_duplicate_receipt_posts_once
+ErrorException: Undefined array key "driver"
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\HandleExceptions.php:262
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\DatabaseManager.php:199
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\DatabaseManager.php:102
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Migrations\DatabaseMigrationRepository.php:227
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Migrations\DatabaseMigrationRepository.php:183
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Migrations\Migrator.php:758
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Console\Migrations\MigrateCommand.php:164
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\helpers.php:328
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Console\Migrations\MigrateCommand.php:164
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Console\Migrations\MigrateCommand.php:140
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Console\Migrations\MigrateCommand.php:110
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Migrations\Migrator.php:671
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Console\Migrations\MigrateCommand.php:109
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Console\Migrations\MigrateCommand.php:88
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php:36
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Container\Util.php:43
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php:96
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php:35
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Container\Container.php:799
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Console\Command.php:211
+C:\Users\User\Desktop\IT12_Project\vendor\symfony\console\Command\Command.php:341
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Console\Command.php:180
+C:\Users\User\Desktop\IT12_Project\vendor\symfony\console\Application.php:1094
+C:\Users\User\Desktop\IT12_Project\vendor\symfony\console\Application.php:356
+C:\Users\User\Desktop\IT12_Project\vendor\symfony\console\Application.php:195
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Console\Application.php:165
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:447
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\Facades\Facade.php:363
+C:\Users\User\Desktop\IT12_Project\tests\Feature\StockConcurrencyAndMigrationTest.php:31
+C:\Users\User\Desktop\IT12_Project\tests\Feature\StockConcurrencyAndMigrationTest.php:78
+
+5) Tests\Feature\StockConcurrencyAndMigrationTest::test_real_additive_migration_preserves_preexisting_records
+ErrorException: Undefined array key "driver"
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\HandleExceptions.php:262
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\DatabaseManager.php:199
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\DatabaseManager.php:102
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\DatabaseServiceProvider.php:76
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Container\Container.php:1115
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Container\Container.php:933
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:1078
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Container\Container.php:864
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Foundation\Application.php:1058
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Container\Container.php:1805
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\Facades\Facade.php:243
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\Facades\Facade.php:211
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\Facades\Facade.php:357
+C:\Users\User\Desktop\IT12_Project\database\migrations\0001_01_01_000000_create_users_table.php:14
+C:\Users\User\Desktop\IT12_Project\tests\Feature\StockConcurrencyAndMigrationTest.php:90
+
+ERRORS!
+Tests: 207, Assertions: 2598, Errors: 5.

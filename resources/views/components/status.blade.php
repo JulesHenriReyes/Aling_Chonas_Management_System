@@ -1,9 +1,9 @@
 @props(['value', 'label' => null, 'tooltip' => null, 'align' => 'top-right'])
 @php
     $tone = match($value) {
-        'pending', 'partially_paid', 'low_stock', 'low', 'awaiting_verification' => 'status-attention',
-        'completed', 'fully_paid', 'ready_for_pickup', 'verified', 'in_stock', 'healthy', 'active' => 'status-success',
-        'cancelled', 'unpaid', 'rejected', 'out_of_stock', 'out', 'inactive', 'voided' => 'status-danger',
+        'pending', 'partially_paid', 'low_stock', 'low', 'awaiting_verification', 'expiring_soon', 'unknown_expiry' => 'status-attention',
+        'completed', 'fully_paid', 'ready_for_pickup', 'verified', 'in_stock', 'healthy', 'active', 'available' => 'status-success',
+        'cancelled', 'unpaid', 'rejected', 'out_of_stock', 'out', 'inactive', 'voided', 'expired' => 'status-danger',
         default => '',
     };
 

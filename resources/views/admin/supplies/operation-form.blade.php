@@ -2,17 +2,18 @@
 @section('title', $type === 'receipt' ? 'Stock in' : 'Stock out')
 @section('content')
 <script src="{{ asset('js/inventory-workspace.js') }}?v={{ filemtime(public_path('js/inventory-workspace.js')) }}"></script>
-<div class="workspace" x-data="stockOperation(@js($type), @js($initialLines), @js(route('supplies.lookup')), @js(route('supplies.store')), @js(csrf_token()))">
+<div class="workspace inventory-workspace" x-data="stockOperation(@js($type), @js($initialLines), @js(route('supplies.lookup')), @js(route('supplies.store')), @js(csrf_token()), @js(route('inventory.preview')), @js($errors->messages()))">
     <header class="workspace-heading">
         <div>
-            <a class="back-link" href="{{ route('supplies.index') }}">← Inventory</a>
+            <a class="back-link" data-cancel @click="window.__suppressUnload = true" href="{{ route('supplies.index') }}">← Inventory</a>
             <h1>{{ $type === 'receipt' ? 'Stock in' : 'Stock out' }}</h1>
-            <p>Add supplies and review the stock changes before saving.</p>
+            <p>Each stock-in creates a separate entry. Baking uses the entries expiring first.</p>
         </div>
     </header>
 
-    <form class="workspace-form" x-ref="stockForm" data-safe-form action="{{ route('inventory.store') }}" method="POST" @submit="if (!lines.length) { $event.preventDefault(); error = 'Add at least one supply.'; $refs.search.focus(); }">
+    <form class="workspace-form" x-ref="stockForm" data-safe-form action="{{ route('inventory.store') }}" method="POST" @submit="submit($event)">
         @csrf
+        <input type="hidden" name="business_date" :value="businessDate" :disabled="type !== 'usage'">
         <input type="hidden" name="submission_key" value="{{ old('submission_key', (string) Str::uuid()) }}">
         
         <div class="form-grid">
@@ -32,7 +33,7 @@
 
             <div>
                 <label for="operation_date">{{ $type === 'receipt' ? 'Stock-in date' : 'Effective date' }}</label>
-                <input type="date" id="operation_date" name="operation_date" required value="{{ old('operation_date', now()->toDateString()) }}">
+                <input type="date" id="operation_date" name="operation_date" required value="{{ old('operation_date', \App\Support\InventoryCalendar::date()) }}">
             </div>
 
             @if($type === 'receipt')
@@ -94,64 +95,64 @@
 
         <p class="field-error" role="alert" x-show="error" x-text="error" x-cloak></p>
 
-        <div class="workspace-table table-scroll" role="region" aria-label="Stock operation rows" tabindex="0">
-            <table class="batch-table">
-                <colgroup>
-                    <col class="batch-supply-col">
-                    <col class="batch-stock-col">
-                    <col class="batch-quantity-col">
-                    <col class="batch-change-col">
-                    <col class="batch-stock-col">
-                    <col class="batch-actions-col">
-                </colgroup>
-                <thead>
-                    <tr>
-                        <th>Supply</th>
-                        <th class="numeric">
-                            <span class="inline-flex items-center gap-1 justify-end">
-                                On hand 
-                                <x-tooltip text="Current recorded on-hand quantity in the system. Use reload if another staff member updated inventory." align="right" />
-                            </span>
-                        </th>
-                        <th x-text="type === 'stocktake' ? 'Counted quantity' : 'Quantity'"></th>
-                        <th class="numeric">Change</th>
-                        <th class="numeric">After saving</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <template x-for="(line,index) in lines" :key="line.supply_id">
-                        <tr>
-                            <td>
-                                <strong x-text="line.name"></strong>
-                                <input type="hidden" :name="'lines['+index+'][supply_id]'" :value="line.supply_id">
-                                <input type="hidden" :name="'lines['+index+'][expected_version]'" :value="line.expected_version">
-                            </td>
-                            <td class="numeric" x-text="quantity(line.current_quantity, line.unit)"></td>
-                            <td>
-                                <div class="stock-quantity-input">
-                                    <input :id="'stock-quantity-'+line.supply_id" :name="'lines['+index+'][quantity]'" :aria-label="line.name + ' quantity in ' + line.unit" type="number" inputmode="decimal" :min="type === 'stocktake' ? 0 : 0.01" max="99999999.99" step="0.01" required x-model="line.quantity">
-                                    <span x-text="line.unit" aria-hidden="true"></span>
-                                </div>
-                            </td>
-                            <td class="numeric" x-text="quantity(delta(line), line.unit, true)"></td>
-                            <td class="numeric" :class="after(line) < 0 ? 'field-error' : ''" x-text="quantity(after(line), line.unit)"></td>
-                            <td>
-                                <div class="stock-row-actions">
-                                    <button type="button" class="ui-button quiet" :aria-label="'Remove '+line.name" @click="lines.splice(index, 1)">Remove</button>
-                                    <span x-show="type === 'stocktake'" class="inline-flex items-center gap-1">
-                                        <button type="button" class="ui-button quiet" @click="refreshLine(line)" :aria-label="'Reload current stock for '+line.name">Reload stock</button>
-                                        <x-tooltip text="Fetches the latest recorded quantity and lock version from the server to prevent concurrency conflicts with other staff." align="right" />
-                                    </span>
-                                </div>
-                            </td>
-                        </tr>
-                    </template>
-                    <tr x-show="!lines.length">
-                        <td colspan="6" class="empty-state">Choose supplies above to add the first row.</td>
-                    </tr>
-                </tbody>
-            </table>
+        <p class="form-hint" x-show="type === 'usage' && previewLoading" role="status" x-cloak>Checking entries…</p>
+        <div class="inventory-stock-lines" aria-label="Stock operation rows">
+            <template x-for="(line,index) in lines" :key="line.supply_id">
+                <section class="inventory-stock-line" :class="{'is-receipt': type === 'receipt'}">
+                    <div class="inventory-stock-name">
+                        <strong x-text="line.name" class="inventory-stock-title"></strong>
+                        <div class="inventory-row-meta">
+                            <span x-text="line.category"></span>
+                            <template x-if="type === 'usage'">
+                                <span x-text="' · ' + quantity(line.usable_quantity, line.unit) + ' usable'"></span>
+                            </template>
+                            <template x-if="type !== 'usage'">
+                                <span x-text="' · ' + quantity(line.current_quantity, line.unit) + ' on hand'"></span>
+                            </template>
+                        </div>
+
+                        <input type="hidden" :name="'lines['+index+'][supply_id]'" :value="line.supply_id">
+                        <input type="hidden" :name="'lines['+index+'][expected_version]'" :value="line.expected_version">
+                        <p class="field-error" x-text="fieldError(index, 'supply_id')"></p>
+                    </div>
+                    <div x-show="!entryMode(line)" class="inventory-stock-field">
+                        <label class="inventory-stock-label" :for="'stock-quantity-'+line.supply_id" x-text="type === 'stocktake' ? 'Counted quantity' : 'Quantity'"></label>
+                        <div class="stock-quantity-input">
+                            <input :id="'stock-quantity-'+line.supply_id" :name="'lines['+index+'][quantity]'" :aria-invalid="!!fieldError(index,'quantity')" :aria-describedby="'quantity-error-'+line.supply_id" type="number" inputmode="decimal" :min="type === 'stocktake' ? 0 : 0.01" max="99999999.99" step="0.01" :required="!entryMode(line)" :disabled="entryMode(line)" x-model="line.quantity" @input="changed()" @input.debounce.350ms="preview()">
+                            <span x-text="line.unit"></span>
+                        </div>
+                    </div>
+                    <div x-show="type === 'receipt'" class="inventory-stock-field">
+                        <template x-if="type === 'receipt' && line.category === 'ingredients'"><div>
+                            <label class="inventory-stock-label" :for="'expiry-'+line.supply_id">Expiration date</label>
+                            <input type="date" :id="'expiry-'+line.supply_id" :name="'lines['+index+'][expiry_date]'" required x-model="line.expiry_date" :aria-invalid="!!fieldError(index,'expiry_date')" :aria-describedby="'expiry-error-'+line.supply_id">
+                            <p class="field-error" :id="'expiry-error-'+line.supply_id" x-text="fieldError(index,'expiry_date')"></p>
+                        </div></template>
+                        <p class="form-hint inventory-stock-packaging-note" x-show="line.category === 'packaging'">Expiration: Not applicable</p>
+                    </div>
+                    <div class="inventory-stock-actions">
+                        <button type="button" class="ui-button quiet" :aria-label="'Remove '+line.name" @click="remove(index)">Remove</button>
+                        <button type="button" class="ui-button quiet" x-show="type === 'stocktake'" @click="refreshLine(line)">Reload stock</button>
+                    </div>
+                    <div class="inventory-entry-inputs" x-show="entryMode(line)">
+                        <p class="form-hint" x-text="type === 'waste' ? 'Enter quantities to discard from specific entries.' : 'Count every remaining entry, including expired and unknown stock.'"></p>
+                        <template x-for="(entry,entryIndex) in line.entries" :key="entry.stock_entry_id"><div class="inventory-entry-input">
+                            <label :for="'entry-'+entry.stock_entry_id" x-text="'#'+entry.stock_entry_id+' · '+(entry.expiry_date || (line.category === 'packaging' ? 'No expiry applicable' : 'Expiry unknown'))+' · '+quantity(entry.remaining_quantity,line.unit)+' remaining'"></label>
+                            <div class="stock-quantity-input">
+                            <input type="hidden" :disabled="!entryMode(line)" :name="'lines['+index+'][entries]['+entryIndex+'][stock_entry_id]'" :value="entry.stock_entry_id">
+                                <input type="number" :id="'entry-'+entry.stock_entry_id" :disabled="!entryMode(line)" :name="'lines['+index+'][entries]['+entryIndex+'][quantity]'" :required="type === 'stocktake' && entryMode(line)" :value="entry.quantity === '' && type === 'waste' ? 0 : entry.quantity" @input="entry.quantity = $event.target.value" min="0" :max="type === 'waste' ? entry.remaining_quantity : 99999999.99" step="0.01" inputmode="decimal" placeholder="0">
+                                <span x-text="line.unit"></span>
+                            </div>
+                            <p class="field-error" x-text="fieldError(index,'entries.'+entryIndex+'.quantity')"></p>
+                        </div></template>
+                        <p class="form-hint" x-show="!line.entries.length">No remaining entries. Record new dated stock through Stock in.</p>
+                        <input type="hidden" :disabled="!entryMode(line)" :name="'lines['+index+'][quantity]'" :value="entryTotal(line)">
+                    </div>
+                    <p class="field-error inventory-line-feedback" :id="'quantity-error-'+line.supply_id" x-text="fieldError(index,'quantity')"></p>
+                    <p class="form-hint inventory-line-feedback" x-show="type === 'usage' && line.allocations.length" x-text="allocationText(line)"></p>
+                </section>
+            </template>
+            <p class="empty-state" x-show="!lines.length">Choose supplies above to add the first row.</p>
         </div>
 
         <div>
@@ -160,9 +161,10 @@
         </div>
 
         <div class="form-actions">
+            <button type="button" class="ui-button" x-show="type === 'usage'" @click="preview()" :disabled="previewLoading">Refresh allocation</button>
             <span x-text="lines.length + ' supplies · all rows save together'"></span>
-            <a class="ui-button" href="{{ route('supplies.index') }}">Cancel</a>
-            <button class="ui-button primary" :disabled="!lines.length" type="submit" x-text="type === 'receipt' ? 'Save stock in' : type === 'stocktake' ? 'Save stock count' : 'Save stock out'">{{ $type === 'receipt' ? 'Save stock in' : 'Save stock out' }}</button>
+            <a class="ui-button" data-cancel @click="window.__suppressUnload = true" href="{{ route('supplies.index') }}">Cancel</a>
+            <button class="ui-button primary" :disabled="!lines.length || (type === 'usage' && !previewReady)" type="submit" x-text="type === 'receipt' ? 'Save stock in' : type === 'stocktake' ? 'Save stock count' : 'Save stock out'">{{ $type === 'receipt' ? 'Save stock in' : 'Save stock out' }}</button>
             <span role="status" data-submit-status></span>
         </div>
     </form>

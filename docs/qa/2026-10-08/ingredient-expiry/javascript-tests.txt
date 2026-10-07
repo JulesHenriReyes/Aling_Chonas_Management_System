@@ -1,0 +1,13 @@
+✔ package price responds to layer, quantity and extras (0.8863ms)
+✔ customer search matches name and phone and selection uses an explicit record (0.8044ms)
+✔ inline customer creation selects the returned customer (1.1627ms)
+✔ owner can select distinct reusable items, edit quantities, remove and re-add (1.9001ms)
+✔ included catalog item has no surcharge and same-item paid extras apply once per line (1.2651ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 134.2478

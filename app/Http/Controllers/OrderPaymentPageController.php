@@ -20,7 +20,7 @@ class OrderPaymentPageController extends Controller
 
     public function show(string $token)
     {
-        $order = $this->order($token)->load(['orderDetails.addOns', 'orderDetails.product', 'payments', 'paymentProofs', 'refund']);
+        $order = $this->order($token)->load(['orderDetails.addOns', 'orderDetails.product', 'payments', 'paymentProofs']);
         $settings = PaymentSetting::first();
 
         return view('public.payment', compact('order', 'settings'));

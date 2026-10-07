@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff order details - Aling Chona Cakes & Cupcakes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+                    colors: {
+                        cream: { 50: '#FDFBF7', 100: '#F5F1EB' },
+                        cocoa: { 50: '#F5F1EB', 100: '#E8E0D4', 200: '#D4C4B0', 300: '#C2956B', 400: '#716153', 500: '#5C4A3A', 600: '#3C2415', 700: '#2C1810', 800: '#1A0E08' },
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script defer src="http://127.0.0.1:8003/js/alpine.min.js"></script>
+    <style>
+        [x-cloak] { display: none !important; }
+        /* Custom scrollbar for sidebar */
+        .sidebar-scroll::-webkit-scrollbar { width: 4px; }
+        .sidebar-scroll::-webkit-scrollbar-track { background: transparent; }
+        .sidebar-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+    </style>
+    <link rel="stylesheet" href="http://127.0.0.1:8003/css/bakery-ui.css?v=1791399346">
+<script defer src="http://127.0.0.1:8003/js/bakery-ui.js?v=1791384325"></script>
+</head>
+<body class="bg-cream-50 text-cocoa-500 font-sans min-h-screen" x-data="{ sidebarOpen: false }">
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    
+    <div x-show="sidebarOpen" x-transition:enter="transition-opacity ease-out duration-200" x-transition:leave="transition-opacity ease-in duration-150"
+         data-sidebar-backdrop class="fixed inset-0 z-40 bg-black/40 lg:hidden" @click="sidebarOpen = false" x-cloak></div>
+
+    
+    <aside id="staff-navigation" data-sidebar :data-open="sidebarOpen.toString()" aria-label="Staff navigation" :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
+           class="fixed top-0 left-0 z-50 h-full w-60 bg-cocoa-700 text-cocoa-100 flex flex-col transition-transform duration-200 lg:translate-x-0">
+
+        <button type="button" data-sidebar-close @click="sidebarOpen = false" aria-label="Close navigation" class="sidebar-close self-end p-3 text-white"><svg class="ui-icon" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m6 6 12 12M6 18 18 6" /></svg>
+</button>
+        
+        <div class="px-5 py-5 border-b border-white/10">
+            <a href="http://127.0.0.1:8000/dashboard" class="flex items-center gap-3">
+                <span class="w-9 h-9 rounded-lg bg-cocoa-300 flex items-center justify-center text-white text-lg font-bold">A</span>
+                <div>
+                    <span class="font-bold text-white text-sm tracking-tight block leading-tight">Aling Chona</span>
+                    <span class="text-xs text-cocoa-100 leading-tight">Cakes & Cupcakes</span>
+                </div>
+            </a>
+        </div>
+
+        
+        <nav class="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto sidebar-scroll">
+            <a href="http://127.0.0.1:8000/dashboard"
+               class="flex items-center gap-3 px-3 py-2.5 rounded-r-lg rounded-l-none text-sm transition
+                      border-l-[3px] border-transparent text-cocoa-100 hover:bg-white/5 hover:text-white">
+                <svg class="ui-icon w-[18px] h-[18px] flex-shrink-0" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" /></svg>
+                Dashboard
+            </a>
+
+            <a href="http://127.0.0.1:8000/orders"
+               class="flex items-center gap-3 px-3 py-2.5 rounded-r-lg rounded-l-none text-sm transition
+                      border-l-[3px] border-cocoa-300 bg-white/10 text-white font-semibold">
+                <svg class="ui-icon w-[18px] h-[18px] flex-shrink-0" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15a2.25 2.25 0 012.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25z" /></svg>
+                Orders
+            </a>
+
+            <a href="http://127.0.0.1:8000/pickup-schedule"
+               class="flex items-center gap-3 px-3 py-2.5 rounded-r-lg rounded-l-none text-sm transition
+                      border-l-[3px] border-transparent text-cocoa-100 hover:bg-white/5 hover:text-white">
+                <svg class="ui-icon w-[18px] h-[18px] flex-shrink-0" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" /></svg>
+                Pickup Schedule
+            </a>
+
+            <div class="pt-4 pb-1.5 px-3">
+                <span class="sidebar-label">Manage</span>
+            </div>
+
+            <a href="http://127.0.0.1:8000/customers"
+               class="flex items-center gap-3 px-3 py-2.5 rounded-r-lg rounded-l-none text-sm transition
+                      border-l-[3px] border-transparent text-cocoa-100 hover:bg-white/5 hover:text-white">
+                <svg class="ui-icon w-[18px] h-[18px] flex-shrink-0" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" /></svg>
+                Customers
+            </a>
+
+            <a href="http://127.0.0.1:8000/products"
+               class="flex items-center gap-3 px-3 py-2.5 rounded-r-lg rounded-l-none text-sm transition
+                      border-l-[3px] border-transparent text-cocoa-100 hover:bg-white/5 hover:text-white">
+                <svg class="ui-icon w-[18px] h-[18px] flex-shrink-0" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" /></svg>
+                Products
+            </a>
+
+            <a href="http://127.0.0.1:8000/supplies"
+               class="flex items-center gap-3 px-3 py-2.5 rounded-r-lg rounded-l-none text-sm transition
+                      border-l-[3px] border-transparent text-cocoa-100 hover:bg-white/5 hover:text-white">
+                <svg class="ui-icon w-[18px] h-[18px] flex-shrink-0" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-2.25-1.313M21 7.5v2.25m0-2.25l-2.25 1.313M3 7.5l2.25-1.313M3 7.5l2.25 1.313M3 7.5v2.25m9 3l2.25-1.313M12 12.75l-2.25-1.313M12 12.75V15m0 6.75l2.25-1.313M12 21.75V19.5m0 2.25l-2.25-1.313m0-16.875L12 2.25l2.25 1.313M21 14.25v2.25l-2.25 1.313m-13.5 0L3 16.5v-2.25" /></svg>
+                Inventory
+            </a>
+
+            <div class="pt-4 pb-1.5 px-3">
+                <span class="sidebar-label">Finance</span>
+            </div>
+
+            <a href="http://127.0.0.1:8000/expenses"
+               class="flex items-center gap-3 px-3 py-2.5 rounded-r-lg rounded-l-none text-sm transition
+                      border-l-[3px] border-transparent text-cocoa-100 hover:bg-white/5 hover:text-white">
+                <svg class="ui-icon w-[18px] h-[18px] flex-shrink-0" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" /></svg>
+                Expenses
+            </a>
+
+                        <a href="http://127.0.0.1:8000/reports"
+               class="flex items-center gap-3 px-3 py-2.5 rounded-r-lg rounded-l-none text-sm transition
+                      border-l-[3px] border-transparent text-cocoa-100 hover:bg-white/5 hover:text-white">
+                <svg class="ui-icon w-[18px] h-[18px] flex-shrink-0" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" /></svg>
+                Reports
+            </a>
+            
+                            <div class="pt-4 pb-1.5 px-3">
+                    <span class="sidebar-label">Admin</span>
+                </div>
+
+                <a href="http://127.0.0.1:8000/users"
+                   class="flex items-center gap-3 px-3 py-2.5 rounded-r-lg rounded-l-none text-sm transition
+                          border-l-[3px] border-transparent text-cocoa-100 hover:bg-white/5 hover:text-white">
+                    <svg class="ui-icon w-[18px] h-[18px] flex-shrink-0" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" /></svg>
+                    <span>Users (Owner)</span>
+                </a>
+                    </nav>
+
+    </aside>
+
+    
+    <div class="lg:pl-60 min-h-screen flex flex-col">
+        
+        <header id="admin-topbar" class="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-cocoa-100">
+            <div class="flex items-center justify-between px-4 sm:px-6 lg:px-8 h-14">
+                
+                <button type="button" aria-label="Open navigation" aria-controls="staff-navigation" :aria-expanded="sidebarOpen.toString()" @click="sidebarOpen = true" class="lg:hidden p-2 -ml-2 rounded-lg text-cocoa-400 hover:text-cocoa-600 hover:bg-cream-100 transition">
+                    <svg class="ui-icon w-5 h-5" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
+                </button>
+
+                
+                <span class="hidden lg:block text-sm text-cocoa-500">Staff workspace</span>
+
+                
+                <div class="flex items-center gap-3 text-sm min-w-0">
+                    <span class="text-cocoa-500 text-xs min-w-0">Kennith x Fadel <span class="text-cocoa-500">&middot;</span> <span class="capitalize">owner</span></span>
+                    <form action="http://127.0.0.1:8000/logout" method="POST" class="inline">
+                        <input type="hidden" name="_token" value="aQg5GxgtQxpqz9ML9LgvNaDQjltolOzCIPCpcKHv" autocomplete="off">                        <button type="submit" class="px-3 py-1.5 text-xs font-medium text-cocoa-500 hover:text-cocoa-700 border border-cocoa-100 rounded-lg hover:bg-cream-100 transition">
+                            Sign Out
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </header>
+
+        
+        <main id="main-content" tabindex="-1" class="flex-grow px-4 sm:px-6 lg:px-8 py-6">
+            <div class="max-w-7xl mx-auto staff-content-container">
+                
+                
+                
+                <div class="space-y-5">
+    <div class="page-heading"><div><h1 class="font-bold text-cocoa-600">Customer and pickup</h1><p>Finish the staff order using the saved package selection.</p></div></div>
+    <script src="http://127.0.0.1:8003/js/staff-customer-picker.js?v=1791147703"></script><form action="http://127.0.0.1:8000/orders" method="POST" class="review-first-checkout order-details-grid"  x-data="staffCustomerPicker(JSON.parse('[{\u0022id\u0022:1,\u0022name\u0022:\u0022Clock Buyer\u0022,\u0022phone\u0022:\u002209171234567\u0022}]'), 1, 'http:\/\/127.0.0.1:8000\/orders\/create\/customer', 'aQg5GxgtQxpqz9ML9LgvNaDQjltolOzCIPCpcKHv')" @submit="if ($event.submitter?.formAction !== 'http:\/\/127.0.0.1:8000\/orders\/create\/details\/back' && !selectedId) { error = 'Choose or add a customer before saving this order.'; $event.preventDefault() }" >
+    <input type="hidden" name="_token" value="aQg5GxgtQxpqz9ML9LgvNaDQjltolOzCIPCpcKHv" autocomplete="off">        <div class="space-y-6">
+        
+        <div class="checkout-card p-6 sm:p-7 space-y-5">
+            <div class="flex items-center gap-2.5 pb-3 border-b border-cocoa-100">
+                <div class="w-8 h-8 rounded-lg bg-cocoa-50 text-cocoa-600 flex items-center justify-center shrink-0 border border-cocoa-100">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                </div>
+                <h2 class="text-base font-bold text-cocoa-700">Contact details</h2>
+            </div>
+
+                            <div class="relative" @click.outside="open = false">
+                    <label for="customer-search" class="block text-xs font-semibold text-cocoa-700 uppercase tracking-wider mb-1.5">
+                        Search customers by name or phone
+                    </label>
+                    <div class="relative">
+                        <input id="customer-search" type="search" x-model="search" @focus="open = true" @click="open = true" @input="selectedId = ''; open = true" @keydown.escape="open = false" @keydown.tab="open = false" autocomplete="off" class="form-input-custom pr-10" placeholder="Type a name or phone number..." role="combobox" aria-controls="customer-options" :aria-expanded="open.toString()">
+                        <input type="hidden" name="customer_id" :value="selectedId">
+                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-cocoa-400">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        </div>
+                    </div>
+                    <div id="customer-options" x-show="open && matches.length" x-cloak class="customer-results mt-1" role="listbox">
+                        <template x-for="customer in matches" :key="customer.id">
+                            <button type="button" role="option" class="customer-result hover:bg-cream-100 flex items-center justify-between" @click="choose(customer)">
+                                <span class="font-medium text-cocoa-700" x-text="customer.name"></span>
+                                <span class="text-xs text-cocoa-400" x-text="customer.phone"></span>
+                            </button>
+                        </template>
+                    </div>
+                </div>
+                <div>
+                    <button type="button" class="inline-flex items-center gap-1.5 text-xs font-semibold text-cocoa-600 hover:text-cocoa-700 underline" @click="showAdd = !showAdd; open = false">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                        <span x-text="showAdd ? 'Close new customer form' : 'Add a new customer here'"></span>
+                    </button>
+                </div>
+                <div x-show="showAdd" x-cloak class="border border-cocoa-100 bg-cream-50/50 rounded-xl p-4 space-y-3">
+                    <h3 class="font-semibold text-sm text-cocoa-700">New customer</h3>
+                    <div class="grid sm:grid-cols-2 gap-3">
+                        <div><label for="new-first" class="block text-xs font-semibold text-cocoa-600 mb-1">First name</label><input id="new-first" x-model="newCustomer.first_name" maxlength="100" class="form-input-custom"></div>
+                        <div><label for="new-last" class="block text-xs font-semibold text-cocoa-600 mb-1">Last name</label><input id="new-last" x-model="newCustomer.last_name" maxlength="100" class="form-input-custom"></div>
+                        <div><label for="new-middle" class="block text-xs font-semibold text-cocoa-600 mb-1">Middle name (optional)</label><input id="new-middle" x-model="newCustomer.middle_name" maxlength="100" class="form-input-custom"></div>
+                        <div><label for="new-phone" class="block text-xs font-semibold text-cocoa-600 mb-1">Mobile or landline number</label><input id="new-phone" type="tel" x-model="newCustomer.phone_number" maxlength="40" aria-describedby="new-phone-help new-phone-error" :aria-invalid="Boolean(fieldErrors.phone_number)" class="form-input-custom"><p id="new-phone-help" class="text-xs text-cocoa-500 mt-1">For landlines, include the area code, e.g. 032 234 5678.</p><p id="new-phone-error" role="alert" x-show="fieldErrors.phone_number" x-text="fieldErrors.phone_number?.[0]" class="text-sm text-red-700" x-cloak></p></div>
+                    </div>
+                    <button type="button" @click="createCustomer()" :disabled="creating" class="px-4 py-2 bg-cocoa-600 hover:bg-cocoa-700 text-white text-xs font-semibold rounded-lg disabled:opacity-60 transition" x-text="creating ? 'Saving customer…' : 'Save and select customer'"></button>
+                </div>
+                <p role="alert" x-show="error" x-text="error" class="text-xs text-red-700 bg-red-50 p-2.5 rounded-lg border border-red-200" x-cloak></p>
+                    </div>
+
+        
+        <div class="checkout-card p-6 sm:p-7 space-y-5">
+            <div class="flex items-center gap-2.5 pb-3 border-b border-cocoa-100">
+                <div class="w-8 h-8 rounded-lg bg-cocoa-50 text-cocoa-600 flex items-center justify-center shrink-0 border border-cocoa-100">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                </div>
+                <h2 class="text-base font-bold text-cocoa-700">Pickup details</h2>
+            </div>
+
+            <div class="grid sm:grid-cols-2 gap-4">
+                <div>
+                    <label for="pickup-date" class="block text-xs font-semibold text-cocoa-700 uppercase tracking-wider mb-1.5">
+                        Pickup date <span class="text-red-500">*</span>
+                    </label>
+                    <input id="pickup-date" name="pickup_date" type="date" min="2026-10-08" required value="2026-10-09" class="form-input-custom">
+                </div>
+                <div>
+                    <div class="pickup-time-picker" data-pickup-time data-options="{&quot;AM&quot;:[{&quot;value&quot;:&quot;08&quot;,&quot;label&quot;:&quot;8&quot;,&quot;minutes&quot;:[&quot;00&quot;,&quot;01&quot;,&quot;02&quot;,&quot;03&quot;,&quot;04&quot;,&quot;05&quot;,&quot;06&quot;,&quot;07&quot;,&quot;08&quot;,&quot;09&quot;,&quot;10&quot;,&quot;11&quot;,&quot;12&quot;,&quot;13&quot;,&quot;14&quot;,&quot;15&quot;,&quot;16&quot;,&quot;17&quot;,&quot;18&quot;,&quot;19&quot;,&quot;20&quot;,&quot;21&quot;,&quot;22&quot;,&quot;23&quot;,&quot;24&quot;,&quot;25&quot;,&quot;26&quot;,&quot;27&quot;,&quot;28&quot;,&quot;29&quot;,&quot;30&quot;,&quot;31&quot;,&quot;32&quot;,&quot;33&quot;,&quot;34&quot;,&quot;35&quot;,&quot;36&quot;,&quot;37&quot;,&quot;38&quot;,&quot;39&quot;,&quot;40&quot;,&quot;41&quot;,&quot;42&quot;,&quot;43&quot;,&quot;44&quot;,&quot;45&quot;,&quot;46&quot;,&quot;47&quot;,&quot;48&quot;,&quot;49&quot;,&quot;50&quot;,&quot;51&quot;,&quot;52&quot;,&quot;53&quot;,&quot;54&quot;,&quot;55&quot;,&quot;56&quot;,&quot;57&quot;,&quot;58&quot;,&quot;59&quot;]},{&quot;value&quot;:&quot;09&quot;,&quot;label&quot;:&quot;9&quot;,&quot;minutes&quot;:[&quot;00&quot;,&quot;01&quot;,&quot;02&quot;,&quot;03&quot;,&quot;04&quot;,&quot;05&quot;,&quot;06&quot;,&quot;07&quot;,&quot;08&quot;,&quot;09&quot;,&quot;10&quot;,&quot;11&quot;,&quot;12&quot;,&quot;13&quot;,&quot;14&quot;,&quot;15&quot;,&quot;16&quot;,&quot;17&quot;,&quot;18&quot;,&quot;19&quot;,&quot;20&quot;,&quot;21&quot;,&quot;22&quot;,&quot;23&quot;,&quot;24&quot;,&quot;25&quot;,&quot;26&quot;,&quot;27&quot;,&quot;28&quot;,&quot;29&quot;,&quot;30&quot;,&quot;31&quot;,&quot;32&quot;,&quot;33&quot;,&quot;34&quot;,&quot;35&quot;,&quot;36&quot;,&quot;37&quot;,&quot;38&quot;,&quot;39&quot;,&quot;40&quot;,&quot;41&quot;,&quot;42&quot;,&quot;43&quot;,&quot;44&quot;,&quot;45&quot;,&quot;46&quot;,&quot;47&quot;,&quot;48&quot;,&quot;49&quot;,&quot;50&quot;,&quot;51&quot;,&quot;52&quot;,&quot;53&quot;,&quot;54&quot;,&quot;55&quot;,&quot;56&quot;,&quot;57&quot;,&quot;58&quot;,&quot;59&quot;]},{&quot;value&quot;:&quot;10&quot;,&quot;label&quot;:&quot;10&quot;,&quot;minutes&quot;:[&quot;00&quot;,&quot;01&quot;,&quot;02&quot;,&quot;03&quot;,&quot;04&quot;,&quot;05&quot;,&quot;06&quot;,&quot;07&quot;,&quot;08&quot;,&quot;09&quot;,&quot;10&quot;,&quot;11&quot;,&quot;12&quot;,&quot;13&quot;,&quot;14&quot;,&quot;15&quot;,&quot;16&quot;,&quot;17&quot;,&quot;18&quot;,&quot;19&quot;,&quot;20&quot;,&quot;21&quot;,&quot;22&quot;,&quot;23&quot;,&quot;24&quot;,&quot;25&quot;,&quot;26&quot;,&quot;27&quot;,&quot;28&quot;,&quot;29&quot;,&quot;30&quot;,&quot;31&quot;,&quot;32&quot;,&quot;33&quot;,&quot;34&quot;,&quot;35&quot;,&quot;36&quot;,&quot;37&quot;,&quot;38&quot;,&quot;39&quot;,&quot;40&quot;,&quot;41&quot;,&quot;42&quot;,&quot;43&quot;,&quot;44&quot;,&quot;45&quot;,&quot;46&quot;,&quot;47&quot;,&quot;48&quot;,&quot;49&quot;,&quot;50&quot;,&quot;51&quot;,&quot;52&quot;,&quot;53&quot;,&quot;54&quot;,&quot;55&quot;,&quot;56&quot;,&quot;57&quot;,&quot;58&quot;,&quot;59&quot;]},{&quot;value&quot;:&quot;11&quot;,&quot;label&quot;:&quot;11&quot;,&quot;minutes&quot;:[&quot;00&quot;,&quot;01&quot;,&quot;02&quot;,&quot;03&quot;,&quot;04&quot;,&quot;05&quot;,&quot;06&quot;,&quot;07&quot;,&quot;08&quot;,&quot;09&quot;,&quot;10&quot;,&quot;11&quot;,&quot;12&quot;,&quot;13&quot;,&quot;14&quot;,&quot;15&quot;,&quot;16&quot;,&quot;17&quot;,&quot;18&quot;,&quot;19&quot;,&quot;20&quot;,&quot;21&quot;,&quot;22&quot;,&quot;23&quot;,&quot;24&quot;,&quot;25&quot;,&quot;26&quot;,&quot;27&quot;,&quot;28&quot;,&quot;29&quot;,&quot;30&quot;,&quot;31&quot;,&quot;32&quot;,&quot;33&quot;,&quot;34&quot;,&quot;35&quot;,&quot;36&quot;,&quot;37&quot;,&quot;38&quot;,&quot;39&quot;,&quot;40&quot;,&quot;41&quot;,&quot;42&quot;,&quot;43&quot;,&quot;44&quot;,&quot;45&quot;,&quot;46&quot;,&quot;47&quot;,&quot;48&quot;,&quot;49&quot;,&quot;50&quot;,&quot;51&quot;,&quot;52&quot;,&quot;53&quot;,&quot;54&quot;,&quot;55&quot;,&quot;56&quot;,&quot;57&quot;,&quot;58&quot;,&quot;59&quot;]}],&quot;PM&quot;:[{&quot;value&quot;:&quot;12&quot;,&quot;label&quot;:&quot;12&quot;,&quot;minutes&quot;:[&quot;00&quot;,&quot;01&quot;,&quot;02&quot;,&quot;03&quot;,&quot;04&quot;,&quot;05&quot;,&quot;06&quot;,&quot;07&quot;,&quot;08&quot;,&quot;09&quot;,&quot;10&quot;,&quot;11&quot;,&quot;12&quot;,&quot;13&quot;,&quot;14&quot;,&quot;15&quot;,&quot;16&quot;,&quot;17&quot;,&quot;18&quot;,&quot;19&quot;,&quot;20&quot;,&quot;21&quot;,&quot;22&quot;,&quot;23&quot;,&quot;24&quot;,&quot;25&quot;,&quot;26&quot;,&quot;27&quot;,&quot;28&quot;,&quot;29&quot;,&quot;30&quot;,&quot;31&quot;,&quot;32&quot;,&quot;33&quot;,&quot;34&quot;,&quot;35&quot;,&quot;36&quot;,&quot;37&quot;,&quot;38&quot;,&quot;39&quot;,&quot;40&quot;,&quot;41&quot;,&quot;42&quot;,&quot;43&quot;,&quot;44&quot;,&quot;45&quot;,&quot;46&quot;,&quot;47&quot;,&quot;48&quot;,&quot;49&quot;,&quot;50&quot;,&quot;51&quot;,&quot;52&quot;,&quot;53&quot;,&quot;54&quot;,&quot;55&quot;,&quot;56&quot;,&quot;57&quot;,&quot;58&quot;,&quot;59&quot;]},{&quot;value&quot;:&quot;13&quot;,&quot;label&quot;:&quot;1&quot;,&quot;minutes&quot;:[&quot;00&quot;,&quot;01&quot;,&quot;02&quot;,&quot;03&quot;,&quot;04&quot;,&quot;05&quot;,&quot;06&quot;,&quot;07&quot;,&quot;08&quot;,&quot;09&quot;,&quot;10&quot;,&quot;11&quot;,&quot;12&quot;,&quot;13&quot;,&quot;14&quot;,&quot;15&quot;,&quot;16&quot;,&quot;17&quot;,&quot;18&quot;,&quot;19&quot;,&quot;20&quot;,&quot;21&quot;,&quot;22&quot;,&quot;23&quot;,&quot;24&quot;,&quot;25&quot;,&quot;26&quot;,&quot;27&quot;,&quot;28&quot;,&quot;29&quot;,&quot;30&quot;,&quot;31&quot;,&quot;32&quot;,&quot;33&quot;,&quot;34&quot;,&quot;35&quot;,&quot;36&quot;,&quot;37&quot;,&quot;38&quot;,&quot;39&quot;,&quot;40&quot;,&quot;41&quot;,&quot;42&quot;,&quot;43&quot;,&quot;44&quot;,&quot;45&quot;,&quot;46&quot;,&quot;47&quot;,&quot;48&quot;,&quot;49&quot;,&quot;50&quot;,&quot;51&quot;,&quot;52&quot;,&quot;53&quot;,&quot;54&quot;,&quot;55&quot;,&quot;56&quot;,&quot;57&quot;,&quot;58&quot;,&quot;59&quot;]},{&quot;value&quot;:&quot;14&quot;,&quot;label&quot;:&quot;2&quot;,&quot;minutes&quot;:[&quot;00&quot;,&quot;01&quot;,&quot;02&quot;,&quot;03&quot;,&quot;04&quot;,&quot;05&quot;,&quot;06&quot;,&quot;07&quot;,&quot;08&quot;,&quot;09&quot;,&quot;10&quot;,&quot;11&quot;,&quot;12&quot;,&quot;13&quot;,&quot;14&quot;,&quot;15&quot;,&quot;16&quot;,&quot;17&quot;,&quot;18&quot;,&quot;19&quot;,&quot;20&quot;,&quot;21&quot;,&quot;22&quot;,&quot;23&quot;,&quot;24&quot;,&quot;25&quot;,&quot;26&quot;,&quot;27&quot;,&quot;28&quot;,&quot;29&quot;,&quot;30&quot;,&quot;31&quot;,&quot;32&quot;,&quot;33&quot;,&quot;34&quot;,&quot;35&quot;,&quot;36&quot;,&quot;37&quot;,&quot;38&quot;,&quot;39&quot;,&quot;40&quot;,&quot;41&quot;,&quot;42&quot;,&quot;43&quot;,&quot;44&quot;,&quot;45&quot;,&quot;46&quot;,&quot;47&quot;,&quot;48&quot;,&quot;49&quot;,&quot;50&quot;,&quot;51&quot;,&quot;52&quot;,&quot;53&quot;,&quot;54&quot;,&quot;55&quot;,&quot;56&quot;,&quot;57&quot;,&quot;58&quot;,&quot;59&quot;]},{&quot;value&quot;:&quot;15&quot;,&quot;label&quot;:&quot;3&quot;,&quot;minutes&quot;:[&quot;00&quot;,&quot;01&quot;,&quot;02&quot;,&quot;03&quot;,&quot;04&quot;,&quot;05&quot;,&quot;06&quot;,&quot;07&quot;,&quot;08&quot;,&quot;09&quot;,&quot;10&quot;,&quot;11&quot;,&quot;12&quot;,&quot;13&quot;,&quot;14&quot;,&quot;15&quot;,&quot;16&quot;,&quot;17&quot;,&quot;18&quot;,&quot;19&quot;,&quot;20&quot;,&quot;21&quot;,&quot;22&quot;,&quot;23&quot;,&quot;24&quot;,&quot;25&quot;,&quot;26&quot;,&quot;27&quot;,&quot;28&quot;,&quot;29&quot;,&quot;30&quot;,&quot;31&quot;,&quot;32&quot;,&quot;33&quot;,&quot;34&quot;,&quot;35&quot;,&quot;36&quot;,&quot;37&quot;,&quot;38&quot;,&quot;39&quot;,&quot;40&quot;,&quot;41&quot;,&quot;42&quot;,&quot;43&quot;,&quot;44&quot;,&quot;45&quot;,&quot;46&quot;,&quot;47&quot;,&quot;48&quot;,&quot;49&quot;,&quot;50&quot;,&quot;51&quot;,&quot;52&quot;,&quot;53&quot;,&quot;54&quot;,&quot;55&quot;,&quot;56&quot;,&quot;57&quot;,&quot;58&quot;,&quot;59&quot;]},{&quot;value&quot;:&quot;16&quot;,&quot;label&quot;:&quot;4&quot;,&quot;minutes&quot;:[&quot;00&quot;,&quot;01&quot;,&quot;02&quot;,&quot;03&quot;,&quot;04&quot;,&quot;05&quot;,&quot;06&quot;,&quot;07&quot;,&quot;08&quot;,&quot;09&quot;,&quot;10&quot;,&quot;11&quot;,&quot;12&quot;,&quot;13&quot;,&quot;14&quot;,&quot;15&quot;,&quot;16&quot;,&quot;17&quot;,&quot;18&quot;,&quot;19&quot;,&quot;20&quot;,&quot;21&quot;,&quot;22&quot;,&quot;23&quot;,&quot;24&quot;,&quot;25&quot;,&quot;26&quot;,&quot;27&quot;,&quot;28&quot;,&quot;29&quot;,&quot;30&quot;,&quot;31&quot;,&quot;32&quot;,&quot;33&quot;,&quot;34&quot;,&quot;35&quot;,&quot;36&quot;,&quot;37&quot;,&quot;38&quot;,&quot;39&quot;,&quot;40&quot;,&quot;41&quot;,&quot;42&quot;,&quot;43&quot;,&quot;44&quot;,&quot;45&quot;,&quot;46&quot;,&quot;47&quot;,&quot;48&quot;,&quot;49&quot;,&quot;50&quot;,&quot;51&quot;,&quot;52&quot;,&quot;53&quot;,&quot;54&quot;,&quot;55&quot;,&quot;56&quot;,&quot;57&quot;,&quot;58&quot;,&quot;59&quot;]},{&quot;value&quot;:&quot;17&quot;,&quot;label&quot;:&quot;5&quot;,&quot;minutes&quot;:[&quot;00&quot;,&quot;01&quot;,&quot;02&quot;,&quot;03&quot;,&quot;04&quot;,&quot;05&quot;,&quot;06&quot;,&quot;07&quot;,&quot;08&quot;,&quot;09&quot;,&quot;10&quot;,&quot;11&quot;,&quot;12&quot;,&quot;13&quot;,&quot;14&quot;,&quot;15&quot;,&quot;16&quot;,&quot;17&quot;,&quot;18&quot;,&quot;19&quot;,&quot;20&quot;,&quot;21&quot;,&quot;22&quot;,&quot;23&quot;,&quot;24&quot;,&quot;25&quot;,&quot;26&quot;,&quot;27&quot;,&quot;28&quot;,&quot;29&quot;,&quot;30&quot;,&quot;31&quot;,&quot;32&quot;,&quot;33&quot;,&quot;34&quot;,&quot;35&quot;,&quot;36&quot;,&quot;37&quot;,&quot;38&quot;,&quot;39&quot;,&quot;40&quot;,&quot;41&quot;,&quot;42&quot;,&quot;43&quot;,&quot;44&quot;,&quot;45&quot;,&quot;46&quot;,&quot;47&quot;,&quot;48&quot;,&quot;49&quot;,&quot;50&quot;,&quot;51&quot;,&quot;52&quot;,&quot;53&quot;,&quot;54&quot;,&quot;55&quot;,&quot;56&quot;,&quot;57&quot;,&quot;58&quot;,&quot;59&quot;]},{&quot;value&quot;:&quot;18&quot;,&quot;label&quot;:&quot;6&quot;,&quot;minutes&quot;:[&quot;00&quot;]}]}" data-message="Choose a pickup time between 8:00 AM and 6:00 PM.">
+    <label id="pickup-time-label" for="pickup-time" class="block text-xs font-semibold text-cocoa-700 uppercase tracking-wider mb-1.5">Pickup time <span class="text-red-500">*</span></label>
+    <input id="pickup-time" name="pickup_time" type="time" min="08:00" max="18:00" step="60" required value="15:28" class="form-input-custom" aria-describedby="pickup-time-help pickup-time-error"  data-time-value>
+    <button id="pickup-time-trigger" type="button" class="form-input-custom pickup-time-trigger" aria-haspopup="dialog" aria-expanded="false" aria-controls="pickup-time-panel" aria-labelledby="pickup-time-label pickup-time-display" aria-describedby="pickup-time-help pickup-time-error" data-time-trigger hidden>
+        <span id="pickup-time-display" data-time-display>Select pickup time</span>
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+    </button>
+    <p id="pickup-time-help" class="text-xs text-cocoa-500 mt-1">Pickup available from 8:00 AM to 6:00 PM.</p>
+    <p id="pickup-time-error" class="field-error" role="alert" data-error-for="pickup_time" data-time-error  hidden ></p>
+    <div id="pickup-time-panel" class="pickup-time-panel" role="dialog" aria-modal="false" aria-labelledby="pickup-time-panel-heading" hidden data-time-panel>
+        <div class="pickup-time-panel-heading">
+            <h3 id="pickup-time-panel-heading">Select pickup time</h3>
+            <button type="button" aria-label="Close pickup time picker" data-time-close><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+        </div>
+        <div class="pickup-time-controls">
+            <div><label for="pickup-time-period">AM/PM</label><select id="pickup-time-period" data-time-period><option value="">Select</option><option value="AM">AM</option><option value="PM">PM</option></select></div>
+            <div><label for="pickup-time-hour">Hour</label><select id="pickup-time-hour" data-time-hour disabled><option value="">Select</option></select></div>
+            <div><label for="pickup-time-minute">Minute</label><select id="pickup-time-minute" data-time-minute disabled><option value="">Select</option></select></div>
+        </div>
+        <div class="pickup-time-panel-footer">
+            <span data-time-preview aria-live="polite">Choose AM or PM to begin.</span>
+            <button type="button" data-time-done disabled>Done</button>
+        </div>
+    </div>
+</div>
+    <script defer src="http://127.0.0.1:8003/js/pickup-time-picker.js?v=1791399740"></script>
+                </div>
+            </div>
+
+            <div>
+                <label for="notes" class="block text-xs font-semibold text-cocoa-700 uppercase tracking-wider mb-1.5">
+                    Internal order notes <span class="text-[11px] text-cocoa-400 font-normal normal-case">(optional)</span>
+                </label>
+                <textarea id="notes" name="notes_text" maxlength="1000" rows="3" class="form-input-custom" placeholder="Optional notes or instructions...">Keep the selected pickup time.</textarea>
+            </div>
+        </div>
+    </div>
+
+    
+    <aside class="checkout-card p-6 sm:p-7 space-y-5 lg:sticky lg:top-24" aria-labelledby="order-summary">
+        <div class="flex items-center justify-between pb-3.5 border-b border-cocoa-100">
+            <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-lg bg-cocoa-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                </div>
+                <h2 id="order-summary" class="font-bold text-cocoa-700 text-base">Order summary</h2>
+            </div>
+            <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-cream-100 text-cocoa-600 border border-cocoa-100">
+                1 item
+            </span>
+        </div>
+
+        <div class="divide-y divide-cocoa-100 lg:max-h-96 lg:overflow-y-auto pr-1 -mr-1">
+                                                            <div class="py-3.5 text-xs space-y-2.5 first:pt-0">
+                    
+                    <div class="flex items-start gap-3">
+                                                    <div class="w-16 h-16 rounded-xl bg-cocoa-50 border border-cocoa-100 flex items-center justify-center shrink-0 text-cocoa-400">
+                                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8.25v-1.5m0 1.5c-1.355 0-2.697.056-4.024.166C6.845 8.51 6 9.473 6 10.608v2.513m6-4.871c1.355 0 2.697.056 4.024.166C17.155 8.51 18 9.473 18 10.608v2.513M15 8.25v-1.5m-6 1.5v-1.5m12 9.75-1.5.75m-15-.75 1.5.75m0 0a3.75 3.75 0 0 0 7.5 0m7.5 0a3.75 3.75 0 0 1-7.5 0" /></svg>
+                            </div>
+                        
+                        <div class="min-w-0 flex-1 space-y-0.5">
+                            <div class="flex justify-between items-start gap-2">
+                                <div class="font-bold text-cocoa-700 text-sm leading-snug">
+                                    Pickup clock cake
+                                    <span class="inline-block text-xs font-semibold text-cocoa-600 bg-cream-100 px-1.5 py-0.5 rounded border border-cocoa-100 ml-1">×1</span>
+                                </div>
+                                <span class="font-bold text-cocoa-700 whitespace-nowrap text-sm">₱1,000.00</span>
+                            </div>
+                            <p class="text-cocoa-500 text-[11px]">2 layer(s)</p>
+                        </div>
+                    </div>
+
+                    <div class="included-items text-sm space-y-1">
+        <p class="font-semibold inline-flex items-center gap-1 text-cocoa-700">Included per package (Free) <div x-data="{ show: false }"
+     x-id="['tooltip']"
+     @mouseenter="show = true"
+     @mouseleave="show = false"
+     @focusin="show = true"
+     @focusout="show = false"
+     @click.outside="show = false"
+     @keydown.escape.window="show = false"
+     @scroll.window.capture.passive="if (show) show = false"
+     @resize.window.passive="if (show) show = false"
+     x-effect="if (typeof window.positionTooltip === 'function') { window.positionTooltip($el, $refs, show, 'top', 'top-right'); } else if (show) { const p = $refs.panel; if (p) p.style.visibility = 'visible'; } else { const p = $refs.panel; if (p) p.style.visibility = 'hidden'; }"
+     class="inline-flex items-center align-middle ui-tooltip">
+            <button type="button"
+                x-ref="trigger"
+                aria-describedby="tooltip-uZtGQR60"
+                :aria-describedby="$id('tooltip')"
+                aria-label="Complimentary items (e.g. candles, toppers, or boxes) bundled with this package at no extra charge."
+                @click.prevent.stop="show = !show"
+                @mousedown.stop
+                @focus="show = true"
+                @blur="show = false"
+                class="inline-flex items-center justify-center w-4 h-4 text-cocoa-400 hover:text-cocoa-600 focus:outline-none focus-visible:ring-1 focus-visible:ring-cocoa-400 rounded-full transition-colors cursor-help">
+            <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" focusable="false">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5h.253a.25.25 0 01.244.304l-.459 2.066A1.75 1.75 0 0010.747 15H11a.75.75 0 000-1.5h-.253a.25.25 0 01-.244-.304l.459-2.066A1.75 1.75 0 009.253 9H9z" clip-rule="evenodd" />
+            </svg>
+        </button>
+    
+    <div x-show="show"
+         x-cloak
+         x-ref="panel"
+         style="visibility: hidden;"
+         x-transition:enter="transition ease-out duration-150"
+         x-transition:enter-start="opacity-0 scale-95"
+         x-transition:enter-end="opacity-100 scale-100"
+         x-transition:leave="transition ease-in duration-100"
+         x-transition:leave-start="opacity-100 scale-100"
+         x-transition:leave-end="opacity-0 scale-95"
+         id="tooltip-uZtGQR60"
+         :id="$id('tooltip')"
+         role="tooltip"
+         aria-label="Complimentary items (e.g. candles, toppers, or boxes) bundled with this package at no extra charge."
+         class="fixed z-[9999] bg-cocoa-800 text-white rounded-lg p-2.5 text-xs shadow-lg leading-relaxed w-max max-w-xs sm:max-w-sm max-w-[calc(100vw-2rem)] ui-tooltip-panel">
+        Complimentary items (e.g. candles, toppers, or boxes) bundled with this package at no extra charge.
+    </div>
+</div>
+</p>
+                <p class="whitespace-pre-line">Two-layer cake and 8 included cupcakes</p>    </div>
+
+                                                                                                </div>
+                    </div>
+
+        <div class="border-t border-cocoa-100 pt-3.5 space-y-3">
+            <div class="flex justify-between items-center text-sm">
+                <span class="text-cocoa-500 font-medium">Total Price</span>
+                <span class="font-bold text-cocoa-700 text-lg">₱1,000.00</span>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-cocoa-50/80 border border-cocoa-200/80 space-y-1">
+                <div class="flex justify-between items-baseline">
+                    <span class="text-xs font-bold text-cocoa-700 uppercase tracking-wide inline-flex items-center gap-1">
+                        Exact 50% Deposit
+                        <div x-data="{ show: false }"
+     x-id="['tooltip']"
+     @mouseenter="show = true"
+     @mouseleave="show = false"
+     @focusin="show = true"
+     @focusout="show = false"
+     @click.outside="show = false"
+     @keydown.escape.window="show = false"
+     @scroll.window.capture.passive="if (show) show = false"
+     @resize.window.passive="if (show) show = false"
+     x-effect="if (typeof window.positionTooltip === 'function') { window.positionTooltip($el, $refs, show, 'top', 'top-right'); } else if (show) { const p = $refs.panel; if (p) p.style.visibility = 'visible'; } else { const p = $refs.panel; if (p) p.style.visibility = 'hidden'; }"
+     class="inline-flex items-center align-middle ui-tooltip">
+            <button type="button"
+                x-ref="trigger"
+                aria-describedby="tooltip-jryvsbnN"
+                :aria-describedby="$id('tooltip')"
+                aria-label="A 50% deposit is required to reserve your order once staff confirms availability. The remaining balance is paid at pickup."
+                @click.prevent.stop="show = !show"
+                @mousedown.stop
+                @focus="show = true"
+                @blur="show = false"
+                class="inline-flex items-center justify-center w-4 h-4 text-cocoa-400 hover:text-cocoa-600 focus:outline-none focus-visible:ring-1 focus-visible:ring-cocoa-400 rounded-full transition-colors cursor-help">
+            <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" focusable="false">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5h.253a.25.25 0 01.244.304l-.459 2.066A1.75 1.75 0 0010.747 15H11a.75.75 0 000-1.5h-.253a.25.25 0 01-.244-.304l.459-2.066A1.75 1.75 0 009.253 9H9z" clip-rule="evenodd" />
+            </svg>
+        </button>
+    
+    <div x-show="show"
+         x-cloak
+         x-ref="panel"
+         style="visibility: hidden;"
+         x-transition:enter="transition ease-out duration-150"
+         x-transition:enter-start="opacity-0 scale-95"
+         x-transition:enter-end="opacity-100 scale-100"
+         x-transition:leave="transition ease-in duration-100"
+         x-transition:leave-start="opacity-100 scale-100"
+         x-transition:leave-end="opacity-0 scale-95"
+         id="tooltip-jryvsbnN"
+         :id="$id('tooltip')"
+         role="tooltip"
+         aria-label="A 50% deposit is required to reserve your order once staff confirms availability. The remaining balance is paid at pickup."
+         class="fixed z-[9999] bg-cocoa-800 text-white rounded-lg p-2.5 text-xs shadow-lg leading-relaxed w-max max-w-xs sm:max-w-sm max-w-[calc(100vw-2rem)] ui-tooltip-panel">
+        A 50% deposit is required to reserve your order once staff confirms availability. The remaining balance is paid at pickup.
+    </div>
+</div>
+                    </span>
+                    <strong class="text-base font-extrabold text-cocoa-700">₱500.00</strong>
+                </div>
+                <p class="text-[11px] text-cocoa-500 leading-tight">
+                    Pay only after staff confirms your request. The verified deposit secures your booking; the remaining balance (₱500.00) is paid at actual pickup.
+                </p>
+            </div>
+        </div>
+
+        <input type="hidden" name="expected_total" value="1000">
+
+        <p class="text-xs text-cocoa-500">The bakery will review your request first. Payment becomes available after staff confirmation.</p>
+
+        <div class="flex flex-col gap-2 pt-1">
+            <button type="submit" class="w-full py-3.5 px-5 bg-cocoa-600 hover:bg-cocoa-700 active:scale-[0.99] text-white font-semibold rounded-xl shadow-sm transition flex items-center justify-center gap-2 text-sm">
+                <span>Create staff order request</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </button>
+            <button type="submit" formnovalidate formaction="http://127.0.0.1:8000/orders/create/details/back" class="w-full py-2.5 px-4 border border-cocoa-200 hover:bg-cream-100 text-cocoa-600 font-medium rounded-xl transition flex items-center justify-center gap-2 text-xs">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                <span>Back to packages</span>
+            </button>
+        </div>
+    </aside>
+</form>
+</div>
+            </div>
+        </main>
+
+        
+        <footer class="border-t border-cocoa-100 px-4 sm:px-6 lg:px-8 py-3 mt-auto">
+            <div class="text-xs text-cocoa-500 flex items-center justify-between">
+                <span>Aling Chona Cakes & Cupcakes — Staff System</span>
+                
+            </div>
+        </footer>
+    </div>
+
+    
+    <script type="application/json" id="validation-errors">[]</script>
+</body>
+</html>

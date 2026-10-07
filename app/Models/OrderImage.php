@@ -32,4 +32,11 @@ class OrderImage extends Model
     {
         return $this->belongsTo(User::class, 'uploaded_by');
     }
+
+    public function url(): string
+    {
+        return str_starts_with($this->file_path, 'staff/')
+            ? route('orders.images.show', ['order' => $this->order_id, 'image' => $this->id])
+            : asset('storage/'.$this->file_path);
+    }
 }

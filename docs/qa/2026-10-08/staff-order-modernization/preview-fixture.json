@@ -1,0 +1,14 @@
+{
+    "database": "C:\\Users\\User\\AppData\\Local\\Temp\/bakery-staff-workspace-preview-da99dd7e3f5cdec7a5a8fc67\/workflow-concurrency-staff.sqlite",
+    "storage": "C:\\Users\\User\\AppData\\Local\\Temp\/bakery-staff-workspace-preview-da99dd7e3f5cdec7a5a8fc67\/storage",
+    "root": "C:\\Users\\User\\AppData\\Local\\Temp\/bakery-staff-workspace-preview-da99dd7e3f5cdec7a5a8fc67",
+    "products": [
+        1,
+        2
+    ],
+    "owner_id": 1,
+    "assistant_id": 2,
+    "customer_id": 1,
+    "upload": "C:\\Users\\User\\AppData\\Local\\Temp\/bakery-staff-workspace-preview-da99dd7e3f5cdec7a5a8fc67\/design.png",
+    "pickup_date": "2026-10-11"
+}

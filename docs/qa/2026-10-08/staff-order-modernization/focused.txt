@@ -1,0 +1,65 @@
+PHPUnit 11.5.56 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.2.12
+Configuration: C:\Users\User\Desktop\IT12_Project\phpunit.xml
+
+....................................................E..F........  64 / 64 (100%)
+
+Time: 00:30.621, Memory: 62.00 MB
+
+There was 1 error:
+
+1) Tests\Feature\StaffPackageWorkspaceTest::test_save_rechecks_prices_and_equal_total_price_changes_cannot_bypass_review
+Illuminate\Database\QueryException: SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: add_ons.description (Connection: sqlite, Database: :memory:, SQL: insert into "add_ons" ("name", "price", "is_active", "updated_at", "created_at") values (Extra cupcakes, 100, 1, 2026-10-07 20:04:58, 2026-10-07 20:04:58))
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:838
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:794
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:573
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:537
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Processors\Processor.php:32
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Builder.php:4170
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Builder.php:2237
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1436
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1401
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1240
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Builder.php:1219
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\helpers.php:393
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Builder.php:1218
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\Traits\ForwardsCalls.php:23
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:2544
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:2560
+C:\Users\User\Desktop\IT12_Project\tests\Feature\StaffPackageWorkspaceTest.php:199
+
+Caused by
+PDOException: SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: add_ons.description
+
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:584
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:827
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:794
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:573
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Connection.php:537
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Processors\Processor.php:32
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Query\Builder.php:4170
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Builder.php:2237
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1436
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1401
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:1240
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Builder.php:1219
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\helpers.php:393
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Builder.php:1218
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Support\Traits\ForwardsCalls.php:23
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:2544
+C:\Users\User\Desktop\IT12_Project\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:2560
+C:\Users\User\Desktop\IT12_Project\tests\Feature\StaffPackageWorkspaceTest.php:199
+
+--
+
+There was 1 failure:
+
+1) Tests\Feature\StaffPackageWorkspaceTest::test_paid_customer_cancellation_retains_deposit_once_in_reports
+Failed asserting that 0.0 is identical to 500.0.
+
+C:\Users\User\Desktop\IT12_Project\tests\Feature\StaffPackageWorkspaceTest.php:284
+
+ERRORS!
+Tests: 64, Assertions: 778, Errors: 1, Failures: 1.

@@ -3,7 +3,21 @@
 @section('title', 'Manage Customers')
 
 @section('content')
-<div class="space-y-6">
+<div class="space-y-6" x-data="{
+    editModalOpen: {{ $errors->any() && old('_form') === 'edit_customer' ? 'true' : 'false' }},
+    editCustomer: {
+        id: {{ old('_form') === 'edit_customer' ? old('customer_id', 'null') : 'null' }},
+        first_name: @js(old('_form') === 'edit_customer' ? old('first_name', '') : ''),
+        middle_name: @js(old('_form') === 'edit_customer' ? old('middle_name', '') : ''),
+        last_name: @js(old('_form') === 'edit_customer' ? old('last_name', '') : ''),
+        phone_number: @js(old('_form') === 'edit_customer' ? old('phone_number', '') : ''),
+        update_url: @js(old('_form') === 'edit_customer' && old('customer_id') ? route('customers.update', old('customer_id')) : '')
+    },
+    openEditCustomer(data) {
+        this.editCustomer = { ...data };
+        this.editModalOpen = true;
+    }
+}">
     <div class="page-heading">
         <div>
             <h1 class="text-xl font-bold text-cocoa-600">Customer Management</h1>
@@ -64,7 +78,17 @@
                                 <td class="p-4 text-right"><div class="customer-row-actions">
                                     <a href="{{ route('customers.show', $c) }}" class="text-cocoa-600 font-medium hover:underline">View</a>
                                     @can('manage-customers')
-<a href="{{ route('customers.edit', $c) }}" class="text-cocoa-400 hover:text-cocoa-600 transition hover:underline">Edit</a>
+@php
+    $customerData = [
+        'id' => $c->id,
+        'first_name' => $c->first_name,
+        'middle_name' => $c->middle_name ?? '',
+        'last_name' => $c->last_name,
+        'phone_number' => $c->phone_number,
+        'update_url' => route('customers.update', $c),
+    ];
+@endphp
+<a href="{{ route('customers.edit', $c) }}" @click.prevent="openEditCustomer(@js($customerData))" class="text-cocoa-400 hover:text-cocoa-600 transition hover:underline">Edit</a>
 @endcan
                                 </div></td>
                             </tr>
@@ -77,5 +101,8 @@
             </div>
         @endif
     </div>
+    @can('manage-customers')
+        @include('admin.customers.edit-modal', ['fromIndex' => true])
+    @endcan
 </div>
 @endsection

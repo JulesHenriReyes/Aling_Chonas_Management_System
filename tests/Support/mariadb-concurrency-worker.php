@@ -1,11 +1,9 @@
 <?php
 
 use App\Models\Order;
-use App\Models\Refund;
 use App\Models\User;
 use App\Services\InventoryService;
 use App\Services\OrderService;
-use App\Services\RefundService;
 use Illuminate\Validation\ValidationException;
 
 require __DIR__.'/mariadb-bootstrap.php';
@@ -23,13 +21,10 @@ while (! file_exists($directory.'/release')) {
 }
 try {
     $orders = app(OrderService::class);
-    $refunds = app(RefundService::class);
     $record = match ($payload['action']) {
         'inventory' => app(InventoryService::class)->post($payload['data'], $actor),
         'deposit' => $orders->recordDownPayment(Order::findOrFail($payload['order']), 1000, $payload['method'] ?? 'cash', $payload['reference'] ?? null, $actor),
         'pickup' => $orders->completePickup(Order::findOrFail($payload['order']), 'cash', null, $actor, true),
-        'failure' => $refunds->markBakeryFailure(Order::findOrFail($payload['order']), 'Actual fixture oven failure', $actor, true),
-        'refund' => $refunds->complete(Refund::findOrFail($payload['refund']), ['method' => 'cash', 'reference_number' => 'FIXTURE-RETURN', 'transfer_confirmed' => 1], $actor),
     };
     $result = ['status' => 'posted', 'id' => $record?->id];
 } catch (ValidationException $error) {

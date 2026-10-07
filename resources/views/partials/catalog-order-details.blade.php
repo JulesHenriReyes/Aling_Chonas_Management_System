@@ -1,6 +1,11 @@
 @if ($staff)<script src="{{ asset('js/staff-customer-picker.js') }}?v={{ filemtime(public_path('js/staff-customer-picker.js')) }}"></script>@endif
-<form action="{{ $staff ? route('orders.store') : route('public.order.store') }}" method="POST" class="review-first-checkout order-details-grid" @if($staff) x-data="staffCustomerPicker({{ Js::from($customers->map(fn ($customer) => ['id' => $customer->id, 'name' => $customer->full_name, 'phone' => $customer->phone_number])->values()) }}, {{ Js::from(old('customer_id', $draft['details']['customer_id'] ?? '')) }}, {{ Js::from(route('orders.inlineCustomer')) }}, {{ Js::from(csrf_token()) }})" @submit="if ($event.submitter?.formAction !== {{ Js::from(route('orders.back')) }} && !selectedId) { error = 'Choose or add a customer before saving this order.'; $event.preventDefault() }" @endif>
+<form action="{{ $staff ? route('orders.store') : route('public.order.store') }}" method="POST" class="review-first-checkout order-details-grid" @if($staff) data-staff-checkout data-draft-prefix="{{ $context['browser_prefix'] }}" data-details-draft-url="{{ route('orders.details.draft') }}" x-data="staffCustomerPicker({{ Js::from($customers->map(fn ($customer) => ['id' => $customer->id, 'name' => $customer->full_name, 'phone' => $customer->phone_number])->values()) }}, {{ Js::from(old('customer_id', $draft['details']['customer_id'] ?? '')) }}, {{ Js::from(route('orders.inlineCustomer')) }}, {{ Js::from(csrf_token()) }}, {{ Js::from($draft['customer_picker'] ?? []) }})" @submit="if ($event.submitter?.formAction !== {{ Js::from(route('orders.back')) }} && !selectedId) { error = 'Choose or add a customer before creating this order.'; $event.preventDefault(); $nextTick(() => document.getElementById('customer-search').focus()) }" @endif>
     @csrf
+    @if($staff)
+        <input type="hidden" name="submission_key" value="{{ $draft['submission_key'] }}">
+        <input type="hidden" name="draft_id" value="{{ $draft['draft_id'] }}">
+        <script defer src="{{ asset('js/staff-checkout-draft.js') }}?v={{ filemtime(public_path('js/staff-checkout-draft.js')) }}"></script>
+    @endif
     @unless($staff)
         <input type="hidden" name="submission_key" value="{{ $draft['submission_key'] }}">
         <script defer src="{{ asset('js/public-checkout-draft.js') }}"></script>
@@ -21,20 +26,22 @@
                         Search customers by name or phone
                     </label>
                     <div class="relative">
-                        <input id="customer-search" type="search" x-model="search" @focus="open = true" @click="open = true" @input="selectedId = ''; open = true" @keydown.escape="open = false" @keydown.tab="open = false" autocomplete="off" class="form-input-custom pr-10" placeholder="Type a name or phone number..." role="combobox" aria-controls="customer-options" :aria-expanded="open.toString()">
+                        <input id="customer-search" type="search" x-model="search" @focus="open = true" @click="open = true" @input="searchChanged()" @keydown.arrow-down.prevent="move(1)" @keydown.arrow-up.prevent="move(-1)" @keydown.enter.prevent="selectActive()" @keydown.escape="open = false; activeIndex = -1" @keydown.tab="open = false" autocomplete="off" class="form-input-custom pr-10" placeholder="Type a name or phone number..." role="combobox" aria-autocomplete="list" aria-controls="customer-options" :aria-expanded="open.toString()" :aria-activedescendant="open && activeIndex >= 0 ? 'customer-option-' + matches[activeIndex]?.id : null" aria-describedby="customer-id-error" @error('customer_id') aria-invalid="true" @enderror>
                         <input type="hidden" name="customer_id" :value="selectedId">
                         <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-cocoa-400">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                         </div>
                     </div>
                     <div id="customer-options" x-show="open && matches.length" x-cloak class="customer-results mt-1" role="listbox">
-                        <template x-for="customer in matches" :key="customer.id">
-                            <button type="button" role="option" class="customer-result hover:bg-cream-100 flex items-center justify-between" @click="choose(customer)">
+                        <template x-for="(customer, customerIndex) in matches" :key="customer.id">
+                            <button type="button" role="option" :id="'customer-option-'+customer.id" :aria-selected="(activeIndex === customerIndex).toString()" tabindex="-1" class="customer-result hover:bg-cream-100 flex items-center justify-between" @click="choose(customer)">
                                 <span class="font-medium text-cocoa-700" x-text="customer.name"></span>
                                 <span class="text-xs text-cocoa-400" x-text="customer.phone"></span>
                             </button>
                         </template>
                     </div>
+                    <p x-show="open && !matches.length" x-cloak class="form-hint" role="status">No matching customers. Add the customer below.</p>
+                    <p id="customer-id-error" class="field-error" role="alert">@error('customer_id'){{ $message }}@enderror</p>
                 </div>
                 <div>
                     <button type="button" class="inline-flex items-center gap-1.5 text-xs font-semibold text-cocoa-600 hover:text-cocoa-700 underline" @click="showAdd = !showAdd; open = false">
@@ -45,9 +52,9 @@
                 <div x-show="showAdd" x-cloak class="border border-cocoa-100 bg-cream-50/50 rounded-xl p-4 space-y-3">
                     <h3 class="font-semibold text-sm text-cocoa-700">New customer</h3>
                     <div class="grid sm:grid-cols-2 gap-3">
-                        <div><label for="new-first" class="block text-xs font-semibold text-cocoa-600 mb-1">First name</label><input id="new-first" x-model="newCustomer.first_name" maxlength="100" class="form-input-custom"></div>
-                        <div><label for="new-last" class="block text-xs font-semibold text-cocoa-600 mb-1">Last name</label><input id="new-last" x-model="newCustomer.last_name" maxlength="100" class="form-input-custom"></div>
-                        <div><label for="new-middle" class="block text-xs font-semibold text-cocoa-600 mb-1">Middle name (optional)</label><input id="new-middle" x-model="newCustomer.middle_name" maxlength="100" class="form-input-custom"></div>
+                        <div><label for="new-first" class="block text-xs font-semibold text-cocoa-600 mb-1">First name</label><input id="new-first" x-model="newCustomer.first_name" maxlength="100" :aria-invalid="Boolean(fieldErrors.first_name)" aria-describedby="new-first-error" class="form-input-custom"><p id="new-first-error" role="alert" class="field-error" x-show="fieldErrors.first_name" x-text="fieldErrors.first_name?.[0]" x-cloak></p></div>
+                        <div><label for="new-last" class="block text-xs font-semibold text-cocoa-600 mb-1">Last name</label><input id="new-last" x-model="newCustomer.last_name" maxlength="100" :aria-invalid="Boolean(fieldErrors.last_name)" aria-describedby="new-last-error" class="form-input-custom"><p id="new-last-error" role="alert" class="field-error" x-show="fieldErrors.last_name" x-text="fieldErrors.last_name?.[0]" x-cloak></p></div>
+                        <div><label for="new-middle" class="block text-xs font-semibold text-cocoa-600 mb-1">Middle name (optional)</label><input id="new-middle" x-model="newCustomer.middle_name" maxlength="100" :aria-invalid="Boolean(fieldErrors.middle_name)" aria-describedby="new-middle-error" class="form-input-custom"><p id="new-middle-error" role="alert" class="field-error" x-show="fieldErrors.middle_name" x-text="fieldErrors.middle_name?.[0]" x-cloak></p></div>
                         <div><label for="new-phone" class="block text-xs font-semibold text-cocoa-600 mb-1">Mobile or landline number</label><input id="new-phone" type="tel" x-model="newCustomer.phone_number" maxlength="40" aria-describedby="new-phone-help new-phone-error" :aria-invalid="Boolean(fieldErrors.phone_number)" class="form-input-custom"><p id="new-phone-help" class="text-xs text-cocoa-500 mt-1">For landlines, include the area code, e.g. 032 234 5678.</p><p id="new-phone-error" role="alert" x-show="fieldErrors.phone_number" x-text="fieldErrors.phone_number?.[0]" class="text-sm text-red-700" x-cloak></p></div>
                     </div>
                     <button type="button" @click="createCustomer()" :disabled="creating" class="px-4 py-2 bg-cocoa-600 hover:bg-cocoa-700 text-white text-xs font-semibold rounded-lg disabled:opacity-60 transition" x-text="creating ? 'Saving customer…' : 'Save and select customer'"></button>
@@ -102,11 +109,7 @@
                     <input id="pickup-date" name="pickup_date" type="date" min="{{ \App\Support\PickupCalendar::todayString() }}" required value="{{ old('pickup_date', $draft['details']['pickup_date'] ?? '') }}" class="form-input-custom">
                 </div>
                 <div>
-                    <label for="pickup-time" class="block text-xs font-semibold text-cocoa-700 uppercase tracking-wider mb-1.5">
-                        Pickup time <span class="text-red-500">*</span>
-                    </label>
-                    <input id="pickup-time" name="pickup_time" type="time" min="08:00" max="18:00" required value="{{ old('pickup_time', $draft['details']['pickup_time'] ?? '') }}" class="form-input-custom">
-                    <p class="text-xs text-cocoa-500 mt-1">Pickup available between 8:00 AM and 6:00 PM.</p>
+                    <x-pickup-time :value="old('pickup_time', $draft['details']['pickup_time'] ?? '')" />
                 </div>
             </div>
 
@@ -214,23 +217,24 @@
                 <div class="flex justify-between items-baseline">
                     <span class="text-xs font-bold text-cocoa-700 uppercase tracking-wide inline-flex items-center gap-1">
                         Exact 50% Deposit
-                        <x-tooltip text="A 50% deposit is required to reserve your order once staff confirms availability. The remaining balance is paid at pickup." />
+                        <x-tooltip :text="$staff ? 'Record the exact 50% deposit in Cash or GCash after creating the staff order. The remaining balance is paid at pickup.' : 'A 50% deposit is required to reserve your order once staff confirms availability. The remaining balance is paid at pickup.'" />
                     </span>
                     <strong class="text-base font-extrabold text-cocoa-700">₱{{ number_format($quote['deposit'], 2) }}</strong>
                 </div>
                 <p class="text-[11px] text-cocoa-500 leading-tight">
-                    Pay only after staff confirms your request. The verified deposit secures your booking; the remaining balance (₱{{ number_format($quote['total'] - $quote['deposit'], 2) }}) is paid at actual pickup.
+                    {{ $staff ? 'Record the deposit separately in Cash or GCash after creating the order.' : 'Pay only after staff confirms your request.' }} The verified deposit secures the booking; the remaining balance (₱{{ number_format($quote['total'] - $quote['deposit'], 2) }}) is paid at actual pickup.
                 </p>
             </div>
         </div>
 
         <input type="hidden" name="expected_total" value="{{ $quote['total'] }}">
 
-        <p class="text-xs text-cocoa-500">The bakery will review your request first. Payment becomes available after staff confirmation.</p>
+        <p class="text-xs text-cocoa-500">{{ $staff ? 'Creating this order confirms the design, quantities, pickup schedule and capacity. The order will await its deposit.' : 'The bakery will review your request first. Payment becomes available after staff confirmation.' }}</p>
+        @if($staff)<p class="form-hint" role="status" data-draft-status></p>@endif
 
         <div class="flex flex-col gap-2 pt-1">
             <button type="submit" class="w-full py-3.5 px-5 bg-cocoa-600 hover:bg-cocoa-700 active:scale-[0.99] text-white font-semibold rounded-xl shadow-sm transition flex items-center justify-center gap-2 text-sm">
-                <span>{{ $staff ? 'Create staff order request' : 'Submit order request' }}</span>
+                <span>{{ $staff ? 'Create staff order' : 'Submit order request' }}</span>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
             </button>
             <button type="submit" formnovalidate formaction="{{ $staff ? route('orders.back') : route('public.order.back') }}" class="w-full py-2.5 px-4 border border-cocoa-200 hover:bg-cream-100 text-cocoa-600 font-medium rounded-xl transition flex items-center justify-center gap-2 text-xs">

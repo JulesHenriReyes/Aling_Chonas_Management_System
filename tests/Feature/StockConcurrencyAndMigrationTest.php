@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Models\{Customer, InventoryTransaction, Order, Payment, Product, Refund, Supply, User};
+use App\Models\{Customer, InventoryTransaction, Order, Payment, Product, Supply, User};
 use Illuminate\Support\Facades\{Artisan, DB, File};
 use Illuminate\Support\Str;
 use Symfony\Component\Process\Process;
@@ -33,7 +33,7 @@ class StockConcurrencyAndMigrationTest extends TestCase
     private function supply(): Supply { return Supply::create(['supply_name'=>'Shared flour','category'=>'ingredients','unit'=>'kg','current_quantity'=>10,'reorder_level'=>3,'is_active'=>true]); }
     private function payload(Supply $supply,string $type,int $quantity): array
     {
-        return ['submission_key'=>(string)Str::uuid(),'type'=>$type,'operation_date'=>'2026-10-02','notes'=>'Concurrent fixture','lines'=>[['supply_id'=>$supply->id,'quantity'=>$quantity]]];
+        return ['submission_key'=>(string)Str::uuid(),'type'=>$type,'operation_date'=>'2026-10-02','notes'=>'Concurrent fixture','business_date'=>\App\Support\InventoryCalendar::date(),'lines'=>[['supply_id'=>$supply->id,'quantity'=>$quantity,'expiry_date'=>'2099-12-31','expected_version'=>$supply->fresh()->stock_version]]];
     }
     private function runTogether(User $actor,array $payloads): array
     {
@@ -56,6 +56,7 @@ class StockConcurrencyAndMigrationTest extends TestCase
     public function test_concurrent_receipts_have_no_lost_update(): void
     {
         $this->migrate(); $actor=$this->staff(); $supply=$this->supply();
+        \App\Models\StockEntry::create(['supply_id'=>$supply->id,'source'=>'verified_opening','expiry_date'=>'2099-12-31','opening_quantity'=>10,'remaining_quantity'=>10]);
         $results=$this->runTogether($actor,[$this->payload($supply,'receipt',3),$this->payload($supply,'receipt',4)]);
         $this->assertSame(['posted','posted'],array_column($results,'status'));
         $this->assertEquals(17,$supply->fresh()->current_quantity);
@@ -65,6 +66,7 @@ class StockConcurrencyAndMigrationTest extends TestCase
     public function test_concurrent_usage_cannot_overspend_stock(): void
     {
         $this->migrate(); $actor=$this->staff(); $supply=$this->supply();
+        \App\Models\StockEntry::create(['supply_id'=>$supply->id,'source'=>'verified_opening','expiry_date'=>'2099-12-31','opening_quantity'=>10,'remaining_quantity'=>10]);
         $results=$this->runTogether($actor,[$this->payload($supply,'usage',7),$this->payload($supply,'usage',7)]);
         $statuses=array_column($results,'status'); sort($statuses);
         $this->assertSame(['posted','rejected'],$statuses);
@@ -73,7 +75,8 @@ class StockConcurrencyAndMigrationTest extends TestCase
     }
     public function test_concurrent_duplicate_receipt_posts_once(): void
     {
-        $this->migrate(); $actor=$this->staff(); $supply=$this->supply(); $payload=$this->payload($supply,'receipt',3);
+        $this->migrate(); $actor=$this->staff(); $supply=$this->supply();
+        \App\Models\StockEntry::create(['supply_id'=>$supply->id,'source'=>'verified_opening','expiry_date'=>'2099-12-31','opening_quantity'=>10,'remaining_quantity'=>10]); $payload=$this->payload($supply,'receipt',3);
         $results=$this->runTogether($actor,[$payload,$payload]);
         $this->assertSame($results[0]['id'],$results[1]['id']);
         $this->assertEquals(13,$supply->fresh()->current_quantity);
@@ -97,7 +100,7 @@ class StockConcurrencyAndMigrationTest extends TestCase
         $order->orderDetails()->create(['product_id'=>$product->id,'product_name_snapshot'=>'Original saved cake name','quantity'=>1,'unit_price'=>1250,'layers'=>1]);
         Payment::create(['order_id'=>$order->id,'user_id'=>$actor->id,'amount'=>1250,'payment_type'=>'final_payment','payment_method'=>'cash','payment_date'=>'2026-09-20 08:00:00']);
         $cancelled=Order::withoutEvents(fn () => Order::create(['order_number'=>'LEGACY-REFUND','customer_id'=>$customer->id,'user_id'=>$actor->id,'status'=>'cancelled','cancelled_at'=>'2026-09-21 08:00:00','cancellation_kind'=>'bakery_failure','pickup_date'=>'2026-09-21','pickup_time'=>'16:00']));
-        Refund::create(['order_id'=>$cancelled->id,'requested_by'=>$actor->id,'amount'=>500,'reason'=>'Legacy bakery-failure refund','status'=>'pending']);
+        DB::table('refunds')->insert(['order_id'=>$cancelled->id,'requested_by'=>$actor->id,'amount'=>500,'reason'=>'Legacy bakery-failure refund','status'=>'pending']);
         $snapshots=[];
         foreach(['users','customers','products','orders','order_details','payments','refunds','supplies','inventory_transactions','expenses'] as $table) $snapshots[$table]=DB::table($table)->get()->map(fn($row)=>(array)$row)->all();
         foreach(File::glob(database_path('migrations/2026_10_02*.php')) as $path) (require $path)->up();

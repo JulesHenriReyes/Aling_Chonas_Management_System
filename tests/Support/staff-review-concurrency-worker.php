@@ -1,13 +1,11 @@
 <?php
 
 use App\Models\Order;
-use App\Models\Refund;
 use App\Models\User;
 use App\Services\InventoryService;
 use App\Services\OrderService;
 use App\Services\OrderReviewService;
 use App\Services\PaymentReviewService;
-use App\Services\RefundService;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -31,7 +29,6 @@ while (! file_exists($directory.'/release')) {
 }
 try {
     $orders = app(OrderService::class);
-    $refunds = app(RefundService::class);
     $record = match ($payload['action']) {
         'confirm' => app(OrderReviewService::class)->confirm(Order::findOrFail($payload['order']), $actor, true),
         'decline' => app(OrderReviewService::class)->decline(Order::findOrFail($payload['order']), 'Fixture capacity unavailable', $actor),
@@ -41,8 +38,6 @@ try {
         'inventory' => app(InventoryService::class)->post($payload['data'], $actor),
         'deposit' => $orders->recordDownPayment(Order::findOrFail($payload['order']), 1000, $payload['method'] ?? 'cash', $payload['reference'] ?? null, $actor),
         'pickup' => $orders->completePickup(Order::findOrFail($payload['order']), 'cash', null, $actor, true),
-        'failure' => $refunds->markBakeryFailure(Order::findOrFail($payload['order']), 'Actual fixture oven failure', $actor, true),
-        'refund' => $refunds->complete(Refund::findOrFail($payload['refund']), ['method' => 'cash', 'reference_number' => 'FIXTURE-RETURN', 'transfer_confirmed' => 1], $actor),
     };
     $result = ['status' => 'posted', 'id' => $record?->id];
 } catch (ValidationException $error) {

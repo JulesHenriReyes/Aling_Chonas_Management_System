@@ -20,13 +20,19 @@ class StockOperationsAndExpensesTest extends TestCase
 
     private function supply(string $name, string $unit = 'kg', float $quantity = 10): Supply
     {
-        return Supply::create(['supply_name' => $name, 'category' => 'ingredients', 'unit' => $unit, 'current_quantity' => $quantity, 'reorder_level' => 5, 'is_active' => true]);
+        $supply = Supply::create(['supply_name' => $name, 'category' => 'ingredients', 'unit' => $unit, 'current_quantity' => $quantity, 'reorder_level' => 5, 'is_active' => true]);
+        if ($quantity > 0) \App\Models\StockEntry::create(['supply_id'=>$supply->id,'source'=>'verified_opening','expiry_date'=>'2099-12-31','opening_quantity'=>$quantity,'remaining_quantity'=>$quantity]);
+        return $supply;
     }
 
     private function batch(array $supplies, string $type = 'receipt', float $quantity = 2): array
     {
-        return ['submission_key' => (string) Str::uuid(), 'type' => $type, 'operation_date' => '2026-10-02', 'notes' => 'Delivery / production count',
-            'lines' => array_map(fn ($s) => ['supply_id' => $s->id, 'quantity' => $quantity, 'expected_version' => $s->stock_version ?? 0], $supplies)];
+        return ['submission_key'=>(string)Str::uuid(), 'type'=>$type, 'operation_date'=>'2026-10-02', 'business_date'=>\App\Support\InventoryCalendar::date(), 'notes'=>'Delivery / production count',
+            'lines'=>array_map(function ($s) use ($type,$quantity) {
+                $line=['supply_id'=>$s->id,'quantity'=>$quantity,'expected_version'=>$s->fresh()->stock_version,'expiry_date'=>'2099-12-31'];
+                if (in_array($type,['waste','stocktake'])) $line['entries']=[['stock_entry_id'=>$s->stockEntries()->first()->id,'quantity'=>$quantity]];
+                return $line;
+            },$supplies)];
     }
 
     public function test_receipt_is_atomic_grouped_idempotent_and_reconcilable_without_expenses(): void
@@ -95,9 +101,10 @@ class StockOperationsAndExpensesTest extends TestCase
     public function test_supply_opening_balance_unit_guard_search_filters_and_pagination(): void
     {
         $this->actingAs($this->staff());
-        $data = ['supply_name' => 'Flour', 'category' => 'ingredients', 'unit' => 'kg', 'current_quantity' => 10, 'reorder_level' => 5, 'is_active' => 1];
+        $data = ['supply_name' => 'Flour', 'category' => 'ingredients', 'unit' => 'kg', 'current_quantity' => 0, 'reorder_level' => 5, 'is_active' => 1];
         $this->post('/supplies', $data)->assertRedirect(); $supply = Supply::sole();
-        $this->assertDatabaseHas('inventory_baselines', ['supply_id' => $supply->id, 'opening_quantity' => 10, 'source' => 'opening_balance']);
+        $this->post('/inventory', $this->batch([$supply], 'receipt', 10))->assertRedirect();
+        $this->assertDatabaseHas('inventory_baselines', ['supply_id' => $supply->id, 'opening_quantity' => 0, 'source' => 'opening_balance']);
         $data['unit'] = 'bag'; $this->patch('/supplies/'.$supply->id, $data)->assertSessionHasErrors('unit');
         $this->assertEquals('kg', $supply->fresh()->unit);
         for ($i = 0; $i < 24; $i++) $this->supply('Boxes '.$i, 'piece', 0);
@@ -108,10 +115,10 @@ class StockOperationsAndExpensesTest extends TestCase
 
     public function test_legacy_movement_can_be_corrected_once_without_rewriting_history(): void
     {
-        $actor=$this->staff(); $this->actingAs($actor); $supply=$this->supply('Legacy sugar', 'kg', 15);
+        $actor=$this->staff('owner'); $this->actingAs($actor); $supply=$this->supply('Legacy sugar', 'kg', 15);
         $movement=InventoryTransaction::create(['supply_id'=>$supply->id,'user_id'=>$actor->id,'transaction_type'=>'stock_in','quantity'=>5,'transaction_date'=>'2026-09-01','notes'=>'Original delivery']);
         $this->get('/inventory/movements/'.$movement->id)->assertOk()->assertSee('Correct this movement');
-        $data=['submission_key'=>(string)Str::uuid(),'notes'=>'Duplicate legacy delivery entry'];
+        $data=['submission_key'=>(string)Str::uuid(),'notes'=>'Duplicate legacy delivery entry','reconciliation'=>[$movement->id=>[['stock_entry_id'=>$supply->stockEntries()->first()->id,'quantity'=>5]]]];
         $this->post('/inventory/movements/'.$movement->id.'/reverse',$data)->assertRedirect();
         $this->post('/inventory/movements/'.$movement->id.'/reverse',$data)->assertRedirect();
         $this->assertEquals(10,$supply->fresh()->current_quantity);
@@ -159,10 +166,11 @@ class StockOperationsAndExpensesTest extends TestCase
         $actor = $this->staff(); $this->actingAs($actor);
         for ($i = 0; $i < 25; $i++) Expense::create($this->expenseData() + ['user_id' => $actor->id]);
         $this->get('/expenses?category=ingredients')->assertOk()->assertViewHas('totalExpenses', 6250)->assertViewHas('expenses', fn ($rows) => $rows->count() === 20)->assertSee('data-desc=', false)->assertSee('data-action=', false);
-        foreach (['/expenses/create', '/expenses/1/edit', '/expenses/1', '/expenses/history'] as $page) $this->get($page)->assertOk();
+        $expenseId=Expense::orderBy('id')->first()->id;
+        foreach (['/expenses/create', '/expenses/'.$expenseId.'/edit', '/expenses/'.$expenseId, '/expenses/history'] as $page) $this->get($page)->assertOk();
         $actor->update(['is_active' => false]);
         $this->get('/expenses')->assertForbidden(); $this->post('/expenses', $this->expenseData())->assertForbidden();
-        $this->patch('/expenses/1', [])->assertForbidden(); $this->delete('/expenses/1', [])->assertForbidden();
+        $this->patch('/expenses/'.$expenseId, [])->assertForbidden(); $this->delete('/expenses/'.$expenseId, [])->assertForbidden();
         $this->post('/inventory', [])->assertForbidden(); $this->get('/supplies/lookup')->assertForbidden();
     }
 

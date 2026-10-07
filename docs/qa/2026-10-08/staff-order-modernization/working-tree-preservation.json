@@ -1,0 +1,17 @@
+{
+  "unrelated_tracked_diffs_identical_to_initial_snapshot": 54,
+  "concurrently_modified_unrelated_paths_left_intact": [
+    "app/Http/Controllers/SupplyController.php",
+    "public/js/bakery-ui.js",
+    "resources/views/admin/expenses/index.blade.php",
+    "resources/views/admin/expenses/show.blade.php",
+    "resources/views/admin/supplies/index.blade.php",
+    "resources/views/admin/supplies/operation-form.blade.php",
+    "resources/views/admin/supplies/show.blade.php"
+  ],
+  "concurrent_change_note": "These paths changed outside this ordering task. No restore, reset, or edits were applied to them by this task. The initial snapshot and current differences are retained for review.",
+  "preexisting_untracked_paths_present": 19,
+  "missing_preexisting_untracked_paths": [],
+  "new_workflow_migrations": 0,
+  "git_diff_check_passed": true
+}

@@ -90,7 +90,8 @@ $this->orderService->recordFinalPayment($order1, 1000.00, 'gcash', 'REF-1000', $
 
         $this->confirmPaymentFixture($order2);
         $this->orderService->recordDownPayment($order2, 1000.00, 'gcash', 'REF-500', $this->owner, $today);
-        $this->orderService->cancelOrder($order2, $this->owner);
+        // Historical paid cancellation fixture; new paid cancellations are blocked.
+        $order2->forceFill(['status'=>'cancelled','cancellation_kind'=>'customer','cancelled_at'=>now()])->save();
 
         // 3. Record business expense: ₱800 on ingredients
         Expense::create([
@@ -125,7 +126,7 @@ $this->orderService->recordFinalPayment($order1, 1000.00, 'gcash', 'REF-1000', $
     public function test_low_stock_supplies_query(): void
     {
         // Normal supply
-        Supply::create([
+        $normalSupply = Supply::create([
             'supply_name' => 'Sugar',
             'category' => 'ingredients',
             'unit' => 'kg',
@@ -144,6 +145,7 @@ $this->orderService->recordFinalPayment($order1, 1000.00, 'gcash', 'REF-1000', $
             'is_active' => true,
         ]);
 
+        foreach ([$normalSupply,$lowSupply] as $supply) \App\Models\StockEntry::create(['supply_id'=>$supply->id,'source'=>'verified_opening','expiry_date'=>'2099-12-31','opening_quantity'=>$supply->current_quantity,'remaining_quantity'=>$supply->current_quantity]);
         $lowStockList = $this->reportService->getLowStockSupplies();
 
         $this->assertCount(1, $lowStockList);
@@ -165,7 +167,8 @@ $this->orderService->recordFinalPayment($order1, 1000.00, 'gcash', 'REF-1000', $
 
         $this->confirmPaymentFixture($order);
         $this->orderService->recordDownPayment($order, 1000.00, 'cash', null, $this->owner, $today);
-        $this->orderService->cancelOrder($order, $this->owner);
+        // Historical paid cancellation fixture; new paid cancellations are blocked.
+        $order->forceFill(['status'=>'cancelled','cancellation_kind'=>'customer','cancelled_at'=>now()])->save();
 
         $this->assertSame(1000.00, $this->reportService->getCancellationIncome($today, $today));
     }
@@ -186,7 +189,8 @@ $this->orderService->recordFinalPayment($order1, 1000.00, 'gcash', 'REF-1000', $
         $this->orderService->recordDownPayment($order, 1000.00, 'cash', null, $this->owner, $today);
         // Explicit historical fixture; preserve existing classification, not a new retention decision.
         $order->payments()->create(['user_id' => $this->owner->id, 'amount' => 1000, 'payment_type' => 'final_payment', 'payment_method' => 'cash', 'payment_date' => $today]);
-        $this->orderService->cancelOrder($order, $this->owner);
+        // Historical paid cancellation fixture; new paid cancellations are blocked.
+        $order->forceFill(['status'=>'cancelled','cancellation_kind'=>'customer','cancelled_at'=>now()])->save();
 
         $this->assertSame(1000.00, $this->reportService->getCancellationIncome($today, $today));
         $this->assertSame(2000.00, $order->fresh()->amount_paid);

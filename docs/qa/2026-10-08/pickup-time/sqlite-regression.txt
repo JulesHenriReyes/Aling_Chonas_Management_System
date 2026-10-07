@@ -1,0 +1,254 @@
+
+   PASS  Tests\Unit\ExampleTest
+  ✓ that true is true
+
+   PASS  Tests\Feature\ApprovedWorkflowReportAcceptanceTest
+  ✓ ordinary workflows reconcile independent centavo oracle across all outputs and event periods                 2.06s  
+
+   PASS  Tests\Feature\CatalogMigrationSafetyTest
+  ✓ upgrade and rollback preserve historical orders payments and catalog                                         0.06s  
+
+   PASS  Tests\Feature\ContactAndPickupCalendarTest
+  ✓ invalid contacts are rejected at every entry without changing customer or order records                      0.13s  
+  ✓ mobile and complete manila and provincial landlines normalize and match across entry points                  0.09s  
+  ✓ equivalent historical international landline matches without rewriting or guessing an old contact            0.02s  
+  ✓ invalid contact keeps draft details and per line staged image associations                                   0.83s  
+  ✓ pickup local today matches dashboard schedule http service and date inputs with data set #0                  1.53s  
+  ✓ pickup local today matches dashboard schedule http service and date inputs with data set #1                  0.14s  
+  ✓ pickup local today matches dashboard schedule http service and date inputs with data set #2                  0.14s  
+  ✓ pickup local today matches dashboard schedule http service and date inputs with data set #3                  0.13s  
+  ✓ pickup local today matches dashboard schedule http service and date inputs with data set #4                  0.13s  
+  ✓ pickup local today matches dashboard schedule http service and date inputs with data set #5                  0.13s  
+
+   PASS  Tests\Feature\ExampleTest
+  ✓ the application returns a successful response                                                                0.37s  
+
+   PASS  Tests\Feature\FinancialReportingTest
+  ✓ financial summary and operational net income                                                                 0.09s  
+  ✓ low stock supplies query                                                                                     0.04s  
+  ✓ cancellation income only includes retained down payments                                                     0.04s  
+  ✓ legacy cancellation preserves existing deposit reporting and full ledger                                     0.05s  
+
+   PASS  Tests\Feature\FixedCatalogAndPaymentReviewTest
+  ✓ both paths use catalog prices and keep inclusions separate from extras                                       0.06s  
+  ✓ snapshots survive catalog changes and manual price changes are rejected                                      0.04s  
+  ✓ invalid option unavailable product inapplicable extra and fractional quantity are rejected                   0.03s  
+  ✓ proof is private and does not count as payment until exact verification                                      0.08s  
+  ✓ rejection retains history and allows replacement but pending proof blocks replacement                        0.07s  
+  ✓ duplicates across orders and deactivated staff are rejected                                                  0.10s  
+  ✓ cash workflow and readiness before collection are preserved                                                  0.09s  
+  ✓ receipts reject non images and oversized images                                                              0.06s  
+  ✓ http public flow has persistent token access and private receipt authorization                               2.19s  
+  ✓ catalog and settings management is owner only and photos are separate                                        1.32s  
+  ✓ http price changes require review again and do not create partial records                                    0.05s  
+  ✓ owner can manage add on photos applicability and options without repricing orders                            0.09s  
+  ✓ public receipt submission is rate limited and inactive staff cannot read receipts                            0.11s  
+  ✓ historical completed pickup remains terminal even without readiness timestamp                                0.07s  
+
+   PASS  Tests\Feature\ImplementationPolicyTest
+  ✓ assistant valid direct requests and bookmarks are denied without record file or draft writes                 3.62s  
+  ✓ assistant service bypasses include indirect cancellation and financial operations                            0.15s  
+  ✓ exact deposit and early final payment rejections leave ledger and references unchanged                       0.22s  
+  ✓ ready pickup requires acknowledgment uses saved balance and completes atomically                             0.11s  
+  ✓ a post payment write failure rolls back payment reference and completion                                     0.07s  
+  ✓ legacy fully paid orders are collected without another charge                                                0.07s  
+  ✓ excessive public proof is not accepted as a deposit                                                          0.11s  
+  ✓ guest and inactive staff do not mutate internal records                                                      0.07s  
+
+   PASS  Tests\Feature\IngredientExpiryTest
+  ✓ receipts are separate even with identical expiry and replay once                                             0.09s  
+  ✓ ingredient expiry is required on all stock in paths                                                          0.07s  
+  ✓ packaging needs no date and uses oldest entry                                                                0.07s  
+  ✓ packaging count increase creates undated entry and reduction uses oldest                                     0.07s  
+  ✓ fefo splits and cannot be overridden                                                                         0.08s  
+  ✓ expiry uses business day and does not decrement physical stock                                               0.06s  
+  ✓ stale preview and date are rejected without posting                                                          0.07s  
+  ✓ unknown and expired stock can be wasted and counted but not used                                             0.07s  
+  ✓ counts require all entries and reject stale versions                                                         0.07s  
+  ✓ opening verification splits without changing quantity or expiry metadata                                     0.07s  
+  ✓ verification is owner only and cannot change a dated entry                                                   0.06s  
+  ✓ receipt reversal cannot take stock from another entry                                                        0.07s  
+  ✓ usage reversal restores original entries even after expiration                                               0.06s  
+  ✓ invalid last row rolls back entries and movements                                                            0.05s  
+  ✓ migration backfill is resumable and preserves old records                                                    0.04s  
+  ✓ low stock counts usable quantity and category cannot bypass expiration                                       0.05s  
+  ✓ alternate endpoint replay and held stock enforcement                                                         0.07s  
+  ✓ legacy ingredient reconciliation requires owner selected entries                                             0.08s  
+  ✓ verified opening ties sort first and bulk reversal matches movements                                         0.09s  
+  ✓ stale count keeps entered counts and zero stock stays countable                                              0.07s  
+  ✓ bulk verification of one supply reverses each movement once                                                  0.08s  
+
+   PASS  Tests\Feature\InventoryAndAuthorizationBusinessRulesTest
+  ✓ inventory stock in increases stock and creates transaction                                                   0.07s  
+  ✓ inventory stock out decreases stock                                                                          0.05s  
+  ✓ negative stock rejected on stock out                                                                         0.04s  
+  ✓ positive adjustment increases stock                                                                          0.04s  
+  ✓ negative adjustment decreases stock                                                                          0.04s  
+  ✓ negative adjustment below zero rejected                                                                      0.04s  
+  ✓ inventory transaction and stock quantity stay synchronized                                                   0.06s  
+  ✓ owner access gates                                                                                           0.03s  
+  ✓ assistant access restrictions                                                                                0.03s  
+  ✓ assistant can access approved daily work and cannot access reports or administration                         0.15s  
+  ✓ owner can access user management                                                                             0.06s  
+
+   PASS  Tests\Feature\InventorySupplyCreationTest
+  ✓ quick creation starts at zero and stock is posted exactly once                                               0.09s  
+  ✓ quick creation rejects opening stock and duplicate names without extra records                               0.04s  
+  ✓ save and stock in selects the new supply without adding stock                                                0.38s  
+  ✓ save only and inactive supplies do not open an unusable stock form                                           0.05s  
+  ✓ quick creation is unavailable to guests and inactive staff                                                   0.03s  
+  ✓ default ingredient catalogue starts at zero and reseeding preserves stock                                    0.08s  
+
+   PASS  Tests\Feature\OperationalReliabilityAcceptanceTest
+  ✓ missing stocktake reason preserves every record and old count input                                          0.05s  
+  ✓ failure after first stock quantity write rolls back batch baselines and history                              0.04s  
+  ✓ product toggle is owner only and inactive actor cannot toggle or create stock                                0.05s  
+
+   PASS  Tests\Feature\OrderAndPaymentBusinessRulesTest
+  ✓ exact deposit is accepted after staff confirmation                                                           0.06s  
+  ✓ incorrect down payment rejected                                                                              0.05s  
+  ✓ duplicate down payment rejected                                                                              0.05s  
+  ✓ generic status update cannot bypass staff review                                                             0.04s  
+  ✓ final payment accepted when exact balance is paid                                                            0.07s  
+  ✓ payment exceeding balance rejected                                                                           0.06s  
+  ✓ verified deposit blocks cancellation in ui http and stale service requests                                   0.09s  
+  ✓ fully paid active legacy order cannot be cancelled                                                           0.09s  
+  ✓ cancelled order preserves payment and rejects further payment                                                0.06s  
+  ✓ completed at is recorded and not overwritten                                                                 0.06s  
+  ✓ cancelled at is recorded and not overwritten                                                                 0.05s  
+
+   PASS  Tests\Feature\OrderReviewAndPricingTest
+  ✓ public and staff creation paths preserve the correct creator intent                                          0.06s  
+  ✓ pending public prices are fixed immediately and cannot be manually adjusted                                  0.03s  
+  ✓ confirmed order retains option price after catalog price changes                                             0.05s  
+  ✓ invalid status transitions and terminal state changes are rejected                                           0.07s  
+  ✓ cancelled orders are terminal                                                                                0.05s  
+
+   PASS  Tests\Feature\PackageInclusionsTest
+  ✓ owner can add edit and remove multiple included items without changing paid applicability                    0.08s  
+  ✓ invalid and duplicate rows are rejected atomically and input is preserved                                    0.08s  
+  ✓ new layer option can have only structured items and keeps other options unchanged                            0.05s  
+  ✓ paid extra selection is independent of package visibility and included items                                 0.08s  
+  ✓ public and staff orders use included quantities per package and paid extras once per line                    0.16s  
+  ✓ catalog changes do not rewrite saved inclusions or prices                                                    0.07s  
+  ✓ migration does not parse legacy text or backfill order inclusions                                            0.07s  
+
+   PASS  Tests\Feature\Phase3QAFixesTest
+  ✓ product update accepts both put and patch methods                                                            0.06s  
+  ✓ supply update via patch updates master item                                                                  0.04s  
+  ✓ customer phone normalization handles various philippine formats                                              0.04s  
+  ✓ payment controller requires reference number for gcash payments                                              0.07s  
+  ✓ internal staff order creation handles per item image uploads                                                 0.07s  
+  ✓ public storage symlink is established                                                                        0.04s  
+
+   PASS  Tests\Feature\PickupTimePickerTest
+  ✓ boundaries and noon are accepted by both http and service paths with data set #0                             0.08s  
+  ✓ boundaries and noon are accepted by both http and service paths with data set #1                             0.06s  
+  ✓ boundaries and noon are accepted by both http and service paths with data set #2                             0.06s  
+  ✓ boundaries and noon are accepted by both http and service paths with data set #3                             0.06s  
+  ✓ boundaries and noon are accepted by both http and service paths with data set #4                             0.06s  
+  ✓ crafted times fail without posting an order at any entry with data set #0                                    0.04s  
+  ✓ crafted times fail without posting an order at any entry with data set #1                                    0.05s  
+  ✓ crafted times fail without posting an order at any entry with data set #2                                    0.05s  
+  ✓ crafted times fail without posting an order at any entry with data set #3                                    0.04s  
+  ✓ crafted times fail without posting an order at any entry with data set #4                                    0.03s  
+  ✓ crafted times fail without posting an order at any entry with data set #5                                    0.04s  
+  ✓ crafted times fail without posting an order at any entry with data set #6                                    0.05s  
+  ✓ crafted times fail without posting an order at any entry with data set #7                                    0.05s  
+  ✓ crafted times fail without posting an order at any entry with data set #8                                    0.04s  
+  ✓ crafted times fail without posting an order at any entry with data set #9                                    0.04s  
+  ✓ crafted times fail without posting an order at any entry with data set #10                                   0.05s  
+  ✓ options and rules share configured hours and only offer closing minutes                                      0.03s  
+  ✓ details keep time and contact values after errors and back navigation                                        0.09s  
+
+   PASS  Tests\Feature\PublicOrderingTest
+  ✓ guest can view active products but not inactive products                                                     0.07s  
+  ✓ guest can submit multiple customized products as a pending public order                                      0.07s  
+  ✓ customer matching uses normalized phone and exact names                                                      0.05s  
+  ✓ public submission creates a new normalized customer when no exact match exists                               0.04s  
+  ✓ public image upload is saved against its matching order detail                                               0.05s  
+  ✓ cross order image association is rejected                                                                    0.05s  
+  ✓ old success url redirects and guests cannot reach internal routes                                            0.04s  
+  ✓ internal order lookup is not available to a public guest                                                     0.03s  
+  ✓ public order submissions are rate limited                                                                    0.07s  
+
+   PASS  Tests\Feature\PublicPackageWorkspaceTest
+  ✓ catalog navigates to dedicated customization and multiline edit is idempotent                                0.12s  
+  ✓ validation keeps uploads and submitted order associates images and extras with each line                     0.14s  
+  ✓ autosaved upload is deduplicated and catalog availability revalidated                                        0.10s  
+  ✓ removing an uncommitted reference cleans its file                                                            0.06s  
+  ✓ draft reference image can be retrieved and streamed                                                          0.05s  
+
+   PASS  Tests\Feature\ReceiptOrderIdentityTest
+  ✓ repeat customer does not inherit receipts and new uploads work                                               0.21s  
+  ✓ recycled id cannot expose or verify an old receipt even in the same second                                   0.23s  
+  ✓ migration preserves valid history and leaves stale or unknown history unbound                                0.20s  
+
+   PASS  Tests\Feature\ReceiptUploadRedirectTest
+  ✓ invalid buyer upload returns to its order even with an admin referrer                                        0.20s  
+  ✓ missing upload with stale previous page returns to its private order                                         0.19s  
+  ✓ service rejection keeps the buyer on the order and json clients get 422                                      0.08s  
+
+   PASS  Tests\Feature\RefundFeatureRemovalTest
+  ✓ removed endpoints and screens work without a refunds table                                                   0.11s  
+  ✓ migration preserves existing records instead of silently deleting them                                       0.03s  
+
+   PASS  Tests\Feature\ReportPeriodsAndReconciliationTest
+  ✓ periods resolve month range year boundary and leap day                                                       0.04s  
+  ✓ invalid or incomplete periods produce validation errors                                                      0.03s  
+  ✓ business timezone inclusive end and fractional datetime boundaries                                           0.03s  
+  ✓ summaries chart breakdowns drilldowns exports and saved package prices reconcile                             0.13s  
+  ✓ empty reports zero fill and use monthly trends for long periods                                              0.03s  
+
+   PASS  Tests\Feature\StaffConfirmationBeforePaymentTest
+  ✓ public submission requires review and cannot self approve                                                    0.09s  
+  ✓ unreviewed qr receipt and staff deposit paths leave no side effects                                          0.09s  
+  ✓ owner and assistant can confirm without money and replay preserves audit                                     0.12s  
+  ✓ confirmation requires acknowledgment valid pickup and active staff                                           0.08s  
+  ✓ decline requires owner and reason and remains terminal                                                       0.10s  
+  ✓ receipt review and replacement do not repeat approval or create payment                                      0.13s  
+  ✓ preparation needs verified exact deposit and owner financial permissions                                     0.11s  
+  ✓ review and decline have no financial effect and queues are distinct                                          0.20s  
+  ✓ legacy proof requires owner and can be verified after explicit feasible approval                             0.12s  
+  ✓ legacy no transfer decline requires explicit account check                                                   0.07s  
+  ✓ previously paid work is preserved and unpaid legacy confirmation needs review                                0.09s  
+
+   PASS  Tests\Feature\StockConcurrencyAndMigrationTest
+  ✓ concurrent receipts have no lost update                                                                      1.74s  
+  ✓ concurrent usage cannot overspend stock                                                                      1.99s  
+  ✓ concurrent duplicate receipt posts once                                                                      1.38s  
+  ✓ real additive migration preserves preexisting records                                                        0.39s  
+
+   PASS  Tests\Feature\StockOperationsAndExpensesTest
+  ✓ receipt is atomic grouped idempotent and reconcilable without expenses                                       0.22s  
+  ✓ invalid or duplicate line rolls back entire receipt                                                          0.07s  
+  ✓ usage waste negative stock and stale count                                                                   0.10s  
+  ✓ reversal preserves original and cannot be posted twice                                                       0.08s  
+  ✓ supply opening balance unit guard search filters and pagination                                              0.50s  
+  ✓ legacy movement can be corrected once without rewriting history                                              0.12s  
+  ✓ expense creation edit and void audit preserve creator and report effect                                      9.84s  
+  ✓ expense total covers all pages and authorization is server enforced                                          0.15s  
+  ✓ additive migration creates truthful legacy baselines without modifying records                               0.04s  
+
+   PASS  Tests\Feature\TwoStepOrderingAndReceiptScreenTest
+  ✓ public draft keeps package and uploaded image while moving back and forth                                    0.13s  
+  ✓ price is checked again when submitting draft and fields survive validation                                   0.08s  
+  ✓ staff uses two steps and can create and select customer inline                                               0.08s  
+  ✓ rejection state and authenticated screenshot remain separate from payment                                    0.10s  
+  ✓ buyer can replace a rejected receipt and prior history remains visible                                       0.12s  
+  ✓ buyer can remove saved reference without leaving an orphaned upload                                          0.06s  
+
+   PASS  Tests\Feature\UiPresentationTest
+  ✓ order pages preserve actions and price locking in every lifecycle state                                      0.96s  
+  ✓ public status guidance and empty receipt panels follow the current stage                                     0.16s  
+  ✓ public receipt remains unpaid and validation preserves selected items                                        0.09s  
+  ✓ staff workspace recommendations presentation                                                                 0.08s  
+  ✓ view transitions and floating row actions presentation                                                       0.03s  
+  ✓ public storefront layout and quiet button presentation                                                       0.11s  
+  ✓ tooltip components render accessible attributes and guidance                                                 0.89s  
+  ✓ paid extras and included items render images on order details                                                0.06s  
+  ✓ inventory detail sliding drawer presentation and endpoint                                                    0.05s  
+
+  Tests:    194 passed (2345 assertions)
+  Duration: 44.25s
+

@@ -1,0 +1,17 @@
+✔ package price responds to layer, quantity and extras (2.3496ms)
+✔ customer search matches name and phone and selection uses an explicit record (1.7369ms)
+✔ inline customer creation selects the returned customer (1.7369ms)
+✔ owner can select distinct reusable items, edit quantities, remove and re-add (3.3582ms)
+✔ included catalog item has no surcharge and same-item paid extras apply once per line (0.8457ms)
+✔ customer keyboard selection wraps, enters the active record and clears selection on new search (1.3939ms)
+✔ unfinished inline customer fields restore without selecting an unknown record (0.504ms)
+✔ inline creation failure keeps inputs and identifies each invalid field (2.2948ms)
+✔ editor signature ignores staged photo response changes and tracks design changes (1.1957ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 154.9332

@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Models\{Customer, Expense, Order, Payment, Refund, User};
+use App\Models\{Customer, Expense, Order, Payment, User};
 use App\Services\{FinancialReportService, ReportPeriod};
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
@@ -63,16 +63,15 @@ class ReportPeriodsAndReconciliationTest extends TestCase
         $line->addOns()->create(['name_snapshot'=>'Saved extras','description_snapshot'=>'Extra description','quantity'=>3,'unit_price'=>100,'add_on_id'=>$extra->id]);
         $customerCancel=$makeOrder('CUSTOMER','cancelled','customer'); $bakeryCancel=$makeOrder('BAKERY','cancelled','bakery_failure');
         foreach ([[$completed,2300,'cash'],[$customerCancel,500,'gcash'],[$bakeryCancel,700,'gcash']] as [$order,$amount,$method]) Payment::create(['order_id'=>$order->id,'user_id'=>$actor->id,'amount'=>$amount,'payment_type'=>'down_payment','payment_method'=>$method,'payment_date'=>'2026-09-10 08:00:00']);
-        Refund::create(['order_id'=>$bakeryCancel->id,'amount'=>700,'reason'=>'Bakery failure','status'=>'completed','requested_by'=>$actor->id,'completed_by'=>$actor->id,'method'=>'gcash','completed_at'=>'2026-09-16 12:00:00']);
         Expense::create(['user_id'=>$actor->id,'description'=>'Flour','category'=>'ingredients','amount'=>300,'expense_date'=>'2026-09-30']);
         $void=Expense::create(['user_id'=>$actor->id,'description'=>'Voided','category'=>'equipment','amount'=>900,'expense_date'=>'2026-09-30']); $void->delete();
         $period=ReportPeriod::resolve(['mode'=>'month','month'=>'2026-09']); $service=app(FinancialReportService::class); $report=$service->report($period);
-        $expected=['sales'=>2300,'gross_collections'=>3500,'refunds_completed'=>700,'payment_collections'=>2800,'cancellation_income'=>500,'expenses'=>300,'operational_net_income'=>2500];
+        $expected=['sales'=>2300,'gross_collections'=>3500,'payment_collections'=>3500,'cancellation_income'=>500,'expenses'=>300,'operational_net_income'=>2500];
         foreach($expected as $metric=>$amount) { $this->assertEquals($amount,$report['summary'][$metric]); $this->assertEquals($amount,array_sum(array_column($report['trends'],$metric))); }
         $this->assertSame(1,$report['summary']['completed_order_count']);
         $this->assertEquals(2300,$report['packages']->sum('total_amount')); $this->assertEquals(300,$report['packages']->sum('extras_amount'));
         $this->assertSame('Saved cake name',$report['packages']->sole()->product_name_snapshot);
-        $this->assertEquals(300,$report['expensesByCategory']->sum('total_amount')); $this->assertEquals(2800,$report['methods']->sum('net'));
+        $this->assertEquals(300,$report['expensesByCategory']->sum('total_amount')); $this->assertEquals(3500,$report['methods']->sum('net'));
         foreach(FinancialReportService::LABELS as $metric=>$label) {
             $response=$this->get(route('reports.records',$period->query()+['metric'=>$metric]));
             $response->assertOk()->assertViewHas('total',$expected[$metric]);
@@ -85,7 +84,7 @@ class ReportPeriodsAndReconciliationTest extends TestCase
         $summary=collect($rows)->firstWhere('section','summary');
         foreach($expected as $metric=>$amount) $this->assertEquals($amount,$summary[$metric]);
         $this->assertEquals(2300,collect($rows)->where('section','trend')->sum('sales'));
-        $this->assertEquals(2800,collect($rows)->where('section','payment_method')->sum('payment_collections'));
+        $this->assertEquals(3500,collect($rows)->where('section','payment_method')->sum('payment_collections'));
     }
 
     public function test_empty_reports_zero_fill_and_use_monthly_trends_for_long_periods(): void

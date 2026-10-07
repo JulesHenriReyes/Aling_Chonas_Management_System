@@ -1,0 +1,136 @@
+{
+  "checks": [
+    {
+      "role": "assistant",
+      "page": "inventory",
+      "bodyOverflow": false,
+      "bodyWidth": 375,
+      "width": 390,
+      "workspaceWidth": 343
+    },
+    {
+      "role": "assistant",
+      "page": "inventory",
+      "bodyOverflow": false,
+      "bodyWidth": 753,
+      "width": 768,
+      "workspaceWidth": 705
+    },
+    {
+      "role": "assistant",
+      "page": "inventory",
+      "bodyOverflow": false,
+      "bodyWidth": 1425,
+      "width": 1440,
+      "workspaceWidth": 1121
+    },
+    {
+      "role": "assistant",
+      "page": "baking",
+      "bodyOverflow": false,
+      "width": 390
+    },
+    {
+      "role": "assistant",
+      "page": "baking",
+      "bodyOverflow": false,
+      "width": 768
+    },
+    {
+      "role": "assistant",
+      "page": "baking",
+      "bodyOverflow": false,
+      "width": 1440
+    },
+    {
+      "role": "owner",
+      "page": "inventory",
+      "bodyOverflow": false,
+      "bodyWidth": 375,
+      "width": 390
+    },
+    {
+      "role": "owner",
+      "page": "inventory",
+      "bodyOverflow": false,
+      "bodyWidth": 753,
+      "width": 768
+    },
+    {
+      "role": "owner",
+      "page": "inventory",
+      "bodyOverflow": false,
+      "bodyWidth": 1425,
+      "width": 1440
+    },
+    {
+      "role": "owner",
+      "page": "stock-in",
+      "bodyOverflow": false,
+      "width": 390
+    },
+    {
+      "role": "owner",
+      "page": "stock-in",
+      "bodyOverflow": false,
+      "width": 768
+    },
+    {
+      "role": "owner",
+      "page": "stock-in",
+      "bodyOverflow": false,
+      "width": 1440
+    },
+    {
+      "role": "owner",
+      "page": "baking",
+      "bodyOverflow": false,
+      "width": 390
+    },
+    {
+      "role": "owner",
+      "page": "baking",
+      "bodyOverflow": false,
+      "width": 768
+    },
+    {
+      "role": "owner",
+      "page": "baking",
+      "bodyOverflow": false,
+      "width": 1440
+    },
+    {
+      "role": "assistant",
+      "page": "stock-in",
+      "bodyOverflow": false,
+      "expiry": "2026-11-07",
+      "ingredientQuantity": "2",
+      "packagingQuantity": "6",
+      "width": 390
+    },
+    {
+      "role": "assistant",
+      "page": "stock-in",
+      "bodyOverflow": false,
+      "expiry": "2026-11-07",
+      "ingredientQuantity": "2",
+      "packagingQuantity": "6",
+      "width": 768
+    },
+    {
+      "role": "assistant",
+      "page": "stock-in",
+      "bodyOverflow": false,
+      "expiry": "2026-11-07",
+      "ingredientQuantity": "2",
+      "packagingQuantity": "6",
+      "width": 1440
+    }
+  ],
+  "keyboard": {
+    "drawerEscapeReturnsFocus": true,
+    "dateFieldsLabelled": true
+  },
+  "wasteValidationPreservesInput": true,
+  "openingVerificationZeroNet": true
+}

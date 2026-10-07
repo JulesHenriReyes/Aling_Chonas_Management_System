@@ -1,0 +1,35 @@
+{
+    "guarded_server": true,
+    "held_locks_blocked_workers": true,
+    "submission_key_server_issued_owner_session_scoped": true,
+    "creation": [
+        {
+            "id": 1,
+            "status": "confirmed",
+            "payments": 0
+        },
+        {
+            "id": 1,
+            "status": "confirmed",
+            "payments": 0
+        }
+    ],
+    "saved_order_count": 1,
+    "saved_reference_count": 1,
+    "no_payment_at_creation": true,
+    "cancellation": [
+        {
+            "id": 1,
+            "status": "cancelled",
+            "payments": 1
+        },
+        {
+            "id": 1,
+            "status": "cancelled",
+            "payments": 1
+        }
+    ],
+    "retained_deposit": 500,
+    "collections": 500,
+    "completed_sales": 0
+}

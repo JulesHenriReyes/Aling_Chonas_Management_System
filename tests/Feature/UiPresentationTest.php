@@ -37,24 +37,26 @@ class UiPresentationTest extends TestCase
         $service = app(OrderService::class);
         $data = ['customer_id' => $customer->id, 'pickup_date' => now()->addDays(3)->toDateString(), 'pickup_time' => '14:00', 'notes_text' => 'Keep the cake level. Customer will call before pickup.', 'items' => [['product_id' => $product->id, 'package_option_id' => $product->options()->first()->id, 'quantity' => 1, 'layers' => 3, 'themes' => 'Pastel blue and gold floral celebration', 'special_request' => 'Happy birthday, Maria! Please keep the inscription and every design detail visible.']]];
         $order = $service->createInternalOrder($data, $owner);
+        // Keep coverage of existing internal requests created before automatic Owner approval.
+        $order->forceFill(['status' => 'pending', 'review_status' => 'pending', 'reviewed_by' => null, 'reviewed_at' => null])->save();
         $this->actingAs($owner);
         $pending = $this->get('/orders/'.$order->id);
-        $pending->assertDontSee('name="unit_price"', false)->assertDontSee('value="down_payment"', false)->assertSee('Confirm request');
+        $pending->assertDontSee('name="unit_price"', false)->assertDontSee('value="down_payment"', false)->assertSee('Confirm request')->assertSee('id="staff-review-heading"', false);
         $this->snapshot('order-pending', $pending);
         $this->confirmPaymentFixture($order);
         $unpaidApproval = $this->get('/orders/'.$order->id);
-        $unpaidApproval->assertSee('value="down_payment"', false)->assertDontSee('value="preparing"', false);
+        $unpaidApproval->assertSee('value="down_payment"', false)->assertDontSee('value="preparing"', false)->assertDontSee('id="staff-review-heading"', false)->assertSee('Review history');
         $service->recordDownPayment($order, $order->required_down_payment, 'gcash', 'TEST-REF-123', $owner);
         $confirmed = $this->get('/orders/'.$order->id);
         $confirmed->assertDontSee('name="unit_price"', false)->assertSee('value="preparing"', false)->assertDontSee('name="pickup_confirmed"', false);
         $this->snapshot('order-confirmed', $confirmed);
         $service->updateStatus($order, 'preparing', $owner);
         $preparing = $this->get('/orders/'.$order->id);
-        $preparing->assertSee('value="ready_for_pickup"', false);
+        $preparing->assertSee('value="ready_for_pickup"', false)->assertDontSee('id="staff-review-heading"', false)->assertSee('Review history')->assertDontSee('Staff confirmation opens');
         $this->snapshot('order-preparing', $preparing);
         $service->updateStatus($order, 'ready_for_pickup', $owner);
         $ready = $this->get('/orders/'.$order->id);
-        $ready->assertDontSee('value="completed"', false)->assertSee('At pickup:')->assertSee('name="pickup_confirmed"', false);
+        $ready->assertDontSee('value="completed"', false)->assertSee('At pickup:')->assertSee('name="pickup_confirmed"', false)->assertDontSee('id="staff-review-heading"', false);
         $this->snapshot('order-ready-unpaid', $ready);
         // Explicit fully paid legacy state for normal status completion coverage.
         $order->payments()->create(['user_id' => $owner->id, 'amount' => $order->remaining_balance, 'payment_type' => 'final_payment', 'payment_method' => 'cash', 'payment_date' => now()]);
@@ -63,14 +65,13 @@ class UiPresentationTest extends TestCase
         $this->snapshot('order-ready-paid', $paid);
         $service->updateStatus($order, 'completed', $owner);
         $completed = $this->get('/orders/'.$order->id);
-        $completed->assertDontSee('Cancel Order')->assertDontSee('name="unit_price"', false)->assertSee('TEST-REF-123');
+        $completed->assertDontSee('Cancel Order')->assertDontSee('name="unit_price"', false)->assertSee('TEST-REF-123')->assertDontSee('Order actions')->assertDontSee('id="staff-review-heading"', false)->assertSee('Review history');
         $this->snapshot('order-completed', $completed);
         $cancelledOrder = $service->createInternalOrder($data, $owner);
         $this->confirmPaymentFixture($cancelledOrder);
-        $service->recordDownPayment($cancelledOrder, $cancelledOrder->required_down_payment, 'cash', null, $owner);
         $service->cancelOrder($cancelledOrder, $owner);
         $cancelled = $this->get('/orders/'.$cancelledOrder->id);
-        $cancelled->assertSee('Order Cancelled')->assertDontSee('value="final_payment"', false)->assertDontSee('name="unit_price"', false);
+        $cancelled->assertSee('Cancelled')->assertDontSee('Order actions')->assertDontSee('id="staff-review-heading"', false)->assertDontSee('value="final_payment"', false)->assertDontSee('name="unit_price"', false);
         $this->snapshot('order-cancelled', $cancelled);
         foreach (['orders', 'dashboard', 'pickup-schedule', 'reports', 'expenses', 'customers', 'products', 'supplies', 'users'] as $page) {
             $this->snapshot($page, $this->get('/'.$page));
@@ -78,6 +79,27 @@ class UiPresentationTest extends TestCase
         foreach (['customers/'.$customer->id, 'customers/'.$customer->id.'/edit', 'customers/create', 'orders/create', 'users/create', 'users/'.$owner->id.'/edit'] as $page) {
             $this->snapshot(str_replace('/', '-', $page), $this->get('/'.$page));
         }
+    }
+
+    public function test_public_status_guidance_and_empty_receipt_panels_follow_the_current_stage(): void
+    {
+        $owner = User::factory()->create(['role' => 'owner', 'is_active' => true]);
+        $customer = Customer::create(['first_name' => 'Stage', 'last_name' => 'Buyer', 'phone_number' => '09171234567']);
+        $product = $this->catalogProduct(['product_name' => 'Stage cake', 'price' => 1000, 'is_active' => true]);
+        $service = app(OrderService::class);
+        $order = $service->createPublicOrder(['customer_id' => $customer->id, 'pickup_date' => now()->addDays(3)->toDateString(), 'pickup_time' => '14:00', 'items' => [['product_id' => $product->id, 'package_option_id' => $product->options()->first()->id, 'quantity' => 1]]]);
+        $this->actingAs($owner);
+        $this->get('/orders/'.$order->id)->assertSee('Confirm request')->assertDontSee('id="proof-review"', false);
+        $this->confirmPaymentFixture($order);
+        $this->get('/orders/'.$order->id)->assertSee('id="proof-review"', false)->assertDontSee('id="staff-review-heading"', false);
+        // Verified public deposits are posted by receipt review; seed that completed step for presentation coverage.
+        $order->payments()->create(['user_id' => $owner->id, 'amount' => $order->required_down_payment, 'payment_type' => 'down_payment', 'payment_method' => 'gcash', 'reference_number' => 'STAGE-DEPOSIT', 'payment_date' => now()]);
+        $service->updateStatus($order, 'preparing', $owner);
+        $this->get('/orders/'.$order->id)->assertDontSee('id="proof-review"', false)->assertSee('Review history');
+        $this->get(route('public.order.payment', $order->private_token))->assertSee('Preparing')->assertDontSee('pay the exact 50% deposit to secure your booking')->assertDontSee('After staff confirmation');
+        $service->updateStatus($order, 'ready_for_pickup', $owner);
+        $service->completePickup($order, 'cash', null, $owner, true);
+        $this->get(route('public.order.payment', $order->private_token))->assertSee('No further payment is due')->assertDontSee('After staff confirmation');
     }
 
     public function test_public_receipt_remains_unpaid_and_validation_preserves_selected_items(): void
@@ -406,13 +428,13 @@ class UiPresentationTest extends TestCase
         $suppliesResponse = $this->get('/supplies');
         $suppliesResponse->assertOk()
             ->assertSee('Stock status')
-            ->assertSee('Inventory levels automatically categorized as In stock, Low stock, or Out of stock based on reorder thresholds.', false);
+            ->assertSee('Availability uses combined usable stock. Expired and unknown ingredient entries stay on hand.', false);
 
         // Admin Supplies Operation Form (stock reload concurrency tooltip and recorded column header tooltip)
         $operationResponse = $this->get(route('inventory.create', 'stocktake'));
         $operationResponse->assertOk()
-            ->assertSee('Current recorded on-hand quantity in the system. Use reload if another staff member updated inventory.', false)
-            ->assertSee('Fetches the latest recorded quantity and lock version from the server to prevent concurrency conflicts with other staff.', false);
+            ->assertSee('Count every remaining entry, including expired and unknown stock.', false)
+            ->assertSee('Reload stock', false);
 
         // Admin Reports Index (financial metrics tooltips)
         $reportsResponse = $this->get('/reports');

@@ -4,43 +4,42 @@
 @php($proof = $order->paymentProofs->first())
 <div class="public-order-status max-w-5xl mx-auto space-y-4">
     {{-- Progress Navigation --}}
-    <nav aria-label="Progress" class="mb-5">
-        <div class="flex items-center text-xs tracking-wide">
-            <span class="text-cocoa-700">Packages</span>
-            <span class="text-cocoa-300 mx-2">/</span>
-            <span class="text-cocoa-700">Contact & pickup</span>
-            <span class="text-cocoa-300 mx-2">/</span>
-            <span class="text-cocoa-700 font-semibold" aria-current="step">Order status</span>
-        </div>
+    <nav class="store-progress mb-3 sm:mb-5" aria-label="Order progress">
+        <a href="{{ route('public.order.index') }}">1. Choose package</a>
+        <span>2. Customize</span>
+        <span>3. Contact & pickup</span>
+        <span aria-current="step">4. Staff review & status</span>
     </nav>
 
-    <header class="space-y-1">
-        <div class="flex flex-wrap items-center justify-between gap-3">
-            <h1 class="font-bold text-cocoa-700 text-2xl sm:text-3xl">Your order {{ $order->order_number }}</h1>
-            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-cream-100 text-cocoa-700 border border-cocoa-200">
-                <svg class="w-3.5 h-3.5 text-cocoa-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                <span>Pickup: {{ $order->pickup_date->format('F j, Y') }} at {{ \Carbon\Carbon::parse($order->pickup_time)->format('g:i A') }} ({{ config('bakery.pickup_timezone') }})</span>
+    <header class="space-y-2">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+            <div>
+                <h1 class="font-bold text-cocoa-700 text-lg sm:text-2xl leading-tight flex flex-wrap items-center gap-1.5">
+                    <span>Your order</span>
+                    <span class="font-mono text-xs sm:text-sm font-semibold text-cocoa-600 bg-cream-100 px-2 py-0.5 rounded border border-cocoa-200/80 inline-block align-middle">{{ $order->order_number }}</span>
+                </h1>
+            </div>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] sm:text-xs font-semibold bg-cream-100 text-cocoa-700 border border-cocoa-200 self-start sm:self-auto">
+                <svg class="w-3.5 h-3.5 text-cocoa-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                <span>Pickup: {{ $order->pickup_date->format('M j, Y') }} at {{ \Carbon\Carbon::parse($order->pickup_time)->format('g:i A') }}</span>
             </div>
         </div>
-        <p class="text-xs text-cocoa-400">
-            @if ($order->status === 'cancelled')
-                This order is cancelled. See the payment and refund status below.
-            @elseif ($order->status === 'completed')
-                Pickup is complete. No further payment is due.
-            @elseif ($order->needsStaffReview() || $order->status === 'pending')
-                Staff will review your request first. No payment is requested while it awaits confirmation.
-            @else
-                After staff confirmation, pay the exact 50% deposit to secure your booking. The remaining balance is due only at actual pickup after Ready for pickup.
-            @endif
-        </p>
     </header>
 
+    {{-- Automatic Order Link Clipboard Notification --}}
+    @include('partials.order-private-link')
+
     @if (session('success'))
-        <p role="status" class="p-4 bg-emerald-50 text-emerald-800 rounded-xl border border-emerald-200 text-sm font-medium">{{ session('success') }}</p>
+        <div role="status" class="px-3.5 py-2 bg-emerald-50 text-emerald-800 rounded-xl border border-emerald-200 text-xs font-medium flex items-center justify-between gap-2" x-data="{ show: true }" x-show="show">
+            <span>{{ session('success') }}</span>
+            <button type="button" @click="show = false" class="text-emerald-600 hover:text-emerald-900 shrink-0 p-0.5 rounded hover:bg-emerald-100 transition cursor-pointer" aria-label="Dismiss message">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
     @endif
 
     {{-- Order Progress Card --}}
-    <section class="checkout-card p-5 space-y-3" aria-labelledby="order-progress">
+    <section class="checkout-card p-4 sm:p-5 space-y-3" aria-labelledby="order-progress">
         <div class="flex items-center justify-between border-b border-cocoa-100 pb-3">
             <h2 id="order-progress" class="font-bold text-cocoa-700 text-sm">Order progress</h2>
             <x-status :value="$order->status" :label="$order->workflowLabel()" class="order-workflow-status" />
@@ -69,17 +68,16 @@
             @elseif ($order->status === 'preparing')
                 <p>We’re preparing your cakes. Check this link for Ready for pickup.</p>
             @elseif ($order->status === 'ready_for_pickup')
-                <p>Your order is ready for pickup. The remaining balance is due when you collect it.</p>
+                <p>Your order is ready for pickup. {{ $order->remaining_balance > 0 ? 'The remaining balance is due when you collect it.' : 'Your order is paid in full; no further payment is due.' }}</p>
             @elseif ($order->status === 'completed')
-                <p>Your order has been collected and paid in full. Thank you for ordering with Aling Chona.</p>
+                <p>Your order has been collected and paid in full. No further payment is due. Thank you for ordering with Aling Chona.</p>
             @elseif ($order->cancellation_kind === 'staff_rejected')
                 <p><strong>Request declined.</strong> The bakery cannot accept this request: {{ $order->cancellation_reason }}</p>
                 <p class="mt-2">No verified payment is recorded. @if($proof)The Owner checked the reported transfer before declining; contact the bakery if your account shows a successful transfer.@else No payment was requested for this request.@endif You may submit a revised request.</p>
             @elseif ($order->cancellation_kind === 'bakery_failure')
                 <p>The bakery could not fulfil your order. {{ $order->cancellation_reason }}</p>
-                @unless ($order->refund)<p>No verified payment was recorded, so no refund is due.</p>@endunless
             @else
-                <p>Your order was cancelled. The existing customer-cancellation policy retains the deposit.</p>
+                <p>Your order was cancelled. @if($order->hasVerifiedPayment())The deposit was retained under the policy in effect when this order was cancelled.@else No verified payment is recorded.@endif</p>
             @endif
         </div>
     </section>
@@ -90,29 +88,15 @@
         </details>
     @endif
 
-    @if ($order->refund)
-        <section class="checkout-card p-5 space-y-2" aria-labelledby="refund-status">
-            <h2 id="refund-status" class="font-bold text-cocoa-700 text-sm">Full refund · {{ ucfirst($order->refund->status) }}</h2>
-            <p class="text-xl font-extrabold text-cocoa-700">₱{{ number_format($order->refund->amount, 2) }}</p>
-            <p class="text-xs text-cocoa-600">{{ $order->refund->reason }}</p>
-            @if ($order->refund->status === 'pending')
-                <p class="text-xs text-cocoa-500">The bakery will return all verified payments. GCash transfers are handled manually; the refund has not yet been marked sent.</p>
-            @else
-                <p class="text-xs text-cocoa-500">Transferred by {{ strtoupper($order->refund->method) }} on {{ $order->refund->completed_at->format('F j, Y g:i A') }}.</p>
-                <p class="text-xs text-cocoa-500">Refund reference: {{ $order->refund->reference_number }}</p>
-            @endif
-        </section>
-    @endif
-
     @php($needsPayment = $order->canSubmitReceipt() && ($settings?->isConfigured() || $proof?->status === 'rejected' || filled(old('reference_number'))))
 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {{-- Left Column: Order Items & Pricing Summary + Bookmark Link --}}
         <div class="lg:col-span-7 space-y-4">
             {{-- Order Items & Total Summary --}}
-            <section class="checkout-card p-6 space-y-4" aria-labelledby="fixed-total">
+            <section class="checkout-card p-4 sm:p-6 space-y-3.5 sm:space-y-4" aria-labelledby="fixed-total">
                 <div class="flex items-center justify-between border-b border-cocoa-100 pb-3">
-                    <h2 id="fixed-total" class="font-bold text-cocoa-700 text-base">{{ $order->fixed_catalog_pricing ? 'Your fixed-price order' : 'Your saved order' }}</h2>
+                    <h2 id="fixed-total" class="font-bold text-cocoa-700 text-sm sm:text-base">{{ $order->fixed_catalog_pricing ? 'Your fixed-price order' : 'Your saved order' }}</h2>
                     <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-cream-100 text-cocoa-600 border border-cocoa-100">
                         {{ $order->orderDetails->sum('quantity') }} {{ $order->orderDetails->sum('quantity') === 1 ? 'package' : 'packages' }}
                     </span>
@@ -127,7 +111,7 @@
                     </div>
 
                     {{-- 50% Deposit & Payment Details Box --}}
-                    <div class="p-3.5 rounded-xl bg-cocoa-50/80 border border-cocoa-200/80 space-y-2">
+                    <div class="p-3 sm:p-3.5 rounded-xl bg-cocoa-50/80 border border-cocoa-200/80 space-y-2">
                         <div class="flex justify-between items-baseline">
                             <span class="text-xs font-bold text-cocoa-700 uppercase tracking-wide inline-flex items-center gap-1">
                                 Exact 50% Deposit
@@ -147,35 +131,26 @@
                         @endif
                     </div>
 
-                    @if ($order->refund)
-                        <div class="flex justify-between gap-4 text-xs font-semibold text-amber-800 bg-amber-50 p-2.5 rounded-lg border border-amber-200">
-                            <span>Refund {{ $order->refund->status }}:</span>
-                            <span>₱{{ number_format($order->refund->amount, 2) }}</span>
-                        </div>
-                    @endif
 
                     <p class="text-xs text-cocoa-400 pt-2 border-t border-cocoa-100">
-                        Customer cancellations retain the verified booking deposit. If the bakery cannot fulfil your order, all verified payments are due for a full refund. A refund is marked completed only after the money is returned.
+                        Once a payment is verified, the booking is secured and the order cannot be cancelled. The remaining balance is collected only at actual pickup after the order is ready.
                     </p>
                 </div>
             </section>
 
-            @if ($needsPayment)
-                @include('partials.order-private-link')
-            @endif
         </div>
 
         {{-- Right Column: Payment Actions (or Order Link when no payment needed) --}}
         <div class="lg:col-span-5 sidebar-column space-y-4 lg:sticky lg:top-20">
             @if ($needsPayment)
                 {{-- Unified 2-Step Deposit Payment Card --}}
-                <div class="checkout-card p-6 space-y-5">
+                <div class="checkout-card p-4 sm:p-6 space-y-4 sm:space-y-5">
                     <div class="flex items-center justify-between pb-3 border-b border-cocoa-100">
                         <div class="flex items-center gap-2.5">
                             <div class="w-8 h-8 rounded-lg bg-cocoa-50 text-cocoa-700 flex items-center justify-center shrink-0 border border-cocoa-200">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
                             </div>
-                            <h2 class="font-bold text-cocoa-700 text-base">{{ $proof?->status === 'rejected' ? 'Correct your payment receipt' : ($settings?->isConfigured() ? 'Pay your GCash deposit' : 'Submit your reported transfer receipt') }}</h2>
+                            <h2 class="font-bold text-cocoa-700 text-sm sm:text-base">{{ $proof?->status === 'rejected' ? 'Correct your payment receipt' : ($settings?->isConfigured() ? 'Pay your GCash deposit' : 'Submit your reported transfer receipt') }}</h2>
                         </div>
                         <span class="text-xs font-extrabold text-cocoa-700 px-2.5 py-1 rounded-full bg-cream-100 border border-cocoa-200">
                             ₱{{ number_format($order->required_down_payment, 2) }}
@@ -198,7 +173,7 @@
                                 @if ($proof?->status === 'rejected')If you have already transferred money, do not pay again. Correct your receipt below or contact the bakery. Only send money if you have not already made a transfer.@else Send exactly <strong class="font-bold text-cocoa-700">₱{{ number_format($order->required_down_payment, 2) }}</strong> using the business GCash QR.@endif
                             </p>
                             <div class="flex flex-col items-center gap-2.5 p-3 rounded-xl bg-cream-50/60 border border-cocoa-100">
-                                <img src="{{ route('public.order.qr', ['token' => $order->private_token, 'inline' => 1]) }}" width="240" height="240" alt="Business GCash payment QR" class="w-full max-w-[220px] h-auto rounded-lg border border-cocoa-100 bg-white p-2 shadow-xs">
+                                <img src="{{ route('public.order.qr', ['token' => $order->private_token, 'inline' => 1]) }}" width="240" height="240" alt="Business GCash payment QR" class="w-full max-w-[180px] sm:max-w-[220px] h-auto rounded-lg border border-cocoa-100 bg-white p-2 shadow-xs">
                                 <a href="{{ route('public.order.qr', $order->private_token) }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white hover:bg-cream-100 text-cocoa-700 text-xs font-semibold border border-cocoa-200 transition shadow-2xs">
                                     <svg class="w-3.5 h-3.5 text-cocoa-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
                                     <span>Save QR image</span>
@@ -253,9 +228,66 @@
                     </section>
                 </div>
             @else
-                {{-- If no payment is needed, Order Link card sits cleanly in the right column --}}
-                @include('partials.order-private-link')
+                {{-- Order Status Summary Card --}}
+                <div class="checkout-card p-4 sm:p-5 space-y-3 bg-cream-50/70 border border-cocoa-100">
+                    <div class="flex items-center gap-2.5 pb-2.5 border-b border-cocoa-100">
+                        <div class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center shrink-0 font-bold text-xs">
+                            ✓
+                        </div>
+                        <h2 class="font-bold text-cocoa-700 text-sm">Order Status Summary</h2>
+                    </div>
+                    <div class="space-y-1.5 text-xs text-cocoa-600">
+                        <p><span class="font-semibold text-cocoa-700">Status:</span> {{ ucfirst(str_replace('_', ' ', $order->status)) }}</p>
+                        <p><span class="font-semibold text-cocoa-700">Scheduled Pickup:</span> {{ $order->pickup_date->format('M j, Y') }} at {{ \Carbon\Carbon::parse($order->pickup_time)->format('g:i A') }}</p>
+                        @if($order->status === 'completed')
+                            <p class="text-emerald-700 font-medium pt-1">This order has been completed and picked up. Thank you for choosing Aling Chona!</p>
+                        @elseif($order->status === 'ready_for_pickup')
+                            <p class="text-emerald-700 font-medium pt-1">Your cake is ready! Please proceed to the bakery for pickup.</p>
+                        @elseif($order->status === 'preparing')
+                            <p class="text-cocoa-500 pt-1">Our bakers and decorators are actively preparing your order.</p>
+                        @endif
+                    </div>
+                </div>
             @endif
+
+            {{-- Need Help / Contact Bakery Card --}}
+            <section class="checkout-card p-4 sm:p-5 space-y-3" aria-labelledby="contact-bakery-heading">
+                <div class="flex items-center gap-2.5 pb-2.5 border-b border-cocoa-100">
+                    <div class="w-7 h-7 rounded-lg bg-cocoa-50 text-cocoa-600 flex items-center justify-center shrink-0 border border-cocoa-100">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
+                    </div>
+                    <h2 id="contact-bakery-heading" class="font-bold text-cocoa-700 text-sm">Need help or have questions?</h2>
+                </div>
+                <p class="text-xs text-cocoa-500">
+                    For questions about your order, payment receipts, or pickup schedule, message or call us:
+                </p>
+                <div class="space-y-2.5 text-xs">
+                    <div class="flex items-center gap-2.5 text-cocoa-600">
+                        <svg class="w-4 h-4 text-cocoa-400 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.145 2 11.258c0 2.908 1.455 5.503 3.735 7.151V22l3.435-1.886c.905.251 1.861.387 2.83.387 5.523 0 10-4.145 10-9.258C22 6.145 17.523 2 12 2zm1.053 12.443l-2.618-2.793-5.111 2.793 5.623-5.967 2.684 2.793 5.045-2.793-5.623 5.967z"/></svg>
+                        <div class="min-w-0">
+                            <span class="text-cocoa-400 block text-[11px] font-medium">Facebook Messenger</span>
+                            <a href="{{ config('bakery.facebook_url', 'https://m.me/alingchonacakes') }}" target="_blank" rel="noopener noreferrer" class="font-semibold text-cocoa-700 hover:text-cocoa-900 underline inline-flex items-center gap-1">
+                                {{ config('bakery.facebook_name', 'Aling Chona Cake & Cupcake') }}
+                                <svg class="w-3 h-3 text-cocoa-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2.5 text-cocoa-600">
+                        <svg class="w-4 h-4 text-cocoa-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                        <div>
+                            <span class="text-cocoa-400 block text-[11px] font-medium">Phone / SMS</span>
+                            <span class="font-semibold text-cocoa-700">{{ config('bakery.contact_phone', '0917 123 4567') }}</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2.5 text-cocoa-600">
+                        <svg class="w-4 h-4 text-cocoa-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        <div>
+                            <span class="text-cocoa-400 block text-[11px] font-medium">Store & Pickup</span>
+                            <span class="text-cocoa-700 font-medium">{{ config('bakery.location', 'Aling Chona Store & Residence') }}</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
     </div>
 </div>

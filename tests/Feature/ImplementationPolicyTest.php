@@ -9,7 +9,6 @@ use App\Models\Product;
 use App\Models\User;
 use App\Services\OrderService;
 use App\Services\PaymentReviewService;
-use App\Services\RefundService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -62,7 +61,7 @@ class ImplementationPolicyTest extends TestCase
     private function snapshot(): array
     {
         $snapshot = [];
-        foreach (['customers', 'orders', 'order_details', 'order_images', 'payments', 'payment_proofs', 'refunds', 'gcash_references'] as $table) {
+        foreach (['customers', 'orders', 'order_details', 'order_images', 'payments', 'payment_proofs', 'gcash_references'] as $table) {
             $snapshot[$table] = DB::table($table)->get()->map(fn ($row) => (array) $row)->all();
         }
         foreach (['public', 'local', 'receipts'] as $disk) {
@@ -101,7 +100,6 @@ class ImplementationPolicyTest extends TestCase
         $failed = $this->order();
         $this->confirmPaymentFixture($failed);
         $this->orders->recordDownPayment($failed, 1000, 'cash', null, $this->owner);
-        $refund = app(RefundService::class)->markBakeryFailure($failed, 'Oven failure', $this->owner, true);
         $customer = ['first_name' => 'New', 'last_name' => 'Buyer', 'phone_number' => '09181234567'];
         $requests = [
             ['GET', '/customers/create', []], ['GET', '/customers/'.$this->customer->id.'/edit', []],
@@ -115,8 +113,6 @@ class ImplementationPolicyTest extends TestCase
             ['POST', '/orders/'.$order->id.'/complete-pickup', ['payment_method' => 'cash', 'pickup_confirmed' => '1']],
             ['POST', '/payment-proofs/'.$proof->id.'/accept', ['amount' => 1000, 'reference_number' => 'PROOF-1', 'account_checked' => '1']],
             ['POST', '/payment-proofs/'.$proof->id.'/reject', ['reason' => 'Not received']],
-            ['POST', '/orders/'.$order->id.'/bakery-failure', ['reason' => 'Oven failure', 'bakery_failure_confirmed' => '1']],
-            ['POST', '/refunds/'.$refund->id.'/complete', ['method' => 'cash', 'reference_number' => 'RETURN-1', 'transfer_confirmed' => '1']],
             ['GET', '/reports', []], ['GET', '/reports/records', ['kind' => 'sales']], ['GET', '/reports/export', []],
         ];
         $before = $this->snapshot();
@@ -139,12 +135,10 @@ class ImplementationPolicyTest extends TestCase
         $order = $this->order();
         $public = $this->order(true);
         $reviews = app(PaymentReviewService::class);
-        $refunds = app(RefundService::class);
         $this->confirmPaymentFixture($public);
         $proof = $reviews->submit($public, UploadedFile::fake()->image('receipt.png'), 'SERVICE-1');
         $this->confirmPaymentFixture($order);
         $this->orders->recordDownPayment($order, 1000, 'cash', null, $this->owner);
-        $refund = $refunds->markBakeryFailure($order, 'Oven failure', $this->owner, true);
         $active = $this->order();
         foreach ([
             fn () => $this->orders->createInternalOrder($this->payload(), $this->assistant),
@@ -156,8 +150,6 @@ class ImplementationPolicyTest extends TestCase
             fn () => $this->orders->updateStatus($active, 'cancelled', $this->assistant),
             fn () => $reviews->accept($proof, 1000, 'SERVICE-1', $this->assistant),
             fn () => $reviews->reject($proof, 'Not received', $this->assistant),
-            fn () => $refunds->markBakeryFailure($active, 'Oven failure', $this->assistant, true),
-            fn () => $refunds->complete($refund, ['method' => 'cash', 'reference_number' => 'RETURN', 'transfer_confirmed' => '1'], $this->assistant),
         ] as $action) {
             $this->denied($action, AuthorizationException::class);
         }
@@ -222,52 +214,20 @@ class ImplementationPolicyTest extends TestCase
         $this->assertSame('ready_for_pickup', $order->fresh()->status);
     }
 
-    public function test_full_refund_uses_received_money_and_allows_genuine_failure_after_on_time_readiness(): void
+    public function test_legacy_fully_paid_orders_are_collected_without_another_charge(): void
     {
-        $refunds = app(RefundService::class);
-        $unpaid = $this->order();
-        $this->assertNull($refunds->markBakeryFailure($unpaid, 'Cannot bake', $this->owner, true));
-        $this->assertDatabaseCount('refunds', 0);
-        $paid = $this->order();
-        $this->ready($paid);
-        $this->denied(fn () => $refunds->markBakeryFailure($paid, 'Customer is late', $this->owner));
-        $this->assertTrue($paid->fresh()->ready_at->lte($paid->pickupDeadline()));
-        $refund = $refunds->markBakeryFailure($paid, 'Cake damaged after readiness; cannot supply a replacement.', $this->owner, true);
-        $this->assertEquals(1000, $refund->amount);
-        $this->assertSame('pending', $refund->status);
-        $this->denied(fn () => $refunds->complete($refund, ['method' => 'cash', 'reference_number' => 'RETURN'], $this->owner));
-        $data = ['method' => 'cash', 'reference_number' => 'RETURN', 'transfer_confirmed' => '1'];
-        $refunds->complete($refund, $data, $this->owner);
-        $this->assertSame('completed', $refund->fresh()->status);
-        $this->denied(fn () => $refunds->complete($refund, $data, $this->owner));
-        $this->denied(fn () => $refunds->markBakeryFailure($paid, 'Again', $this->owner, true));
-        $collected = $this->order();
-        $this->ready($collected);
-        $this->orders->completePickup($collected, 'cash', null, $this->owner, true);
-        $this->denied(fn () => $refunds->markBakeryFailure($collected, 'Cannot reverse completed pickup', $this->owner, true));
+        $order = $this->order();
+        $this->ready($order);
+        // Explicit legacy fixture; the new workflow cannot prepay this balance.
+        $order->payments()->create(['user_id' => $this->owner->id, 'amount' => 1000, 'payment_type' => 'final_payment',
+            'payment_method' => 'cash', 'payment_date' => now()->subDay()]);
+        $ledger = $order->payments()->get()->toArray();
+        $this->orders->updateStatus($order, 'completed', $this->assistant);
+        $this->assertSame('completed', $order->fresh()->status);
+        $this->assertSame($ledger, $order->payments()->get()->toArray());
     }
 
-    public function test_legacy_fully_paid_orders_are_preserved_refunded_fully_or_collected_without_another_charge(): void
-    {
-        foreach (['failure', 'collection'] as $case) {
-            $order = $this->order();
-            $this->ready($order);
-            // Explicit legacy fixture; the new workflow cannot prepay this balance.
-            $order->payments()->create(['user_id' => $this->owner->id, 'amount' => 1000, 'payment_type' => 'final_payment',
-                'payment_method' => 'cash', 'payment_date' => now()->subDay()]);
-            $ledger = $order->payments()->get()->toArray();
-            if ($case === 'failure') {
-                $refund = app(RefundService::class)->markBakeryFailure($order, 'Legacy paid order cannot be supplied', $this->owner, true);
-                $this->assertEquals(2000, $refund->amount);
-            } else {
-                $this->orders->updateStatus($order, 'completed', $this->assistant);
-                $this->assertSame('completed', $order->fresh()->status);
-            }
-            $this->assertSame($ledger, $order->payments()->get()->toArray());
-        }
-    }
-
-    public function test_excessive_public_proof_is_not_accepted_as_a_deposit_or_refund(): void
+    public function test_excessive_public_proof_is_not_accepted_as_a_deposit(): void
     {
         $order = $this->order(true);
         $this->confirmPaymentFixture($order);
@@ -276,7 +236,6 @@ class ImplementationPolicyTest extends TestCase
         $this->assertSame('awaiting_verification', $proof->fresh()->status);
         app(PaymentReviewService::class)->accept($proof, 1000, 'OVER-1', $this->owner);
         $this->assertSame('confirmed', $order->fresh()->status);
-        $this->assertDatabaseCount('refunds', 0);
     }
 
     public function test_guest_and_inactive_staff_do_not_mutate_internal_records(): void

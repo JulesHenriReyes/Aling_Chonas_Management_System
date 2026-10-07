@@ -61,23 +61,23 @@
             $metricTooltips = [
                 'sales' => 'Total invoiced value of orders with Completed status during this period.',
                 'gross_collections' => 'All verified cash and GCash payments received and ledgered in this period.',
-                'refunds_completed' => 'Funds refunded to customers for cancelled or unfulfilled orders.',
                 'cancellation_income' => 'Non-refundable deposits retained from customer-initiated cancellations.',
                 'expenses' => 'Total shop expenses logged during this period (excluding voided entries).',
+            ];
+            $metricSubtitles = [
+                'gross_collections' => 'Verified cash and GCash payments',
             ];
         @endphp
         @foreach(\App\Services\FinancialReportService::LABELS as $metric => $label)
             <div class="summary-metric">
                 <span class="inline-flex items-center gap-1">{{ $label }} <x-tooltip :text="$metricTooltips[$metric] ?? ''" /></span>
                 <strong>₱{{ number_format($summary[$metric], 2) }}</strong>
+                @if(isset($metricSubtitles[$metric]))
+                    <small class="text-cocoa-400 -mt-0.5">{{ $metricSubtitles[$metric] }}</small>
+                @endif
                 <a href="{{ route('reports.records', $period->query() + ['metric' => $metric]) }}"><small>Inspect records →</small></a>
             </div>
         @endforeach
-        <div class="summary-metric">
-            <span class="inline-flex items-center gap-1">Net collections <x-tooltip text="Gross verified collections minus completed refunds within this period." /></span>
-            <strong>₱{{ number_format($summary['payment_collections'], 2) }}</strong>
-            <small>Verified payments less completed refunds</small>
-        </div>
     </section>
 
     <section class="operational-result">
@@ -95,7 +95,7 @@
         </div>
         <p class="chart-legend">
             <span class="legend-sales">Completed sales</span>
-            <span class="legend-net">Net collections</span>
+            <span class="legend-net">Payment collections</span>
             <span class="legend-expenses">Expenses</span>
         </p>
 
@@ -111,7 +111,7 @@
         <div class="table-scroll" tabindex="0" role="region" aria-label="Scrollable financial trend chart">
             <svg role="img" aria-labelledby="trend-title trend-description" viewBox="0 0 {{ $width }} 275" class="trend-chart" style="min-width:{{ $width }}px">
                 <title id="trend-title">{{ $grain }} financial trend for {{ $period->label() }}</title>
-                <desc id="trend-description">Completed sales, net collections and expenses. Exact values, including zero activity, appear in the table below. Negative collections extend below the zero line.</desc>
+                <desc id="trend-description">Completed sales, payment collections and expenses. Exact values, including zero activity, appear in the table below. Negative collections extend below the zero line.</desc>
                 <line x1="55" y1="{{ $baseline }}" x2="{{ $width - 15 }}" y2="{{ $baseline }}" stroke="#9c8b7a" />
                 <text x="5" y="{{ $baseline + 4 }}">₱0</text>
                 <text x="5" y="20">₱{{ number_format($maximum, 0) }}</text>
@@ -139,8 +139,7 @@
                             <th>Period</th>
                             <th class="numeric">Sales</th>
                             <th class="numeric">Gross collections</th>
-                            <th class="numeric">Refunds</th>
-                            <th class="numeric">Net collections</th>
+                            <th class="numeric">Payment collections</th>
                             <th class="numeric">Retained deposits</th>
                             <th class="numeric">Expenses</th>
                             <th class="numeric">Operational result</th>
@@ -151,7 +150,7 @@
                         @foreach($trends as $row)
                             <tr>
                                 <th scope="row">{{ $row['period'] }}</th>
-                                @foreach(['sales', 'gross_collections', 'refunds_completed', 'payment_collections', 'cancellation_income', 'expenses', 'operational_net_income'] as $metric)
+                                @foreach(['sales', 'gross_collections', 'payment_collections', 'cancellation_income', 'expenses', 'operational_net_income'] as $metric)
                                     <td class="numeric">{{ number_format($row[$metric], 2) }}</td>
                                 @endforeach
                                 <td class="numeric">{{ $row['completed_order_count'] }}</td>
@@ -161,7 +160,7 @@
                     <tfoot>
                         <tr>
                             <th>Total (PHP)</th>
-                            @foreach(['sales', 'gross_collections', 'refunds_completed', 'payment_collections', 'cancellation_income', 'expenses', 'operational_net_income'] as $metric)
+                            @foreach(['sales', 'gross_collections', 'payment_collections', 'cancellation_income', 'expenses', 'operational_net_income'] as $metric)
                                 <td class="numeric">{{ number_format($summary[$metric], 2) }}</td>
                             @endforeach
                             <td class="numeric">{{ $summary['completed_order_count'] }}</td>
@@ -186,7 +185,7 @@
                     <tbody>
                         @foreach($expensesByCategory as $category)
                             <tr>
-                                <td><a class="record-link" href="{{ route('expenses.index', ['category' => $category->category, 'start_date' => $period->start->toDateString(), 'end_date' => $period->end->toDateString()]) }}">{{ ucfirst($category->category) }}</a></td>
+                                <td><a class="record-link" href="{{ route('expenses.index', ['category' => $category->category, 'start_date' => $period->start->toDateString(), 'end_date' => $period->end->toDateString()]) }}">{{ $category->category === 'ingredients' ? 'Groceries' : ucfirst($category->category) }}</a></td>
                                 <td class="numeric">₱{{ number_format($category->total_amount, 2) }}</td>
                             </tr>
                         @endforeach
@@ -202,14 +201,13 @@
         </section>
 
         <section>
-            <h2>Collections & refunds by method</h2>
-            <div class="workspace-table table-scroll" role="region" aria-label="Collections and refunds by payment method" tabindex="0">
+            <h2>Collections by method</h2>
+            <div class="workspace-table table-scroll" role="region" aria-label="Collections by payment method" tabindex="0">
                 <table class="small-table">
                     <thead>
                         <tr>
                             <th>Method</th>
                             <th class="numeric">Gross verified</th>
-                            <th class="numeric">Refunded</th>
                             <th class="numeric">Net</th>
                         </tr>
                     </thead>
@@ -218,7 +216,6 @@
                             <tr>
                                 <td>{{ ucfirst($method['method']) }}</td>
                                 <td class="numeric">₱{{ number_format($method['gross'], 2) }}</td>
-                                <td class="numeric">₱{{ number_format($method['refunds'], 2) }}</td>
                                 <td class="numeric">₱{{ number_format($method['net'], 2) }}</td>
                             </tr>
                         @endforeach
@@ -268,10 +265,10 @@
 
     <aside class="workspace-panel current-snapshot">
         <h2>Current snapshot · as of {{ $asOf->format('M d, Y H:i') }} {{ $period->timezone }}</h2>
-        <p>Outstanding refunds across all dates: <strong>₱{{ number_format($summary['refunds_pending'], 2) }}</strong>. <a class="record-link" href="{{ route('supplies.index', ['low_stock' => 1]) }}">{{ $lowStockCount }} active supplies at or below reorder level</a>.</p>
-        <p class="form-hint">These current figures are outside the selected period. Stock is tracked per supply and unit; no inventory value is inferred.</p>
+        <p><a class="record-link" href="{{ route('supplies.index', ['low_stock' => 1]) }}">{{ $lowStockCount }} active supplies at or below reorder level</a>.</p>
+        <p class="form-hint">This current stock count are outside the selected period. Stock is tracked per supply and unit; no inventory value is inferred.</p>
     </aside>
 
-    <p class="form-hint">Sales use completion dates; collections use payment dates; completed refunds use refund completion dates; retained deposits use customer cancellation dates; expenses use expense dates. Unverified or rejected receipts, voided expenses, and bakery-failure retention are excluded.</p>
+    <p class="form-hint">Sales use completion dates; collections use payment dates; retained deposits use customer cancellation dates; expenses use expense dates. Unverified or rejected receipts, voided expenses, and bakery-failure retention are excluded.</p>
 </div>
 @endsection

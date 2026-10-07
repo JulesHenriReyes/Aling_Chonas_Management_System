@@ -62,6 +62,11 @@ class CustomerController extends Controller
         $validated['phone_number'] = Customer::normalizePhoneNumber($validated['phone_number']);
         $customer->update($validated);
 
+        if ($request->input('_from') === 'index') {
+            return redirect()->route('customers.index')
+                ->with('success', "Customer {$customer->full_name} updated successfully.");
+        }
+
         return redirect()->route('customers.show', $customer)
             ->with('success', "Customer {$customer->full_name} updated successfully.");
     }

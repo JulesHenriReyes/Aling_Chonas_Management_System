@@ -1,0 +1,8 @@
+{
+    "business_tables": 21,
+    "schema_fields": 197,
+    "foreign_keys": 35,
+    "refunds_table_absent": true,
+    "diagram_matches_local_database": true,
+    "errors": []
+}

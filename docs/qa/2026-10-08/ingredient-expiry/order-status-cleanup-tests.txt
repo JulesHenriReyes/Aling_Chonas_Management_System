@@ -1,0 +1,57 @@
+
+   PASS  Tests\Feature\FixedCatalogAndPaymentReviewTest
+  ✓ both paths use catalog prices and keep inclusions separate from extras                                       0.38s  
+  ✓ snapshots survive catalog changes and manual price changes are rejected                                      0.04s  
+  ✓ invalid option unavailable product inapplicable extra and fractional quantity are rejected                   0.02s  
+  ✓ proof is private and does not count as payment until exact verification                                      0.06s  
+  ✓ rejection retains history and allows replacement but pending proof blocks replacement                        0.05s  
+  ✓ duplicates across orders and deactivated staff are rejected                                                  0.06s  
+  ✓ cash workflow and readiness before collection are preserved                                                  0.04s  
+  ✓ receipts reject non images and oversized images                                                              0.03s  
+  ✓ http public flow has persistent token access and private receipt authorization                               5.25s  
+  ✓ catalog and settings management is owner only and photos are separate                                        1.55s  
+  ✓ http price changes require review again and do not create partial records                                    0.03s  
+  ✓ owner can manage add on photos applicability and options without repricing orders                            0.05s  
+  ✓ public receipt submission is rate limited and inactive staff cannot read receipts                            0.06s  
+  ✓ historical completed pickup remains terminal even without readiness timestamp                                0.04s  
+
+   PASS  Tests\Feature\OrderAndPaymentBusinessRulesTest
+  ✓ exact deposit is accepted after staff confirmation                                                           0.06s  
+  ✓ incorrect down payment rejected                                                                              0.03s  
+  ✓ duplicate down payment rejected                                                                              0.04s  
+  ✓ generic status update cannot bypass staff review                                                             0.03s  
+  ✓ final payment accepted when exact balance is paid                                                            0.05s  
+  ✓ payment exceeding balance rejected                                                                           0.06s  
+  ✓ verified deposit blocks cancellation in ui http and stale service requests                                   0.06s  
+  ✓ fully paid active legacy order cannot be cancelled                                                           0.07s  
+  ✓ cancelled order preserves payment and rejects further payment                                                0.04s  
+  ✓ completed at is recorded and not overwritten                                                                 0.04s  
+  ✓ cancelled at is recorded and not overwritten                                                                 0.03s  
+
+   PASS  Tests\Feature\StaffConfirmationBeforePaymentTest
+  ✓ public submission requires review and cannot self approve                                                    0.05s  
+  ✓ unreviewed qr receipt and staff deposit paths leave no side effects                                          0.05s  
+  ✓ owner and assistant can confirm without money and replay preserves audit                                     0.08s  
+  ✓ confirmation requires acknowledgment valid pickup and active staff                                           0.05s  
+  ✓ decline requires owner and reason and remains terminal                                                       0.07s  
+  ✓ receipt review and replacement do not repeat approval or create payment                                      0.21s  
+  ✓ preparation needs verified exact deposit and owner financial permissions                                     0.05s  
+  ✓ review and decline have no financial effect and queues are distinct                                          2.57s  
+  ✓ legacy proof requires owner and can be verified after explicit feasible approval                             0.09s  
+  ✓ legacy no transfer decline requires explicit account check                                                   0.04s  
+  ✓ previously paid work is preserved and unpaid legacy confirmation needs review                                0.08s  
+
+   PASS  Tests\Feature\UiPresentationTest
+  ✓ order pages preserve actions and price locking in every lifecycle state                                      3.75s  
+  ✓ public status guidance and empty receipt panels follow the current stage                                     0.17s  
+  ✓ public receipt remains unpaid and validation preserves selected items                                        0.71s  
+  ✓ staff workspace recommendations presentation                                                                 0.11s  
+  ✓ view transitions and floating row actions presentation                                                       0.03s  
+  ✓ public storefront layout and quiet button presentation                                                       0.11s  
+  ✓ tooltip components render accessible attributes and guidance                                                 1.40s  
+  ✓ paid extras and included items render images on order details                                                0.07s  
+  ✓ inventory detail sliding drawer presentation and endpoint                                                    0.06s  
+
+  Tests:    45 passed (597 assertions)
+  Duration: 18.17s
+

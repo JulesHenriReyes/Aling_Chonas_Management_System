@@ -8,9 +8,22 @@ use RuntimeException;
 
 final class DisposableDatabase
 {
+    public static function tempDir(): string
+    {
+        $temp = getenv('TEMP') ?: getenv('TMP') ?: sys_get_temp_dir();
+        if ((str_starts_with($temp, 'C:\\WINDOWS') || str_starts_with($temp, 'C:/WINDOWS')) && getenv('USERPROFILE')) {
+            $userTemp = getenv('USERPROFILE').'/AppData/Local/Temp';
+            if (is_dir($userTemp)) {
+                $temp = $userTemp;
+            }
+        }
+
+        return $temp;
+    }
+
     public static function storage(): string
     {
-        $path = sys_get_temp_dir().'/bakery-implementation-tests-'.getmypid();
+        $path = self::tempDir().'/bakery-implementation-tests-'.getmypid();
         foreach (['', '/framework/views', '/framework/cache', '/framework/sessions', '/logs', '/app/private', '/app/public', '/app/payment-receipts'] as $directory) {
             if (! is_dir($path.$directory)) {
                 mkdir($path.$directory, 0777, true);
@@ -35,7 +48,7 @@ final class DisposableDatabase
             throw new RuntimeException('Disposable tests require APP_ENV=testing.');
         }
         $storage = strtolower(str_replace('\\', '/', realpath($app->storagePath()) ?: ''));
-        $temporary = strtolower(str_replace('\\', '/', realpath(sys_get_temp_dir()))).'/';
+        $temporary = strtolower(str_replace('\\', '/', realpath(self::tempDir()))).'/';
         if (! str_starts_with($storage, $temporary) || $app->configurationIsCached()) {
             throw new RuntimeException('Tests require temporary storage and uncached configuration.');
         }
@@ -51,7 +64,7 @@ final class DisposableDatabase
             $connection = $event->connection;
             $database = $connection->getDatabaseName();
             $resolved = str_replace('\\', '/', realpath((string) $database) ?: '');
-            $temporary = str_replace('\\', '/', realpath(sys_get_temp_dir())).'/';
+            $temporary = str_replace('\\', '/', realpath(self::tempDir())).'/';
             $fileAllowed = str_starts_with(strtolower($resolved), strtolower($temporary))
                 && str_contains(basename($resolved), 'workflow-concurrency-');
             if ($connection->getDriverName() !== 'sqlite' || ($database !== ':memory:' && ! $fileAllowed)

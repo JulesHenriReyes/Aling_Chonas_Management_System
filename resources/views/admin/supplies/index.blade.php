@@ -1,23 +1,53 @@
 @extends('layouts.admin')
 @section('title', 'Inventory & supplies')
 @section('content')
-<div class="workspace" x-data="{
-    showCreateModal: {{ $errors->any() ? 'true' : 'false' }},
+<div class="workspace inventory-workspace" x-data="{
+    showCreateModal: {{ $errors->any() && old('_form') !== 'edit_supply' ? 'true' : 'false' }},
+    showEditModal: {{ $errors->any() && old('_form') === 'edit_supply' ? 'true' : 'false' }},
+    editSupply: {
+        id: {{ old('_form') === 'edit_supply' ? old('supply_id', 'null') : 'null' }},
+        supply_name: @js(old('_form') === 'edit_supply' ? old('supply_name', '') : ''),
+        category: @js(old('_form') === 'edit_supply' ? old('category', 'ingredients') : 'ingredients'),
+        unit: @js(old('_form') === 'edit_supply' ? old('unit', 'kg') : 'kg'),
+        reorder_level: @js(old('_form') === 'edit_supply' ? old('reorder_level', '0.00') : '0.00'),
+        is_active: {{ old('_form') === 'edit_supply' ? (old('is_active', true) ? 'true' : 'false') : 'true' }},
+        update_url: @js(old('_form') === 'edit_supply' && old('supply_id') ? route('supplies.update', old('supply_id')) : '')
+    },
+    openEditSupply(supply) {
+        this.editSupply = {
+            id: supply.id,
+            supply_name: supply.supply_name,
+            category: supply.category,
+            unit: supply.unit,
+            reorder_level: Number(supply.reorder_level ?? 0).toFixed(2),
+            is_active: Boolean(supply.is_active),
+            update_url: '/supplies/' + supply.id
+        };
+        this.showEditModal = true;
+    },
     showDetailDrawer: false,
     detailLoading: false,
+    detailSequence: 0,
+    detailError: '',
     drawerSupply: null,
+    drawerEntry: null,
+    drawerEntryHistory: [],
     drawerBaseline: null,
     drawerMovements: [],
     drawerNetMovement: 0,
     openSupplyDetail(supply) {
+        const request = ++this.detailSequence;
+        this.detailError = '';
         this.drawerSupply = supply;
+        this.drawerEntry = supply.entry || null;
+        this.drawerEntryHistory = [];
         this.showDetailDrawer = true;
         this.detailLoading = true;
         this.drawerBaseline = null;
         this.drawerMovements = [];
         this.drawerNetMovement = 0;
 
-        fetch('/supplies/' + supply.id, {
+        fetch('/supplies/' + supply.id + (supply.entry ? '?stock_entry_id=' + supply.entry.stock_entry_id : ''), {
             headers: {
                 'Accept': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest'
@@ -28,20 +58,23 @@
             return res.json();
         })
         .then(data => {
-            if (this.drawerSupply && this.drawerSupply.id === supply.id) {
-                this.drawerSupply = { ...this.drawerSupply, ...data.supply, ...data.routes };
+            if (request === this.detailSequence && this.showDetailDrawer && this.drawerSupply && this.drawerSupply.id === supply.id) {
+                this.drawerSupply = { ...this.drawerSupply, ...data.supply, ...data.routes, entries: data.entries };
                 this.drawerBaseline = data.baseline;
+                this.drawerEntry = data.selected_entry || this.drawerEntry;
+                this.drawerEntryHistory = data.entry_history || [];
                 this.drawerMovements = data.movements || [];
                 this.drawerNetMovement = data.net_movement || 0;
                 this.detailLoading = false;
             }
         })
         .catch(() => {
-            this.detailLoading = false;
+            if (request === this.detailSequence) { this.detailLoading = false; this.detailError = 'Could not load entry details. Close this panel and open it again to retry.'; }
         });
     },
     closeDetailDrawer() {
         this.showDetailDrawer = false;
+        this.detailSequence++;
     }
 }">
     <header class="workspace-heading">
@@ -59,6 +92,16 @@
             <a class="ui-button primary" href="{{ route('inventory.create','receipt') }}"><x-icon name="plus" /> Stock in</a>
         </div>
     </header>
+
+    @if(array_sum($expiryCounts))
+        <nav class="inventory-expiry-summary" aria-label="Expiry alerts">
+            @foreach(['expiring'=>'expiring soon','expired'=>'expired','unknown'=>'with unknown expiry'] as $state=>$label)
+                @if($expiryCounts[$state])<a href="{{ route('supplies.index',['expiry'=>$state]) }}">{{ $expiryCounts[$state] }} {{ $label }}</a>@endif
+            @endforeach
+            @if($expiryCounts['unknown'] && auth()->user()->isOwner())<a class="inventory-review-link" href="{{ route('inventory.verify') }}">Review opening stock →</a>@endif
+        </nav>
+        @if($expiryCounts['unknown'])<p class="form-hint">Existing ingredients with unknown expiry are held from baking. Verify their dates instead of stocking in the same quantities again.</p>@endif
+    @endif
 
     <form method="GET" class="workspace-filters" aria-label="Filter supplies">
         <div class="filter-search">
@@ -91,90 +134,74 @@
                 @endforeach
             </select>
         </div>
-        <input type="hidden" name="sort" value="{{ request('sort','supply_name') }}">
+        <div><label for="supply-expiry">Expiration</label><select id="supply-expiry" name="expiry"><option value="">All expirations</option>@foreach(['available'=>'Usable','expiring'=>'Expiring soon (within 7 days)','expired'=>'Expired','unknown'=>'Expiry unknown'] as $value=>$label)<option value="{{ $value }}" @selected(request('expiry')===$value)>{{ $label }}</option>@endforeach</select></div>
+        <input type="hidden" name="sort" value="{{ request('sort','expiry') }}">
         <input type="hidden" name="direction" value="{{ request('direction','asc') }}">
         <button class="ui-button">Apply</button>
         <a class="ui-button quiet" href="{{ route('supplies.index') }}">Reset</a>
     </form>
 
     <div class="workspace-table table-scroll" role="region" aria-label="Supplies table" tabindex="0">
-        <table class="supplies-table">
-            <colgroup>
-                <col>
-                <col class="supplies-category-col">
-                <col class="supplies-stock-col">
-                <col class="supplies-status-col">
-                <col class="supplies-actions-col">
-            </colgroup>
-            <thead>
-                <tr>
-                    <th><x-sort-heading column="supply_name" label="Supply" /></th>
-                    <th><x-sort-heading column="category" label="Category" /></th>
-                    <th>On hand</th>
-                    <th><span class="inline-flex items-center gap-1">Stock status <x-tooltip text="Inventory levels automatically categorized as In stock, Low stock, or Out of stock based on reorder thresholds." /></span></th>
-                    <th scope="col" aria-label="Supply options"><span class="sr-only">Actions</span></th>
-                </tr>
-            </thead>
+        <table class="supplies-table inventory-entry-table">
+            <colgroup><col><col class="inventory-quantity-col"><col class="inventory-expiry-col"><col class="inventory-status-col"><col class="supplies-actions-col"></colgroup>
+            <thead><tr><th><x-sort-heading column="supply_name" label="Supply" /></th><th>Remaining</th><th><x-sort-heading column="expiry" label="Expiration" /></th><th>Status <x-tooltip text="Availability uses combined usable stock. Expired and unknown ingredient entries stay on hand." /></th><th scope="col">Actions</th></tr></thead>
             <tbody>
                 @forelse($supplies as $supply)
                     @php
-                        $supplyData = [
-                            'id' => $supply->id,
-                            'supply_name' => $supply->supply_name,
-                            'category' => $supply->category,
-                            'unit' => $supply->unit,
-                            'current_quantity' => (float) $supply->current_quantity,
-                            'formatted_quantity' => number_format($supply->current_quantity, 2),
-                            'reorder_level' => (float) $supply->reorder_level,
-                            'formatted_reorder_level' => number_format($supply->reorder_level, 2),
-                            'is_active' => (bool) $supply->is_active,
-                            'is_low_stock' => (bool) $supply->is_low_stock,
-                            'is_out_of_stock' => (float) $supply->current_quantity == 0,
-                            'edit_url' => route('supplies.edit', $supply),
-                            'history_url' => route('inventory.history', ['supply_id' => $supply->id]),
-                            'stock_in_url' => route('inventory.create', ['type' => 'receipt', 'supply_id' => $supply->id]),
-                            'stock_out_url' => route('inventory.create', ['type' => 'usage', 'supply_id' => $supply->id]),
-                        ];
+                        $first = app(\App\Services\StockEntryLedger::class)->ordered($supply, $supply->stockEntries)->first()?->id;
+                        $displayEntries = $supply->category === 'ingredients' ? $supply->stockEntries : collect([null]);
+                        if(request('expiry')) $displayEntries = $displayEntries->filter(function($e) use($supply) { if(!$e) return false; $e->setRelation('supply',$supply); return request('expiry') === 'available' ? in_array($e->expiry_status,['available','expiring']) : $e->expiry_status === request('expiry'); });
+                        if($displayEntries->isEmpty() && !request('expiry')) $displayEntries = collect([null]);
                     @endphp
-                    <tr class="cursor-pointer hover:bg-cream-100/60 transition group"
-                        @click="openSupplyDetail(@js($supplyData))">
-                        <td>
-                            <a class="record-link font-semibold group-hover:text-cocoa-700"
-                               href="{{ route('supplies.show', $supply) }}"
-                               @click="if (!$event.ctrlKey && !$event.metaKey && $event.button === 0) { $event.preventDefault(); $event.stopPropagation(); openSupplyDetail(@js($supplyData)); } else { $event.stopPropagation(); }">
-                                {{ $supply->supply_name }}
-                            </a>
-                            @unless($supply->is_active)<span class="status">Inactive</span>@endunless
-                        </td>
-                        <td>{{ ucfirst($supply->category) }}</td>
-                        <td class="font-medium text-cocoa-600">{{ number_format($supply->current_quantity, 2) }} {{ $supply->unit }}</td>
-                        <td>
-                            @if($supply->current_quantity == 0)
-                                <x-status value="out_of_stock" label="Out of stock" />
-                            @elseif($supply->is_low_stock)
-                                <x-status value="low_stock" label="Low stock" />
+                    @foreach($displayEntries as $entry)
+                        @php
+                            if($entry) $entry->setRelation('supply',$supply);
+                            $state = $entry?->expiry_status;
+                            $entryData = $entry ? ['stock_entry_id'=>$entry->id, 'opening_quantity'=>(float)$entry->opening_quantity, 'remaining_quantity'=>(float)$entry->remaining_quantity, 'expiry_date'=>$entry->expiry_date?->toDateString(), 'stock_in_date'=>$entry->stock_in_date?->toDateString(), 'source'=>$entry->source, 'status'=>$state] : null;
+                            $supplyData = ['id'=>$supply->id,'supply_name'=>$supply->supply_name,'category'=>$supply->category,'unit'=>$supply->unit,'current_quantity'=>(float)$supply->current_quantity,'formatted_quantity'=>number_format($supply->current_quantity,2),'usable_quantity'=>$supply->usable_quantity,'formatted_usable_quantity'=>number_format($supply->usable_quantity,2),'reorder_level'=>(float)$supply->reorder_level,'formatted_reorder_level'=>number_format($supply->reorder_level,2),'is_active'=>(bool)$supply->is_active,'is_low_stock'=>(bool)$supply->is_low_stock,'is_out_of_stock'=>$supply->usable_quantity==0,'edit_url'=>route('supplies.edit',$supply),'history_url'=>route('inventory.history',['supply_id'=>$supply->id]),'stock_in_url'=>route('inventory.create',['type'=>'receipt','supply_id'=>$supply->id]),'stock_out_url'=>route('inventory.create',['type'=>'usage','supply_id'=>$supply->id]),'entry'=>$entryData];
+                        @endphp
+                        <tr @click="openSupplyDetail(@js($supplyData))" class="inventory-entry-row">
+                            <td><a class="record-link inventory-supply-link" href="{{ route('supplies.show',$supply) }}" @click.stop="if (!$event.ctrlKey && !$event.metaKey && $event.button === 0) { $event.preventDefault(); openSupplyDetail(@js($supplyData)); }">
+                                    <span class="inventory-supply-name">{{ $supply->supply_name }}</span>
+                                    <span class="inventory-row-meta">{{ ucfirst($supply->category) }}@if($entry) · {{ $entry->stock_in_date ? 'Stocked '.$entry->stock_in_date->format('M j, Y') : 'Opening stock' }}@endif</span>
+                                </a>
+                                @unless($supply->is_active)<span class="status">Inactive</span>@endunless
+                            </td>
+                            <td>{{ number_format($entry?->remaining_quantity ?? $supply->current_quantity,2) }} {{ $supply->unit }}<span class="inventory-row-meta">{{ number_format($supply->usable_quantity,2) }} {{ $supply->unit }} usable total</span></td>
+                            <td>{{ $entry?->expiry_date?->format('M j, Y') ?? ($entry ? 'Unknown' : ($supply->category === 'packaging' ? 'Not applicable' : '—')) }}
+                                @if($supply->category === 'ingredients' && $entry && $entry->id === $first && $entry->expiry_date)<span class="inventory-row-meta inventory-use-first">Use first</span>@endif
+                            </td>
+                            <td>
+                                @if($entry)<x-status :value="['unknown'=>'unknown_expiry','expired'=>'expired','expiring'=>'expiring_soon','available'=>'available'][$state]" :label="['unknown'=>'Expiry unknown','expired'=>'Expired','expiring'=>'Expiring soon','available'=>'Available'][$state]" />
+                                @else<x-status :value="$supply->usable_quantity == 0 ? 'out_of_stock' : ($supply->is_low_stock ? 'low_stock' : 'in_stock')" :label="$supply->usable_quantity == 0 ? 'Out of stock' : ($supply->is_low_stock ? 'Low stock' : 'Available')" />@endif
+                            </td>
+                            <td @click.stop><details class="row-actions supply-actions"><summary aria-label="Options for {{ $supply->supply_name }}{{ $entry ? ' entry '.$entry->id : '' }}"><x-icon name="dots-vertical" /></summary><div>
+                                <a href="{{ route('supplies.show',$supply) }}" @click.prevent="openSupplyDetail(@js($supplyData)); $el.closest('details').removeAttribute('open')">Details</a>
+                                <a href="{{ route('inventory.create',['type'=>'usage','supply_id'=>$supply->id]) }}">Stock out</a>
+                                <a href="{{ route('inventory.history',['supply_id'=>$supply->id,'stock_entry_id'=>$entry?->id]) }}">History</a>
+                                <a href="{{ route('supplies.edit',$supply) }}" @click.prevent="openEditSupply(@js($supplyData)); $el.closest('details')?.removeAttribute('open')">Edit supply</a>
+                            </div></details></td>
+                        </tr>
+                    @endforeach
+                @empty
+                    <tr style="height: 100%;">
+                        <td colspan="5" class="empty-state text-center" style="text-align: center !important; vertical-align: middle !important; padding: 4rem 1rem !important;">
+                            @if(request('expiry') === 'expiring')
+                                <div style="font-weight: 600; font-size: 1rem; color: var(--color-cocoa-900, #2c1a11); margin-bottom: 0.25rem;">No ingredients are expiring soon</div>
+                                <div style="color: var(--color-cocoa-600, #7a5d4d); margin-bottom: 1rem; font-size: 0.875rem;">None of your active ingredient batches expire within the next 7 days.</div>
+                                <a class="ui-button quiet" href="{{ route('supplies.index') }}">Clear filter</a>
+                            @elseif(request('expiry') === 'expired')
+                                <div style="font-weight: 600; font-size: 1rem; color: var(--color-cocoa-900, #2c1a11); margin-bottom: 0.25rem;">No ingredients are expired</div>
+                                <div style="color: var(--color-cocoa-600, #7a5d4d); margin-bottom: 1rem; font-size: 0.875rem;">All active ingredient batches are currently within their expiration dates.</div>
+                                <a class="ui-button quiet" href="{{ route('supplies.index') }}">Clear filter</a>
+                            @elseif(request('expiry') === 'unknown')
+                                <div style="font-weight: 600; font-size: 1rem; color: var(--color-cocoa-900, #2c1a11); margin-bottom: 0.25rem;">No ingredients with unknown expiry</div>
+                                <div style="color: var(--color-cocoa-600, #7a5d4d); margin-bottom: 1rem; font-size: 0.875rem;">All active ingredient batches have recorded expiration dates.</div>
+                                <a class="ui-button quiet" href="{{ route('supplies.index') }}">Clear filter</a>
                             @else
-                                <x-status value="in_stock" label="In stock" />
+                                No supplies match these filters. <a href="{{ route('supplies.index') }}">Clear filters</a> or add a supply.
                             @endif
                         </td>
-                        <td @click.stop>
-                            <details class="row-actions supply-actions">
-                                <summary aria-label="Options for {{ $supply->supply_name }}"><x-icon name="dots-vertical" /></summary>
-                                <div>
-                                    <a href="{{ route('supplies.edit', $supply) }}">Edit</a>
-                                    <a href="{{ route('supplies.show', $supply) }}"
-                                       role="button"
-                                       @click.prevent="openSupplyDetail(@js($supplyData)); $el.closest('details').removeAttribute('open')">
-                                        Details
-                                    </a>
-                                    <a href="{{ route('inventory.history', ['supply_id' => $supply->id]) }}">History</a>
-                                </div>
-                            </details>
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="5" class="empty-state">No supplies match these filters. <a href="{{ route('supplies.index') }}">Clear filters</a> or add a supply.</td>
                     </tr>
                 @endforelse
             </tbody>
@@ -257,22 +284,48 @@
                         @enderror
                     </div>
 
-                    <div>
+                    @php
+                        $standardUnits = [
+                            'kg' => 'kg (Kilogram)',
+                            'g' => 'g (Gram)',
+                            'piece' => 'piece (Individual piece)',
+                            'pcs' => 'pcs (Pieces)',
+                            'can' => 'can (Can)',
+                            'ml' => 'ml (Milliliter)',
+                            'litre' => 'litre (Liter)',
+                            'pack' => 'pack (Pack)',
+                            'box' => 'box (Box)',
+                            'bottle' => 'bottle (Bottle)',
+                        ];
+                        $oldUnit = old('unit', 'kg');
+                        $isCustomUnit = !empty($oldUnit) && !array_key_exists($oldUnit, $standardUnits);
+                        $initialUnitMode = $isCustomUnit ? 'custom' : $oldUnit;
+                    @endphp
+                    <div x-data="{
+                        unitMode: '{{ $initialUnitMode }}',
+                        customUnit: '{{ $isCustomUnit ? addslashes($oldUnit) : '' }}'
+                    }">
                         <label for="modal-unit" class="block text-xs font-semibold text-cocoa-500 mb-1.5">Stock unit <span class="text-red-500">*</span></label>
-                        <input id="modal-unit"
-                               name="unit"
-                               type="text"
-                               required
-                               maxlength="50"
-                               placeholder="e.g. kg, piece, can, ml"
-                               value="{{ old('unit', 'kg') }}"
-                               list="modal-stock-units"
-                               class="w-full text-sm rounded-lg border border-cocoa-100 bg-white px-3 py-2 text-cocoa-600 focus:border-cocoa-300 focus:ring-1 focus:ring-cocoa-300">
-                        <datalist id="modal-stock-units">
-                            @foreach(config('inventory.stock_units', ['kg', 'g', 'piece', 'can', 'ml', 'litre']) as $unit)
-                                <option value="{{ $unit }}">
+                        <select id="modal-unit"
+                                x-model="unitMode"
+                                :name="unitMode === 'custom' ? null : 'unit'"
+                                name="unit"
+                                required
+                                class="w-full text-sm rounded-lg border border-cocoa-100 bg-white px-3 py-2 text-cocoa-600 focus:border-cocoa-300 focus:ring-1 focus:ring-cocoa-300">
+                            @foreach($standardUnits as $uVal => $uLabel)
+                                <option value="{{ $uVal }}" @selected($oldUnit === $uVal)>{{ $uLabel }}</option>
                             @endforeach
-                        </datalist>
+                            <option value="custom" @selected($isCustomUnit)>Other (custom unit)...</option>
+                        </select>
+                        <div x-show="unitMode === 'custom'" x-cloak class="mt-2">
+                            <input type="text"
+                                   x-model="customUnit"
+                                   :name="unitMode === 'custom' ? 'unit' : null"
+                                   :required="unitMode === 'custom'"
+                                   maxlength="50"
+                                   placeholder="Enter custom unit (e.g. tub, roll, sheet)"
+                                   class="w-full text-sm rounded-lg border border-cocoa-100 bg-white px-3 py-2 text-cocoa-600 focus:border-cocoa-300 focus:ring-1 focus:ring-cocoa-300">
+                        </div>
                         <p class="text-[11px] text-cocoa-400 mt-1">Eggs: piece; milk: can; flour: kg.</p>
                         @error('unit')
                             <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
@@ -291,7 +344,7 @@
                            required
                            value="{{ old('reorder_level', '0.00') }}"
                            class="w-full text-sm rounded-lg border border-cocoa-100 bg-white px-3 py-2 text-cocoa-600 focus:border-cocoa-300 focus:ring-1 focus:ring-cocoa-300">
-                    <p class="text-[11px] text-cocoa-400 mt-1">Triggers "Low stock" warning when current quantity falls to or below this level.</p>
+                    <p class="text-[11px] text-cocoa-400 mt-1">Triggers "Low stock" warning when usable quantity falls to or below this level.</p>
                     @error('reorder_level')
                         <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
                     @enderror
@@ -331,10 +384,13 @@
         </div>
     </div>
 
+    @include('admin.supplies.edit-modal', ['fromIndex' => true])
+
     <!-- Sliding Detail Drawer from Right (Anchored strictly below the header in all zoom/size states) -->
     <div x-show="showDetailDrawer"
          x-cloak
          data-detail-drawer
+         data-dialog
          @keydown.escape.window="closeDetailDrawer"
          class="fixed left-0 right-0 bottom-0 z-30 overflow-hidden"
          style="top: var(--topbar-height, 3.5rem); height: calc(100dvh - var(--topbar-height, 3.5rem)); display: none;">
@@ -380,12 +436,12 @@
                                         <span class="inline-flex items-center text-[10px] font-semibold text-stone-500 bg-stone-100 px-2 py-0.5 rounded border border-stone-200">Inactive</span>
                                     </template>
                                 </div>
-                                <h2 class="text-base font-bold text-cocoa-700 truncate" x-text="drawerSupply.supply_name"></h2>
+                                <h2 class="text-base font-bold text-cocoa-700 break-words" x-text="drawerSupply.supply_name"></h2>
                             </div>
                             <button type="button"
                                     @click="closeDetailDrawer"
                                     class="text-cocoa-400 hover:text-cocoa-600 p-1.5 rounded-lg hover:bg-cream-100 transition focus:outline-none shrink-0"
-                                    aria-label="Close detail panel">
+                                    aria-label="Close detail panel" data-dialog-close>
                                 <x-icon name="close" class="w-5 h-5" />
                             </button>
                         </div>
@@ -430,7 +486,7 @@
                                 <!-- Helpful advice alert -->
                                 <template x-if="drawerSupply.is_out_of_stock">
                                     <div class="text-xs bg-rose-50 text-rose-800 p-2.5 rounded-lg border border-rose-200/80">
-                                        <strong>Stock depleted.</strong> Immediate stock in is recommended to avoid production delays.
+                                        <strong>No usable stock.</strong> Review held entries or stock in verified ingredients to avoid production delays.
                                     </div>
                                 </template>
                                 <template x-if="!drawerSupply.is_out_of_stock && drawerSupply.is_low_stock">
@@ -438,6 +494,19 @@
                                         <strong>Low stock alert:</strong> Quantity is at or below the reorder threshold (<span x-text="drawerSupply.formatted_reorder_level + ' ' + drawerSupply.unit"></span>).
                                     </div>
                                 </template>
+                            </div>
+
+                            <div class="inventory-drawer-entries">
+                                <p class="field-error" role="alert" x-show="detailError" x-text="detailError"></p>
+                                <p><strong>Usable total:</strong> <span x-text="drawerSupply.formatted_usable_quantity + ' ' + drawerSupply.unit"></span></p>
+                                <template x-if="drawerEntry"><div class="inventory-selected-entry">
+                                    <h3>Stock entry <span x-text="'#' + drawerEntry.stock_entry_id"></span></h3>
+                                    <p class="inventory-row-meta" x-text="drawerEntry.source.replaceAll('_',' ') + ' · Original quantity: ' + Number(drawerEntry.opening_quantity || 0).toFixed(2) + ' ' + drawerSupply.unit + ' · Stock-in date: ' + (drawerEntry.stock_in_date || 'Unknown')"></p>
+                                    <p><span x-text="Number(drawerEntry.remaining_quantity).toFixed(2) + ' ' + drawerSupply.unit"></span> remaining · <span x-text="drawerEntry.expiry_date ? 'Expires ' + drawerEntry.expiry_date : 'Expiry unknown'"></span></p>
+                                    <a class="record-link" :href="drawerSupply.history_url + '&stock_entry_id=' + drawerEntry.stock_entry_id">Entry history →</a>
+                                    <template x-for="activity in drawerEntryHistory" :key="activity.id"><p class="inventory-row-meta" x-text="activity.type + ': ' + activity.quantity + ' ' + drawerSupply.unit + ' · ' + activity.date"></p></template>
+                                </div></template>
+                                <details><summary>Remaining stock entries</summary><template x-for="entry in (drawerSupply.entries || [])" :key="entry.stock_entry_id"><p class="inventory-row-meta" x-text="'#'+entry.stock_entry_id+' · '+entry.remaining_quantity+' '+drawerSupply.unit+' · '+(entry.expiry_date || (drawerSupply.category === 'packaging' ? 'No expiry applicable' : 'Expiry unknown'))"></p></template></details>
                             </div>
 
                             <!-- Action Shortcuts -->
@@ -450,7 +519,7 @@
                                     <a :href="drawerSupply.stock_out_url" class="ui-button text-xs justify-center py-2">
                                         Stock out
                                     </a>
-                                    <a :href="drawerSupply.edit_url" class="ui-button quiet text-xs justify-center py-2">
+                                    <a :href="drawerSupply.edit_url" @click.prevent="openEditSupply(drawerSupply)" class="ui-button quiet text-xs justify-center py-2">
                                         Edit
                                     </a>
                                 </div>

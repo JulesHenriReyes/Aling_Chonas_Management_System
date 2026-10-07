@@ -4,6 +4,8 @@ Implemented on the existing Laravel / Blade / Alpine stack. The cocoa and cream 
 
 **Local deployment status, updated 2 October 2026:** the regular port-8000 MySQL database has now been backed up and upgraded, with original business values preserved and all three migrations recorded. The initial port-8123 fixture is stopped. See the [local Expenses repair](local-expenses-repair.md) for verification and private backup locations.
 
+**Inventory follow-up, 8 October 2026:** ingredient stock now uses separate expiration-tracked entries and automatic FEFO allocations. The active database was backed up, restored/rehearsed on a clone, and migrated without changing original balances or history. Existing ingredient stock is held as **Expiry unknown** until the Owner verifies it. See [the expiration workflow and current verification evidence](inventory-expiration.md).
+
 ## Changed workflows
 
 - **Public orders:** select a catalog card, customize that package on its own page, save it to the order bag, then continue to contact/pickup and the existing payment page. Add, edit and remove individual lines. Quantities, extras, design requests and reference images stay with their line. The server rechecks availability and pricing before saving or submitting. Stable line keys and a checkout submission key prevent duplicate lines/orders; removed lines cannot be resurrected by an old page.
@@ -48,11 +50,23 @@ Existing supply baselines are labelled `legacy_reconciliation`. Opening quantity
 
 ### Public order drafts
 
+**Cancellation rule, clarified by the user on 8 October 2026:** the Owner may cancel an unpaid order or a booking with exactly its verified 50% deposit. The deposit stays in the original payment ledger and becomes retained cancellation income once, on the cancellation date. It remains a collection on its original payment date; it does not become completed sales. Fully paid and completed orders remain protected. Reported transfers must still be checked before closing an unpaid request. This clarification supersedes the earlier implementation that blocked deposit cancellations. See [company rules and source distinctions](company-rules.md).
+
 Choose **Select package**, select layers and quantity, then optional paid extras and design details. Extra quantities apply to the whole order line; included quantities scale with package quantity and do not incur a surcharge. Reference photos are design references, distinct from payment receipts; up to five JPG/PNG/WebP images of 5 MB each are accepted per line.
 
 **Save package to order** returns to the catalog and order bag. Use **Edit**, **Remove** or select another card. **Continue to contact and pickup** opens the existing summary stage. Draft form fields survive refresh/back in the same browser session, and saved lines/uploads are stored in the server session. Final submission navigates to the same private payment link on repeat submission.
 
 Normal phone cards remain two columns at 360/390/430 px; wider screens show three or four. With enlarged text, cards can use one column so names, prices and actions remain readable without clipping.
+
+### Owner-created staff orders
+
+Use **Orders → Create staff order**, choose a package card, and customize its layer option, quantity, free inclusions, paid extras, theme and design instructions. **Save package to order** adds a stable line to the saved summary. Different designs of the same package remain separate lines. **Edit**, **Remove** and **Add another package** retain the other lines and their photos. The three steps are Choose package, Customize, and Customer and pickup; layouts adapt to the admin content width and stack on narrow screens without overlaying fields.
+
+**Continue to customer and pickup** opens customer search, inline customer creation, the pickup-time picker and the itemized checkout. Use Up/Down then Enter to select a customer; Escape closes suggestions. Field errors appear beside affected inputs. Details and unfinished customer-entry values are saved in the session and a browser draft scoped to the Owner, session and order draft. Editing, reload and Back preserve the selected customer, pickup and notes. Catalog price or availability changes return staff to the affected package while retaining their work.
+
+**Create staff order** records the creating Owner and counts as approval of the design, schedule and capacity. It opens **Confirmed — awaiting deposit**, with no second staff confirmation and no invented payment. Record the exact 50% deposit separately using **Cash** or **GCash**; GCash requires its reference. Preparation still requires that deposit. The balance is collected at actual pickup through the existing pickup/payment action. Public requests continue to require staff review before payment.
+
+Staff reference photos are limited to five JPG/PNG/WebP images per package, 5 MB each. Temporary files use `staff_drafts`; final staff uploads use `staff_references`. Neither disk is public. Draft previews require the current active Owner, session, draft and line; saved reference previews require authenticated active staff and matching order/image membership. Removal and successful creation clean temporary files without clearing public drafts. Existing saved staff selections are adopted when the flow opens. A server-issued submission key uses the existing unique column; repeated and concurrent submissions return the original order even after draft cleanup. No migration is introduced for this workflow.
 
 ### Supplies, stock in and stock out
 
@@ -60,11 +74,11 @@ Create each supply once through **Add supply**, then use **Stock in** for quanti
 
 For the bakery's ingredients, use Flour, Sugar and Cocoa in kg; Egg in pieces; Evaporated milk in cans; Vegetable oil in kg; and Baking powder and Baking soda in g. Initial seed data uses these names and units when setting up a fresh database. The app has no separate ingredient-template dropdown to maintain.
 
-In **Stock in**, enter date, optional supplier and notes. Use **Find a supply** to type a name or open the dropdown button. The list stays open as supplies are selected and marks them Added. Click outside, press Escape or use the button to close it. **Add a new supply** creates a missing catalogue entry on the same page and adds it to the batch with zero stock. Enter quantities beside their units, then review On hand, Change and After saving. All stock rows commit together or none do. Repeated submission of the same stock form returns its existing operation. Cancelling Stock in leaves any newly created catalogue entry at zero.
+In **Stock in**, enter date, optional supplier and notes. Use **Find a supply** to type a name or open the dropdown button. The list stays open as supplies are selected and marks them Added. Click outside, press Escape or use the button to close it. **Add a new supply** creates a missing catalogue entry on the same page and adds it to the batch with zero stock. Enter quantities beside their units and an expiration date for each ingredient; packaging is exempt. Every receipt creates a separate entry, including identical expiration dates. All stock rows commit together or none do. Repeated submission of the same stock form returns its existing operation. Cancelling Stock in leaves any newly created catalogue entry at zero.
 
-**Stock out** selects Used for baking, Waste / spoilage or Count remaining stock. Waste requires a reason. Usage and waste reject negative resulting stock. Count remaining stock accepts actual counted quantities, including zero, and requires an explanation. If stock changed while counting, reload current stock and recount before posting.
+**Stock out** selects Used for baking, Waste / spoilage or Count remaining stock. Baking previews and consumes the earliest-expiring usable entries automatically; expired and unknown ingredients are held. Waste targets actual entries and requires a reason. Ingredient counts include every remaining entry; packaging retains aggregate counting. Counts accept zero and require an explanation. Stale stock/date snapshots are rejected while entered values are retained. Expiration changes availability, not physical quantities, and never creates automatic waste.
 
-Use **Movement history** or a supply's details to inspect actor, effective date, posting time and reconciliation. To correct an operation, open it and post a reasoned **linked reversal**, then enter the corrected operation if needed. The reversal retains the original rows and is rejected if it would make stock negative. Legacy individual movements have their own correction page; grouped operations reverse together. Reversals cannot themselves be reversed.
+Use **Movement history** or a supply's details to inspect actor, dates, posting time, entry allocations and reconciliation. To correct an operation, post a reasoned **linked reversal**, then enter the corrected operation. A reversal undoes the original allocations and retains their expiration dates; receipt reversals cannot borrow stock from another entry. Legacy ingredient corrections without allocations require Owner-selected reconciliation. Opening quantities must be verified through **Review opening stock**, not received again. Posted expiry dates are read-only. Reversals cannot themselves be reversed. See [full stock-entry rules](inventory-expiration.md).
 
 Stock units are fixed after creation. Convert purchases into the recorded unit before entry: for example, a bag labelled 25 kg adds 25 kg of flour. Use the actual labelled weight or count; tray sizes and can capacities are not assumed. Add a separate supply if a different unit is needed. No recipes or order-driven ingredient deductions are inferred. Stock in, waste, adjustment and stocktake do **not** create expenses. Record an actual invoice separately with its real amount.
 
@@ -84,7 +98,7 @@ Use **Apply period** after selecting the period. Month/range/custom filters pers
 | Gross verified collections | Payment ledger entries on payment date; uploaded/unverified/rejected receipt images do not count. |
 | Completed refunds | Completed refund records on refund completion date. |
 | Net collections | Gross verified collections minus completed refunds. |
-| Retained cancellation deposits | Existing customer-cancellation rules and saved downpayment, on cancellation date. Bakery-failure cancellations do not retain deposits. |
+| Retained cancellation deposits | Customer cancellations and the original verified 50% deposit, counted once on the cancellation date. Fully paid/completed orders remain protected. |
 | Valid expenses | Expense date, excluding voided records. |
 | Operational result | Completed sales + retained cancellation deposits − valid expenses. |
 
@@ -96,8 +110,15 @@ Click **Inspect records** on a metric for paginated supporting entries. **View c
 
 See [verification evidence](workflow-verification.md), [requirement checklist](upgrade-checklist.md) and [screenshot gallery](workflow-screenshots.md).
 
-- Initial browser verification used isolated SQLite and realistic bakery fixtures. Concurrent stock tests run two independent PHP processes against a disposable file database. The local deployment repair additionally verified backup restoration, migrations, schema/backfills and original records on a temporary MySQL copy. Concurrent MySQL load was not executed; the MySQL path retains transactions, stable row-lock ordering and uniqueness constraints.
+- Initial browser verification used isolated SQLite and realistic bakery fixtures. The 8 October expiration follow-up additionally passes the SQLite and MariaDB regression suites, proves MariaDB row-lock contention and duplicate-submit behavior with independent processes, and verifies active backup restoration, migration resume and original-record preservation. See [current inventory evidence](inventory-expiration.md).
 - Legacy movements without original before/after quantities cannot prove historical balances before audit adoption. The explicit reconciliation baseline makes current stock reconcilable without inventing historical stock entries. Earlier expense edits cannot be reconstructed.
 - Drafts are tied to the browser/server session; this is not a cross-device customer account cart. Existing session expiry settings apply.
 - Tailwind's CDN and Google font loading remain existing application dependencies. No offline frontend rebuild was introduced.
 - The preview's GCash QR is unset, so the payment page correctly requests bakery setup before money is sent. Existing payment verification behavior remains covered by the regression suite. No real payment was sent during verification.
+# Pickup time selection
+
+Customer and staff checkout share a compact clock picker with AM/PM, hour and minute selectors. Pickup hours default to **8:00 AM–6:00 PM**, inclusive, in the configured bakery pickup timezone. AM offers 8:00–11:59; PM offers 12:00–5:59 and exactly 6:00 PM. Every allowed minute is available.
+
+Click **Done** to save a complete selection. Escape, closing the picker, or clicking outside discards unfinished changes. Changing a selector preserves compatible values and clears incompatible ones instead of rounding the requested time. Old input, saved checkout details and public browser drafts retain the canonical `HH:mm` time. Out-of-range drafts require a new selection while keeping other fields.
+
+`BAKERY_PICKUP_OPENS_AT` and `BAKERY_PICKUP_CLOSES_AT` configure the same-day `HH:mm` range. The component, help text, request validation and order-creation service use the same range. Existing orders are preserved; no database migration or new endpoint is required. Without the picker script, the native time field remains available and server validation still applies. Existing date, review and capacity rules remain unchanged.

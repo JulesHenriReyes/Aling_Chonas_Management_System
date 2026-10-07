@@ -1,0 +1,24 @@
+
+   PASS  Tests\Feature\PickupTimePickerTest
+  ✓ boundaries and noon are accepted by both http and service paths with data set #0                             0.40s  
+  ✓ boundaries and noon are accepted by both http and service paths with data set #1                             0.04s  
+  ✓ boundaries and noon are accepted by both http and service paths with data set #2                             0.04s  
+  ✓ boundaries and noon are accepted by both http and service paths with data set #3                             0.04s  
+  ✓ boundaries and noon are accepted by both http and service paths with data set #4                             0.03s  
+  ✓ crafted times fail without posting an order at any entry with data set #0                                    0.03s  
+  ✓ crafted times fail without posting an order at any entry with data set #1                                    0.03s  
+  ✓ crafted times fail without posting an order at any entry with data set #2                                    0.03s  
+  ✓ crafted times fail without posting an order at any entry with data set #3                                    0.03s  
+  ✓ crafted times fail without posting an order at any entry with data set #4                                    0.02s  
+  ✓ crafted times fail without posting an order at any entry with data set #5                                    0.03s  
+  ✓ crafted times fail without posting an order at any entry with data set #6                                    0.03s  
+  ✓ crafted times fail without posting an order at any entry with data set #7                                    0.02s  
+  ✓ crafted times fail without posting an order at any entry with data set #8                                    0.03s  
+  ✓ crafted times fail without posting an order at any entry with data set #9                                    0.02s  
+  ✓ crafted times fail without posting an order at any entry with data set #10                                   0.02s  
+  ✓ options and rules share configured hours and only offer closing minutes                                      0.02s  
+  ✓ details keep time and contact values after errors and back navigation                                        2.73s  
+
+  Tests:    18 passed (161 assertions)
+  Duration: 3.76s
+

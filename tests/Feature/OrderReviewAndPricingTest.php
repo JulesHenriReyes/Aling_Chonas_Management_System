@@ -84,6 +84,8 @@ class OrderReviewAndPricingTest extends TestCase
     public function test_invalid_status_transitions_and_terminal_state_changes_are_rejected(): void
     {
         $order = $this->orderService->createInternalOrder($this->orderData(), $this->owner);
+        // A historical unreviewed request still cannot bypass confirmation.
+        $order->forceFill(['status' => 'pending', 'review_status' => 'pending', 'reviewed_by' => null, 'reviewed_at' => null])->save();
 
         try {
             $this->orderService->updateStatus($order, 'preparing', $this->owner);
