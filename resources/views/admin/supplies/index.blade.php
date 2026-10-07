@@ -5,31 +5,11 @@
     showCreateModal: {{ $errors->any() ? 'true' : 'false' }},
     showDetailDrawer: false,
     detailLoading: false,
-    headerHeight: 56,
     drawerSupply: null,
     drawerBaseline: null,
     drawerMovements: [],
     drawerNetMovement: 0,
-    updateHeaderHeight() {
-        const topbar = document.getElementById('admin-topbar') || document.querySelector('header.sticky') || document.querySelector('header');
-        if (topbar) {
-            const rect = topbar.getBoundingClientRect();
-            const bottom = Math.max(rect.bottom, topbar.offsetHeight || 56);
-            this.headerHeight = Math.max(48, Math.ceil(bottom));
-        }
-    },
-    init() {
-        this.updateHeaderHeight();
-        const topbar = document.getElementById('admin-topbar') || document.querySelector('header.sticky');
-        if (topbar && window.ResizeObserver) {
-            const ro = new ResizeObserver(() => this.updateHeaderHeight());
-            ro.observe(topbar);
-        }
-        window.addEventListener('resize', () => this.updateHeaderHeight());
-        window.addEventListener('scroll', () => this.updateHeaderHeight(), { passive: true });
-    },
     openSupplyDetail(supply) {
-        this.updateHeaderHeight();
         this.drawerSupply = supply;
         this.showDetailDrawer = true;
         this.detailLoading = true;
@@ -132,7 +112,7 @@
                     <th><x-sort-heading column="category" label="Category" /></th>
                     <th>On hand</th>
                     <th><span class="inline-flex items-center gap-1">Stock status <x-tooltip text="Inventory levels automatically categorized as In stock, Low stock, or Out of stock based on reorder thresholds." /></span></th>
-                    <th scope="col" aria-label="Supply options"></th>
+                    <th scope="col" aria-label="Supply options"><span class="sr-only">Actions</span></th>
                 </tr>
             </thead>
             <tbody>
@@ -161,7 +141,7 @@
                         <td>
                             <a class="record-link font-semibold group-hover:text-cocoa-700"
                                href="{{ route('supplies.show', $supply) }}"
-                               @click.prevent.stop="openSupplyDetail(@js($supplyData))">
+                               @click="if (!$event.ctrlKey && !$event.metaKey && $event.button === 0) { $event.preventDefault(); $event.stopPropagation(); openSupplyDetail(@js($supplyData)); } else { $event.stopPropagation(); }">
                                 {{ $supply->supply_name }}
                             </a>
                             @unless($supply->is_active)<span class="status">Inactive</span>@endunless
@@ -357,8 +337,7 @@
          data-detail-drawer
          @keydown.escape.window="closeDetailDrawer"
          class="fixed left-0 right-0 bottom-0 z-30 overflow-hidden"
-         :style="'top: ' + headerHeight + 'px; height: calc(100dvh - ' + headerHeight + 'px);'"
-         style="display: none;">
+         style="top: var(--topbar-height, 3.5rem); height: calc(100dvh - var(--topbar-height, 3.5rem)); display: none;">
 
         <!-- Backdrop scrim: strictly below the header, clean dark scrim WITHOUT backdrop-blur -->
         <div x-show="showDetailDrawer"
@@ -381,7 +360,7 @@
                  x-transition:leave-start="translate-x-0"
                  x-transition:leave-end="translate-x-full"
                  @click.away="closeDetailDrawer"
-                 class="w-screen max-w-md sm:max-w-[420px] bg-white border-l border-t border-cocoa-100 shadow-2xl flex flex-col h-full pointer-events-auto"
+                 class="w-screen max-w-md sm:max-w-[420px] bg-white border-l border-cocoa-100 shadow-2xl flex flex-col h-full pointer-events-auto"
                  role="dialog"
                  aria-modal="true"
                  aria-label="Supply details">
@@ -545,19 +524,13 @@
                                         </div>
                                     </template>
 
-                                    <a :href="drawerSupply.history_url" class="block w-full text-center text-xs font-semibold text-cocoa-600 hover:text-cocoa-800 bg-cream-50 hover:bg-cream-100 border border-cocoa-100/80 rounded-lg py-2 transition mt-2">
-                                        View complete movement history →
-                                    </a>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Drawer Footer -->
-                        <div class="p-3.5 border-t border-cocoa-100 bg-cream-50/60 flex items-center justify-between gap-3">
-                            <a :href="drawerSupply.history_url" class="text-xs font-semibold text-cocoa-600 hover:underline">
-                                Movement history
-                            </a>
-                            <button type="button" @click="closeDetailDrawer" class="ui-button quiet text-xs">
+                        <div class="p-3.5 border-t border-cocoa-100 bg-cream-50/60 flex items-center justify-end gap-3">
+                            <button type="button" @click="closeDetailDrawer" class="ui-button quiet text-xs py-2 px-4">
                                 Close
                             </button>
                         </div>

@@ -79,6 +79,22 @@ class PublicOrderController extends Controller
         return redirect()->route('public.order.index')->with('success', 'Package removed.');
     }
 
+    public function draftImage(Request $request, string $sessionId, string $filename)
+    {
+        $cleanSession = basename($sessionId);
+        $cleanFilename = basename($filename);
+        $path = 'order_drafts/'.$cleanSession.'/'.$cleanFilename;
+
+        abort_unless(Storage::disk('local')->exists($path), 404);
+
+        $mimeType = Storage::disk('local')->mimeType($path) ?: 'image/jpeg';
+
+        return Storage::disk('local')->response($path, $cleanFilename, [
+            'Content-Type' => $mimeType,
+            'Cache-Control' => 'private, no-cache, no-store, must-revalidate',
+        ]);
+    }
+
     public function saveSelection(Request $request, OrderDraftService $drafts, CatalogPricingService $pricing)
     {
         $drafts->save($request, false, $pricing);

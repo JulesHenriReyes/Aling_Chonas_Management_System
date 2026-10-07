@@ -1,7 +1,7 @@
 @props([
     'text' => '',
     'position' => 'top',
-    'align' => 'center',
+    'align' => 'top-right',
     'ariaLabel' => null,
 ])
 
@@ -18,7 +18,8 @@
      @click.outside="show = false"
      @keydown.escape.window="show = false"
      @scroll.window.capture.passive="if (show) show = false"
-     x-effect="if (show) { $nextTick(() => { const trigger = $refs.trigger || $el.firstElementChild || $el; const panel = $refs.panel; if (!trigger || !panel) return; const tRect = trigger.getBoundingClientRect(); const pRect = panel.getBoundingClientRect(); const vw = window.innerWidth; const vh = window.innerHeight; const gap = 8; let top; const canFitTop = tRect.top - gap - pRect.height >= 8; const canFitBottom = tRect.bottom + gap + pRect.height <= vh - 8; if ('{{ $position }}' === 'bottom') { top = (canFitBottom || !canFitTop) ? (tRect.bottom + gap) : (tRect.top - gap - pRect.height); } else { top = (canFitTop || !canFitBottom) ? (tRect.top - gap - pRect.height) : (tRect.bottom + gap); } if (top < 8) top = 8; else if (top + pRect.height > vh - 8) top = Math.max(8, vh - pRect.height - 8); let left; if ('{{ $align }}' === 'left') { left = tRect.left; } else if ('{{ $align }}' === 'right') { left = tRect.right - pRect.width; } else { left = tRect.left + (tRect.width / 2) - (pRect.width / 2); } if (left < 8) left = 8; else if (left + pRect.width > vw - 8) left = Math.max(8, vw - pRect.width - 8); panel.style.top = Math.round(top) + 'px'; panel.style.left = Math.round(left) + 'px'; panel.style.visibility = 'visible'; }); } else { const p = $refs.panel; if (p) { p.style.visibility = 'hidden'; } }"
+     @resize.window.passive="if (show) show = false"
+     x-effect="if (typeof window.positionTooltip === 'function') { window.positionTooltip($el, $refs, show, '{{ $position }}', '{{ $align }}'); } else if (show) { const p = $refs.panel; if (p) p.style.visibility = 'visible'; } else { const p = $refs.panel; if (p) p.style.visibility = 'hidden'; }"
      {{ $attributes->class(['inline-flex items-center align-middle ui-tooltip']) }}>
     @if ($slot->isNotEmpty())
         <span tabindex="0"

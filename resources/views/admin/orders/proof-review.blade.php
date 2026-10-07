@@ -22,9 +22,9 @@
                             <span class="inline-flex items-center gap-1 text-xs font-semibold text-cocoa-600 underline mt-1.5 hover:text-cocoa-700">View screenshot</span>
                         </button>
                         <template x-teleport="body">
-                            <div x-show="expanded" style="display: none;" class="fixed inset-0 z-[100] flex items-center justify-center bg-black bg-opacity-80 p-4 backdrop-blur-sm" @keydown.escape.window="expanded = false">
+                            <div x-show="expanded" style="display: none;" class="fixed inset-0 z-[100] flex items-center justify-center bg-black bg-opacity-80 p-4 backdrop-blur-sm" @keydown.escape.window="expanded = false" data-dialog role="dialog" aria-modal="true" aria-label="Receipt screenshot preview">
                                 <div class="relative w-full h-full flex justify-center items-center" @click.outside="expanded = false">
-                                    <button @click="expanded = false" class="absolute top-4 right-4 text-white hover:text-gray-300 focus:outline-none z-[110]">
+                                    <button @click="expanded = false" class="absolute top-4 right-4 text-white hover:text-gray-300 focus:outline-none z-[110]" aria-label="Close screenshot preview">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 drop-shadow-md" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
                                     </button>
                                     <img src="{{ route('proofs.receipt', $proof) }}" alt="Expanded GCash screenshot" class="max-w-full max-h-full object-contain rounded drop-shadow-2xl">
@@ -47,7 +47,7 @@
                         </form>
                         <details class="border-t border-red-200 pt-3"><summary class="cursor-pointer py-2 font-semibold text-red-800">Reject this receipt</summary>
                             <form action="{{ route('proofs.reject', $proof) }}" method="POST" class="space-y-3 mt-3">@csrf
-                                <div><label for="reject-reason-{{ $proof->id }}">Reason shown to the buyer</label><textarea id="reject-reason-{{ $proof->id }}" name="reason" rows="2" maxlength="1000" required class="w-full"></textarea></div>
+                                <div><label for="reject-reason-{{ $proof->id }}">Reason shown to the buyer</label><textarea id="reject-reason-{{ $proof->id }}" name="reason" rows="2" maxlength="1000" required class="w-full resize-y"></textarea></div>
                                 <button class="px-4 py-2 bg-red-700 hover:bg-red-800 text-white font-semibold rounded-lg">Reject receipt</button>
                             </form>
                         </details>

@@ -275,6 +275,11 @@ class UiPresentationTest extends TestCase
             ->assertSee('lg:col-span-7 space-y-4', false)
             ->assertSee('lg:col-span-5 sidebar-column space-y-4 lg:sticky lg:top-20', false)
             ->assertSee('mt-6', false);
+
+        $customize = $this->get(route('public.package.customize', [$product, (string) \Illuminate\Support\Str::uuid()]));
+        $customize->assertOk()
+            ->assertSee('mobile-sticky-actions', false)
+            ->assertSee('Save package to order');
     }
 
     public function test_tooltip_components_render_accessible_attributes_and_guidance(): void
@@ -365,15 +370,20 @@ class UiPresentationTest extends TestCase
         ]);
         $this->actingAs($owner);
 
-        // Admin Orders Index (unified status tabs and origin badges)
+        // Admin Orders Index (unified status tabs)
         $ordersResponse = $this->get('/orders');
         $ordersResponse->assertOk()
             ->assertDontSee('Order workflow queues')
             ->assertSee('Awaiting Deposit')
+            ->assertSee('Receipt Verification')
             ->assertSee('Pending Review')
-            ->assertSee('Confirmed')
-            ->assertSee('Public Web')
-            ->assertSee('Order submitted online by customer via public storefront.', false);
+            ->assertSee('Confirmed');
+
+        // Date range filtering on orders index
+        $filteredResponse = $this->get('/orders?date_from=' . now()->addDays(2)->toDateString() . '&date_to=' . now()->addDays(4)->toDateString());
+        $filteredResponse->assertOk()->assertSee($order->order_number);
+        $excludedResponse = $this->get('/orders?date_from=' . now()->addDays(5)->toDateString() . '&date_to=' . now()->addDays(7)->toDateString());
+        $excludedResponse->assertOk()->assertDontSee($order->order_number);
 
         // Admin Orders Show (origin badge)
         $showResponse = $this->get('/orders/' . $order->id);
@@ -472,6 +482,7 @@ class UiPresentationTest extends TestCase
             ->assertSee('data-detail-drawer', false)
             ->assertSee('openSupplyDetail', false)
             ->assertSee('bg-black/25', false)
+            ->assertSee('!$event.ctrlKey && !$event.metaKey && $event.button === 0', false)
             ->assertDontSee('data-detail-drawer fixed inset-0 bg-black/40 backdrop-blur', false);
 
         // 2. Check JSON show endpoint for slide-over drawer async loading

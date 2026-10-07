@@ -58,6 +58,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     syncOverlay();
 
+    const adminTopbar = document.getElementById('admin-topbar');
+    if (adminTopbar) {
+        const updateTopbarHeight = () => {
+            const h = adminTopbar.offsetHeight;
+            if (h > 0) {
+                document.documentElement.style.setProperty('--topbar-height', `${h}px`);
+            }
+        };
+        updateTopbarHeight();
+        window.addEventListener('resize', updateTopbarHeight);
+    }
+
     const errors = JSON.parse(document.getElementById('validation-errors')?.textContent || '{}');
     const validationRoot = document.querySelector('[data-validation-active="true"]') || document;
     let firstInvalid;
@@ -203,3 +215,64 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+window.positionTooltip = function(el, refs, show, position, align) {
+    if (show) {
+        requestAnimationFrame(() => {
+            const trigger = refs?.trigger || el.querySelector('[x-ref="trigger"]') || el.firstElementChild || el;
+            const panel = refs?.panel || el.querySelector('[x-ref="panel"]');
+            if (!trigger || !panel) return;
+
+            panel.style.visibility = 'hidden';
+            const originalDisplay = panel.style.display;
+            if (getComputedStyle(panel).display === 'none') {
+                panel.style.display = 'block';
+            }
+
+            const tRect = trigger.getBoundingClientRect();
+            const pRect = panel.getBoundingClientRect();
+            const pWidth = Math.max(panel.offsetWidth, pRect.width, 100);
+            const pHeight = Math.max(panel.offsetHeight, pRect.height, 24);
+            const vw = window.innerWidth;
+            const vh = window.innerHeight;
+            const gap = 8;
+
+            let top;
+            const canFitTop = tRect.top - gap - pHeight >= 8;
+            const canFitBottom = tRect.bottom + gap + pHeight <= vh - 8;
+            if (position === 'bottom') {
+                top = (canFitBottom || !canFitTop) ? (tRect.bottom + gap) : (tRect.top - gap - pHeight);
+            } else {
+                top = (canFitTop || !canFitBottom) ? (tRect.top - gap - pHeight) : (tRect.bottom + gap);
+            }
+            if (top < 8) top = 8;
+            else if (top + pHeight > vh - 8) top = Math.max(8, vh - pHeight - 8);
+
+            let left;
+            if (align === 'center') {
+                left = tRect.left + (tRect.width / 2) - (pWidth / 2);
+            } else if (align === 'right') {
+                left = tRect.right - pWidth;
+            } else if (align === 'left') {
+                left = tRect.left;
+            } else {
+                // 'top-right' (default): spawn above and to the right of the trigger icon
+                left = tRect.left + (tRect.width / 2);
+            }
+            if (left < 8) left = 8;
+            else if (left + pWidth > vw - 8) left = Math.max(8, vw - pWidth - 8);
+
+            panel.style.top = Math.round(top) + 'px';
+            panel.style.left = Math.round(left) + 'px';
+            panel.style.visibility = 'visible';
+        });
+    } else {
+        const p = refs?.panel || el.querySelector('[x-ref="panel"]');
+        if (p) {
+            p.style.visibility = 'hidden';
+            p.style.display = '';
+        }
+    }
+};
+
+

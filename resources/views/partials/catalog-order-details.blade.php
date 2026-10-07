@@ -105,7 +105,8 @@
                     <label for="pickup-time" class="block text-xs font-semibold text-cocoa-700 uppercase tracking-wider mb-1.5">
                         Pickup time <span class="text-red-500">*</span>
                     </label>
-                    <input id="pickup-time" name="pickup_time" type="time" required value="{{ old('pickup_time', $draft['details']['pickup_time'] ?? '') }}" class="form-input-custom">
+                    <input id="pickup-time" name="pickup_time" type="time" min="08:00" max="18:00" required value="{{ old('pickup_time', $draft['details']['pickup_time'] ?? '') }}" class="form-input-custom">
+                    <p class="text-xs text-cocoa-500 mt-1">Pickup available between 8:00 AM and 6:00 PM.</p>
                 </div>
             </div>
 
@@ -132,9 +133,9 @@
             </span>
         </div>
 
-        <div class="divide-y divide-cocoa-100 max-h-96 overflow-y-auto pr-1 -mr-1">
+        <div class="divide-y divide-cocoa-100 lg:max-h-96 lg:overflow-y-auto pr-1 -mr-1">
             @foreach ($quote['lines'] as $line)
-                @php($photo = $line['photo_path'] ?? \App\Models\Product::find($line['product_id'])?->photo_path)
+                @php($photo = $line['photo_path'] ?? null)
                 @php($draftItem = $draft['items'][$loop->index] ?? null)
                 <div class="py-3.5 text-xs space-y-2.5 first:pt-0">
                     {{-- Package visual row with thumbnail on left --}}

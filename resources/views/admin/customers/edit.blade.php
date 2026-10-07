@@ -17,26 +17,26 @@
             @method('PUT')
 
             <div>
-                <label class="block text-xs font-semibold text-cocoa-500 mb-1.5" for="field-admin-customers-edit-blade-php-1">first name <span class="text-red-500">*</span></label>
-                <input autocomplete="given-name" id="field-admin-customers-edit-blade-php-1" type="text" name="first_name" value="{{ old('first_name', $customer->first_name) }}" required 
+                <label class="block text-xs font-semibold text-cocoa-500 mb-1.5" for="customer-first-name">First Name <span class="text-red-500">*</span></label>
+                <input autocomplete="given-name" id="customer-first-name" type="text" name="first_name" value="{{ old('first_name', $customer->first_name) }}" required 
                        class="w-full text-sm rounded-lg border-cocoa-100 bg-white focus:border-cocoa-300 focus:ring-cocoa-300 placeholder-cocoa-400/50">
             </div>
 
             <div>
-                <label class="block text-xs font-semibold text-cocoa-500 mb-1.5" for="field-admin-customers-edit-blade-php-2">middle name <span class="text-cocoa-400 font-normal normal-case">(optional)</span></label>
-                <input autocomplete="additional-name" id="field-admin-customers-edit-blade-php-2" type="text" name="middle_name" value="{{ old('middle_name', $customer->middle_name) }}" 
+                <label class="block text-xs font-semibold text-cocoa-500 mb-1.5" for="customer-middle-name">Middle Name <span class="text-cocoa-400 font-normal normal-case">(Optional)</span></label>
+                <input autocomplete="additional-name" id="customer-middle-name" type="text" name="middle_name" value="{{ old('middle_name', $customer->middle_name) }}" 
                        class="w-full text-sm rounded-lg border-cocoa-100 bg-white focus:border-cocoa-300 focus:ring-cocoa-300 placeholder-cocoa-400/50">
             </div>
 
             <div>
-                <label class="block text-xs font-semibold text-cocoa-500 mb-1.5" for="field-admin-customers-edit-blade-php-3">last name <span class="text-red-500">*</span></label>
-                <input autocomplete="family-name" id="field-admin-customers-edit-blade-php-3" type="text" name="last_name" value="{{ old('last_name', $customer->last_name) }}" required 
+                <label class="block text-xs font-semibold text-cocoa-500 mb-1.5" for="customer-last-name">Last Name <span class="text-red-500">*</span></label>
+                <input autocomplete="family-name" id="customer-last-name" type="text" name="last_name" value="{{ old('last_name', $customer->last_name) }}" required 
                        class="w-full text-sm rounded-lg border-cocoa-100 bg-white focus:border-cocoa-300 focus:ring-cocoa-300 placeholder-cocoa-400/50">
             </div>
 
             <div>
-                <label class="block text-xs font-semibold text-cocoa-500 mb-1.5" for="field-admin-customers-edit-blade-php-4">Mobile or landline number <span class="text-red-500">*</span></label>
-                <input autocomplete="tel" id="field-admin-customers-edit-blade-php-4" type="tel" name="phone_number" maxlength="40" aria-describedby="customer-phone-help customer-phone-error" value="{{ old('phone_number', $customer->phone_number) }}" required
+                <label class="block text-xs font-semibold text-cocoa-500 mb-1.5" for="customer-phone-number">Phone Number <span class="text-red-500">*</span></label>
+                <input autocomplete="tel" id="customer-phone-number" type="tel" name="phone_number" maxlength="40" aria-describedby="customer-phone-help customer-phone-error" value="{{ old('phone_number', $customer->phone_number) }}" required
                        class="w-full text-sm rounded-lg border-cocoa-100 bg-white focus:border-cocoa-300 focus:ring-cocoa-300 placeholder-cocoa-400/50">
                 <p id="customer-phone-help" class="text-xs text-cocoa-500 mt-1">For landlines, include the area code, e.g. 02 8123 4567 or 032 234 5678. +63 numbers are accepted.</p>
                 @error('phone_number')<p id="customer-phone-error" role="alert" class="text-sm text-red-700">{{ $message }}</p>@enderror

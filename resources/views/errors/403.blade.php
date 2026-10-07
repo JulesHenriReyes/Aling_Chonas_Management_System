@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access Restricted — Aling Chona Cakes & Cupcakes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/bakery-ui.css') }}?v={{ file_exists(public_path('css/bakery-ui.css')) ? filemtime(public_path('css/bakery-ui.css')) : 1 }}">
+    <style>
+        body {
+            background-color: var(--bakery-bg, #FDFBF7);
+            color: var(--bakery-text, #3C2415);
+            font-family: 'Inter', system-ui, sans-serif;
+            margin: 0;
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        .error-card {
+            background: #ffffff;
+            border: 1px solid var(--bakery-line, #E8E0D4);
+            border-radius: 1rem;
+            padding: 2.5rem 2rem;
+            max-width: 28rem;
+            width: 100%;
+            box-shadow: 0 4px 6px -1px rgba(60, 36, 21, 0.05);
+        }
+        .error-code {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1;
+            color: var(--cocoa-600, #3C2415);
+            letter-spacing: -0.025em;
+        }
+        .error-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--cocoa-800, #1A0E08);
+        }
+        .error-desc {
+            font-size: 0.875rem;
+            color: var(--bakery-muted, #716153);
+            line-height: 1.5;
+            margin-bottom: 2rem;
+        }
+        .error-actions {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+    <main class="error-card">
+        <div class="error-code">403</div>
+        <h1 class="error-title">Access Restricted</h1>
+        <p class="error-desc">{{ $exception->getMessage() ?: 'You do not have permission to access this bakery resource or action.' }}</p>
+        <div class="error-actions">
+            @auth
+                <a href="{{ route('dashboard') }}" class="ui-button primary">Staff Dashboard</a>
+            @else
+                <a href="{{ route('login') }}" class="ui-button primary">Staff Login</a>
+            @endauth
+            <a href="{{ url('/') }}" class="ui-button quiet">Return to Store</a>
+        </div>
+    </main>
+</body>
+</html>

@@ -99,4 +99,22 @@ class PublicPackageWorkspaceTest extends TestCase
         Storage::disk('local')->assertMissing($path);
         $this->assertCount(0,session('public_package_editors.'.$key.'.staged_images'));
     }
+
+    public function test_draft_reference_image_can_be_retrieved_and_streamed(): void
+    {
+        Storage::fake('local');
+        $sessionId = 'test-session-123';
+        $filename = 'sample.jpg';
+        $path = "order_drafts/{$sessionId}/{$filename}";
+        Storage::disk('local')->put($path, 'fake-image-bytes');
+
+        $response = $this->get("/storage/{$path}");
+        $response->assertOk();
+
+        $altResponse = $this->get("/order_drafts/{$sessionId}/{$filename}");
+        $altResponse->assertOk();
+
+        $missingResponse = $this->get("/order_drafts/{$sessionId}/missing.jpg");
+        $missingResponse->assertNotFound();
+    }
 }

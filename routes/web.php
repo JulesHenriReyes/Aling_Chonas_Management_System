@@ -24,6 +24,8 @@ Route::get('/packages/{product}/customize/{line}', [PublicOrderController::class
 Route::post('/packages/{product}/customize/{line}', [PublicOrderController::class, 'savePackage'])->middleware(PrivateOrderResponse::class)->block()->name('public.package.save');
 Route::post('/packages/{product}/draft/{line}', [PublicOrderController::class, 'saveEditor'])->middleware(['throttle:60,1', PrivateOrderResponse::class])->block()->name('public.package.draft');
 Route::post('/order/packages/{line}/remove', [PublicOrderController::class, 'removePackage'])->block()->name('public.package.remove');
+Route::get('/storage/order_drafts/{session_id}/{filename}', [PublicOrderController::class, 'draftImage'])->where(['session_id' => '[A-Za-z0-9_\-]+', 'filename' => '[A-Za-z0-9_\-\.]+'])->middleware(PrivateOrderResponse::class);
+Route::get('/order_drafts/{session_id}/{filename}', [PublicOrderController::class, 'draftImage'])->where(['session_id' => '[A-Za-z0-9_\-]+', 'filename' => '[A-Za-z0-9_\-\.]+'])->middleware(PrivateOrderResponse::class)->name('public.draft.image');
 Route::post('/order', [PublicOrderController::class, 'store'])
     ->middleware('throttle:public-orders')
     ->block()

@@ -1,14 +1,11 @@
 @extends('public.layout')
 @section('title', 'Contact and pickup · Aling Chona')
 @section('content')
-<nav aria-label="Progress" class="mb-5">
-    <div class="flex items-center text-xs tracking-wide">
-        <a href="{{ route('public.order.index') }}" class="text-cocoa-700 hover:text-cocoa-900 transition">Packages</a>
-        <span class="text-cocoa-300 mx-2">/</span>
-        <span class="text-cocoa-700 font-semibold" aria-current="step">Contact & pickup</span>
-        <span class="text-cocoa-300 mx-2">/</span>
-        <span class="text-cocoa-400">Staff review</span>
-    </div>
+<nav class="store-progress mb-6" aria-label="Order progress">
+    <a href="{{ route('public.order.index') }}">1. Choose package</a>
+    <span>2. Customize</span>
+    <span aria-current="step">3. Contact & pickup</span>
+    <span>4. Staff review</span>
 </nav>
 
 <div class="public-intro mb-6">

@@ -205,6 +205,8 @@
         </footer>
     </div>
 
+    @stack('drawers')
+
     @include('partials.validation-data')
 </body>
 </html>

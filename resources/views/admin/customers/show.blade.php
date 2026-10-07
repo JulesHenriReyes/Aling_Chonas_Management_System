@@ -31,7 +31,12 @@
 
     <!-- Orders History -->
     <div class="space-y-4">
-        <h2 class="text-sm font-semibold text-cocoa-600">Order history</h2>
+        <div class="flex items-center justify-between">
+            <h2 class="text-sm font-semibold text-cocoa-600">Order history ({{ $customer->orders->count() }})</h2>
+            @if ($customer->orders->count() > 10)
+                <a href="{{ route('orders.index', ['search' => $customer->phone_number]) }}" class="text-xs text-cocoa-500 hover:text-cocoa-700 underline font-medium">View all {{ $customer->orders->count() }} orders →</a>
+            @endif
+        </div>
 
         @if ($customer->orders->isEmpty())
             <p class="text-sm text-cocoa-400 py-6 text-center">No orders placed by this customer yet.</p>
@@ -50,7 +55,7 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-cocoa-100/60">
-                        @foreach ($customer->orders as $order)
+                        @foreach ($customer->orders->take(10) as $order)
                             <tr class="text-sm text-cocoa-500 hover:bg-cream-50 transition">
                                 <td class="p-3 font-mono font-semibold text-cocoa-600">
                                     <a href="{{ route('orders.show', $order) }}" class="hover:underline">
@@ -63,7 +68,17 @@
                                 </td>
                                 <td class="p-3 font-semibold text-cocoa-600">₱{{ number_format($order->total_amount, 2) }}</td>
                                 <td class="p-3 font-semibold text-xs">
-                                    <x-status :value="$order->payment_status" />
+                                    @if ($order->status === 'cancelled')
+                                        @if ($order->amount_paid > 0)
+                                            <span class="inline-flex items-center text-xs font-semibold px-2 py-0.5 rounded text-amber-800 bg-amber-50 border border-amber-200">
+                                                ₱{{ number_format($order->amount_paid, 2) }} paid
+                                            </span>
+                                        @else
+                                            <span class="text-xs text-cocoa-400 font-medium">—</span>
+                                        @endif
+                                    @else
+                                        <x-status :value="$order->payment_status" />
+                                    @endif
                                 </td>
                                 <td class="p-3 font-semibold text-xs">
                                     <x-status :value="$order->status" />
@@ -78,6 +93,11 @@
                     </tbody>
                 </table>
             </div>
+            @if ($customer->orders->count() > 10)
+                <div class="p-3 text-center bg-cream-50 rounded-lg border border-cocoa-100 text-xs text-cocoa-500">
+                    Showing 10 most recent orders. <a href="{{ route('orders.index', ['search' => $customer->phone_number]) }}" class="font-semibold text-cocoa-700 underline">View all {{ $customer->orders->count() }} orders in order management →</a>
+                </div>
+            @endif
         @endif
     </div>
 </div>

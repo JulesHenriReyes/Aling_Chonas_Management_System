@@ -53,6 +53,32 @@ window.catalogOrder = function (products, previousItems, quoteUrl, staff = false
             if (enabled) item.add_ons.push({ add_on_id: extra.id, quantity: 1 });
             else item.add_ons = item.add_ons.filter(selected => String(selected.add_on_id) !== String(extra.id));
         },
+        decreaseExtra(item, extra) {
+            const selected = this.selectedExtra(item, extra.id);
+            if (!selected) return;
+            const current = Number(selected.quantity || 1);
+            if (current > 1) {
+                selected.quantity = current - 1;
+            } else {
+                this.toggleExtra(item, extra, false);
+            }
+        },
+        increaseExtra(item, extra) {
+            const selected = this.selectedExtra(item, extra.id);
+            if (!selected) {
+                this.toggleExtra(item, extra, true);
+            } else {
+                selected.quantity = Math.min(999, Number(selected.quantity || 1) + 1);
+            }
+        },
+        setExtraQuantity(item, extra, val) {
+            const selected = this.selectedExtra(item, extra.id);
+            if (!selected) return;
+            let num = parseInt(val, 10);
+            if (isNaN(num) || num < 1) num = 1;
+            if (num > 999) num = 999;
+            selected.quantity = num;
+        },
         lineTotal(item) {
             let cents = Math.round(Number(this.option(item)?.price || 0) * 100) * Number(item.quantity || 0);
             for (const selected of item.add_ons) {

@@ -17,7 +17,7 @@
         <div><label for="price-{{ $key }}">Fixed package price (₱)</label><input id="price-{{ $key }}" name="price" type="number" min="0.02" max="999999.98" step="0.02" required value="{{ $restore ? old('price') : $option->price }}" class="w-full"></div>
     </div>
     <fieldset class="space-y-3">
-        <legend class="font-semibold">Included per package · ₱0 extra</legend>
+        <legend class="font-semibold text-cocoa-700">Included per package (Free)</legend>
         <p class="text-sm">Quantity counts catalog units in one package. For example, 2 of an item named “Box of 6 cupcakes” means two boxes per package.</p>
         <template x-for="(row, index) in rows" :key="row.uid">
             <div class="inclusion-editor-row">
@@ -40,7 +40,7 @@
     <input type="hidden" name="is_active" value="0">
     <label class="flex items-center gap-3"><input type="checkbox" name="is_active" value="1" @checked($restore ? old('is_active') : $option->is_active)>Option available</label>
     <div class="flex items-center gap-3">
-        <button disabled :disabled="false" class="px-4 py-2 border border-cocoa-200 rounded-lg hover:bg-cream-100 font-medium">{{ $option->exists ? 'Save layer option' : 'Add layer option' }}</button>
+        <button class="px-4 py-2 bg-cocoa-600 text-white rounded-lg hover:bg-cocoa-700 font-medium transition">{{ $option->exists ? 'Save layer option' : 'Add layer option' }}</button>
         @if (!$option->exists && $product->options->isNotEmpty())
             <button type="button" @click="$dispatch('close-add-option')" class="px-4 py-2 border border-cocoa-200 rounded-lg hover:bg-cream-100 text-sm text-cocoa-600">Cancel</button>
         @endif

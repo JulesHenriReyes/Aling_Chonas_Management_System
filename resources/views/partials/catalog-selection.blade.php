@@ -9,13 +9,22 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-5">
             @forelse ($products as $product)
                 <article class="catalog-card space-y-3">
-                    @if ($product->photo_path)<img src="{{ asset('storage/'.$product->photo_path) }}" alt="{{ $product->product_name }}" width="360" height="480" loading="lazy" class="catalog-card-photo" style="object-fit: cover !important; width: 100% !important; height: 17rem !important; display: block !important;">@endif
+                    @if ($product->photo_path)
+                        <img src="{{ asset('storage/'.$product->photo_path) }}" alt="{{ $product->product_name }}" width="360" height="270" loading="lazy" class="catalog-card-photo w-full aspect-[4/3] object-cover rounded-lg border border-cocoa-100 block">
+                    @else
+                        <div class="w-full aspect-[4/3] rounded-lg border border-cocoa-100 bg-cream-50 flex flex-col items-center justify-center text-cocoa-400 gap-2">
+                            <x-icon name="cake" class="w-10 h-10 text-cocoa-400" />
+                            <span class="text-xs font-medium text-cocoa-500">{{ $product->product_name }}</span>
+                        </div>
+                    @endif
                     <h3 class="font-semibold text-cocoa-600">{{ $product->product_name }}</h3>
                     @if ($product->description)<p class="text-sm">{{ $product->description }}</p>@endif
                     @if ($product->options->count() > 1)
                         <p class="text-sm">From ₱{{ number_format($product->options->min('price'), 2) }} · {{ $product->options->pluck('layers')->join(', ') }} layer options available</p>
                     @elseif ($product->options->isNotEmpty())
                         <p class="text-sm">₱{{ number_format($product->options->first()->price, 2) }} · {{ $product->options->first()->layers }} layer(s)</p>
+                    @else
+                        <p class="text-sm text-cocoa-400">Price on request</p>
                     @endif
                     <button type="button" @click="add(products.find(product => product.id === {{ $product->id }}))" class="px-4 py-2 border border-cocoa-200 rounded-lg hover:bg-cream-100" aria-label="Add {{ $product->product_name }}">Add package</button>
                 </article>

@@ -31,9 +31,14 @@
                     <x-icon path="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" class="w-5 h-5 text-cocoa-400" />
                     <h2 class="text-sm font-semibold text-cocoa-600">{{ \Carbon\Carbon::parse($date)->format('l, F d, Y') }}</h2>
                 </div>
-                <span class="text-sm text-cocoa-500">
-                    {{ $dailyOrders->count() }} pickup(s)
-                </span>
+                <div class="flex items-center gap-2">
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-cream-100 text-cocoa-700 border border-cocoa-200">
+                        {{ $dailyOrders->count() }} scheduled
+                    </span>
+                    <span class="text-sm text-cocoa-500">
+                        {{ $dailyOrders->count() }} pickup(s)
+                    </span>
+                </div>
             </div>
             <div class="divide-y divide-cocoa-100/60">
                 @foreach ($dailyOrders as $order)
@@ -45,10 +50,19 @@
                                 <span class="font-semibold text-cocoa-600">{{ \Carbon\Carbon::parse($order->pickup_time)->format('h:i A') }}</span>
                                 <a href="tel:{{ $order->customer->phone_number }}" class="text-cocoa-500 hover:underline">{{ $order->customer->phone_number }}</a>
                             </div>
-                            <div class="text-sm text-cocoa-500">
-                                <span class="font-medium">Packages:</span> {{ $order->orderDetails->map(fn($d) => $d->quantity . 'x ' . ($d->product_name_snapshot ?? $d->product->product_name))->join(', ') }}
+                            <div class="text-sm text-cocoa-600 space-y-1">
+                                <span class="font-semibold text-xs uppercase tracking-wider text-cocoa-400 block">Packages:</span>
                                 @foreach ($order->orderDetails as $detail)
-                                    @foreach ($detail->addOns as $extra)<span class="block">Paid extra: {{ $extra->quantity }} × {{ $extra->name_snapshot }}</span>@endforeach
+                                    <div>
+                                        <span class="font-medium text-cocoa-700">{{ $detail->quantity }}× {{ $detail->product_name_snapshot ?? $detail->product->product_name }}</span>
+                                        @if($detail->addOns->isNotEmpty())
+                                            <ul class="text-xs text-cocoa-500 pl-3 border-l-2 border-cocoa-100 space-y-0.5 mt-0.5">
+                                                @foreach ($detail->addOns as $extra)
+                                                    <li>+ Paid extra: {{ $extra->quantity }} × {{ $extra->name_snapshot }}</li>
+                                                @endforeach
+                                            </ul>
+                                        @endif
+                                    </div>
                                 @endforeach
                             </div>
                             @if ($order->notes_text)
@@ -58,10 +72,20 @@
                             @endif
                         </div>
                         <div class="flex items-center sm:items-end flex-row sm:flex-col justify-between sm:justify-center gap-2 text-right">
-                            <div class="flex items-center gap-2">
+                            <div class="flex items-center gap-2 flex-wrap">
                                 <x-status :value="$order->status" :label="$order->workflowLabel()" class="order-workflow-status" />
                                 <x-status :value="$order->payment_status" />
-                                <a href="{{ route('orders.show', $order) }}" class="ml-2 bg-white border border-cocoa-100 text-cocoa-500 hover:bg-cream-100 font-medium text-xs px-3 py-1 rounded-lg transition">
+                                @if (Gate::allows('update-order-status') && $order->status === 'preparing')
+                                    <form action="{{ route('orders.updateStatus', $order) }}" method="POST" class="inline">
+                                        @csrf
+                                        @method('PATCH')
+                                        <input type="hidden" name="status" value="ready_for_pickup">
+                                        <button type="submit" class="bg-amber-600 hover:bg-amber-700 text-white font-semibold text-xs px-2.5 py-1 rounded-lg transition shadow-2xs">
+                                            Mark Ready
+                                        </button>
+                                    </form>
+                                @endif
+                                <a href="{{ route('orders.show', $order) }}" class="bg-white border border-cocoa-100 text-cocoa-500 hover:bg-cream-100 font-medium text-xs px-3 py-1 rounded-lg transition">
                                     View
                                 </a>
                             </div>

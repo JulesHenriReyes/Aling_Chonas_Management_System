@@ -11,6 +11,7 @@ use App\Services\OrderDraftService;
 use App\Services\OrderService;
 use App\Services\OrderReviewService;
 use App\Support\PhilippineContact;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,7 +30,7 @@ class OrderController extends Controller
      */
     public function index(Request $request): View
     {
-        $query = Order::with(['customer', 'user', 'orderDetails.product', 'orderDetails.addOns', 'payments', 'paymentProofs'])
+        $query = Order::with(['customer', 'user', 'orderDetails.product', 'orderDetails.addOns', 'payments', 'paymentProofs', 'images'])
             ->latest();
 
         if ($request->filled('status')) {
@@ -62,6 +63,13 @@ class OrderController extends Controller
                             ->orWhere('phone_number', 'like', "%{$search}%");
                     });
             });
+        }
+
+        if ($request->filled('date_from')) {
+            $query->whereDate('pickup_date', '>=', $request->date_from);
+        }
+        if ($request->filled('date_to')) {
+            $query->whereDate('pickup_date', '<=', $request->date_to);
         }
 
         $orders = $query->paginate(15)->withQueryString();
@@ -170,7 +178,7 @@ class OrderController extends Controller
     /**
      * Detailed order review page (fixed-price snapshots, customizations, payments, lifecycle).
      */
-    public function show(Order $order): View
+    public function show(Request $request, Order $order): View|JsonResponse
     {
         $order->load([
             'customer',
@@ -185,6 +193,82 @@ class OrderController extends Controller
             'refund.completedBy',
             'reviewer',
         ]);
+
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json([
+                'order' => [
+                    'id' => $order->id,
+                    'order_number' => $order->order_number,
+                    'status' => $order->status,
+                    'workflow_label' => $order->workflowLabel(),
+                    'payment_status' => $order->payment_status,
+                    'is_public' => $order->user_id === null,
+                    'origin_label' => $order->user_id === null ? 'Public Web' : 'Staff (' . ($order->user->first_name ?? 'Staff') . ')',
+                    'customer_name' => $order->customer->full_name,
+                    'customer_phone' => $order->customer->phone_number,
+                    'pickup_date' => $order->pickup_date->format('M d, Y'),
+                    'pickup_time' => \Carbon\Carbon::parse($order->pickup_time)->format('h:i A'),
+                    'total_amount' => (float) $order->total_amount,
+                    'formatted_total' => number_format($order->total_amount, 2),
+                    'amount_paid' => (float) $order->amount_paid,
+                    'formatted_paid' => number_format($order->amount_paid, 2),
+                    'remaining_balance' => (float) $order->remaining_balance,
+                    'formatted_balance' => number_format($order->remaining_balance, 2),
+                    'required_down_payment' => (float) $order->required_down_payment,
+                    'formatted_down_payment' => number_format($order->required_down_payment, 2),
+                    'notes_text' => $order->notes_text,
+                    'created_at' => $order->created_at->format('M d, Y h:i A'),
+                    'completed_at' => $order->completed_at?->format('M d, Y h:i A'),
+                    'cancelled_at' => $order->cancelled_at?->format('M d, Y h:i A'),
+                    'show_url' => route('orders.show', $order),
+                    'has_unreviewed_proof' => $order->paymentProofs->where('status', 'awaiting_verification')->isNotEmpty(),
+                    'needs_review' => $order->needsStaffReview(),
+                    'items_count' => $order->orderDetails->sum('quantity'),
+                    'items' => $order->orderDetails->map(function ($detail) {
+                        return [
+                            'id' => $detail->id,
+                            'product_name' => $detail->product_name_snapshot ?? ($detail->product->product_name ?? 'Package Item'),
+                            'quantity' => $detail->quantity,
+                            'unit_price' => number_format($detail->unit_price, 2),
+                            'subtotal' => number_format($detail->subtotal, 2),
+                            'photo_url' => $detail->product?->photo_path ? asset('storage/' . $detail->product->photo_path) : null,
+                            'layers' => $detail->layers,
+                            'themes' => $detail->themes,
+                            'special_request' => $detail->special_request,
+                            'add_ons' => $detail->addOns->filter(fn ($a) => (int) $a->quantity > 0)->map(fn ($addOn) => [
+                                'name' => $addOn->name_snapshot ?? ($addOn->addOn?->name ?? 'Extra'),
+                                'quantity' => $addOn->quantity,
+                                'price' => number_format((float) $addOn->unit_price, 2),
+                            ])->values(),
+                        ];
+                    })->values(),
+                    'images' => $order->images->map(fn ($img) => [
+                        'id' => $img->id,
+                        'url' => asset('storage/' . $img->file_path),
+                    ])->values(),
+                    'payments' => $order->payments->map(function ($payment) {
+                        return [
+                            'id' => $payment->id,
+                            'amount' => number_format($payment->amount, 2),
+                            'payment_method' => ucfirst(str_replace('_', ' ', $payment->payment_method ?? 'Cash')),
+                            'payment_type' => ucfirst(str_replace('_', ' ', $payment->payment_type ?? 'Payment')),
+                            'reference_number' => $payment->reference_number,
+                            'recorded_by' => $payment->user?->first_name,
+                            'paid_at' => $payment->paid_at ? \Carbon\Carbon::parse($payment->paid_at)->format('M d, Y h:i A') : $payment->created_at?->format('M d, Y h:i A'),
+                        ];
+                    })->values(),
+                    'proofs' => $order->paymentProofs->map(function ($proof) use ($order) {
+                        return [
+                            'id' => $proof->id,
+                            'status' => $proof->status,
+                            'review_url' => route('orders.show', $order),
+                            'receipt_url' => route('proofs.receipt', $proof),
+                            'uploaded_at' => $proof->created_at->format('M d, Y h:i A'),
+                        ];
+                    })->values(),
+                ],
+            ]);
+        }
 
         $otherRequests = Order::whereDate('pickup_date', $order->pickup_date->toDateString())->whereKeyNot($order->id);
         $pickupContext = ['booked' => (clone $otherRequests)->workflowQueue('booked')->count(),

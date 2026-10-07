@@ -26,7 +26,13 @@
                 <div class="flex items-center gap-3 flex-wrap">
                     <h1 class="text-2xl font-bold text-cocoa-600 font-mono">{{ $order->order_number }}</h1>
                     <x-status :value="$order->status" :label="$order->workflowLabel()" class="order-workflow-status" />
-                    <x-status :value="$order->payment_status" />
+                    @if ($order->status !== 'cancelled')
+                        <x-status :value="$order->payment_status" />
+                    @elseif ($order->amount_paid > 0)
+                        <span class="inline-flex items-center text-xs font-semibold px-2.5 py-0.5 rounded text-amber-800 bg-amber-50 border border-amber-200">
+                            ₱{{ number_format($order->amount_paid, 2) }} deposit retained
+                        </span>
+                    @endif
                 </div>
                 <div class="text-xs text-cocoa-400 mt-2 flex flex-wrap gap-x-4 gap-y-1">
                     <span>Submitted: <strong class="text-cocoa-500">{{ $order->created_at->format('M d, Y h:i A') }}</strong></span>
@@ -51,8 +57,8 @@
                 </div>
                 <div>
                     <span class="text-xs text-cocoa-500  font-bold block">Balance</span>
-                    <span class="text-base font-bold {{ $order->remaining_balance > 0 ? 'text-red-600' : 'text-cocoa-400' }}">
-                        ₱{{ number_format($order->remaining_balance, 2) }}
+                    <span class="text-base font-bold {{ $order->status !== 'cancelled' && $order->remaining_balance > 0 ? 'text-red-600' : 'text-cocoa-400' }}">
+                        ₱{{ number_format($order->status === 'cancelled' ? 0 : $order->remaining_balance, 2) }}
                     </span>
                 </div>
             </div>
@@ -75,7 +81,12 @@
                         <div class="item-section space-y-3">
                             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-cocoa-100/60 pb-3">
                                 <div>
-                                    <h3 class="font-semibold text-cocoa-600 text-sm">{{ $detail->product_name_snapshot ?? $detail->product->product_name }}</h3>
+                                    <div class="flex items-center gap-2 flex-wrap">
+                                        <h3 class="font-semibold text-cocoa-700 text-sm sm:text-base">{{ $detail->product_name_snapshot ?? $detail->product->product_name }}</h3>
+                                        @if ($detail->layers)
+                                            <span class="text-xs font-semibold text-cocoa-600 bg-cream-100 px-2.5 py-0.5 rounded-full border border-cocoa-200/80">{{ $detail->layers }} layer(s)</span>
+                                        @endif
+                                    </div>
                                     <span class="text-xs text-cocoa-400">Saved package price: ₱{{ number_format($detail->unit_price, 2) }}</span>
                                 </div>
                                 <div class="text-right">
@@ -85,35 +96,43 @@
                             </div>
 
                             {{-- Customization Details --}}
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-                                <div>
-                                    <span class="text-cocoa-500 font-bold block text-xs ">Layers</span>
-                                    <span class="text-cocoa-700 font-medium">{{ $detail->layers ?? 'N/A' }}</span>
-                                </div>
-                                <div>
-                                    <span class="text-cocoa-500 font-bold block text-xs ">Theme / Colors</span>
-                                    <span class="text-cocoa-700 font-medium">{{ $detail->themes ?? 'None specified' }}</span>
-                                </div>
-                                <div>
-                                    <span class="text-cocoa-500 font-bold block text-xs ">Special Requests</span>
-                                    <span class="text-cocoa-700 font-medium">{{ $detail->special_request ?? 'None' }}</span>
-                                </div>
+                            <div class="space-y-2 text-xs">
+                                @if ($detail->themes)
+                                    <div class="p-3 rounded-xl bg-cream-50/70 border border-cocoa-100/80">
+                                        <span class="font-bold text-cocoa-600 block text-xs mb-1">Theme / Colors</span>
+                                        <p class="text-cocoa-800 font-medium leading-relaxed break-words text-xs sm:text-sm">{{ $detail->themes }}</p>
+                                    </div>
+                                @endif
+
+                                @if ($detail->special_request)
+                                    <div class="p-3 rounded-xl bg-amber-50/60 border border-amber-200/70">
+                                        <span class="font-bold text-amber-900 block text-xs mb-1">Special Requests & Instructions</span>
+                                        <p class="text-cocoa-800 font-medium leading-relaxed whitespace-pre-line break-words text-xs sm:text-sm">{{ $detail->special_request }}</p>
+                                    </div>
+                                @endif
+
+                                @if (!$detail->themes && !$detail->special_request)
+                                    <p class="text-xs text-cocoa-400 italic">No custom themes or special requests specified.</p>
+                                @endif
                             </div>
 
                             {{-- Per-Product Reference Images --}}
                             @if ($detail->images->isNotEmpty())
-                                <div class="pt-2">
-                                    <span class="text-xs text-cocoa-500 font-bold block mb-1.5">Reference Photos:</span>
-                                    <div class="flex flex-wrap gap-2">
+                                <div class="pt-2 space-y-1.5">
+                                    <span class="text-xs text-cocoa-500 font-bold block">Customer Reference {{ \Illuminate\Support\Str::plural('Photo', $detail->images->count()) }}</span>
+                                    <div class="flex flex-wrap gap-2.5">
                                         @foreach ($detail->images as $img)
                                             <div x-data="{ expanded: false }" class="relative">
-                                                <button type="button" @click="expanded = true" class="block border border-cocoa-100 rounded-lg overflow-hidden w-16 h-16 bg-cream-50 hover:opacity-80 transition focus:outline-none">
-                                                    <img src="{{ asset('storage/' . $img->file_path) }}" alt="{{ $img->original_filename }}" class="w-full h-full object-cover">
+                                                <button type="button" @click="expanded = true" class="group relative block w-16 h-16 rounded-xl overflow-hidden border border-cocoa-200/80 bg-cream-100 hover:border-amber-400 focus:outline-none cursor-pointer transition shadow-xs" title="Click to view full photo: {{ $img->original_filename }}" aria-label="View reference photo {{ $img->original_filename }}">
+                                                    <img src="{{ asset('storage/' . $img->file_path) }}" alt="{{ $img->original_filename }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200">
+                                                    <div class="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white drop-shadow" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" /></svg>
+                                                    </div>
                                                 </button>
                                                 <template x-teleport="body">
-                                                    <div x-show="expanded" style="display: none;" class="fixed inset-0 z-[100] flex items-center justify-center bg-black bg-opacity-80 p-4 backdrop-blur-sm" @keydown.escape.window="expanded = false">
+                                                    <div x-show="expanded" style="display: none;" class="fixed inset-0 z-[100] flex items-center justify-center bg-black bg-opacity-80 p-4 backdrop-blur-sm" @keydown.escape.window="expanded = false" data-dialog role="dialog" aria-modal="true" aria-label="Reference photo preview">
                                                         <div class="relative w-full h-full flex justify-center items-center" @click.outside="expanded = false">
-                                                            <button @click="expanded = false" class="absolute top-4 right-4 text-white hover:text-gray-300 focus:outline-none z-[110]">
+                                                            <button @click="expanded = false" class="absolute top-4 right-4 text-white hover:text-gray-300 focus:outline-none z-[110]" aria-label="Close image preview">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 drop-shadow-md" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
                                                             </button>
                                                             <img src="{{ asset('storage/' . $img->file_path) }}" alt="{{ $img->original_filename }}" class="max-w-full max-h-full object-contain rounded drop-shadow-2xl">
@@ -128,38 +147,46 @@
 
                             {{-- Fixed catalog snapshot --}}
                             @include('partials.included-items', ['includedItems' => $detail->included_items_snapshot ?? [], 'includedText' => $detail->included_contents_snapshot, 'packageQuantity' => $detail->quantity])
+
                             @if ($detail->addOns->isNotEmpty())
-                                <div class="space-y-1.5 pt-1">
-                                    @foreach ($detail->addOns as $extra)
-                                        @php
-                                            $extraPhoto = $extra->addOn?->photo_path ?? $extra->photo_path ?? null;
-                                        @endphp
-                                        <div class="flex items-start gap-2 text-sm pt-0.5">
-                                            @if ($extraPhoto)
-                                                <div x-data="{ expanded: false }" class="shrink-0 mt-0.5">
-                                                    <button type="button" @click="expanded = true" class="block border border-cocoa-100 rounded overflow-hidden w-7 h-7 bg-cream-50 hover:opacity-80 transition focus:outline-none cursor-pointer" title="Click to view image">
-                                                        <img src="{{ asset('storage/' . $extraPhoto) }}" alt="{{ $extra->name_snapshot }}" class="w-full h-full object-cover">
-                                                    </button>
-                                                    <template x-teleport="body">
-                                                        <div x-show="expanded" style="display: none;" class="fixed inset-0 z-[100] flex items-center justify-center bg-black bg-opacity-80 p-4 backdrop-blur-sm" @keydown.escape.window="expanded = false">
-                                                            <div class="relative w-full h-full flex justify-center items-center" @click.outside="expanded = false">
-                                                                <button @click="expanded = false" class="absolute top-4 right-4 text-white hover:text-gray-300 focus:outline-none z-[110]">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 drop-shadow-md" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-                                                                </button>
-                                                                <img src="{{ asset('storage/' . $extraPhoto) }}" alt="{{ $extra->name_snapshot }}" class="max-w-full max-h-full object-contain rounded drop-shadow-2xl">
-                                                            </div>
+                                <div class="pt-3 border-t border-cocoa-100/70 space-y-2">
+                                    <span class="text-xs font-semibold text-cocoa-700 block">Paid extras</span>
+                                    <div class="space-y-1.5">
+                                        @foreach ($detail->addOns as $extra)
+                                            @php
+                                                $extraPhoto = $extra->addOn?->photo_path ?? $extra->photo_path ?? null;
+                                            @endphp
+                                            <div class="flex items-center justify-between gap-3 p-2.5 rounded-xl bg-cream-50/60 border border-cocoa-100/60">
+                                                <div class="flex items-center gap-2.5 min-w-0">
+                                                    @if ($extraPhoto)
+                                                        <div x-data="{ expanded: false }" class="shrink-0">
+                                                            <button type="button" @click="expanded = true" class="block border border-cocoa-100 rounded overflow-hidden w-8 h-8 bg-cream-50 hover:opacity-80 transition focus:outline-none cursor-pointer" title="Click to view image" aria-label="View photo of {{ $extra->name_snapshot }}">
+                                                                <img src="{{ asset('storage/' . $extraPhoto) }}" alt="{{ $extra->name_snapshot }}" class="w-full h-full object-cover">
+                                                            </button>
+                                                            <template x-teleport="body">
+                                                                <div x-show="expanded" style="display: none;" class="fixed inset-0 z-[100] flex items-center justify-center bg-black bg-opacity-80 p-4 backdrop-blur-sm" @keydown.escape.window="expanded = false" data-dialog role="dialog" aria-modal="true" aria-label="Photo preview of {{ $extra->name_snapshot }}">
+                                                                    <div class="relative w-full h-full flex justify-center items-center" @click.outside="expanded = false">
+                                                                        <button @click="expanded = false" class="absolute top-4 right-4 text-white hover:text-gray-300 focus:outline-none z-[110]" aria-label="Close image preview">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 drop-shadow-md" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                                                                        </button>
+                                                                        <img src="{{ asset('storage/' . $extraPhoto) }}" alt="{{ $extra->name_snapshot }}" class="max-w-full max-h-full object-contain rounded drop-shadow-2xl">
+                                                                    </div>
+                                                                </div>
+                                                            </template>
                                                         </div>
-                                                    </template>
+                                                    @endif
+                                                    <div class="min-w-0">
+                                                        <p class="leading-snug font-medium text-cocoa-800 text-xs sm:text-sm">
+                                                            <strong>Paid extra:</strong> {{ $extra->name_snapshot }}
+                                                            <span class="text-cocoa-500 font-semibold ml-1">×{{ $extra->quantity }}</span>
+                                                            <span class="text-xs text-cocoa-400 font-normal ml-1">({{ '₱' . number_format($extra->unit_price, 2) }} each)</span>
+                                                        </p>
+                                                    </div>
                                                 </div>
-                                            @endif
-                                            <div class="min-w-0 flex-1">
-                                                <p class="leading-snug"><strong>Paid extra:</strong> {{ $extra->name_snapshot }} × {{ $extra->quantity }} for this whole order line · ₱{{ number_format($extra->subtotal, 2) }}</p>
-                                                @if ($extra->description_snapshot)
-                                                    <span class="block text-xs text-cocoa-400">{{ $extra->description_snapshot }} · ₱{{ number_format($extra->unit_price, 2) }} each</span>
-                                                @endif
+                                                <span class="font-bold text-cocoa-700 text-xs sm:text-sm shrink-0 whitespace-nowrap">₱{{ number_format($extra->subtotal, 2) }}</span>
                                             </div>
-                                        </div>
-                                    @endforeach
+                                        @endforeach
+                                    </div>
                                 </div>
                             @endif
                         </div>
@@ -167,41 +194,6 @@
                 </div>
             </div>
 
-            {{-- Reference Images --}}
-            <div class="bg-white border border-cocoa-100 rounded-xl p-4">
-                <div class="flex items-center justify-between border-b border-cocoa-100 pb-4 mb-4">
-                    <h2 class="text-sm font-semibold text-cocoa-600">All Reference Images</h2>
-                    <span class="text-xs text-cocoa-400">{{ $order->images->count() }} image(s)</span>
-                </div>
-
-                @if ($order->images->isNotEmpty())
-                    <div class="grid grid-cols-3 sm:grid-cols-2 xl:grid-cols-4 md:grid-cols-6 gap-3 mb-4">
-                        @foreach ($order->images as $img)
-                            <div class="border border-cocoa-100 rounded-lg overflow-hidden bg-cream-50" x-data="{ expanded: false }">
-                                <button type="button" @click="expanded = true" class="block aspect-square w-full hover:opacity-80 transition focus:outline-none">
-                                    <img src="{{ asset('storage/' . $img->file_path) }}" alt="{{ $img->original_filename }}" class="w-full h-full object-cover">
-                                </button>
-                                <div class="px-1.5 py-1 text-[9px] text-cocoa-400 truncate" title="{{ $img->original_filename }}">
-                                    {{ $img->original_filename }}
-                                </div>
-                                <template x-teleport="body">
-                                    <div x-show="expanded" style="display: none;" class="fixed inset-0 z-[100] flex items-center justify-center bg-black bg-opacity-80 p-4 backdrop-blur-sm" @keydown.escape.window="expanded = false">
-                                        <div class="relative w-full h-full flex justify-center items-center" @click.outside="expanded = false">
-                                            <button @click="expanded = false" class="absolute top-4 right-4 text-white hover:text-gray-300 focus:outline-none z-[110]">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 drop-shadow-md" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-                                            </button>
-                                            <img src="{{ asset('storage/' . $img->file_path) }}" alt="{{ $img->original_filename }}" class="max-w-full max-h-full object-contain rounded drop-shadow-2xl">
-                                        </div>
-                                    </div>
-                                </template>
-                            </div>
-                        @endforeach
-                    </div>
-                @else
-                    <p class="text-sm text-cocoa-400 py-4 text-center">No images uploaded for this order.</p>
-                @endif
-
-            </div>
 
             @include('admin.orders.staff-review')
             @include('admin.orders.proof-review')
@@ -235,22 +227,22 @@
                             <input type="hidden" name="payment_type" value="down_payment">
 
                             <div>
-                                <label class="block text-xs font-bold text-cocoa-600 mb-1" for="field-admin-orders-show-blade-php-2-{{ $detail->id ?? 0 }}">amount (₱)</label>
-                                <input id="field-admin-orders-show-blade-php-2-{{ $detail->id ?? 0 }}" type="number" step="0.01" name="amount" value="{{ $order->required_down_payment }}" readonly
+                                <label class="block text-xs font-bold text-cocoa-600 mb-1" for="deposit-amount">Amount (₱)</label>
+                                <input id="deposit-amount" type="number" step="0.01" name="amount" value="{{ $order->required_down_payment }}" readonly
                                        class="w-full text-xs rounded-lg border-cocoa-100 bg-cream-100 font-semibold text-cocoa-600">
                             </div>
 
                             <div>
-                                <label class="block text-xs font-bold text-cocoa-600 mb-1" for="field-admin-orders-show-blade-php-3-{{ $detail->id ?? 0 }}">method</label>
-                                <select id="field-admin-orders-show-blade-php-3-{{ $detail->id ?? 0 }}" name="payment_method" required class="w-full text-xs rounded-lg border-cocoa-100 focus:border-cocoa-300 focus:ring-cocoa-300">
+                                <label class="block text-xs font-bold text-cocoa-600 mb-1" for="deposit-method">Payment Method</label>
+                                <select id="deposit-method" name="payment_method" required class="w-full text-xs rounded-lg border-cocoa-100 focus:border-cocoa-300 focus:ring-cocoa-300">
                                     <option value="cash">Cash</option>
                                     <option value="gcash">GCash</option>
                                 </select>
                             </div>
 
                             <div>
-                                <label class="block text-xs font-bold text-cocoa-600 mb-1" for="field-admin-orders-show-blade-php-4-{{ $detail->id ?? 0 }}">GCash Ref #</label>
-                                <input id="field-admin-orders-show-blade-php-4-{{ $detail->id ?? 0 }}" type="text" name="reference_number" placeholder="Required if GCash"
+                                <label class="block text-xs font-bold text-cocoa-600 mb-1" for="deposit-reference">Reference Number</label>
+                                <input id="deposit-reference" type="text" name="reference_number" placeholder="Required if GCash"
                                        class="w-full text-xs rounded-lg border-cocoa-100 focus:border-cocoa-300 focus:ring-cocoa-300 placeholder-cocoa-400/50">
                             </div>
 
@@ -281,22 +273,22 @@
                             @csrf
 
                             <div>
-                                <label class="block text-xs font-bold text-cocoa-600 mb-1" for="field-admin-orders-show-blade-php-5-{{ $detail->id ?? 0 }}">amount (₱)</label>
-                                <input id="field-admin-orders-show-blade-php-5-{{ $detail->id ?? 0 }}" type="number" step="0.01" value="{{ $order->remaining_balance }}" readonly
+                                <label class="block text-xs font-bold text-cocoa-600 mb-1" for="pickup-balance-amount">Amount (₱)</label>
+                                <input id="pickup-balance-amount" type="number" step="0.01" value="{{ $order->remaining_balance }}" readonly
                                        class="w-full text-xs rounded-lg border-cocoa-100 bg-cream-100 font-semibold text-cocoa-600">
                             </div>
 
                             <div>
-                                <label class="block text-xs font-bold text-cocoa-600 mb-1" for="field-admin-orders-show-blade-php-6-{{ $detail->id ?? 0 }}">method</label>
-                                <select id="field-admin-orders-show-blade-php-6-{{ $detail->id ?? 0 }}" name="payment_method" x-model="method" required class="w-full text-xs rounded-lg border-cocoa-100 focus:border-cocoa-300 focus:ring-cocoa-300">
+                                <label class="block text-xs font-bold text-cocoa-600 mb-1" for="pickup-balance-method">Payment Method</label>
+                                <select id="pickup-balance-method" name="payment_method" x-model="method" required class="w-full text-xs rounded-lg border-cocoa-100 focus:border-cocoa-300 focus:ring-cocoa-300">
                                     <option value="cash">Cash</option>
                                     <option value="gcash">GCash</option>
                                 </select>
                             </div>
 
                             <div>
-                                <label class="block text-xs font-bold text-cocoa-600 mb-1" for="field-admin-orders-show-blade-php-7-{{ $detail->id ?? 0 }}">GCash Ref #</label>
-                                <input id="field-admin-orders-show-blade-php-7-{{ $detail->id ?? 0 }}" type="text" name="reference_number" value="{{ old('reference_number') }}" :required="method === 'gcash'" placeholder="Required if GCash" maxlength="100"
+                                <label class="block text-xs font-bold text-cocoa-600 mb-1" for="pickup-balance-reference">Reference Number</label>
+                                <input id="pickup-balance-reference" type="text" name="reference_number" value="{{ old('reference_number') }}" :required="method === 'gcash'" placeholder="Required if GCash" maxlength="100"
                                        class="w-full text-xs rounded-lg border-cocoa-100 focus:border-cocoa-300 focus:ring-cocoa-300 placeholder-cocoa-400/50">
                                 @error('reference_number')<p role="alert" data-error-for="reference_number" class="text-sm text-red-700">{{ $message }}</p>@enderror
                             </div>

@@ -21,6 +21,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script defer src="{{ asset('js/alpine.min.js') }}"></script>
+    <style>
+        [x-cloak] { display: none !important; }
+    </style>
     @include('partials.ui-assets')
 </head>
 <body class="bg-cream-50 text-cocoa-500 min-h-screen flex items-center justify-center p-4 font-sans">
@@ -40,7 +44,15 @@
 
             @if ($errors->any())
                 <div data-error-summary role="alert" tabindex="-1" class="mb-4 px-3 py-2.5 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs">
-                    {{ $errors->first() }}
+                    @if ($errors->count() > 1)
+                        <ul class="list-disc list-inside space-y-1">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    @else
+                        {{ $errors->first() }}
+                    @endif
                 </div>
             @endif
 
@@ -53,11 +65,20 @@
                            placeholder="you@alingchona.local">
                 </div>
 
-                <div>
-                    <label for="password" class="block text-xs font-semibold text-cocoa-500 mb-1.5">password</label>
-                    <input type="password" id="password" name="password" required autocomplete="current-password"
-                           class="w-full text-sm rounded-lg border-cocoa-100 bg-white focus:border-cocoa-300 focus:ring-cocoa-300 placeholder-cocoa-400/50"
-                           placeholder="Enter your password">
+                <div x-data="{ showPassword: false }">
+                    <label for="password" class="block text-xs font-semibold text-cocoa-500 mb-1.5">Password</label>
+                    <div class="relative">
+                        <input type="password" :type="showPassword ? 'text' : 'password'" id="password" name="password" required autocomplete="current-password"
+                               class="w-full text-sm rounded-lg border-cocoa-100 bg-white focus:border-cocoa-300 focus:ring-cocoa-300 placeholder-cocoa-400/50 pr-10"
+                               placeholder="Enter your password">
+                        <button type="button" @click="showPassword = !showPassword"
+                                :aria-label="showPassword ? 'Hide password' : 'Show password'"
+                                class="absolute inset-y-0 right-0 flex items-center pr-3 text-cocoa-400 hover:text-cocoa-600 transition">
+                            <span class="sr-only" x-text="showPassword ? 'Hide password' : 'Show password'"></span>
+                            <svg x-show="!showPassword" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                            <svg x-show="showPassword" x-cloak class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18"/></svg>
+                        </button>
+                    </div>
                 </div>
 
                 <div class="flex items-center justify-between text-xs pt-1">

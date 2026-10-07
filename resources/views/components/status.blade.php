@@ -1,9 +1,9 @@
-@props(['value', 'label' => null, 'tooltip' => null, 'align' => 'center'])
+@props(['value', 'label' => null, 'tooltip' => null, 'align' => 'top-right'])
 @php
     $tone = match($value) {
         'pending', 'partially_paid', 'low_stock', 'low', 'awaiting_verification' => 'status-attention',
         'completed', 'fully_paid', 'ready_for_pickup', 'verified', 'in_stock', 'healthy', 'active' => 'status-success',
-        'cancelled', 'unpaid', 'rejected', 'out_of_stock', 'out', 'inactive' => 'status-danger',
+        'cancelled', 'unpaid', 'rejected', 'out_of_stock', 'out', 'inactive', 'voided' => 'status-danger',
         default => '',
     };
 
@@ -49,6 +49,7 @@
         'out' => 'Zero inventory remaining on hand; replenishment urgently required.',
         'inactive' => 'Supply item is archived / inactive and hidden from active inventory operations.',
         'active' => 'Supply item is active and available for use in inventory operations.',
+        'voided' => 'Expense record has been voided and excluded from active financials.',
     ];
 
     $labelRaw = $label ? strtolower(trim($label)) : null;

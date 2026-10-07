@@ -158,7 +158,7 @@ class StockOperationsAndExpensesTest extends TestCase
     {
         $actor = $this->staff(); $this->actingAs($actor);
         for ($i = 0; $i < 25; $i++) Expense::create($this->expenseData() + ['user_id' => $actor->id]);
-        $this->get('/expenses?category=ingredients')->assertOk()->assertViewHas('totalExpenses', 6250)->assertViewHas('expenses', fn ($rows) => $rows->count() === 20);
+        $this->get('/expenses?category=ingredients')->assertOk()->assertViewHas('totalExpenses', 6250)->assertViewHas('expenses', fn ($rows) => $rows->count() === 20)->assertSee('data-desc=', false)->assertSee('data-action=', false);
         foreach (['/expenses/create', '/expenses/1/edit', '/expenses/1', '/expenses/history'] as $page) $this->get($page)->assertOk();
         $actor->update(['is_active' => false]);
         $this->get('/expenses')->assertForbidden(); $this->post('/expenses', $this->expenseData())->assertForbidden();
