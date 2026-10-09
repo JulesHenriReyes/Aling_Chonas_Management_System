@@ -121,6 +121,8 @@ Route::middleware(['auth', 'role:owner,assistant'])->group(function () {
     Route::get('/expenses/create', [ExpenseController::class, 'create'])->name('expenses.create');
     Route::get('/expenses/history', [ExpenseController::class, 'history'])->name('expenses.history');
     Route::get('/expenses/{expense}', [ExpenseController::class, 'show'])->name('expenses.show');
+    Route::get('/expenses/{expense}/edit', [ExpenseController::class, 'edit'])->name('expenses.edit');
+    Route::patch('/expenses/{expense}', [ExpenseController::class, 'update'])->name('expenses.update');
     Route::delete('/expenses/{expense}', [ExpenseController::class, 'destroy'])->name('expenses.destroy');
     Route::post('/expenses', [ExpenseController::class, 'store'])->name('expenses.store');
 

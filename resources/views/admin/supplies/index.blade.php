@@ -75,6 +75,75 @@
     closeDetailDrawer() {
         this.showDetailDrawer = false;
         this.detailSequence++;
+    },
+    selectEntry(entry) {
+        if (!this.drawerSupply || !entry) return;
+        this.drawerEntry = { ...entry };
+        this.drawerEntryHistory = [];
+        fetch('/supplies/' + this.drawerSupply.id + '?stock_entry_id=' + entry.stock_entry_id, {
+            headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }
+        })
+        .then(res => res.ok ? res.json() : null)
+        .then(data => {
+            if (data && this.drawerEntry && this.drawerEntry.stock_entry_id === entry.stock_entry_id) {
+                this.drawerEntry = data.selected_entry || this.drawerEntry;
+                this.drawerEntryHistory = data.entry_history || [];
+            }
+        })
+        .catch(() => {});
+    },
+    formatDate(d) {
+        if (!d) return 'None';
+        const parts = String(d).split('-');
+        if (parts.length !== 3) return d;
+        const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        const m = months[parseInt(parts[1], 10) - 1] || parts[1];
+        return `${m} ${parseInt(parts[2], 10)}, ${parts[0]}`;
+    },
+    formatSource(s) {
+        if (!s) return 'Stock in';
+        const map = {
+            'opening_stock': 'Opening Stock',
+            'verified_opening': 'Verified Opening',
+            'receipt': 'Purchase Receipt',
+            'manual': 'Manual Stock-in',
+            'adjustment': 'Adjustment',
+            'legacy_reconciliation': 'Reconciliation Baseline'
+        };
+        return map[s] || s.replaceAll('_', ' ').replace(/\b\w/g, l => l.toUpperCase());
+    },
+    formatActivityType(t) {
+        if (!t) return 'Movement';
+        const map = {
+            'expiry_verification': 'Expiry Verification',
+            'usage': 'Used in Baking',
+            'waste': 'Waste / Spoilage',
+            'receipt': 'Stock Receipt',
+            'adjustment': 'Stock Adjustment',
+            'stocktake': 'Stock Count'
+        };
+        return map[t] || t.replaceAll('_', ' ').replace(/\b\w/g, l => l.toUpperCase());
+    },
+    getBatchStatus(entry) {
+        if (!entry) return null;
+        if (this.drawerSupply && this.drawerSupply.category === 'packaging') {
+            return { label: 'Packaging', class: 'bg-cocoa-50 text-cocoa-600 border-cocoa-200' };
+        }
+        if (!entry.expiry_date) {
+            return { label: 'No expiry set', class: 'bg-amber-50 text-amber-700 border-amber-200' };
+        }
+        const today = new Date();
+        today.setHours(0,0,0,0);
+        const expDateStr = String(entry.expiry_date).split('T')[0];
+        const exp = new Date(expDateStr + 'T00:00:00');
+        const diffDays = Math.ceil((exp - today) / (1000 * 60 * 60 * 24));
+        if (diffDays < 0) {
+            return { label: 'Expired', class: 'bg-rose-50 text-rose-700 border-rose-200' };
+        }
+        if (diffDays <= 7) {
+            return { label: 'Expiring soon', class: 'bg-amber-50 text-amber-700 border-amber-200' };
+        }
+        return { label: 'Usable', class: 'bg-emerald-50 text-emerald-700 border-emerald-200' };
     }
 }">
     <header class="workspace-heading">
@@ -496,17 +565,128 @@
                                 </template>
                             </div>
 
-                            <div class="inventory-drawer-entries">
-                                <p class="field-error" role="alert" x-show="detailError" x-text="detailError"></p>
-                                <p><strong>Usable total:</strong> <span x-text="drawerSupply.formatted_usable_quantity + ' ' + drawerSupply.unit"></span></p>
-                                <template x-if="drawerEntry"><div class="inventory-selected-entry">
-                                    <h3>Stock entry <span x-text="'#' + drawerEntry.stock_entry_id"></span></h3>
-                                    <p class="inventory-row-meta" x-text="drawerEntry.source.replaceAll('_',' ') + ' · Original quantity: ' + Number(drawerEntry.opening_quantity || 0).toFixed(2) + ' ' + drawerSupply.unit + ' · Stock-in date: ' + (drawerEntry.stock_in_date || 'Unknown')"></p>
-                                    <p><span x-text="Number(drawerEntry.remaining_quantity).toFixed(2) + ' ' + drawerSupply.unit"></span> remaining · <span x-text="drawerEntry.expiry_date ? 'Expires ' + drawerEntry.expiry_date : 'Expiry unknown'"></span></p>
-                                    <a class="record-link" :href="drawerSupply.history_url + '&stock_entry_id=' + drawerEntry.stock_entry_id">Entry history →</a>
-                                    <template x-for="activity in drawerEntryHistory" :key="activity.id"><p class="inventory-row-meta" x-text="activity.type + ': ' + activity.quantity + ' ' + drawerSupply.unit + ' · ' + activity.date"></p></template>
-                                </div></template>
-                                <details><summary>Remaining stock entries</summary><template x-for="entry in (drawerSupply.entries || [])" :key="entry.stock_entry_id"><p class="inventory-row-meta" x-text="'#'+entry.stock_entry_id+' · '+entry.remaining_quantity+' '+drawerSupply.unit+' · '+(entry.expiry_date || (drawerSupply.category === 'packaging' ? 'No expiry applicable' : 'Expiry unknown'))"></p></template></details>
+                            <!-- Active Batch & Expiry Section -->
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-[11px] font-semibold text-cocoa-400 uppercase tracking-wider">Active Batch & Expiry</span>
+                                    <span class="text-xs font-semibold text-cocoa-700 bg-cream-100 border border-cocoa-100 px-2.5 py-0.5 rounded-full"
+                                          x-text="'Usable: ' + (drawerSupply.formatted_usable_quantity || Number(drawerSupply.usable_quantity || 0).toFixed(2)) + ' ' + drawerSupply.unit"></span>
+                                </div>
+
+                                <p class="text-xs text-rose-600 bg-rose-50 border border-rose-200 rounded-lg p-2.5" role="alert" x-show="detailError" x-text="detailError"></p>
+
+                                <!-- Active Batch Card -->
+                                <template x-if="drawerEntry">
+                                    <div class="bg-white border border-cocoa-100 rounded-xl p-3.5 space-y-3 text-xs shadow-sm">
+                                        <!-- Card Header -->
+                                        <div class="flex items-center justify-between gap-2 pb-2.5 border-b border-cocoa-100/70">
+                                            <div class="flex items-center gap-2">
+                                                <span class="font-bold text-sm text-cocoa-800" x-text="'Batch #' + drawerEntry.stock_entry_id"></span>
+                                                <span class="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-cocoa-50 text-cocoa-600 border border-cocoa-200/50"
+                                                      x-text="formatSource(drawerEntry.source)"></span>
+                                            </div>
+                                            <template x-if="getBatchStatus(drawerEntry)">
+                                                <span class="text-[11px] font-semibold px-2.5 py-0.5 rounded-full border"
+                                                      :class="getBatchStatus(drawerEntry).class"
+                                                      x-text="getBatchStatus(drawerEntry).label"></span>
+                                            </template>
+                                        </div>
+
+                                        <!-- Details Grid -->
+                                        <div class="grid grid-cols-2 gap-2.5">
+                                            <div>
+                                                <span class="text-cocoa-400 block font-medium">Remaining in Batch</span>
+                                                <span class="font-bold text-cocoa-800 text-sm" x-text="Number(drawerEntry.remaining_quantity || 0).toFixed(2) + ' ' + drawerSupply.unit"></span>
+                                            </div>
+                                            <div>
+                                                <span class="text-cocoa-400 block font-medium">Expiration Date</span>
+                                                <span class="font-bold text-sm"
+                                                      :class="drawerEntry.expiry_date ? 'text-cocoa-800' : 'text-cocoa-400 font-normal italic'"
+                                                      x-text="drawerEntry.expiry_date ? formatDate(drawerEntry.expiry_date) : (drawerSupply.category === 'packaging' ? 'No expiry' : 'Not recorded')"></span>
+                                            </div>
+                                            <div>
+                                                <span class="text-cocoa-400 block font-medium">Original Quantity</span>
+                                                <span class="font-semibold text-cocoa-600" x-text="drawerEntry.opening_quantity ? (Number(drawerEntry.opening_quantity).toFixed(2) + ' ' + drawerSupply.unit) : '—'"></span>
+                                            </div>
+                                            <div>
+                                                <span class="text-cocoa-400 block font-medium">Stock-in Date</span>
+                                                <span class="font-semibold text-cocoa-600" x-text="formatDate(drawerEntry.stock_in_date)"></span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Recent Batch Activity Mini Log -->
+                                        <div class="pt-2.5 border-t border-cocoa-100/70 space-y-1.5" x-show="drawerEntryHistory.length > 0">
+                                            <span class="text-[10px] font-semibold text-cocoa-400 uppercase tracking-wider block">Recent Batch Activity</span>
+                                            <div class="space-y-1.5">
+                                                <template x-for="activity in drawerEntryHistory" :key="activity.id">
+                                                    <div class="flex items-center justify-between text-xs bg-cream-50/50 rounded-lg px-2.5 py-1.5 text-cocoa-600 border border-cocoa-100/60">
+                                                        <span class="font-semibold text-cocoa-700" x-text="formatActivityType(activity.type)"></span>
+                                                        <div class="flex items-center gap-1.5 text-cocoa-500 text-[11px]">
+                                                            <span class="font-bold text-cocoa-700" x-text="Number(activity.quantity).toFixed(2) + ' ' + drawerSupply.unit"></span>
+                                                            <span class="text-cocoa-300">·</span>
+                                                            <span x-text="activity.date"></span>
+                                                        </div>
+                                                    </div>
+                                                </template>
+                                            </div>
+                                        </div>
+
+                                        <!-- Entry History Link -->
+                                        <div class="pt-2 border-t border-cocoa-100/70 flex items-center justify-end">
+                                            <a class="text-xs font-semibold text-cocoa-600 hover:text-cocoa-800 transition inline-flex items-center gap-1"
+                                               :href="drawerSupply.history_url + '&stock_entry_id=' + drawerEntry.stock_entry_id">
+                                                <span>Entry history</span>
+                                                <span aria-hidden="true">&rarr;</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </template>
+
+                                <!-- Empty State when no batch exists -->
+                                <template x-if="!drawerEntry && !detailLoading">
+                                    <div class="bg-white border border-cocoa-100 rounded-xl p-4 text-center text-xs text-cocoa-400">
+                                        No active batches recorded for this item.
+                                    </div>
+                                </template>
+
+                                <!-- All Batches List (when multiple batches exist) -->
+                                <template x-if="drawerSupply.entries && drawerSupply.entries.length > 1">
+                                    <details class="group bg-white border border-cocoa-100 rounded-xl overflow-hidden transition">
+                                        <summary class="cursor-pointer select-none px-3.5 py-2.5 text-xs font-semibold text-cocoa-700 flex items-center justify-between hover:bg-cream-50/60 transition list-none">
+                                            <div class="flex items-center gap-2">
+                                                <span>All Available Batches</span>
+                                                <span class="text-[10px] bg-cocoa-100 text-cocoa-700 font-bold px-1.5 py-0.5 rounded-full"
+                                                      x-text="drawerSupply.entries.length"></span>
+                                            </div>
+                                            <svg class="w-4 h-4 text-cocoa-400 transition-transform group-open:rotate-180" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.25a.75.75 0 01-1.06 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/>
+                                            </svg>
+                                        </summary>
+                                        <div class="p-2 border-t border-cocoa-100/70 bg-cream-50/30 space-y-1.5">
+                                            <template x-for="entry in drawerSupply.entries" :key="entry.stock_entry_id">
+                                                <div @click="selectEntry(entry)"
+                                                     class="cursor-pointer rounded-lg p-2.5 text-xs transition border flex items-center justify-between gap-3"
+                                                     :class="drawerEntry && drawerEntry.stock_entry_id === entry.stock_entry_id ? 'bg-cream-100/80 border-cocoa-300 ring-1 ring-cocoa-300' : 'bg-white border-cocoa-100 hover:border-cocoa-200 hover:bg-cream-50/50'">
+                                                    <div class="min-w-0">
+                                                        <div class="flex items-center gap-2">
+                                                            <span class="font-bold text-cocoa-800" x-text="'Batch #' + entry.stock_entry_id"></span>
+                                                            <span class="text-[10px] px-1.5 py-0.2 rounded bg-cocoa-50 text-cocoa-600 border border-cocoa-200/50"
+                                                                  x-text="formatSource(entry.source)"></span>
+                                                        </div>
+                                                        <div class="text-[11px] text-cocoa-400 mt-0.5">
+                                                            <span x-text="entry.expiry_date ? ('Expires ' + formatDate(entry.expiry_date)) : (drawerSupply.category === 'packaging' ? 'No expiry' : 'Expiry unknown')"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="text-right shrink-0">
+                                                        <span class="font-bold text-cocoa-800 block" x-text="Number(entry.remaining_quantity).toFixed(2) + ' ' + drawerSupply.unit"></span>
+                                                        <span x-show="drawerEntry && drawerEntry.stock_entry_id === entry.stock_entry_id" class="text-[10px] font-semibold text-cocoa-600">Viewing</span>
+                                                        <span x-show="!drawerEntry || drawerEntry.stock_entry_id !== entry.stock_entry_id" class="text-[10px] text-cocoa-400">Click to switch</span>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                        </div>
+                                    </details>
+                                </template>
                             </div>
 
                             <!-- Action Shortcuts -->

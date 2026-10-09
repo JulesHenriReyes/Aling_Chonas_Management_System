@@ -9,6 +9,9 @@
         </div>
         <div class="workspace-actions">
             <a class="ui-button" href="{{ route('expenses.history', ['expense_id' => $expense->id]) }}">Audit history</a>
+            @unless($expense->trashed())
+                <a class="ui-button primary" href="{{ route('expenses.edit', $expense) }}">Edit expense</a>
+            @endunless
         </div>
     </header>
 

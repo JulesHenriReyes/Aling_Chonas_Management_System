@@ -161,7 +161,9 @@ class SupplyController extends Controller
 
         if ($request->wantsJson() || $request->ajax()) {
             $request->validate(['stock_entry_id'=>['nullable','integer']]);
-            $selectedEntry = $request->filled('stock_entry_id') ? $supply->stockEntries->firstWhere('id',$request->integer('stock_entry_id')) : null;
+            $selectedEntry = $request->filled('stock_entry_id')
+                ? $supply->stockEntries->firstWhere('id', $request->integer('stock_entry_id'))
+                : $supply->stockEntries->where('remaining_quantity', '>', 0)->sortBy('expiry_date')->first();
             abort_if($request->filled('stock_entry_id') && !$selectedEntry,404);
             return response()->json([
                 'supply' => [

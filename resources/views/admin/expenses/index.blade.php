@@ -100,6 +100,7 @@
                                 <div>
                                     <a href="{{ route('expenses.show', $expense) }}">View</a>
                                     @unless($expense->trashed())
+                                        <a href="{{ route('expenses.edit', $expense) }}">Edit</a>
                                         <button type="button"
                                                 class="text-left w-full text-red-600 hover:text-red-700 text-xs px-3 py-1.5 transition"
                                                 data-action="{{ route('expenses.destroy', $expense) }}"

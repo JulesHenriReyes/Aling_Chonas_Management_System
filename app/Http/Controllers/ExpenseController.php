@@ -58,6 +58,21 @@ class ExpenseController extends Controller
         return view('admin.expenses.show', compact('expense'));
     }
 
+    public function edit(Expense $expense)
+    {
+        Gate::authorize('manage-expenses');
+        $expense->load('user');
+        return view('admin.expenses.form', compact('expense'));
+    }
+
+    public function update(Request $request, Expense $expense)
+    {
+        Gate::authorize('manage-expenses');
+        $data = $this->validateExpense($request) + $request->validate(['version' => ['required', 'integer', 'min:0'], 'reason' => ['nullable', 'string', 'max:1000']]);
+        $this->service->update($expense, $data, $request->user());
+        return redirect()->route('expenses.show', $expense)->with('success', 'Expense updated.');
+    }
+
     public function destroy(Request $request, int $expense)
     {
         Gate::authorize('manage-expenses');
