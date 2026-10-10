@@ -133,7 +133,7 @@
 
 
                     <p class="text-xs text-cocoa-400 pt-2 border-t border-cocoa-100">
-                        The exact 50% deposit secures your booking after verification. If you request an eligible cancellation after paying only this deposit, the deposit is retained. For orders going ahead, the remaining balance is collected at actual pickup after the order is ready.
+                        The exact 50% deposit secures your booking after verification. If you cancel an eligible order after paying only this deposit, the deposit is retained. For orders going ahead, the remaining balance is collected at actual pickup after the order is ready.
                     </p>
                 </div>
             </section>
@@ -250,6 +250,70 @@
                 </div>
             @endif
 
+            @if (!in_array($order->status, ['completed', 'cancelled'], true))
+                <section class="checkout-card p-4 sm:p-5 space-y-2" aria-label="Order cancellation">
+                    @if ($order->canCustomerCancel())
+                        <details data-order-cancellation class="group" @if($errors->hasAny(['cancellation', 'confirm_cancellation'])) open @endif>
+                            <summary class="flex items-center justify-between cursor-pointer list-none [&::-webkit-details-marker]:hidden select-none">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-7 h-7 rounded-lg bg-rose-50 text-rose-700 flex items-center justify-center shrink-0 border border-rose-100/80">
+                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                                    </div>
+                                    <div>
+                                        <span class="font-bold text-cocoa-700 text-sm block">Cancel order</span>
+                                        <span class="text-[11px] text-cocoa-400 block group-open:hidden">Changed your plans? Tap to review options</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-1.5 text-xs font-semibold text-cocoa-500 group-hover:text-red-700 transition">
+                                    <span class="group-open:hidden">Manage</span>
+                                    <svg class="w-4 h-4 text-cocoa-400 transition-transform duration-200 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </div>
+                            </summary>
+                            <form action="{{ route('public.order.cancel', $order->private_token) }}" method="POST" class="mt-3.5 pt-3.5 border-t border-cocoa-100 space-y-3">
+                                @csrf
+                                <div class="p-3 rounded-lg bg-rose-50/70 border border-rose-200/70 text-xs text-rose-900 leading-relaxed space-y-1.5">
+                                    <div class="flex items-start gap-2">
+                                        <svg class="w-4 h-4 text-rose-700 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                                        <div class="space-y-1">
+                                            <p class="font-semibold text-rose-950">Cancellation is immediate and final.</p>
+                                            <p class="text-rose-800">Your order will no longer be prepared or available for pickup.</p>
+                                            @if ($order->hasVerifiedPayment())
+                                                <p class="font-medium text-rose-950 pt-0.5">Your verified 50% deposit of <strong>₱{{ number_format($order->amount_paid, 2) }}</strong> will be retained. It will not be refunded.</p>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <label class="flex items-start gap-2.5 text-xs text-cocoa-700 leading-relaxed cursor-pointer select-none">
+                                    <input type="checkbox" name="confirm_cancellation" value="1" required class="mt-0.5 rounded border-cocoa-300 text-red-600 focus:ring-red-500">
+                                    <span class="font-medium">I understand and want to cancel this order.</span>
+                                </label>
+                                <div class="flex items-center gap-2.5 pt-1">
+                                    <button type="submit" class="px-4 py-2.5 rounded-lg bg-red-700 hover:bg-red-800 text-white text-xs font-semibold shadow-xs transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-700">
+                                        Yes, cancel order
+                                    </button>
+                                    <button type="button" onclick="this.closest('details').removeAttribute('open')" class="px-3.5 py-2.5 rounded-lg border border-cocoa-200 bg-white hover:bg-cream-100 text-cocoa-600 text-xs font-semibold transition">
+                                        Never mind, keep order
+                                    </button>
+                                </div>
+                            </form>
+                        </details>
+                    @else
+                        <div class="flex items-center gap-2.5 pb-2 border-b border-cocoa-100">
+                            <div class="w-7 h-7 rounded-lg bg-cocoa-50 text-cocoa-500 flex items-center justify-center shrink-0 border border-cocoa-100">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            </div>
+                            <h2 class="font-bold text-cocoa-700 text-sm">Need to cancel?</h2>
+                        </div>
+                        <p class="text-xs text-cocoa-600 leading-relaxed">To cancel, <a href="#contact-bakery-heading" class="font-semibold underline text-cocoa-700 hover:text-cocoa-900">contact the bakery</a>. The Owner must check your reported transfer or payment record first.</p>
+                    @endif
+                    @foreach (['cancellation', 'confirm_cancellation'] as $field)
+                        @error($field)<p role="alert" class="text-xs text-red-700">{{ $message }}</p>@enderror
+                    @endforeach
+                </section>
+            @endif
+
             {{-- Need Help / Contact Bakery Card --}}
             <section class="checkout-card p-4 sm:p-5 space-y-3" aria-labelledby="contact-bakery-heading">
                 <div class="flex items-center gap-2.5 pb-2.5 border-b border-cocoa-100">
@@ -296,7 +360,7 @@
 (() => {
     let timer = null;
     const checkStatus = async () => {
-        if (document.hidden) return;
+        if (document.hidden || document.querySelector('[data-order-cancellation][open]')) return;
         try {
             const res = await fetch(window.location.href, { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
             if (res.ok) {

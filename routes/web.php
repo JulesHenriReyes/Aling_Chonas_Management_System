@@ -37,6 +37,7 @@ Route::post('/order/details/back', [PublicOrderController::class, 'backToSelecti
 Route::middleware(PrivateOrderResponse::class)->prefix('/order/payment/{token}')->where(['token' => '[a-f0-9]{64}'])->group(function () {
     Route::get('/', [OrderPaymentPageController::class, 'show'])->name('public.order.payment');
     Route::post('/receipt', [OrderPaymentPageController::class, 'submit'])->middleware('throttle:public-receipts')->name('public.order.receipt');
+    Route::post('/cancel', [OrderPaymentPageController::class, 'cancel'])->middleware('throttle:10,1')->name('public.order.cancel');
     Route::get('/qr', [OrderPaymentPageController::class, 'qr'])->name('public.order.qr');
     Route::get('/save-link', [OrderPaymentPageController::class, 'saveLink'])->name('public.order.saveLink');
 });

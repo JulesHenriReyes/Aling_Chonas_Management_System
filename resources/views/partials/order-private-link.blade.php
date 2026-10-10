@@ -84,7 +84,7 @@
                 <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-100 text-emerald-800 border border-emerald-300/60 whitespace-nowrap" x-show="copied">
                     <span x-text="autoCopied ? 'Auto-copied' : 'Copied!'">Auto-copied</span>
                 </span>
-                <x-tooltip text="Bookmark or copy this unique private link to track your order status and upload receipts without needing an account." />
+                <x-tooltip text="Keep this link private. Anyone with it can view your order, upload receipts after staff confirmation, and cancel an eligible order." />
             </div>
         </div>
         <div class="flex items-center gap-1.5 shrink-0 ml-auto sm:ml-0">

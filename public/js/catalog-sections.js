@@ -40,8 +40,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 if (form.hasAttribute('data-catalog-toggle')) {
                     button.textContent = data.available ? 'Make layer unavailable' : 'Make layer available';
+                    if (data.available) {
+                        button.classList.remove('catalog-toggle-enable');
+                        button.classList.add('catalog-toggle-disable');
+                    } else {
+                        button.classList.remove('catalog-toggle-disable');
+                        button.classList.add('catalog-toggle-enable');
+                    }
                     const pill = form.closest('.catalog-section').querySelector('[data-option-availability]');
-                    if (pill) { pill.textContent = data.available ? 'Available' : 'Unavailable'; pill.className = 'association-tag'; }
+                    if (pill) {
+                        pill.textContent = data.available ? 'Available' : 'Unavailable';
+                        pill.className = 'text-xs px-2.5 py-0.5 rounded-full font-medium ' + (data.available ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-amber-50 text-amber-700 border border-amber-200');
+                    }
                 }
                 if (data.action) {
                     form.action = data.action;

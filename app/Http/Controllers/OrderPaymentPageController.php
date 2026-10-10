@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\PaymentSetting;
 use App\Services\PaymentReviewService;
+use App\Services\OrderService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
@@ -44,6 +45,23 @@ class OrderPaymentPageController extends Controller
         return redirect()->route('public.order.payment', $token)->with('success', 'Receipt submitted. Staff will verify it against the business GCash account.');
     }
 
+    public function cancel(Request $request, string $token, OrderService $orders)
+    {
+        $this->order($token);
+        try {
+            $request->validate(['confirm_cancellation' => ['required', 'accepted']]);
+            $order = $orders->cancelPublicOrder($token);
+        } catch (ValidationException $exception) {
+            throw $exception->redirectTo(route('public.order.payment', $token));
+        }
+
+        $message = $order->hasVerifiedPayment()
+            ? 'Your order is cancelled. Your verified 50% deposit has been retained and will not be refunded.'
+            : 'Your order is cancelled. No verified payment is recorded.';
+
+        return redirect()->route('public.order.payment', $token)->with('success', $message);
+    }
+
     public function qr(Request $request, string $token)
     {
         $order = $this->order($token);
@@ -60,7 +78,7 @@ class OrderPaymentPageController extends Controller
     public function saveLink(string $token)
     {
         $order = $this->order($token);
-        $content = "Aling Chona Cakes & Cupcakes\nOrder {$order->order_number}\nKeep this private link safe. Anyone with it can view this order and submit a receipt after staff confirmation.\n".route('public.order.payment', $token)."\n";
+        $content = "Aling Chona Cakes & Cupcakes\nOrder {$order->order_number}\nKeep this private link safe. Anyone with it can view this order, submit a receipt after staff confirmation, and cancel an eligible order.\n".route('public.order.payment', $token)."\n";
 
         return response($content, 200, [
             'Content-Type' => 'text/plain; charset=UTF-8',

@@ -1,0 +1,27 @@
+{
+    "root": "C:\\Users\\User\\AppData\\Local\\Temp\/bakery-customer-cancellation-73cda714a795fc7b53a5",
+    "database": "C:\\Users\\User\\AppData\\Local\\Temp\/bakery-customer-cancellation-73cda714a795fc7b53a5\/workflow-concurrency-cancellation.sqlite",
+    "storage": "C:\\Users\\User\\AppData\\Local\\Temp\/bakery-customer-cancellation-73cda714a795fc7b53a5\/storage",
+    "orders": {
+        "pending": {
+            "id": 1,
+            "token": "d7b003bb82205f1af2f5f823a128d65a82eb9dcc9abc0102e0f6b0c86d9f6aba",
+            "number": "ORD-20261010-7B02D53226"
+        },
+        "approved": {
+            "id": 2,
+            "token": "1d4d43cc1dd545c2b32e672e7a213abed7dbe7c1db46dbdc3c247ef9950d283f",
+            "number": "ORD-20261010-2E7DB0F520"
+        },
+        "deposit": {
+            "id": 3,
+            "token": "dd8f98f94fa8ad79951c0fd0a3bc55f86dd2ac26f26543a3a40a04989ff5136e",
+            "number": "ORD-20261010-148865F768"
+        },
+        "receipt": {
+            "id": 4,
+            "token": "befb0e9316c723fbcfadb1442615048da6043e588e765e193ba8936b77145b69",
+            "number": "ORD-20261010-CA1E0EA2B1"
+        }
+    }
+}

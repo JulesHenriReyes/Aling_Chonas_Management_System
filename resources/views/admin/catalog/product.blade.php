@@ -34,8 +34,11 @@
         <button class="px-5 py-3 bg-cocoa-600 text-white rounded-lg hover:bg-cocoa-700">Save package</button>
     </form>
     @if ($product->exists)
-        <section class="section-form space-y-5" aria-labelledby="layer-options"><h2 id="layer-options" class="font-semibold text-cocoa-600">Layer options and inclusions</h2>
-            <p class="text-sm">Select reusable items included in each package. They add ₱0 to its fixed price. Paid extras are configured separately in the item catalog. Prices use ₱0.02 increments for an exact 50% deposit. Existing orders keep their saved prices and inclusions.</p>
+        <section class="section-form space-y-5" aria-labelledby="layer-options">
+            <div>
+                <h2 id="layer-options" class="font-bold text-cocoa-700 text-lg">Layer options and inclusions</h2>
+                <p class="text-xs text-cocoa-500 mt-1">Configure layer tiers, fixed prices, and complimentary inclusions. Existing orders retain their historical prices and inclusions.</p>
+            </div>
             @foreach ($product->options as $option)
                 @include('admin.catalog.option-form', ['option' => $option])
             @endforeach

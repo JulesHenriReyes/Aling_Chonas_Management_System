@@ -11,7 +11,7 @@
                         <template x-if="!extra.photo_path"><span class="extra-photo-placeholder"><x-icon name="cake" /><span>Photo coming soon</span></span></template>
                     </span>
                     <span class="extra-card-copy">
-                        <strong x-text="extra.name"></strong>
+                        <strong x-text="extra.name" :title="extra.name"></strong>
                         <span x-text="money(extra.price)"></span>
                         <span class="extra-card-state" x-text="selectedExtra(item, extra.id) ? 'Selected' : 'Add to package'"></span>
                     </span>

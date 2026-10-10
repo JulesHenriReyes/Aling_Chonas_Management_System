@@ -25,7 +25,7 @@
 .extra-photo-placeholder { display:flex; flex:1; flex-direction:column; align-items:center; justify-content:center; padding:1rem; text-align:center; gap:.5rem; color:var(--bakery-muted); font-size:.8125rem; }
 .extra-photo-placeholder .ui-icon { width:2rem; height:2rem; }
 .extra-card-copy { display:grid; gap:.25rem; padding:.625rem; color:var(--bakery-ink); font-size:.875rem; overflow-wrap:anywhere; }
-.extra-card-copy strong { line-height:1.4; }
+.extra-card-copy strong { line-height:1.35; min-height:2.7em; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
 .extra-card-state { font-size:.75rem; color:var(--bakery-muted); }
 .extra-card.is-selected .extra-card-state { font-weight:700; color:var(--bakery-ink); }
 .extra-card-quantity { border-top:1px solid var(--bakery-line); padding:.625rem; }

@@ -127,9 +127,15 @@
                     <p class="text-xs text-cocoa-500">Theme colors, special requests, and reference photos apply specifically to your cake, not to paid extras.</p>
                 </div>
 
-                <div class="design-fields {{ $staff ? 'staff-design-fields col-span-full' : '' }}" @if($staff) style="grid-column: 1 / -1;" @endif>
-                    <div class="{{ $staff ? 'staff-design-field' : '' }}"><label :for="'theme-'+item.uid">Theme and colors (optional)</label><input :id="'theme-'+item.uid" :name="'items['+index+'][themes]'" maxlength="255" x-model="item.themes" class="w-full"></div>
-                    <div class="{{ $staff ? 'staff-design-field' : '' }}"><label :for="'request-'+item.uid">Design instructions and special requests (optional)</label><textarea :id="'request-'+item.uid" :name="'items['+index+'][special_request]'" rows="2" maxlength="1000" x-model="item.special_request" class="w-full"></textarea></div>
+                <div class="design-fields col-span-full {{ $staff ? 'staff-design-fields' : 'space-y-3.5' }}" style="grid-column: 1 / -1;">
+                    <div class="{{ $staff ? 'staff-design-field' : '' }}">
+                        <label :for="'theme-'+item.uid" class="block text-xs font-bold text-cocoa-700 mb-1">Theme and colors (optional)</label>
+                        <input :id="'theme-'+item.uid" :name="'items['+index+'][themes]'" maxlength="255" x-model="item.themes" placeholder="e.g. Pastel pink & white, gold accents, rustic floral" class="w-full text-xs rounded-lg border-cocoa-200 bg-white focus:border-cocoa-400 focus:ring-cocoa-300">
+                    </div>
+                    <div class="{{ $staff ? 'staff-design-field' : '' }}">
+                        <label :for="'request-'+item.uid" class="block text-xs font-bold text-cocoa-700 mb-1">Design instructions and special requests (optional)</label>
+                        <textarea :id="'request-'+item.uid" :name="'items['+index+'][special_request]'" rows="3" maxlength="1000" x-model="item.special_request" placeholder="Specify custom dedication lettering, piping details, dietary notes, or topper placement..." class="w-full text-xs rounded-lg border-cocoa-200 bg-white focus:border-cocoa-400 focus:ring-cocoa-300 resize-y min-h-[76px]"></textarea>
+                    </div>
                 </div>
                     <div style="grid-column: 1 / -1;" class="col-span-full">
                         <label :for="'images-'+item.uid" class="inline-flex items-center gap-1 font-medium text-cocoa-700">Design reference photos for this package (optional) <x-tooltip text="Attach cake inspiration or design sketches (up to 5 photos, 5 MB each). These guide our cake decorators and are not payment receipts." /></label>

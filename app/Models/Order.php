@@ -279,6 +279,13 @@ class Order extends Model
         return $this->relationLoaded('paymentProofs') ? $this->paymentProofs->isNotEmpty() : $this->paymentProofs()->exists();
     }
 
+    public function canCustomerCancel(): bool
+    {
+        return $this->user_id === null && $this->canBeCancelled()
+            && ! $this->hasAwaitingReceipt()
+            && ! ($this->amount_paid === 0.0 && $this->hasReportedTransfer());
+    }
+
     public function hasAwaitingReceipt(): bool
     {
         return $this->relationLoaded('paymentProofs') ? $this->paymentProofs->contains('status', 'awaiting_verification')

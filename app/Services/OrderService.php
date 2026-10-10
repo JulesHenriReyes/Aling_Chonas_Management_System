@@ -480,6 +480,29 @@ class OrderService
     {
         StaffAccess::requireOwner($user);
 
+        return $this->cancelEligibleOrder($order, $noFundsChecked);
+    }
+
+    /** The private link authorizes cancellation of this public order only. */
+    public function cancelPublicOrder(string $token): Order
+    {
+        return DB::transaction(function () use ($token) {
+            $order = Order::whereNull('user_id')->where('private_token', $token)->lockForUpdate()->firstOrFail();
+            if ($order->status === 'cancelled') {
+                return $order;
+            }
+            if (! $order->canCustomerCancel()) {
+                throw ValidationException::withMessages([
+                    'cancellation' => 'This order cannot be cancelled online. Contact the bakery so the Owner can check its payment and status.',
+                ]);
+            }
+
+            return $this->cancelEligibleOrder($order);
+        });
+    }
+
+    private function cancelEligibleOrder(Order $order, bool $noFundsChecked = false): Order
+    {
         return DB::transaction(function () use ($order, $noFundsChecked) {
             $order = $this->lockOrder($order);
             if ($order->status === 'completed') {
