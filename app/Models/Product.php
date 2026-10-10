@@ -11,6 +11,17 @@ class Product extends Model
 {
     use HasFactory;
 
+    protected static function booted(): void
+    {
+        // Keep the existing pivot-based pricing and public catalog paths intact.
+        static::created(function (Product $product) {
+            if (!\Illuminate\Support\Facades\Schema::hasColumn('add_ons', 'all_packages')) {
+                return; // Also support historical migration rehearsals.
+            }
+            $product->addOns()->syncWithoutDetaching(AddOn::where('all_packages', true)->pluck('id')->all());
+        });
+    }
+
     protected $fillable = [
         'product_name',
         'price',

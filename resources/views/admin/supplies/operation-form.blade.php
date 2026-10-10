@@ -2,7 +2,7 @@
 @section('title', $type === 'receipt' ? 'Stock in' : 'Stock out')
 @section('content')
 <script src="{{ asset('js/inventory-workspace.js') }}?v={{ filemtime(public_path('js/inventory-workspace.js')) }}"></script>
-<div class="workspace inventory-workspace" x-data="stockOperation(@js($type), @js($initialLines), @js(route('supplies.lookup')), @js(route('supplies.store')), @js(csrf_token()), @js(route('inventory.preview')), @js($errors->messages()))">
+<div class="workspace inventory-workspace stock-operation" x-data="stockOperation(@js($type), @js($initialLines), @js(route('supplies.lookup')), @js(route('supplies.store')), @js(csrf_token()), @js(route('inventory.preview')), @js($errors->messages()))">
     <header class="workspace-heading">
         <div>
             <a class="back-link" data-cancel @click="window.__suppressUnload = true" href="{{ route('supplies.index') }}">← Inventory</a>
@@ -16,6 +16,7 @@
         <input type="hidden" name="business_date" :value="businessDate" :disabled="type !== 'usage'">
         <input type="hidden" name="submission_key" value="{{ old('submission_key', (string) Str::uuid()) }}">
         
+        <div class="stock-operation-controls">
         <div class="form-grid">
             @if(in_array($type, ['usage', 'waste', 'stocktake']))
                 <div>
@@ -90,15 +91,21 @@
                     @endif
                 </div>
             </div>
-            <p class="form-hint" role="status" x-show="notice" x-text="notice" x-cloak></p>
         </div>
+        </div>
+
+        <p class="form-hint stock-operation-notice" role="status" x-show="notice" x-text="notice" x-cloak></p>
 
         <p class="field-error" role="alert" x-show="error" x-text="error" x-cloak></p>
 
         <p class="form-hint" x-show="type === 'usage' && previewLoading" role="status" x-cloak>Checking entries…</p>
+        <p class="form-hint stock-entry-guidance" x-show="lines.some(line => entryMode(line))" x-text="type === 'waste' ? 'Enter quantities to discard from specific entries.' : 'Count every remaining entry, including expired and unknown stock.'" x-cloak></p>
         <div class="inventory-stock-lines" aria-label="Stock operation rows">
+            <div class="inventory-stock-columns" x-show="type === 'receipt' && lines.length" aria-hidden="true" x-cloak>
+                <span>Supply</span><span>Quantity</span><span>Expiration date</span><span></span>
+            </div>
             <template x-for="(line,index) in lines" :key="line.supply_id">
-                <section class="inventory-stock-line" :class="{'is-receipt': type === 'receipt'}">
+                <section class="inventory-stock-line" :class="{'is-receipt': type === 'receipt', 'is-entry-mode': entryMode(line)}">
                     <div class="inventory-stock-name">
                         <strong x-text="line.name" class="inventory-stock-title"></strong>
                         <div class="inventory-row-meta">
@@ -115,14 +122,14 @@
                         <input type="hidden" :name="'lines['+index+'][expected_version]'" :value="line.expected_version">
                         <p class="field-error" x-text="fieldError(index, 'supply_id')"></p>
                     </div>
-                    <div x-show="!entryMode(line)" class="inventory-stock-field">
+                    <div x-show="!entryMode(line)" class="inventory-stock-field inventory-stock-quantity">
                         <label class="inventory-stock-label" :for="'stock-quantity-'+line.supply_id" x-text="type === 'stocktake' ? 'Counted quantity' : 'Quantity'"></label>
                         <div class="stock-quantity-input">
                             <input :id="'stock-quantity-'+line.supply_id" :name="'lines['+index+'][quantity]'" :aria-invalid="!!fieldError(index,'quantity')" :aria-describedby="'quantity-error-'+line.supply_id" type="number" inputmode="decimal" :min="type === 'stocktake' ? 0 : 0.01" max="99999999.99" step="0.01" :required="!entryMode(line)" :disabled="entryMode(line)" x-model="line.quantity" @input="changed()" @input.debounce.350ms="preview()">
                             <span x-text="line.unit"></span>
                         </div>
                     </div>
-                    <div x-show="type === 'receipt'" class="inventory-stock-field">
+                    <div x-show="type === 'receipt'" class="inventory-stock-field inventory-stock-expiry">
                         <template x-if="type === 'receipt' && line.category === 'ingredients'"><div>
                             <label class="inventory-stock-label" :for="'expiry-'+line.supply_id">Expiration date</label>
                             <input type="date" :id="'expiry-'+line.supply_id" :name="'lines['+index+'][expiry_date]'" required x-model="line.expiry_date" :aria-invalid="!!fieldError(index,'expiry_date')" :aria-describedby="'expiry-error-'+line.supply_id">
@@ -135,7 +142,6 @@
                         <button type="button" class="ui-button quiet" x-show="type === 'stocktake'" @click="refreshLine(line)">Reload stock</button>
                     </div>
                     <div class="inventory-entry-inputs" x-show="entryMode(line)">
-                        <p class="form-hint" x-text="type === 'waste' ? 'Enter quantities to discard from specific entries.' : 'Count every remaining entry, including expired and unknown stock.'"></p>
                         <template x-for="(entry,entryIndex) in line.entries" :key="entry.stock_entry_id"><div class="inventory-entry-input">
                             <label :for="'entry-'+entry.stock_entry_id" x-text="'#'+entry.stock_entry_id+' · '+(entry.expiry_date || (line.category === 'packaging' ? 'No expiry applicable' : 'Expiry unknown'))+' · '+quantity(entry.remaining_quantity,line.unit)+' remaining'"></label>
                             <div class="stock-quantity-input">
@@ -156,6 +162,7 @@
         </div>
 
         <div>
+            <div x-show="['waste', 'stocktake'].includes(type)" x-cloak><label for="stock-reason-preset">Quick reason (optional)</label><select id="stock-reason-preset" data-reason-target="notes"><option value="">Choose a starting point</option><option>Expired stock</option><option>Spoiled or damaged stock</option><option>Inventory recount variance</option><option>Typo in quantity entry</option></select></div>
             <label for="notes" x-text="['waste', 'stocktake'].includes(type) ? 'Reason / explanation' : 'Notes (optional)'"></label>
             <textarea id="notes" name="notes" rows="2" maxlength="2000" :required="['waste', 'stocktake'].includes(type)">{{ old('notes') }}</textarea>
         </div>

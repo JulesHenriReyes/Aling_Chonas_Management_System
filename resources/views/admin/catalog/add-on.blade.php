@@ -28,10 +28,15 @@
                 <p class="text-sm mt-1">JPG, PNG or WebP, up to 5 MB. Leave empty to keep the existing photo.</p>
             </div>
         </div>
-        <fieldset class="space-y-3"><legend class="font-semibold mb-3">Offer this paid extra with</legend>
-            <p class="text-sm">Only selected packages offer this item as a paid extra at its normal price. This does not control package visibility or included items. Leave all unchecked to use it only in package inclusions.</p>
-            @foreach ($products as $product)<label class="flex items-center gap-3"><input type="checkbox" name="products[]" value="{{ $product->id }}" @checked(in_array($product->id, old('_add_on') === (string) ($addOn->id ?? 'new') ? old('products', []) : $addOn->products->modelKeys()))>{{ $product->product_name }}</label>@endforeach
+        <fieldset class="space-y-3" x-data="{ scope: @js(old('availability_scope', $addOn->all_packages ? 'all' : 'selected')) }"><legend class="font-semibold mb-3">Offer this paid extra with</legend>
+            <label class="flex items-start gap-3"><input type="radio" name="availability_scope" value="all" x-model="scope">All current and future cake packages</label>
+            <label class="flex items-start gap-3"><input type="radio" name="availability_scope" value="selected" x-model="scope">Only selected packages</label>
+            <p class="text-sm" x-show="scope === 'selected'">Only selected packages offer this item as a paid extra at its normal price. This does not control package visibility or included items. Leave all unchecked to use it only in package inclusions.</p>
+            <p class="text-sm" x-show="scope === 'all'" x-cloak>Offered at its normal price with every current and future package. Availability and included items are still managed separately.</p>
+            <div x-show="scope === 'selected'" class="package-associations">
+            @foreach ($products as $product)<label class="flex items-center gap-3"><input type="checkbox" :disabled="scope !== 'selected'" name="products[]" value="{{ $product->id }}" @checked(in_array($product->id, old('_add_on') === (string) ($addOn->id ?? 'new') ? old('products', []) : $addOn->products->modelKeys()))>{{ $product->product_name }}</label>@endforeach
             @if ($products->isEmpty())<p>No cake packages yet. You can still save this reusable item.</p>@endif
+        </div>
         </fieldset>
         <input type="hidden" name="is_active" value="0">
         <label class="flex items-center gap-3"><input type="checkbox" name="is_active" value="1" @checked(old('is_active', $addOn->is_active))>Available as a paid extra</label>

@@ -7,7 +7,7 @@
                 <th>Operation</th>
                 <th class="numeric">Quantity / batches</th>
                 <th class="numeric">Total on hand</th>
-                <th>Recorded by / at</th>
+                <th>Recorded by</th>
                 <th>Notes</th>
             </tr>
         </thead>
@@ -19,7 +19,7 @@
                     $quantityLabel = ($movement->transaction_type === 'stock_out' ? '−' : ((float)$movement->quantity > 0 ? '+' : '')).number_format($movement->quantity, 2).' '.$unit;
                 @endphp
                 <tr>
-                    <td class="nowrap">{{ $movement->transaction_date->format('M d, Y') }}</td>
+                    <td class="nowrap">{{ $movement->transaction_date->format('M d, Y') }}<small class="inventory-row-meta">Recorded {{ $movement->created_at->format('M d, Y H:i:s') }}</small></td>
                     <td>
                         <a class="record-link inventory-movement-supply" href="{{ route('supplies.show', $movement->supply) }}"><span>{{ $movement->supply->supply_name }}</span><small>{{ $unit }}</small></a>
                     </td>
@@ -47,12 +47,12 @@
                             {{ $quantityLabel }}
                         @endif
                     </td>
-                    <td class="numeric">
+                    <td class="numeric {{ $movement->quantity_after > $movement->quantity_before ? 'movement-up' : ($movement->quantity_after < $movement->quantity_before ? 'movement-down' : '') }}">
+                        @if($movement->quantity_before !== null)<span class="movement-direction">{{ $movement->quantity_after > $movement->quantity_before ? '↑ Increased' : ($movement->quantity_after < $movement->quantity_before ? '↓ Decreased' : 'Unchanged') }}</span>@endif
                         {{ $movement->quantity_before === null ? 'Unavailable (legacy)' : number_format($movement->quantity_before, 2) . ' → ' . number_format($movement->quantity_after, 2).' '.$unit }}
                     </td>
                     <td>
-                        {{ $movement->user->full_name }}<br>
-                        <small>{{ $movement->created_at->format('M d, Y H:i:s') }}</small>
+                        {{ $movement->user->full_name }}
                     </td>
                     <td>{{ $movement->notes ?? '—' }}</td>
                 </tr>

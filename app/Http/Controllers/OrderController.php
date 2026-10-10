@@ -79,7 +79,7 @@ class OrderController extends Controller
             $query->whereDate('pickup_date', '<=', $request->date_to);
         }
 
-        $orders = $query->paginate(15)->withQueryString();
+        $orders = $query->paginate(10)->withQueryString();
 
         return view('admin.orders.index', compact('orders'));
     }

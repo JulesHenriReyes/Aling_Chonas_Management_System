@@ -50,6 +50,10 @@ class CatalogController extends Controller
         }
         $this->savePhoto($request, $product, $data, 'catalog/packages');
 
+        if ($request->expectsJson()) {
+            return response()->json(['message' => 'Package details saved.', 'redirect' => route('products.edit', $product)]);
+        }
+
         return redirect()->route('products.edit', $product)->with('success', 'Package saved. Configure its layer options and inclusions below.');
     }
 
@@ -64,11 +68,11 @@ class CatalogController extends Controller
             'included_items.*.quantity' => ['required', 'integer', 'between:1,999'],
             'price' => self::PRICE, 'is_active' => ['nullable', 'boolean'],
         ]);
-        $data['is_active'] = $request->boolean('is_active');
+        $data['is_active'] = $request->has('is_active') ? $request->boolean('is_active') : ($option?->is_active ?? true);
         $items = $data['included_items'] ?? [];
         unset($data['included_items']);
         $data['included_contents'] = $data['included_contents'] ?? '';
-        DB::transaction(function () use ($product, $option, $data, $items) {
+        DB::transaction(function () use ($product, &$option, $data, $items) {
             if ($option) {
                 $option = $product->options()->whereKey($option->id)->lockForUpdate()->firstOrFail();
                 $option->update($data);
@@ -80,6 +84,16 @@ class CatalogController extends Controller
             ])->all());
         });
 
+        if ($request->expectsJson()) {
+            $response = ['message' => 'Layer option and inclusions saved.', 'action' => route('options.update', [$product, $option])];
+            if ($option->wasRecentlyCreated) {
+                $inclusionItems = AddOn::orderBy('name')->get();
+                $response['html'] = view('admin.catalog.option-form', compact('product', 'option', 'inclusionItems'))->render()
+                    .view('admin.catalog.option-form', ['product' => $product, 'option' => new PackageOption(['is_active' => true]), 'inclusionItems' => $inclusionItems])->render();
+            }
+            return response()->json($response);
+        }
+
         return redirect()->route('products.edit', $product)->with('success', 'Layer option saved. Existing order snapshots are unchanged.');
     }
 
@@ -88,6 +102,16 @@ class CatalogController extends Controller
         $product->update(['is_active' => !$product->is_active]);
 
         return back()->with('success', 'Package availability updated.');
+    }
+
+    public function toggleOption(Request $request, Product $product, PackageOption $option)
+    {
+        abort_if($option->product_id !== $product->id, 404);
+        $option->update(['is_active' => !$option->is_active]);
+        if ($request->expectsJson()) {
+            return response()->json(['message' => 'Layer availability updated.', 'available' => $option->is_active]);
+        }
+        return back()->with('success', 'Layer availability updated.');
     }
 
     public function editAddOn(?AddOn $addOn = null)
@@ -106,11 +130,13 @@ class CatalogController extends Controller
             'description' => ['required', 'string', 'max:2000'],
             'price' => self::PRICE, 'photo' => self::PHOTO,
             'is_active' => ['nullable', 'boolean'],
+            'availability_scope' => ['nullable', Rule::in(['all', 'selected'])],
             'products' => ['nullable', 'array'],
             'products.*' => ['required', 'integer', 'distinct', 'exists:products,id'],
         ]);
-        $packages = $data['products'] ?? [];
-        unset($data['photo'], $data['products']);
+        $data['all_packages'] = ($data['availability_scope'] ?? 'selected') === 'all';
+        $packages = $data['all_packages'] ? Product::pluck('id')->all() : ($data['products'] ?? []);
+        unset($data['photo'], $data['products'], $data['availability_scope']);
         $data['is_active'] = $request->boolean('is_active');
         $this->savePhoto($request, $addOn, $data, 'catalog/add-ons', fn () => $addOn->products()->sync($packages));
 

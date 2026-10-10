@@ -24,8 +24,8 @@
                     @if ($product->description)<p>{{ $product->description }}</p>@endif
                     <div class="space-y-1.5 pt-1">
                         @forelse ($product->options as $option)
-                            <div class="text-sm flex flex-wrap items-baseline gap-x-2 text-cocoa-700">
-                                <span class="font-semibold text-cocoa-800">{{ $option->layers }} layer(s) · ₱{{ number_format($option->price, 2) }}</span>
+                            <div class="catalog-price-tier">
+                                <span>{{ $option->layers }} layer(s)</span><strong>₱{{ number_format($option->price, 2) }}</strong>
                                 @if (!$option->is_active)
                                     <x-status value="inactive" label="Unavailable" />
                                 @endif
@@ -50,7 +50,7 @@
                             <form action="{{ route('products.toggleStatus', $product) }}" method="POST" class="inline">
                                 @csrf
                                 @method('PATCH')
-                                <button class="ui-button quiet">{{ $product->is_active ? 'Make unavailable' : 'Make available' }}</button>
+                                <button class="ui-button availability-action">{{ $product->is_active ? 'Make unavailable' : 'Make available' }}</button>
                             </form>
                         </div>
                     @endif
@@ -71,9 +71,13 @@
                 <div class="space-y-2">
                     <h3 class="font-semibold">{{ $extra->name }} · ₱{{ number_format($extra->price, 2) }} as a paid extra</h3>
                     <p>{{ $extra->description }}</p>
-                    <div class="flex items-center gap-2 text-sm">
+                    <div class="flex flex-wrap items-center gap-2 text-sm">
                         <x-status :value="$extra->is_active ? 'active' : 'inactive'" :label="$extra->is_active ? 'Paid extra enabled' : 'Paid extra disabled'" />
-                        <span class="text-cocoa-500">· Offered with: {{ $extra->products->pluck('product_name')->join(', ') ?: 'No packages (inclusions only)' }}</span>
+                        <div class="association-tags">
+                        @if($extra->all_packages)<span class="association-tag">All current &amp; future packages</span>
+                        @elseif($products->isNotEmpty() && $extra->products->count() === $products->count())<span class="association-tag">All current packages</span>
+                        @else @forelse($extra->products as $offered)<span class="association-tag">{{ $offered->product_name }}</span>@empty<span class="association-tag">Inclusions only</span>@endforelse @endif
+                        </div>
                     </div>
                     @if (auth()->user()->isOwner())
                         <div class="pt-1">

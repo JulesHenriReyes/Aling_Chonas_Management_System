@@ -177,21 +177,27 @@ class UiPresentationTest extends TestCase
         $this->assertStringContainsString('@keyframes skeleton-pulse', $css);
     }
 
-    public function test_view_transitions_and_floating_row_actions_presentation(): void
+    public function test_stable_page_navigation_and_floating_row_actions_presentation(): void
     {
         $css = file_get_contents(public_path('css/bakery-ui.css'));
         $js = file_get_contents(public_path('js/bakery-ui.js'));
 
-        // View transitions: no morph/stretching distortion, object-fit none, rapid clean cross-fade
-        $this->assertStringContainsString('::view-transition-old(main-content),', $css);
-        $this->assertStringContainsString('::view-transition-new(main-content)', $css);
-        $this->assertStringContainsString('object-fit: none', $css);
-        $this->assertStringContainsString('object-position: top left', $css);
-        $this->assertStringContainsString('@keyframes vt-fade-out', $css);
-        $this->assertStringContainsString('@keyframes vt-fade-in', $css);
-        $this->assertStringContainsString('view-transition-name: none', $css);
+        // GET filters and page navigation must not morph changing content snapshots.
+        $this->assertStringContainsString('@view-transition { navigation: none; }', $css);
+        $this->assertStringNotContainsString('navigation: auto', $css);
+        $this->assertStringNotContainsString('view-transition-name: main-content', $css);
         $this->assertStringContainsString('scrollbar-gutter: stable', $css);
-        $this->assertStringContainsString('overflow: clip', $css);
+
+        // Every retained font has a matching early preload and cannot swap after first paint.
+        $typography = file_get_contents(public_path('css/bakery-typography.css'));
+        $preloads = file_get_contents(resource_path('views/partials/ui-font-preloads.blade.php'));
+        $this->assertStringNotContainsString('font-display:swap', $typography);
+        $this->assertSame(5, substr_count($typography, 'font-display:optional'));
+        foreach (['calistoga-400', 'dm-sans-400', 'dm-sans-500', 'dm-sans-600', 'dm-sans-700'] as $font) {
+            $this->assertStringContainsString($font, $preloads);
+            $this->assertFileExists(public_path('fonts/'.$font.'.ttf'));
+        }
+        $this->assertStringContainsString("@include('partials.ui-font-preloads')", file_get_contents(resource_path('views/partials/ui-assets.blade.php')));
 
         // Action buttons: floating popover dropdown instead of vertical inline expansion
         $this->assertStringContainsString('.row-actions {', $css);

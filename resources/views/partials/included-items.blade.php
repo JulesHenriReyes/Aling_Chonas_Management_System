@@ -1,6 +1,8 @@
 @if (!empty($includedItems) || filled($includedText))
     <div class="included-items text-sm space-y-1">
-        <p class="font-semibold inline-flex items-center gap-1 text-cocoa-700">Included per package (Free) <x-tooltip text="Complimentary items (e.g. candles, toppers, or boxes) bundled with this package at no extra charge." /></p>
+        @if($showHeading ?? true)
+            <p class="font-semibold inline-flex items-center gap-1 text-cocoa-700">Included per package (Free) <x-tooltip text="Complimentary items (e.g. candles, toppers, or boxes) bundled with this package at no extra charge." /></p>
+        @endif
         @if (!empty($includedItems))
             <ul class="space-y-1">
                 @foreach ($includedItems as $included)

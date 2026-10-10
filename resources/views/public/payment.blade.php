@@ -133,7 +133,7 @@
 
 
                     <p class="text-xs text-cocoa-400 pt-2 border-t border-cocoa-100">
-                        Once a payment is verified, the booking is secured and the order cannot be cancelled. The remaining balance is collected only at actual pickup after the order is ready.
+                        The exact 50% deposit secures your booking after verification. If you request an eligible cancellation after paying only this deposit, the deposit is retained. For orders going ahead, the remaining balance is collected at actual pickup after the order is ready.
                     </p>
                 </div>
             </section>

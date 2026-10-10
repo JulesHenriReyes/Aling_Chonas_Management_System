@@ -1,27 +1,36 @@
 @if ($order->needsStaffReview())
-<section class="section-form space-y-4" aria-labelledby="staff-review-heading">
-    <h2 id="staff-review-heading" class="font-semibold text-cocoa-700">Staff confirmation</h2>
+<section class="section-form staff-confirmation" aria-labelledby="staff-review-heading">
+    <div class="staff-review-heading">
+        <h2 id="staff-review-heading" class="font-semibold text-cocoa-700">Staff confirmation</h2>
+        <p class="text-sm">Review the saved items, quantities, design references, pickup and capacity. Payment remains locked until confirmation.</p>
+    </div>
     @if ($order->needsStaffReview())
-        <p class="text-sm">Review the saved items, quantities, specifications and images above, the requested pickup, and available capacity. Payment remains locked until confirmation.</p>
-        <p class="text-sm">Other requests on {{ $order->pickup_date->format('M j, Y') }}: <strong>{{ $pickupContext['booked'] }} paid bookings</strong> and <strong>{{ $pickupContext['awaitingDeposit'] }} confirmed requests awaiting payment</strong>.</p>
+        <div class="schedule-context {{ $pickupContext['booked'] + $pickupContext['awaitingDeposit'] > 0 ? 'has-bookings' : 'is-open' }}">
+            <strong>Pickup schedule · {{ $order->pickup_date->format('M j, Y') }}</strong>
+            <p>{{ $pickupContext['booked'] }} other paid bookings · {{ $pickupContext['awaitingDeposit'] }} other approved requests awaiting deposit</p>
+            <small>{{ $pickupContext['booked'] + $pickupContext['awaitingDeposit'] > 0 ? 'Check these commitments before accepting this request.' : 'No other booked or approved orders for this date.' }} Capacity must still be reviewed by staff.</small>
+        </div>
         @if ($order->paymentProofs->isNotEmpty())
             <p class="p-3 bg-amber-50 text-amber-900 rounded-lg text-sm">A transfer was reported under the previous flow. The Owner must check it. Do not ask the customer to pay again or approve an impossible request just to accept its receipt.</p>
         @endif
         @if (Gate::allows('confirm-orders') && ($order->paymentProofs->isEmpty() || Gate::allows('review-proofs')))
-            <form action="{{ route('orders.confirm', $order) }}" method="POST" data-action-form data-validation-active="{{ old('_workflow') === 'review' ? 'true' : 'false' }}" class="space-y-3">
+            <form action="{{ route('orders.confirm', $order) }}" method="POST" data-action-form data-validation-active="{{ old('_workflow') === 'review' ? 'true' : 'false' }}" class="staff-confirmation-form" x-data="{ reviewed: @js((bool) old('feasibility_confirmed')) }">
                 @csrf
                 <input type="hidden" name="_workflow" value="review">
-                <label class="flex items-start gap-3 text-sm"><input type="checkbox" name="feasibility_confirmed" value="1" required {{ old('feasibility_confirmed') ? 'checked' : '' }}><span>I reviewed the design, quantities, pickup schedule and capacity. The bakery can fulfil this request.</span></label>
+                <label class="staff-review-check flex items-start gap-3 text-sm"><input type="checkbox" name="feasibility_confirmed" value="1" x-model="reviewed" required {{ old('feasibility_confirmed') ? 'checked' : '' }}><span>I reviewed the design, quantities, pickup schedule and capacity. The bakery can fulfil this request.</span></label>
                 @error('feasibility_confirmed')<p role="alert" data-error-for="feasibility_confirmed" class="text-sm text-red-700">{{ $message }}</p>@enderror
-                <button type="submit" class="w-full px-4 py-3 bg-cocoa-600 hover:bg-cocoa-700 text-white font-semibold rounded-lg">Confirm request</button>
+                <div class="staff-review-submit-row">
+                    <button type="submit" :disabled="!reviewed" class="px-4 py-2 bg-cocoa-600 hover:bg-cocoa-700 text-white font-semibold rounded-lg disabled:opacity-50 disabled:cursor-not-allowed">Confirm request</button>
+                    <p class="form-hint" x-show="!reviewed">Check the review box to enable confirmation. The deposit is collected after approval.</p>
+                </div>
                 <span role="status" data-submit-status></span>
             </form>
         @else
             <p class="text-sm">The Owner must reconcile this reported payment before a review decision.</p>
         @endif
         @can('decline-orders')
-            <details><summary class="cursor-pointer py-3 font-semibold text-red-800">Decline request</summary>
-                <form action="{{ route('orders.decline', $order) }}" method="POST" data-action-form data-validation-active="{{ old('_workflow') === 'decline' ? 'true' : 'false' }}" class="space-y-3 mt-3">
+            <details class="staff-review-decline"><summary class="cursor-pointer font-semibold text-red-800">Decline request</summary>
+                <form action="{{ route('orders.decline', $order) }}" method="POST" data-action-form data-validation-active="{{ old('_workflow') === 'decline' ? 'true' : 'false' }}" class="staff-decline-form">
                     @csrf
                     <input type="hidden" name="_workflow" value="decline">
                     <label for="decline-reason">Reason shown to the customer</label>

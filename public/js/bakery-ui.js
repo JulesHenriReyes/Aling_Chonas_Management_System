@@ -3,10 +3,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const visible = element => element.getClientRects().length && getComputedStyle(element).visibility !== 'hidden';
     const focusable = root => [...root.querySelectorAll('a[href],button,input,select,textarea,[tabindex]')]
         .filter(element => !element.disabled && element.tabIndex >= 0 && visible(element));
-    const overlays = [...document.querySelectorAll('[data-dialog], [data-sidebar]')];
     const mobile = matchMedia('(max-width: 1023px)');
     let activeOverlay = null;
-    let returnFocus = null;
+    const returnTargets = new WeakMap();
     let previousOverflow = '';
     const backgroundState = new Map();
     const restoreBackground = () => {
@@ -14,39 +13,47 @@ document.addEventListener('DOMContentLoaded', () => {
         backgroundState.clear();
     };
     const syncOverlay = () => {
-        const next = overlays.find(element => visible(element) &&
-            (element.hasAttribute('data-dialog') || (mobile.matches && element.dataset.open === 'true')));
+        const next = [...document.querySelectorAll('[data-dialog], [data-sidebar]')].reverse().find(element => visible(element) &&
+            (element.hasAttribute('data-dialog') || (mobile.matches && element.dataset.open === 'true'))) || null;
         if (next === activeOverlay) return;
+        const focusedBeforeChange = document.activeElement;
+        const previous = activeOverlay;
         restoreBackground();
-        if (activeOverlay) {
-            document.body.style.overflow = previousOverflow;
-            if (returnFocus?.isConnected && visible(returnFocus)) returnFocus.focus();
+        if (previous && !visible(previous)) {
+            const target = returnTargets.get(previous);
+            if (target?.isConnected && visible(target)) target.focus();
+            returnTargets.delete(previous);
         }
         activeOverlay = next || null;
-        if (!next) return;
-        returnFocus = document.activeElement;
-        previousOverflow = document.body.style.overflow;
+        if (!next) {
+            document.body.style.overflow = previousOverflow;
+            return;
+        }
+        if (!returnTargets.has(next)) returnTargets.set(next, focusedBeforeChange);
+        if (!previous) previousOverflow = document.body.style.overflow;
         document.body.style.overflow = 'hidden';
         let branch = next;
         while (branch.parentElement && branch !== document.body) {
             for (const sibling of branch.parentElement.children) {
-                if (sibling !== branch && sibling instanceof HTMLElement && !sibling.hasAttribute('data-sidebar-backdrop') && !['SCRIPT','STYLE','LINK'].includes(sibling.tagName)) {
+                if (sibling !== branch && sibling instanceof HTMLElement && !sibling.hasAttribute('data-sidebar-backdrop') && !sibling.hasAttribute('data-dialog-backdrop') && !['SCRIPT','STYLE','LINK'].includes(sibling.tagName)) {
                     backgroundState.set(sibling, sibling.inert);
                     sibling.inert = true;
                 }
             }
             branch = branch.parentElement;
         }
-        (focusable(next)[0] || next).focus();
+        if (!next.contains(document.activeElement)) (focusable(next)[0] || next).focus();
     };
     const observer = new MutationObserver(syncOverlay);
-    overlays.forEach(element => observer.observe(element, {attributes:true, attributeFilter:['style','class','data-open']}));
+    // Alpine teleports and AJAX can create dialogs after DOMContentLoaded.
+    observer.observe(document.body, {childList:true, subtree:true, attributes:true, attributeFilter:['style','class','data-open']});
     mobile.addEventListener('change', syncOverlay);
     document.addEventListener('keydown', event => {
         if (!activeOverlay) return;
         if (event.key === 'Escape') {
             event.preventDefault();
-            activeOverlay.querySelector('[data-dialog-close], [data-sidebar-close]')?.click();
+            const close = activeOverlay.querySelector('[data-dialog-close], [data-sidebar-close], [aria-label="Close image preview"], [aria-label="Close detail panel"]');
+            if (close) { event.stopPropagation(); close.click(); }
         }
         if (event.key === 'Tab') {
             const items = focusable(activeOverlay);
@@ -58,6 +65,29 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     syncOverlay();
 
+    document.addEventListener('click', (event) => {
+        const collapseTrigger = event.target.closest('[data-sidebar-collapse]');
+        if (collapseTrigger) {
+            event.preventDefault();
+            const collapsed = document.body.classList.toggle('sidebar-collapsed');
+            const isExpanded = !collapsed;
+            document.querySelectorAll('[data-sidebar-collapse]').forEach(btn => {
+                btn.setAttribute('aria-expanded', String(isExpanded));
+                btn.setAttribute('aria-label', isExpanded ? 'Collapse navigation' : 'Expand navigation');
+            });
+            window.dispatchEvent(new Event('resize'));
+        }
+    });
+    document.addEventListener('change', event => {
+        const targetId = event.target.dataset.reasonTarget;
+        if (!targetId || !event.target.value) return;
+        const field = document.getElementById(targetId);
+        if (!field) return;
+        field.value = event.target.value;
+        field.dispatchEvent(new Event('input', {bubbles:true}));
+        field.focus();
+    });
+
     const adminTopbar = document.getElementById('admin-topbar');
     if (adminTopbar) {
         const updateTopbarHeight = () => {
@@ -68,6 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         updateTopbarHeight();
         window.addEventListener('resize', updateTopbarHeight);
+        new ResizeObserver(updateTopbarHeight).observe(adminTopbar);
     }
 
     const errors = JSON.parse(document.getElementById('validation-errors')?.textContent || '{}');
@@ -300,3 +331,360 @@ window.positionTooltip = function(el, refs, show, position, align) {
 };
 
 
+
+
+/* Instant live filtering without full page reloads */
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Orders page AJAX filtering
+    const ordersForm = document.getElementById('orders-filter-form');
+    const ordersTableContainer = document.getElementById('orders-table-container');
+    const ordersStatusTabs = document.getElementById('orders-status-tabs');
+
+    if (ordersForm && ordersTableContainer) {
+        let debounceTimer = null;
+        let activeAbort = null;
+
+        const updateOrdersView = async (url, pushHistory = true) => {
+            if (activeAbort) {
+                activeAbort.abort();
+            }
+            activeAbort = new AbortController();
+
+            const loadingEl = document.getElementById('orders-filter-loading');
+            if (loadingEl) {
+                loadingEl.classList.remove('hidden');
+                loadingEl.classList.add('inline-flex');
+            }
+            ordersTableContainer.classList.add('opacity-50', 'pointer-events-none');
+            ordersTableContainer.setAttribute('aria-busy', 'true');
+
+            try {
+                const response = await fetch(url, {
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                    signal: activeAbort.signal
+                });
+
+                if (!response.ok) throw new Error('Filter response status ' + response.status);
+                const html = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+
+                // 1. Swap table container
+                const newTable = doc.getElementById('orders-table-container');
+                if (newTable) {
+                    ordersTableContainer.innerHTML = newTable.innerHTML;
+                    ordersTableContainer.classList.remove('tab-content-enter');
+                    void ordersTableContainer.offsetWidth;
+                    ordersTableContainer.classList.add('tab-content-enter');
+                    if (window.Alpine) {
+                        window.Alpine.initTree(ordersTableContainer);
+                    }
+                }
+
+                // 2. Swap status tabs
+                const newTabs = doc.getElementById('orders-status-tabs');
+                if (newTabs && ordersStatusTabs) {
+                    ordersStatusTabs.innerHTML = newTabs.innerHTML;
+                }
+
+                // 3. Swap results meta (order count & Reset all filters link)
+                const newMeta = doc.getElementById('orders-results-meta');
+                const currentMeta = document.getElementById('orders-results-meta');
+                if (newMeta && currentMeta) {
+                    currentMeta.innerHTML = newMeta.innerHTML;
+                }
+
+                // 4. Sync form inputs with new doc form
+                const newForm = doc.getElementById('orders-filter-form');
+                if (newForm) {
+                    const statusInput = ordersForm.querySelector('input[name="status"]');
+                    const newStatusInput = newForm.querySelector('input[name="status"]');
+                    if (statusInput && newStatusInput) statusInput.value = newStatusInput.value;
+
+                    let queueInput = ordersForm.querySelector('input[name="queue"]');
+                    const newQueueInput = newForm.querySelector('input[name="queue"]');
+                    if (newQueueInput) {
+                        if (!queueInput) {
+                            queueInput = document.createElement('input');
+                            queueInput.type = 'hidden';
+                            queueInput.name = 'queue';
+                            ordersForm.appendChild(queueInput);
+                        }
+                        queueInput.value = newQueueInput.value;
+                    } else if (queueInput) {
+                        queueInput.remove();
+                    }
+
+                    // Sync inputs from URL parameters
+                    const parsedUrl = new URL(url, window.location.origin);
+                    const sInput = ordersForm.querySelector('input[name="search"]');
+                    const clearBtn = ordersForm.querySelector('button[data-clear-search]');
+                    if (sInput) {
+                        if (!parsedUrl.searchParams.has('search')) {
+                            sInput.value = '';
+                            if (clearBtn) clearBtn.classList.add('hidden');
+                        } else {
+                            sInput.value = parsedUrl.searchParams.get('search');
+                            if (clearBtn) clearBtn.classList.remove('hidden');
+                        }
+                    }
+                    const oSelect = ordersForm.querySelector('select[name="origin"]');
+                    if (oSelect) {
+                        oSelect.value = parsedUrl.searchParams.get('origin') || '';
+                    }
+                    const dFrom = ordersForm.querySelector('input[name="date_from"]');
+                    if (dFrom) {
+                        dFrom.value = parsedUrl.searchParams.get('date_from') || '';
+                    }
+                    const dTo = ordersForm.querySelector('input[name="date_to"]');
+                    if (dTo) {
+                        dTo.value = parsedUrl.searchParams.get('date_to') || '';
+                    }
+                }
+
+                if (pushHistory) {
+                    window.history.pushState({ url }, '', url);
+                }
+            } catch (err) {
+                if (err.name !== 'AbortError') {
+                    console.error('Orders AJAX filter error, falling back to full navigation:', err);
+                    window.location.href = url;
+                }
+            } finally {
+                const loadingElAfter = document.getElementById('orders-filter-loading');
+                if (loadingElAfter) {
+                    loadingElAfter.classList.remove('inline-flex');
+                    loadingElAfter.classList.add('hidden');
+                }
+                ordersTableContainer.classList.remove('opacity-50', 'pointer-events-none');
+                ordersTableContainer.removeAttribute('aria-busy');
+            }
+        };
+
+        const triggerFormFilter = () => {
+            const formData = new FormData(ordersForm);
+            const params = new URLSearchParams();
+            for (const [key, val] of formData.entries()) {
+                if (val !== '') {
+                    params.append(key, val);
+                }
+            }
+            const targetUrl = ordersForm.action + (params.toString() ? '?' + params.toString() : '');
+            updateOrdersView(targetUrl);
+        };
+
+        // Text search input with debounce & inline clear button
+        const searchInput = ordersForm.querySelector('input[name="search"]');
+        const clearSearchBtn = ordersForm.querySelector('button[data-clear-search]');
+        if (searchInput) {
+            const toggleClearBtn = () => {
+                if (clearSearchBtn) {
+                    clearSearchBtn.classList.toggle('hidden', !searchInput.value.trim());
+                }
+            };
+            searchInput.addEventListener('input', () => {
+                toggleClearBtn();
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(triggerFormFilter, 250);
+            });
+            searchInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    clearTimeout(debounceTimer);
+                    triggerFormFilter();
+                }
+            });
+            if (clearSearchBtn) {
+                clearSearchBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    searchInput.value = '';
+                    toggleClearBtn();
+                    clearTimeout(debounceTimer);
+                    triggerFormFilter();
+                    searchInput.focus();
+                });
+            }
+        }
+
+        // Origin select dropdown
+        const originSelect = ordersForm.querySelector('select[name="origin"]');
+        if (originSelect) {
+            originSelect.addEventListener('change', triggerFormFilter);
+        }
+
+        // Date picker inputs
+        const dateFromInput = ordersForm.querySelector('input[name="date_from"]');
+        const dateToInput = ordersForm.querySelector('input[name="date_to"]');
+        if (dateFromInput) dateFromInput.addEventListener('change', triggerFormFilter);
+        if (dateToInput) dateToInput.addEventListener('change', triggerFormFilter);
+
+        // Prevent default submit
+        ordersForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            clearTimeout(debounceTimer);
+            triggerFormFilter();
+        });
+
+        // Intercept clicks on status tabs, reset button, and table pagination
+        document.addEventListener('click', (e) => {
+            // Status tab clicked (e.g., "Pending Review", "Awaiting Deposit")
+            const tabLink = e.target.closest('#orders-status-tabs a');
+            if (tabLink) {
+                e.preventDefault();
+                updateOrdersView(tabLink.href);
+                return;
+            }
+
+            // Reset button clicked
+            const resetLink = e.target.closest('#orders-results-meta a[data-filter-reset], #orders-table-container a[data-filter-reset]');
+            if (resetLink) {
+                e.preventDefault();
+                if (searchInput) {
+                    searchInput.value = '';
+                    const clearBtn = ordersForm.querySelector('button[data-clear-search]');
+                    if (clearBtn) clearBtn.classList.add('hidden');
+                }
+                if (originSelect) originSelect.value = '';
+                if (dateFromInput) dateFromInput.value = '';
+                if (dateToInput) dateToInput.value = '';
+                const sInput = ordersForm.querySelector('input[name="status"]');
+                if (sInput) sInput.value = '';
+                const qInput = ordersForm.querySelector('input[name="queue"]');
+                if (qInput) qInput.remove();
+                updateOrdersView(resetLink.href);
+                return;
+            }
+
+            // Table pagination link clicked
+            const pageLink = e.target.closest('#orders-table-container nav a');
+            if (pageLink) {
+                e.preventDefault();
+                updateOrdersView(pageLink.href);
+                return;
+            }
+        });
+
+        // Popstate for browser back/forward buttons
+        window.addEventListener('popstate', (e) => {
+            if (window.location.pathname.includes('/orders')) {
+                updateOrdersView(window.location.href, false);
+            }
+        });
+    }
+
+    // 2. Pickup Schedule page AJAX filtering
+    const scheduleForm = document.getElementById('schedule-filter-form');
+    const scheduleContainer = document.getElementById('schedule-container');
+
+    if (scheduleForm && scheduleContainer) {
+        const pickupInput = scheduleForm.querySelector('input[name="pickup_date"]');
+        const clearDateBtn = scheduleForm.querySelector('button[data-clear-date]');
+        let activeScheduleAbort = null;
+
+        const updateScheduleView = async (url, pushHistory = true) => {
+            if (activeScheduleAbort) {
+                activeScheduleAbort.abort();
+            }
+            activeScheduleAbort = new AbortController();
+
+            scheduleContainer.classList.add('opacity-50', 'pointer-events-none');
+            scheduleContainer.setAttribute('aria-busy', 'true');
+
+            try {
+                const response = await fetch(url, {
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                    signal: activeScheduleAbort.signal
+                });
+                if (!response.ok) throw new Error('Schedule response status ' + response.status);
+                const html = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+
+                const newContainer = doc.getElementById('schedule-container');
+                if (newContainer) {
+                    scheduleContainer.innerHTML = newContainer.innerHTML;
+                    scheduleContainer.classList.remove('tab-content-enter');
+                    void scheduleContainer.offsetWidth;
+                    scheduleContainer.classList.add('tab-content-enter');
+                    if (window.Alpine) {
+                        window.Alpine.initTree(scheduleContainer);
+                    }
+                }
+
+                // Sync date input and inline clear button in header
+                const parsedUrl = new URL(url, window.location.origin);
+                const dateParam = parsedUrl.searchParams.get('pickup_date') || '';
+                if (pickupInput) {
+                    pickupInput.value = dateParam;
+                }
+                if (clearDateBtn) {
+                    clearDateBtn.classList.toggle('hidden', !dateParam);
+                }
+
+                if (pushHistory) {
+                    window.history.pushState({ url }, '', url);
+                }
+            } catch (err) {
+                if (err.name !== 'AbortError') {
+                    console.error('Schedule AJAX filter error, falling back to full navigation:', err);
+                    window.location.href = url;
+                }
+            } finally {
+                scheduleContainer.classList.remove('opacity-50', 'pointer-events-none');
+                scheduleContainer.removeAttribute('aria-busy');
+            }
+        };
+
+        if (pickupInput) {
+            pickupInput.addEventListener('change', () => {
+                const val = pickupInput.value;
+                if (clearDateBtn) clearDateBtn.classList.toggle('hidden', !val);
+                const url = scheduleForm.action + (val ? '?pickup_date=' + encodeURIComponent(val) : '');
+                updateScheduleView(url);
+            });
+        }
+
+        document.addEventListener('click', (e) => {
+            const clearBtn = e.target.closest('#schedule-filter-form button[data-clear-date]');
+            if (clearBtn && pickupInput) {
+                e.preventDefault();
+                pickupInput.value = '';
+                clearBtn.classList.add('hidden');
+                updateScheduleView(scheduleForm.action);
+                return;
+            }
+
+            const scheduleLink = e.target.closest('#schedule-container a[href*="pickup_date"], #schedule-container a[data-schedule-filter], #schedule-container a[data-filter-reset], #schedule-container a[href$="/pickup-schedule"]');
+            if (scheduleLink && scheduleContainer) {
+                e.preventDefault();
+                updateScheduleView(scheduleLink.href);
+            }
+        });
+
+        window.addEventListener('popstate', (e) => {
+            if (window.location.pathname.includes('/pickup-schedule')) {
+                updateScheduleView(window.location.href, false);
+            }
+        });
+    }
+
+    // 3. Auto-application for workspace filters (Expenses and Supplies)
+    const workspaceForms = document.querySelectorAll('form.workspace-filters:not(.report-filters)');
+    workspaceForms.forEach(form => {
+        let inputTimer = null;
+        const submitForm = () => {
+            form.submit();
+        };
+
+        form.querySelectorAll('select, input[type="date"]').forEach(el => {
+            el.addEventListener('change', submitForm);
+        });
+
+        form.querySelectorAll('input:not([type="date"]):not([type="hidden"])').forEach(el => {
+            el.addEventListener('input', () => {
+                clearTimeout(inputTimer);
+                inputTimer = setTimeout(submitForm, 400);
+            });
+        });
+    });
+});

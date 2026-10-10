@@ -9,7 +9,7 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+                    fontFamily: { sans: ['DM Sans', 'system-ui', 'sans-serif'] },
                     colors: {
                         cream: { 50: '#FDFBF7', 100: '#F5F1EB' },
                         cocoa: { 50: '#F5F1EB', 100: '#E8E0D4', 200: '#D4C4B0', 300: '#C2956B', 400: '#716153', 500: '#5C4A3A', 600: '#3C2415', 700: '#2C1810', 800: '#1A0E08' },
@@ -18,9 +18,6 @@
             }
         }
     </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script defer src="{{ asset('js/alpine.min.js') }}"></script>
     <style>
         [x-cloak] { display: none !important; }
@@ -31,11 +28,7 @@
     <a class="skip-link" href="#main-content">Skip to main content</a>
     <main id="main-content" tabindex="-1" class="max-w-sm w-full">
         {{-- Brand --}}
-        <div class="text-center mb-8">
-            <span class="inline-flex w-14 h-14 rounded-2xl bg-cocoa-600 items-center justify-center text-white text-2xl font-bold mb-4">A</span>
-            <h1 class="text-xl font-bold text-cocoa-600 tracking-tight">Aling Chona</h1>
-            <p class="text-xs text-cocoa-500 mt-0.5">Cakes & Cupcakes</p>
-        </div>
+        <div class="text-center mb-8 login-wordmark"><a href="{{ route('public.order.index') }}"><x-brand /></a></div>
 
         {{-- Login Card --}}
         <div class="bg-white rounded-xl border border-cocoa-100 p-6 sm:p-8">

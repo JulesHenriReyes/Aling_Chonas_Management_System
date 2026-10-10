@@ -34,6 +34,24 @@ window.catalogOrder = function (products, previousItems, quoteUrl, staff = false
             clearTimeout(this.saveTimer);
             this.saveTimer = setTimeout(() => { if (!this.uploading && !this.busy) this.saveReferences(); }, 400);
         },
+        acceptReferenceDrop(item, event) {
+            if (this.uploading || this.busy) return;
+            const input = document.getElementById('images-' + item.uid);
+            const dropped = [...(event.dataTransfer?.files || [])];
+            if (!input || !dropped.length) return;
+            if (dropped.length + (item.staged_images || []).length > 5) {
+                this.fieldErrors['items.0.images'] = ['Keep up to 5 reference photos for this package.'];
+                return;
+            }
+            if (dropped.some(file => !['image/jpeg', 'image/png', 'image/webp'].includes(file.type) || file.size > 5 * 1024 * 1024)) {
+                this.fieldErrors['items.0.images'] = ['Choose JPG, PNG or WebP images, up to 5 MB each.'];
+                return;
+            }
+            const files = new DataTransfer();
+            dropped.forEach(file => files.items.add(file));
+            input.files = files.files;
+            input.dispatchEvent(new Event('change', { bubbles: true }));
+        },
         async saveReferences() {
             if (this.uploading) return;
             clearTimeout(this.saveTimer);

@@ -6,6 +6,21 @@
         'cancelled', 'unpaid', 'rejected', 'out_of_stock', 'out', 'inactive', 'voided', 'expired' => 'status-danger',
         default => '',
     };
+    // Workflow labels distinguish receipt review from an approved unpaid order.
+    if ($label !== null) {
+        $workflow = strtolower($label);
+        $tone = match (true) {
+            str_contains($workflow, 'awaiting staff'), str_contains($workflow, 'receipt awaiting'), str_contains($workflow, 'staff review') => 'status-action',
+            str_contains($workflow, 'awaiting deposit'), $value === 'preparing' => 'status-progress',
+            str_contains($workflow, 'booking secured') => 'status-success',
+            $value === 'cancelled' => 'status-neutral',
+            default => $tone,
+        };
+    } elseif ($value === 'preparing') {
+        $tone = 'status-progress';
+    } elseif ($value === 'cancelled') {
+        $tone = 'status-neutral';
+    }
 
     $statusDescriptions = [
         // Order workflow labels & statuses

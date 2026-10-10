@@ -8,7 +8,7 @@
 try { const prefix=@js(session('completed_staff_browser_prefix')); for (const key of Object.keys(sessionStorage)) if (key.startsWith(prefix+'-')) sessionStorage.removeItem(key); } catch {}
 </script>
 @endif
-<div class="space-y-4">
+<div class="space-y-4 order-view">
     {{-- Breadcrumb --}}
     <div class="page-heading">
         <div class="flex items-center gap-2 text-sm">
@@ -26,10 +26,10 @@ try { const prefix=@js(session('completed_staff_browser_prefix')); for (const ke
 
     {{-- Order Header --}}
     <div class="bg-white border border-cocoa-100 rounded-xl p-6">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div class="order-summary-grid">
             <div>
                 <div class="flex items-center gap-3 flex-wrap">
-                    <h1 class="text-2xl font-bold text-cocoa-600 font-mono">{{ $order->order_number }}</h1>
+                    <h1 class="text-2xl font-bold text-cocoa-600 font-mono">{{ $order->order_number }}</h1><span class="association-tag">{{ $order->user_id === null ? 'Public Web' : 'Staff order' }}</span>
                     <x-status :value="$order->status" :label="$order->workflowLabel()" class="order-workflow-status" />
                     @if ($order->status !== 'cancelled')
                         <x-status :value="$order->payment_status" />
@@ -51,7 +51,7 @@ try { const prefix=@js(session('completed_staff_browser_prefix')); for (const ke
             </div>
 
             {{-- Financial Summary --}}
-            <div class="order-money border-t md:border-t-0 md:border-l border-cocoa-100 md:pl-6 pt-4 md:pt-0">
+            <div class="order-money">
                 <div>
                     <span class="text-xs text-cocoa-500  font-bold block">Total</span>
                     <span class="text-xl font-bold text-cocoa-600">₱{{ number_format($order->total_amount, 2) }}</span>
@@ -62,7 +62,7 @@ try { const prefix=@js(session('completed_staff_browser_prefix')); for (const ke
                 </div>
                 <div>
                     <span class="text-xs text-cocoa-500  font-bold block">Balance</span>
-                    <span class="text-base font-bold {{ $order->status !== 'cancelled' && $order->remaining_balance > 0 ? 'text-red-600' : 'text-cocoa-400' }}">
+                    <span class="text-base font-bold {{ $order->status !== 'cancelled' && $order->remaining_balance > 0 ? 'text-red-700' : 'text-emerald-700' }}">
                         ₱{{ number_format($order->status === 'cancelled' ? 0 : $order->remaining_balance, 2) }}
                     </span>
                 </div>
@@ -75,7 +75,7 @@ try { const prefix=@js(session('completed_staff_browser_prefix')); for (const ke
         {{-- Main Content: Line Items, Images, Payments --}}
         <div class="review-main space-y-4">
             {{-- Line Items --}}
-            <div class="bg-white border border-cocoa-100 rounded-xl p-4">
+            <div class="order-items bg-white border border-cocoa-100 rounded-xl p-4">
                 <div class="flex items-center justify-between border-b border-cocoa-100 pb-4 mb-5">
                     <h2 class="text-sm font-semibold text-cocoa-600">Order Items & Customizations</h2>
                     <span class="text-sm text-cocoa-500">Saved prices</span>
@@ -128,7 +128,7 @@ try { const prefix=@js(session('completed_staff_browser_prefix')); for (const ke
                                     <div class="flex flex-wrap gap-2.5">
                                         @foreach ($detail->images as $img)
                                             <div x-data="{ expanded: false }" class="relative">
-                                                <button type="button" @click="expanded = true" class="group relative block w-16 h-16 rounded-xl overflow-hidden border border-cocoa-200/80 bg-cream-100 hover:border-amber-400 focus:outline-none cursor-pointer transition shadow-xs" title="Click to view full photo: {{ $img->original_filename }}" aria-label="View reference photo {{ $img->original_filename }}">
+                                                <button type="button" @click="expanded = true" class="group relative block w-28 h-28 rounded-xl overflow-hidden border border-cocoa-200/80 bg-cream-100 hover:border-amber-400 focus:outline-none cursor-pointer transition shadow-xs" title="Click to view full photo: {{ $img->original_filename }}" aria-label="View reference photo {{ $img->original_filename }}">
                                                     <img src="{{ $img->url() }}" alt="{{ $img->original_filename }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200">
                                                     <div class="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white drop-shadow" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" /></svg>
@@ -151,7 +151,12 @@ try { const prefix=@js(session('completed_staff_browser_prefix')); for (const ke
                             @endif
 
                             {{-- Fixed catalog snapshot --}}
-                            @include('partials.included-items', ['includedItems' => $detail->included_items_snapshot ?? [], 'includedText' => $detail->included_contents_snapshot, 'packageQuantity' => $detail->quantity])
+                            @if(!empty($detail->included_items_snapshot) || filled($detail->included_contents_snapshot))
+                            <div class="order-inclusions">
+                                <strong>Included items · Free</strong>
+                                @include('partials.included-items', ['includedItems' => $detail->included_items_snapshot ?? [], 'includedText' => $detail->included_contents_snapshot, 'packageQuantity' => $detail->quantity, 'showHeading' => false])
+                            </div>
+                            @endif
 
                             @if ($detail->addOns->isNotEmpty())
                                 <div class="pt-3 border-t border-cocoa-100/70 space-y-2">
@@ -204,8 +209,8 @@ try { const prefix=@js(session('completed_staff_browser_prefix')); for (const ke
             @include('admin.orders.proof-review')
 
             {{-- Payments --}}
-            <div class="bg-white border border-cocoa-100 rounded-xl p-6 space-y-4">
-                <div class="flex items-center justify-between border-b border-cocoa-100 pb-4">
+            <div class="order-payments bg-white border border-cocoa-100 rounded-xl p-6 space-y-4">
+                <div class="payment-heading flex items-center justify-between border-b border-cocoa-100 pb-4">
                     <h2 class="text-sm font-semibold text-cocoa-600">Payments</h2>
                     <span class="text-xs font-mono font-semibold text-emerald-700">
                         Paid: ₱{{ number_format($order->amount_paid, 2) }} / ₱{{ number_format($order->total_amount, 2) }}
@@ -260,6 +265,7 @@ try { const prefix=@js(session('completed_staff_browser_prefix')); for (const ke
                     </div>
                 @endif
 
+                <span id="pickup-payment" class="anchor-target"></span>
                 {{-- Final Payment Form --}}
                 @if (Gate::allows('record-payments') && $order->status === 'ready_for_pickup' && $order->remaining_balance > 0)
                     <div class="bg-cream-50 border border-cocoa-100 rounded-lg p-5 space-y-3">
@@ -279,8 +285,9 @@ try { const prefix=@js(session('completed_staff_browser_prefix')); for (const ke
 
                             <div>
                                 <label class="block text-xs font-bold text-cocoa-600 mb-1" for="pickup-balance-amount">Amount (₱)</label>
-                                <input id="pickup-balance-amount" type="number" step="0.01" value="{{ $order->remaining_balance }}" readonly
+                                <input id="pickup-balance-amount" type="number" step="0.01" value="{{ $order->remaining_balance }}" max="{{ $order->remaining_balance }}" aria-describedby="pickup-amount-help" readonly
                                        class="w-full text-xs rounded-lg border-cocoa-100 bg-cream-100 font-semibold text-cocoa-600">
+                                <p id="pickup-amount-help" class="form-hint">Exact balance · maximum ₱{{ number_format($order->remaining_balance, 2) }}. This amount is fixed.</p>
                             </div>
 
                             <div>
@@ -292,9 +299,10 @@ try { const prefix=@js(session('completed_staff_browser_prefix')); for (const ke
                             </div>
 
                             <div>
-                                <label class="block text-xs font-bold text-cocoa-600 mb-1" for="pickup-balance-reference">Reference Number</label>
+                                <label class="block text-xs font-bold text-cocoa-600 mb-1" for="pickup-balance-reference">Reference Number <span x-show="method === 'gcash'" class="text-red-700">(required)</span></label>
                                 <input id="pickup-balance-reference" type="text" name="reference_number" value="{{ old('reference_number') }}" :required="method === 'gcash'" placeholder="Required if GCash" maxlength="100"
                                        class="w-full text-xs rounded-lg border-cocoa-100 focus:border-cocoa-300 focus:ring-cocoa-300 placeholder-cocoa-400/50">
+                                <p class="form-hint" x-show="method === 'gcash'" x-cloak>Enter the reference from the verified incoming GCash transaction.</p>
                                 @error('reference_number')<p role="alert" data-error-for="reference_number" class="text-sm text-red-700">{{ $message }}</p>@enderror
                             </div>
 
@@ -395,7 +403,7 @@ try { const prefix=@js(session('completed_staff_browser_prefix')); for (const ke
             {{-- Lifecycle Actions --}}
             @if (!in_array($order->status, ['completed', 'cancelled'], true))
             <div class="bg-white border border-cocoa-100 rounded-xl p-5 space-y-3">
-                <h2 class="text-sm font-semibold text-cocoa-600">Order actions</h2>
+                <h2 id="order-actions" class="anchor-target text-sm font-semibold text-cocoa-600">Order actions</h2>
 
                 @if ($order->canStartPreparation())
                     <form action="{{ route('orders.updateStatus', $order) }}" method="POST">

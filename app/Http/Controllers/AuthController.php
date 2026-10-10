@@ -41,6 +41,7 @@ class AuthController extends Controller
             }
 
             $request->session()->regenerate();
+            $request->session()->flash('fresh_login', true);
 
             if ($request->wantsJson()) {
                 return response()->json([

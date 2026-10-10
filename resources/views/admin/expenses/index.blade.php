@@ -21,6 +21,7 @@
             <h1>Expenses</h1>
             <p>Daily purchases and business costs.</p>
         </div>
+        <div class="expense-total"><span>Active total · current filters</span><strong>₱{{ number_format($totalExpenses, 2) }}</strong></div>
         <div class="workspace-actions">
             <a class="ui-button" href="{{ route('expenses.history') }}">Audit history</a>
             <button type="button" class="ui-button primary" @click="createModalOpen = true">
@@ -29,7 +30,7 @@
         </div>
     </header>
 
-    <form method="GET" class="workspace-filters" aria-label="Filter expenses">
+    <form method="GET" class="workspace-filters expense-filters" aria-label="Filter expenses">
         <div class="filter-search">
             <label for="expense-q">Search</label>
             <input id="expense-q" name="q" value="{{ request('q') }}" placeholder="Description">
@@ -61,13 +62,16 @@
         </div>
         <input type="hidden" name="sort" value="{{ request('sort', 'expense_date') }}">
         <input type="hidden" name="direction" value="{{ request('direction', 'desc') }}">
-        <button class="ui-button" type="submit">Apply</button>
-        <a class="ui-button quiet" href="{{ route('expenses.index') }}">Reset</a>
     </form>
 
     <div class="workspace-summary">
-        <span>{{ number_format($expenses->total()) }} matching records</span>
-        <p>Active total for these filters <strong>₱{{ number_format($totalExpenses, 2) }}</strong></p>
+        <span>
+            {{ number_format($expenses->total()) }} matching records
+            @if(request()->hasAny(['q', 'category', 'start_date', 'end_date', 'status']))
+                · <a class="text-cocoa-500 hover:text-cocoa-700 underline text-xs font-medium ml-1" href="{{ route('expenses.index') }}">Reset filters</a>
+            @endif
+        </span>
+
     </div>
 
     <div class="workspace-table table-scroll" role="region" aria-label="Expenses table" tabindex="0">
@@ -123,7 +127,7 @@
             </tbody>
         </table>
     </div>
-    
+
     <x-workspace-pagination :records="$expenses" />
 
     <!-- Add Expense Popup Modal -->

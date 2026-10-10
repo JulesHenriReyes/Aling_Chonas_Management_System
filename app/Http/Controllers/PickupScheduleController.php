@@ -15,8 +15,17 @@ class PickupScheduleController extends Controller
             'pickup_date' => ['nullable', 'date'],
         ]);
 
-        $orders = Order::with(['customer', 'orderDetails.product', 'orderDetails.addOns', 'payments', 'paymentProofs'])
-            ->whereNotIn('status', ['completed', 'cancelled'])
+        $baseQuery = Order::with(['customer', 'orderDetails.product', 'orderDetails.addOns', 'payments', 'paymentProofs'])
+            ->whereNotIn('status', ['completed', 'cancelled']);
+
+        $capacityOrders = (clone $baseQuery)
+            ->whereDate('pickup_date', '>=', PickupCalendar::todayString())
+            ->orderBy('pickup_date')
+            ->orderBy('pickup_time')
+            ->get()
+            ->groupBy(fn (Order $order) => $order->pickup_date->toDateString());
+
+        $orders = (clone $baseQuery)
             ->when(
                 $validated['pickup_date'] ?? null,
                 fn ($query, $date) => $query->whereDate('pickup_date', $date),
@@ -27,6 +36,6 @@ class PickupScheduleController extends Controller
             ->get()
             ->groupBy(fn (Order $order) => $order->pickup_date->toDateString());
 
-        return view('admin.schedule.index', compact('orders'));
+        return view('admin.schedule.index', compact('orders', 'capacityOrders'));
     }
 }

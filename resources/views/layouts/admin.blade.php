@@ -9,18 +9,15 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+                    fontFamily: { sans: ['DM Sans', 'system-ui', 'sans-serif'] },
                     colors: {
                         cream: { 50: '#FDFBF7', 100: '#F5F1EB' },
-                        cocoa: { 50: '#F5F1EB', 100: '#E8E0D4', 200: '#D4C4B0', 300: '#C2956B', 400: '#716153', 500: '#5C4A3A', 600: '#3C2415', 700: '#2C1810', 800: '#1A0E08' },
+                        cocoa: { 50: '#F5F1EB', 100: '#E8E0D4', 200: '#D4C4B0', 300: '#C2956B', 400: '#716153', 500: '#5C4A3A', 600: '#3C2415', 700: '#2C1810', 800: '#1A0E08', 900: '#140A05', 950: '#0C0502' },
                     }
                 }
             }
         }
     </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script defer src="{{ asset('js/alpine.min.js') }}"></script>
     <style>
         [x-cloak] { display: none !important; }
@@ -32,6 +29,7 @@
     @include('partials.ui-assets')
 </head>
 <body class="bg-cream-50 text-cocoa-500 font-sans min-h-screen" x-data="{ sidebarOpen: false }">
+    @yield('splash')
     <a class="skip-link" href="#main-content">Skip to main content</a>
 
     {{-- Mobile Sidebar Overlay --}}
@@ -42,16 +40,26 @@
     <aside id="staff-navigation" data-sidebar :data-open="sidebarOpen.toString()" aria-label="Staff navigation" :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
            class="fixed top-0 left-0 z-50 h-full w-60 bg-cocoa-700 text-cocoa-100 flex flex-col transition-transform duration-200 lg:translate-x-0">
 
-        <button type="button" data-sidebar-close @click="sidebarOpen = false" aria-label="Close navigation" class="sidebar-close self-end p-3 text-white"><x-icon name="close" /></button>
-        {{-- Brand --}}
-        <div class="px-5 py-5 border-b border-white/10">
-            <a href="{{ route('dashboard') }}" class="flex items-center gap-3">
-                <span class="w-9 h-9 rounded-lg bg-cocoa-300 flex items-center justify-center text-white text-lg font-bold">A</span>
-                <div>
-                    <span class="font-bold text-white text-sm tracking-tight block leading-tight">Aling Chona</span>
-                    <span class="text-xs text-cocoa-100 leading-tight">Cakes & Cupcakes</span>
-                </div>
+        <button type="button" data-sidebar-close @click="sidebarOpen = false" aria-label="Close navigation" class="sidebar-close hidden"><x-icon name="close" /></button>
+        {{-- Brand & Sidebar Collapse Header --}}
+        <div class="px-5 py-5 border-b border-white/10 flex items-center justify-between gap-2">
+            <a href="{{ route('dashboard') }}" class="flex items-center gap-3 min-w-0">
+                <x-brand inverse compact />
             </a>
+            <button type="button" 
+                    class="sidebar-panel-collapse-btn p-1.5 rounded-lg text-cocoa-200 hover:text-white hover:bg-white/10 transition flex items-center justify-center cursor-pointer shrink-0" 
+                    data-sidebar-collapse 
+                    @click="if (window.innerWidth < 1024) sidebarOpen = false"
+                    aria-controls="staff-navigation" 
+                    aria-expanded="true" 
+                    aria-label="Collapse navigation" 
+                    title="Collapse navigation">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                    <rect width="18" height="18" x="3" y="3" rx="2" />
+                    <path d="M9 3v18" />
+                    <path d="m14 9-3 3 3 3" />
+                </svg>
+            </button>
         </div>
 
         {{-- Navigation --}}
@@ -77,7 +85,7 @@
                 Pickup Schedule
             </a>
 
-            <div class="pt-4 pb-1.5 px-3">
+            <div class="pt-6 pb-0.5 px-3">
                 <span class="sidebar-label">Manage</span>
             </div>
 
@@ -102,7 +110,7 @@
                 Inventory
             </a>
 
-            <div class="pt-4 pb-1.5 px-3">
+            <div class="pt-6 pb-0.5 px-3">
                 <span class="sidebar-label">Finance</span>
             </div>
 
@@ -123,7 +131,7 @@
             @endcan
 
             @can('manage-users')
-                <div class="pt-4 pb-1.5 px-3">
+                <div class="pt-6 pb-0.5 px-3">
                     <span class="sidebar-label">Admin</span>
                 </div>
 
@@ -139,21 +147,34 @@
     </aside>
 
     {{-- Main Content Area --}}
-    <div class="lg:pl-60 min-h-screen flex flex-col">
+    <div class="lg:pl-60 min-h-screen flex flex-col staff-shell">
         {{-- Top Bar --}}
         <header id="admin-topbar" class="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-cocoa-100">
             <div class="flex items-center justify-between px-4 sm:px-6 lg:px-8 h-14">
                 {{-- Mobile menu button --}}
                 <button type="button" aria-label="Open navigation" aria-controls="staff-navigation" :aria-expanded="sidebarOpen.toString()" @click="sidebarOpen = true" class="lg:hidden p-2 -ml-2 rounded-lg text-cocoa-400 hover:text-cocoa-600 hover:bg-cream-100 transition">
-                    <x-icon path="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" class="w-5 h-5" />
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="18" height="18" x="3" y="3" rx="2" />
+                        <path d="M9 3v18" />
+                        <path d="m12 15 3-3-3-3" />
+                    </svg>
                 </button>
 
                 {{-- Page title in top bar --}}
-                <span class="hidden lg:block text-sm text-cocoa-500">Staff workspace</span>
+                <div class="hidden lg:flex items-center gap-2">
+                    <button type="button" class="sidebar-expand-btn ui-button quiet" data-sidebar-collapse aria-controls="staff-navigation" aria-expanded="false" aria-label="Expand navigation" title="Expand navigation">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                            <rect width="18" height="18" x="3" y="3" rx="2" />
+                            <path d="M9 3v18" />
+                            <path d="m12 15 3-3-3-3" />
+                        </svg>
+                    </button>
+                    <span class="text-sm text-cocoa-500 font-medium">Staff workspace</span>
+                </div>
 
                 {{-- Right side --}}
-                <div class="flex items-center gap-3 text-sm min-w-0">
-                    <span class="text-cocoa-500 text-xs min-w-0">{{ Auth::user()->full_name }} <span class="text-cocoa-500">&middot;</span> <span class="capitalize">{{ Auth::user()->role }}</span></span>
+                <div class="flex items-center gap-3 text-sm min-w-0 topbar-account">
+                    <span class="text-cocoa-500 text-xs min-w-0 topbar-identity">{{ Auth::user()->full_name }} <span class="text-cocoa-500">&middot;</span> <span class="capitalize">{{ Auth::user()->role }}</span></span>
                     <form action="{{ route('logout') }}" method="POST" class="inline">
                         @csrf
                         <button type="submit" class="px-3 py-1.5 text-xs font-medium text-cocoa-500 hover:text-cocoa-700 border border-cocoa-100 rounded-lg hover:bg-cream-100 transition">

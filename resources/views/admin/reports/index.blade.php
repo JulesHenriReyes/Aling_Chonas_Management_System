@@ -69,7 +69,7 @@
             ];
         @endphp
         @foreach(\App\Services\FinancialReportService::LABELS as $metric => $label)
-            <div class="summary-metric">
+            <div class="summary-metric"><span class="metric-icon" aria-hidden="true"><x-icon :name="$metric === 'expenses' ? 'receipt' : ($metric === 'sales' ? 'calendar' : 'cash')" /></span>
                 <span class="inline-flex items-center gap-1">{{ $label }} <x-tooltip :text="$metricTooltips[$metric] ?? ''" /></span>
                 <strong>₱{{ number_format($summary[$metric], 2) }}</strong>
                 @if(isset($metricSubtitles[$metric]))
@@ -85,7 +85,7 @@
             <h2 class="inline-flex items-center gap-1">Operational result <x-tooltip text="Completed sales + retained cancellation deposits − valid expenses. Not formal accounting net profit." /></h2>
             <strong>₱{{ number_format($summary['operational_net_income'], 2) }}</strong>
         </div>
-        <p>Completed sales + retained cancellation deposits − valid expenses. Collections are shown separately. This is not accounting profit: cost of goods sold and other accounting costs are unavailable.</p>
+        <div class="result-explanation"><strong>Completed sales + retained cancellation deposits − valid expenses</strong><p>Collections are shown separately. This is not accounting profit: cost of goods sold and other accounting costs are unavailable.</p></div>
     </section>
 
     <section class="workspace-panel report-trends">
@@ -112,6 +112,9 @@
             <svg role="img" aria-labelledby="trend-title trend-description" viewBox="0 0 {{ $width }} 275" class="trend-chart" style="min-width:{{ $width }}px">
                 <title id="trend-title">{{ $grain }} financial trend for {{ $period->label() }}</title>
                 <desc id="trend-description">Completed sales, payment collections and expenses. Exact values, including zero activity, appear in the table below. Negative collections extend below the zero line.</desc>
+                @foreach([0.25, 0.5, 0.75, 1] as $fraction)
+                    <line x1="55" y1="{{ $baseline - $maximum * $scale * $fraction }}" x2="{{ $width - 15 }}" y2="{{ $baseline - $maximum * $scale * $fraction }}" stroke="#e7ded4" stroke-dasharray="3 4" />
+                @endforeach
                 <line x1="55" y1="{{ $baseline }}" x2="{{ $width - 15 }}" y2="{{ $baseline }}" stroke="#9c8b7a" />
                 <text x="5" y="{{ $baseline + 4 }}">₱0</text>
                 <text x="5" y="20">₱{{ number_format($maximum, 0) }}</text>
@@ -124,7 +127,7 @@
                         </rect>
                     @endforeach
                     @if($index % $labelStep === 0 || $loop->last)
-                        <text x="{{ $x + 10 }}" y="250" text-anchor="middle" font-size="11" fill="#78604d" transform="rotate(-45 {{ $x + 10 }} 250)">{{ $grain === 'Daily' ? substr($row['period'], 5) : $row['period'] }}</text>
+                        <text x="{{ $x + 10 }}" y="250" text-anchor="middle" font-size="11" fill="#78604d" >{{ $grain === 'Daily' ? substr($row['period'], 5) : $row['period'] }}</text>
                     @endif
                 @endforeach
             </svg>

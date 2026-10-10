@@ -11,7 +11,7 @@
                 </div>
                 <input type="hidden" :name="'items['+index+'][product_id]'" :value="item.product_id">
                 <input type="hidden" :name="'items['+index+'][draft_key]'" :value="item.draft_key">
-                <div class="grid sm:grid-cols-[1fr_auto] gap-4 items-end">
+                <div class="grid sm:grid-cols-[1fr_auto] gap-4 items-end {{ !$staff ? 'customer-size-quantity' : '' }}">
                     <div>
                         <label class="block text-xs font-semibold text-cocoa-700 uppercase tracking-wider mb-1.5">
                             Cake size & fixed price
@@ -41,7 +41,7 @@
                         <label :for="'quantity-'+item.uid" class="block text-xs font-semibold text-cocoa-700 uppercase tracking-wider mb-1.5">
                             Quantity
                         </label>
-                        <div class="inline-flex items-center rounded-xl border border-cocoa-200/90 bg-white shadow-2xs overflow-hidden h-[42px]">
+                        <div class="package-quantity-stepper inline-flex items-center rounded-xl border border-cocoa-200/90 bg-white shadow-2xs overflow-hidden h-[42px]">
                             <button type="button"
                                     @click="item.quantity = Math.max(1, (Number(item.quantity) || 1) - 1)"
                                     class="w-10 h-full flex items-center justify-center text-cocoa-500 hover:bg-cream-100 hover:text-cocoa-800 active:bg-cream-200 transition font-bold text-base cursor-pointer focus:outline-none"
@@ -66,8 +66,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="included-items text-sm space-y-2" style="grid-column: 1 / -1;">
-                    <h4 class="font-semibold text-cocoa-700">Included per package (Free)</h4>
+                <div class="included-items text-sm {{ $staff ? 'space-y-2' : 'customer-bundle-reward' }}" @unless($staff) :class="{ 'has-free-items': (option(item)?.included_items || []).length > 0 }" @endunless style="grid-column: 1 / -1;">
+                    @unless($staff)<x-icon name="check" class="bundle-reward-icon" x-show="(option(item)?.included_items || []).length > 0" />@endunless
+                    <h4 class="font-semibold text-cocoa-700">{{ $staff ? 'Included per package (Free)' : 'Included with your package' }}@unless($staff)<span class="bundle-free-label" x-show="(option(item)?.included_items || []).length > 0">Free</span>@endunless</h4>
                     <p x-show="!option(item)">Choose an available layer option.</p>
                     <ul class="space-y-1.5">
                         <template x-for="included in (option(item)?.included_items || [])" :key="included.id">
@@ -78,6 +79,9 @@
                     </ul>
                     <p class="whitespace-pre-line text-xs text-cocoa-500" x-show="option(item)?.included_contents" x-text="option(item)?.included_contents"></p>
                 </div>
+                @unless($staff)
+                    @include('components.ordering.visual-extras')
+                @else
                 <fieldset class="space-y-3"><legend class="font-semibold mb-2">Paid extras (optional)</legend>
                     <template x-for="extra in (product(item)?.add_ons || [])" :key="extra.id">
                         <div class="border-t border-cocoa-100 pt-3">
@@ -116,6 +120,7 @@
                     </template>
                     <p x-show="!(product(item)?.add_ons.length)" class="text-sm">No paid extras for this package.</p>
                 </fieldset>
+                @endunless
 
                 <div class="col-span-full border-t border-cocoa-200 pt-4 space-y-1" style="grid-column: 1 / -1;">
                     <h4 class="font-semibold text-cocoa-600 text-sm">Cake design & special instructions (optional)</h4>
@@ -128,9 +133,19 @@
                 </div>
                     <div style="grid-column: 1 / -1;" class="col-span-full">
                         <label :for="'images-'+item.uid" class="inline-flex items-center gap-1 font-medium text-cocoa-700">Design reference photos for this package (optional) <x-tooltip text="Attach cake inspiration or design sketches (up to 5 photos, 5 MB each). These guide our cake decorators and are not payment receipts." /></label>
+                        @unless($staff)
+                        <div class="customer-reference-drop" x-data="{ dragging: false }" :aria-busy="uploading" :class="{ 'is-dragging': dragging, 'is-uploading': uploading }" @dragover.prevent="dragging = !uploading" @dragleave="if (!$el.contains($event.relatedTarget)) dragging = false" @drop.prevent="dragging = false; acceptReferenceDrop(item, $event)">
+                            <x-icon name="plus" class="reference-upload-icon" />
+                            <strong>Have an inspiration photo? Upload your cake design reference here.</strong>
+                            <p>Drag photos here or browse from your device.</p>
+                            <input class="reference-file-input" :id="'images-'+item.uid" :name="'items['+index+'][images][]'" type="file" multiple accept="image/jpeg,image/png,image/webp" :disabled="uploading" :aria-describedby="'reference-help-'+item.uid">
+                            <p role="status" class="reference-upload-status" x-text="uploading ? 'Saving reference photos…' : uploadStatus"></p>
+                        </div>
+                        @else
                         <input :id="'images-'+item.uid" :name="'items['+index+'][images][]'" type="file" multiple accept="image/jpeg,image/png,image/webp">
+                        @endunless
                         <p class="field-error" role="alert" x-show="fieldErrors['items.'+index+'.images'] || fieldErrors['items.'+index+'.images.0']" x-text="(fieldErrors['items.'+index+'.images'] || fieldErrors['items.'+index+'.images.0'] || [])[0]" x-cloak></p>
-                        <p class="text-sm mt-1 text-cocoa-500">Up to 5 JPG, PNG or WebP images, 5 MB each. These are design references, not payment receipts.</p>
+                        <p :id="'reference-help-'+item.uid" class="text-sm mt-1 text-cocoa-500">Up to 5 JPG, PNG or WebP images, 5 MB each. These are design references, not payment receipts.</p>
 
                         <div class="space-y-2 mt-2.5" x-show="(item.staged_images || []).length > 0">
                             <template x-for="saved in (item.staged_images || [])" :key="saved.staged_path">
@@ -186,4 +201,3 @@
                     <p class="font-semibold text-right text-base text-cocoa-600" x-text="'Package line total: ' + money(lineTotal(item))"></p>
                 </div>
             </section>
-

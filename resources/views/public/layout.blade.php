@@ -10,7 +10,7 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+                    fontFamily: { sans: ['DM Sans', 'system-ui', 'sans-serif'] },
                     colors: {
                         cream: { 50: '#FDFBF7', 100: '#F5F1EB' },
                         cocoa: { 50: '#F5F1EB', 100: '#E8E0D4', 200: '#D4C4B0', 300: '#C2956B', 400: '#716153', 500: '#5C4A3A', 600: '#3C2415', 700: '#2C1810', 800: '#1A0E08' },
@@ -19,9 +19,6 @@
             }
         }
     </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script defer src="{{ asset('js/alpine.min.js') }}"></script>
     <style>
         [x-cloak] { display: none !important; }
@@ -34,11 +31,7 @@
     <header class="bg-white border-b border-cocoa-100 sticky top-0 z-40">
         <div class="max-w-7xl 2xl:max-w-[1600px] w-full mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12 flex flex-wrap items-center justify-between gap-4 min-h-[4rem] py-3">
             <a href="{{ route('public.order.index') }}" class="flex items-center gap-3">
-                <span class="w-10 h-10 rounded-xl bg-cocoa-600 flex items-center justify-center text-white text-lg font-bold shrink-0 shadow-sm">A</span>
-                <div class="min-w-0">
-                    <span class="text-base font-bold text-cocoa-600 leading-tight tracking-tight block whitespace-nowrap">Aling Chona</span>
-                    <p class="text-xs text-cocoa-500 leading-tight whitespace-nowrap">Cakes & Cupcakes</p>
-                </div>
+                <x-brand />
             </a>
             <div class="flex items-center gap-3 shrink-0">
                 <a href="{{ route('login') }}" class="text-xs font-semibold px-3 py-1.5 rounded-lg border border-cocoa-100 text-cocoa-500 hover:text-cocoa-700 hover:bg-cream-100 transition">
@@ -78,11 +71,7 @@
                 {{-- Column 1: Brand & Tagline --}}
                 <div class="space-y-2">
                     <div class="flex items-center gap-3">
-                        <span class="w-8 h-8 rounded-lg bg-cocoa-300/20 flex items-center justify-center text-cocoa-100 text-sm font-bold shrink-0">A</span>
-                        <div class="min-w-0">
-                            <span class="font-bold text-white text-sm block">Aling Chona Cakes & Cupcakes</span>
-                            <span class="text-cocoa-200 text-xs block">Custom Bakes & Celebration Delights</span>
-                        </div>
+                        <x-brand inverse compact />
                     </div>
                     <p class="text-cocoa-200/90 leading-relaxed text-[11px] pt-1">
                         Specializing in freshly baked customized cakes and party cupcakes for birthdays, weddings, and family celebrations.

@@ -4,15 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Session Expired — Aling Chona Cakes & Cupcakes</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    @include('partials.ui-font-preloads')
     <link rel="stylesheet" href="{{ asset('css/bakery-ui.css') }}?v={{ file_exists(public_path('css/bakery-ui.css')) ? filemtime(public_path('css/bakery-ui.css')) : 1 }}">
+    <link rel="stylesheet" href="{{ asset('css/bakery-typography.css') }}?v={{ filemtime(public_path('css/bakery-typography.css')) }}">
     <style>
         body {
             background-color: var(--bakery-bg, #FDFBF7);
             color: var(--bakery-text, #3C2415);
-            font-family: 'Inter', system-ui, sans-serif;
+            font-family: 'DM Sans', system-ui, sans-serif;
             margin: 0;
             display: flex;
             min-height: 100vh;
@@ -62,6 +61,7 @@
 </head>
 <body>
     <main class="error-card">
+        <a href="{{ url('/') }}"><x-brand /></a>
         <div class="error-code">419</div>
         <h1 class="error-title">Page Expired</h1>
         <p class="error-desc">Your session has expired due to inactivity. Please refresh the page and try again.</p>

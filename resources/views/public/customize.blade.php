@@ -1,6 +1,7 @@
 @extends('public.layout')
 @section('title', 'Customize your package · Aling Chona')
 @section('content')
+<link rel="stylesheet" href="{{ asset('css/customer-customization.css') }}?v={{ filemtime(public_path('css/customer-customization.css')) }}">
 <script src="{{ asset('js/catalog-order.js') }}?v={{ filemtime(public_path('js/catalog-order.js')) }}"></script>
 <div class="storefront">
     <a class="back-link" href="{{ route($context['select_route']) }}">← All packages</a>

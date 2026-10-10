@@ -61,6 +61,7 @@ Route::middleware(['auth', 'role:owner,assistant'])->group(function () {
         Route::patch('/products/{product}/toggle-status', [CatalogController::class, 'toggleProduct'])->name('products.toggleStatus');
         Route::post('/products/{product}/options', [CatalogController::class, 'saveOption'])->name('options.store');
         Route::patch('/products/{product}/options/{option}', [CatalogController::class, 'saveOption'])->name('options.update');
+        Route::patch('/products/{product}/options/{option}/availability', [CatalogController::class, 'toggleOption'])->name('options.toggle');
         Route::get('/add-ons/create', [CatalogController::class, 'editAddOn'])->name('add-ons.create');
         Route::get('/add-ons/{addOn}/edit', [CatalogController::class, 'editAddOn'])->name('add-ons.edit');
         Route::post('/add-ons', [CatalogController::class, 'saveAddOn'])->name('add-ons.store');

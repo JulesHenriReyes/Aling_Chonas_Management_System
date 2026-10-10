@@ -1,10 +1,12 @@
 @extends('layouts.admin')
 @section('title', $product->exists ? 'Edit cake package' : 'Add cake package')
 @section('content')
+<script defer src="{{ asset('js/catalog-sections.js') }}?v={{ filemtime(public_path('js/catalog-sections.js')) }}"></script>
 <script src="{{ asset('js/package-inclusions.js') }}?v={{ filemtime(public_path('js/package-inclusions.js')) }}"></script>
 <div class="max-w-3xl mx-auto space-y-6">
     <div class="page-heading"><h1 class="font-bold text-cocoa-600">{{ $product->exists ? 'Edit cake package' : 'Add cake package' }}</h1><a href="{{ route('products.index') }}" class="ui-button">Back to catalog</a></div>
-    <form action="{{ $product->exists ? route('products.update', $product) : route('products.store') }}" method="POST" enctype="multipart/form-data" class="section-form space-y-4">
+    <form action="{{ $product->exists ? route('products.update', $product) : route('products.store') }}" method="POST" enctype="multipart/form-data" class="section-form space-y-4 catalog-section" @if($product->exists) data-catalog-save @endif>
+        <strong class="section-title">Package details</strong><span class="section-note">Save changes in this section independently. Other layer edits stay on this page.</span>
         @csrf @if ($product->exists) @method('PATCH') @endif
         <div><label for="product-name">Package name</label><input id="product-name" name="product_name" required maxlength="255" value="{{ old('product_name', $product->product_name) }}" class="w-full"></div>
         <div><label for="description">Description</label><textarea id="description" name="description" rows="3" maxlength="2000" class="w-full">{{ old('description', $product->description) }}</textarea></div>
