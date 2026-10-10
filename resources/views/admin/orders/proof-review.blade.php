@@ -60,8 +60,11 @@
                                            class="w-full text-xs rounded-lg border-cocoa-100 bg-cream-100 font-mono font-semibold text-cocoa-700 cursor-not-allowed">
                                 </div>
                             </div>
-                            <label class="flex items-start gap-3"><input type="checkbox" name="account_checked" value="1" required><span class="inline-flex items-center gap-1 flex-wrap">I checked the successful incoming transaction in the business GCash account, including the exact amount and reference. <x-tooltip text="Staff must independently log in to the merchant GCash wallet app to verify fund arrival and exact reference ID before checking this box. Screenshots alone can be manipulated." /></span></label>
-                            <button class="px-4 py-3 bg-cocoa-600 text-white rounded-lg hover:bg-cocoa-700">Verify deposit and secure booking</button>
+                            <label class="flex items-start gap-2.5 cursor-pointer text-xs text-cocoa-700 select-none">
+                                <input type="checkbox" name="account_checked" value="1" required class="mt-0.5 rounded border-cocoa-300 text-cocoa-600 focus:ring-cocoa-500">
+                                <span class="leading-relaxed">I checked the successful incoming transaction in the business GCash account, including the exact amount and reference.</span>
+                            </label>
+                            <button type="submit" class="px-4 py-2.5 bg-cocoa-600 hover:bg-cocoa-700 text-white font-semibold text-xs rounded-lg transition">Verify deposit and secure booking</button>
                         </form>
                         <details class="border-t border-red-200 pt-3"><summary class="cursor-pointer py-2 font-semibold text-red-800">Reject this receipt</summary>
                             <form action="{{ route('proofs.reject', $proof) }}" method="POST"

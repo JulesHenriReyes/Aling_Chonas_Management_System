@@ -428,7 +428,7 @@ class UiPresentationTest extends TestCase
         ]);
         $proofResponse = $this->get('/orders/' . $order->id);
         $proofResponse->assertOk()
-            ->assertSee('Staff must independently log in to the merchant GCash wallet app to verify fund arrival and exact reference ID before checking this box.', false);
+            ->assertSee('I checked the successful incoming transaction in the business GCash account, including the exact amount and reference.', false);
 
         // Admin Supplies Index (stock level badge and header tooltip)
         $suppliesResponse = $this->get('/supplies');

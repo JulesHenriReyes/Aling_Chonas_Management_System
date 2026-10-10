@@ -344,59 +344,84 @@ document.addEventListener('DOMContentLoaded', () => {
         let debounceTimer = null;
         let activeAbort = null;
 
-        const updateOrdersView = async (url, pushHistory = true) => {
+        const refreshPaused = () => document.hidden ||
+            ordersForm.contains(document.activeElement) ||
+            ordersTableContainer.contains(document.activeElement) ||
+            [...document.querySelectorAll('[data-dialog]')].some(dialog => dialog.getClientRects().length > 0);
+
+        const updateOrdersView = async (url, pushHistory = true, background = false) => {
+            if (background && (activeAbort || debounceTimer || refreshPaused())) return;
+            clearTimeout(debounceTimer);
+            debounceTimer = null;
             if (activeAbort) {
                 activeAbort.abort();
             }
-            activeAbort = new AbortController();
+            const controller = new AbortController();
+            activeAbort = controller;
 
             const loadingEl = document.getElementById('orders-filter-loading');
-            if (loadingEl) {
+            if (!background && loadingEl) {
                 loadingEl.classList.remove('hidden');
                 loadingEl.classList.add('inline-flex');
             }
-            ordersTableContainer.classList.add('opacity-50', 'pointer-events-none');
-            ordersTableContainer.setAttribute('aria-busy', 'true');
+            if (!background) {
+                ordersTableContainer.classList.add('opacity-50', 'pointer-events-none');
+                ordersTableContainer.setAttribute('aria-busy', 'true');
+            }
 
             try {
                 const response = await fetch(url, {
                     headers: { 'X-Requested-With': 'XMLHttpRequest' },
-                    signal: activeAbort.signal
+                    signal: controller.signal,
+                    cache: 'no-store'
                 });
 
                 if (!response.ok) throw new Error('Filter response status ' + response.status);
                 const html = await response.text();
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
+                if (controller !== activeAbort || controller.signal.aborted || (background && refreshPaused())) return;
 
                 // 1. Swap table container
                 const newTable = doc.getElementById('orders-table-container');
-                if (newTable) {
+                if (!newTable) throw new Error('Orders table missing from response');
+                if (newTable.innerHTML !== ordersTableContainer.innerHTML) {
+                    const scroll = ordersTableContainer.querySelector('.orders-scroll');
+                    const scrollLeft = scroll?.scrollLeft || 0;
+                    const scrollTop = scroll?.scrollTop || 0;
+                    if (window.Alpine) window.Alpine.destroyTree(ordersTableContainer);
                     ordersTableContainer.innerHTML = newTable.innerHTML;
-                    ordersTableContainer.classList.remove('tab-content-enter');
-                    void ordersTableContainer.offsetWidth;
-                    ordersTableContainer.classList.add('tab-content-enter');
+                    if (!background) {
+                        ordersTableContainer.classList.remove('tab-content-enter');
+                        void ordersTableContainer.offsetWidth;
+                        ordersTableContainer.classList.add('tab-content-enter');
+                    }
                     if (window.Alpine) {
                         window.Alpine.initTree(ordersTableContainer);
+                    }
+                    const nextScroll = ordersTableContainer.querySelector('.orders-scroll');
+                    if (nextScroll) {
+                        nextScroll.scrollLeft = scrollLeft;
+                        nextScroll.scrollTop = scrollTop;
                     }
                 }
 
                 // 2. Swap status tabs
                 const newTabs = doc.getElementById('orders-status-tabs');
-                if (newTabs && ordersStatusTabs) {
+                if (!background && newTabs && ordersStatusTabs) {
                     ordersStatusTabs.innerHTML = newTabs.innerHTML;
                 }
 
                 // 3. Swap results meta (order count & Reset all filters link)
                 const newMeta = doc.getElementById('orders-results-meta');
                 const currentMeta = document.getElementById('orders-results-meta');
-                if (newMeta && currentMeta) {
+                if (newMeta && currentMeta && newMeta.innerHTML !== currentMeta.innerHTML) {
                     currentMeta.innerHTML = newMeta.innerHTML;
                 }
 
                 // 4. Sync form inputs with new doc form
                 const newForm = doc.getElementById('orders-filter-form');
-                if (newForm) {
+                if (!background && newForm) {
                     const statusInput = ordersForm.querySelector('input[name="status"]');
                     const newStatusInput = newForm.querySelector('input[name="status"]');
                     if (statusInput && newStatusInput) statusInput.value = newStatusInput.value;
@@ -446,11 +471,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     window.history.pushState({ url }, '', url);
                 }
             } catch (err) {
-                if (err.name !== 'AbortError') {
+                if (err.name !== 'AbortError' && !background && controller === activeAbort) {
                     console.error('Orders AJAX filter error, falling back to full navigation:', err);
                     window.location.href = url;
                 }
             } finally {
+                if (controller !== activeAbort) return;
+                activeAbort = null;
                 const loadingElAfter = document.getElementById('orders-filter-loading');
                 if (loadingElAfter) {
                     loadingElAfter.classList.remove('inline-flex');
@@ -569,6 +596,23 @@ document.addEventListener('DOMContentLoaded', () => {
             if (window.location.pathname.includes('/orders')) {
                 updateOrdersView(window.location.href, false);
             }
+        });
+
+        // Refresh only the list, retaining the current filters and pagination.
+        // Failed background requests leave the current list usable and retry later.
+        const refreshOrders = () => updateOrdersView(window.location.href, false, true);
+        let refreshTimer = setInterval(refreshOrders, 5000);
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) refreshOrders();
+        });
+        window.addEventListener('pageshow', () => {
+            if (refreshTimer === null) refreshTimer = setInterval(refreshOrders, 5000);
+            refreshOrders();
+        });
+        window.addEventListener('pagehide', () => {
+            clearInterval(refreshTimer);
+            refreshTimer = null;
+            activeAbort?.abort();
         });
     }
 
