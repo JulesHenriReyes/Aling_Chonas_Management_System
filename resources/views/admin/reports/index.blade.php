@@ -65,18 +65,41 @@
                 'expenses' => 'Total shop expenses logged during this period (excluding voided entries).',
             ];
             $metricSubtitles = [
+                'sales' => $summary['completed_order_count'] . ' completed ' . ($summary['completed_order_count'] === 1 ? 'order' : 'orders'),
                 'gross_collections' => 'Verified cash and GCash payments',
+                'cancellation_income' => 'Retained from cancelled orders',
+                'expenses' => 'Operating and store costs',
+            ];
+            $metricIcons = [
+                'sales' => ['name' => 'shopping-cart', 'badge' => 'metric-badge-sales'],
+                'gross_collections' => ['name' => 'banknotes', 'badge' => 'metric-badge-collections'],
+                'cancellation_income' => ['name' => 'shield-check', 'badge' => 'metric-badge-deposits'],
+                'expenses' => ['name' => 'receipt', 'badge' => 'metric-badge-expenses'],
             ];
         @endphp
         @foreach(\App\Services\FinancialReportService::LABELS as $metric => $label)
-            <div class="summary-metric"><span class="metric-icon" aria-hidden="true"><x-icon :name="$metric === 'expenses' ? 'receipt' : ($metric === 'sales' ? 'calendar' : 'cash')" /></span>
-                <span class="inline-flex items-center gap-1">{{ $label }} <x-tooltip :text="$metricTooltips[$metric] ?? ''" /></span>
-                <strong>₱{{ number_format($summary[$metric], 2) }}</strong>
-                @if(isset($metricSubtitles[$metric]))
-                    <small class="text-cocoa-400 -mt-0.5">{{ $metricSubtitles[$metric] }}</small>
-                @endif
-                <a href="{{ route('reports.records', $period->query() + ['metric' => $metric]) }}"><small>Inspect records →</small></a>
-            </div>
+            @php $iconConfig = $metricIcons[$metric] ?? ['name' => 'clipboard', 'badge' => 'metric-badge-default']; @endphp
+            <a href="{{ route('reports.records', $period->query() + ['metric' => $metric]) }}" class="summary-metric group" aria-label="Inspect {{ strtolower($label) }} records">
+                <div class="summary-metric-header">
+                    <span class="metric-icon-badge {{ $iconConfig['badge'] }}" aria-hidden="true">
+                        <x-icon :name="$iconConfig['name']" />
+                    </span>
+                    <span class="summary-metric-label-wrap">
+                        <span class="summary-metric-label">{{ $label }}</span>
+                        @if(!empty($metricTooltips[$metric]))
+                            <span @click.stop.prevent><x-tooltip :text="$metricTooltips[$metric]" /></span>
+                        @endif
+                    </span>
+                </div>
+                <div class="summary-metric-body">
+                    <strong class="summary-metric-value">₱{{ number_format($summary[$metric], 2) }}</strong>
+                    <small class="summary-metric-subtitle">{{ $metricSubtitles[$metric] ?? '' }}</small>
+                </div>
+                <div class="summary-metric-footer">
+                    <span class="summary-metric-action">Inspect records</span>
+                    <span class="summary-metric-arrow" aria-hidden="true">→</span>
+                </div>
+            </a>
         @endforeach
     </section>
 
