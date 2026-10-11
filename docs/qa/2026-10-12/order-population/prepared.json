@@ -1,0 +1,697 @@
+{
+    "actual": {
+        "db": "aling_chona_db",
+        "port": 3306,
+        "version": "10.4.32-MariaDB"
+    },
+    "backup": "C:\\Users\\User\/AppData\/Local\/Temp\/bakery-order-population-backup-8026a3b1a740\/before-insertion.json",
+    "backup_sha256": "cdd6aa7f32438d30a35c0b75d9e0009b322d624664beadd93638bd7180963449",
+    "dirty_hashes": {
+        "app\/Http\/Controllers\/OrderController.php": "7ff5dc010672f0af9b58801491c102639c68c31bb0f620512a2a3ffc9588af3f",
+        "public\/css\/bakery-ui.css": "95cdda3ce5cec5f243bb38cd9283cfdac488124ceb0594f75e02c184e31e82b5",
+        "public\/css\/workspace-refinements.css": "5a676c46f1c915714e0113bcfa63c3f69d23e9bd77e6084b9faf0698e516d3f9",
+        "public\/js\/bakery-ui.js": "31f0cce77969415a35e94e7db75d667b6c5c1d825fb523590e1334290e97e1ef",
+        "resources\/views\/admin\/dashboard.blade.php": "31137f32be07647a0f7ab390f39498f07fc58b6bc9c6c97eb041e0dc73019b12",
+        "resources\/views\/admin\/orders\/index.blade.php": "d22bb908b4ae94aa7cb6f0effef289e7bec383a951d943744c58b1fdbb4327e0"
+    },
+    "baseline_order_count": 0,
+    "report_month": "2026-10",
+    "baseline_report": {
+        "sales": 0,
+        "gross_collections": 0,
+        "cancellation_income": 0,
+        "expenses": 2650,
+        "completed_order_count": 0,
+        "payment_collections": 0,
+        "operational_net_income": -2650,
+        "period_start": "2026-10-01",
+        "period_end": "2026-10-31"
+    },
+    "plan": [
+        {
+            "first_name": "Sofia",
+            "last_name": "Mendoza",
+            "phone_number": "09170123777",
+            "stage": "pending",
+            "public": true,
+            "created_at": "2026-10-05T09:30:00+08:00",
+            "preparing_at": "2026-10-11T10:00:00+08:00",
+            "ready_at": "2026-10-11T16:00:00+08:00",
+            "cancelled_at": "2026-10-11T12:00:00+08:00",
+            "pickup_at": "2026-10-14T14:00:00+08:00",
+            "deposit_method": "cash",
+            "deposit_reference": "2952341029065",
+            "final_method": "gcash",
+            "final_reference": "6384920609520",
+            "proof_reference": "5310113612094",
+            "submission_key": "253fe3f8-6af5-43fb-bc2e-7e869f8beb58",
+            "expected_total": 2200,
+            "expected_deposit": 1100,
+            "items": [
+                {
+                    "product_id": 1,
+                    "package_option_id": 1,
+                    "quantity": 2,
+                    "themes": "Butterflies in lavender and cream",
+                    "special_request": "Write Happy Birthday Sofia in white icing and keep the butterfly decorations small.",
+                    "add_ons": [
+                        {
+                            "add_on_id": 1,
+                            "quantity": 2
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "first_name": "Miguel",
+            "last_name": "Santos",
+            "phone_number": "09170918709",
+            "stage": "pending",
+            "public": true,
+            "created_at": "2026-10-06T09:30:00+08:00",
+            "preparing_at": "2026-10-11T10:00:00+08:00",
+            "ready_at": "2026-10-11T16:00:00+08:00",
+            "cancelled_at": "2026-10-11T12:00:00+08:00",
+            "pickup_at": "2026-10-15T15:00:00+08:00",
+            "deposit_method": "gcash",
+            "deposit_reference": "7150830868430",
+            "final_method": "cash",
+            "final_reference": "6716649499783",
+            "proof_reference": "9149163062260",
+            "submission_key": "810e0cde-0dbf-40f3-b694-0c4da2c54fea",
+            "expected_total": 1500,
+            "expected_deposit": 750,
+            "items": [
+                {
+                    "product_id": 1,
+                    "package_option_id": 2,
+                    "quantity": 1,
+                    "themes": "Blue ocean and sea creatures",
+                    "special_request": "Use pale blue icing with small fish decorations and leave the center clear for the greeting.",
+                    "add_ons": []
+                }
+            ]
+        },
+        {
+            "first_name": "Isabella",
+            "last_name": "Reyes",
+            "phone_number": "09177703583",
+            "stage": "deposit",
+            "public": true,
+            "created_at": "2026-10-07T09:30:00+08:00",
+            "preparing_at": "2026-10-11T10:00:00+08:00",
+            "ready_at": "2026-10-11T16:00:00+08:00",
+            "cancelled_at": "2026-10-11T12:00:00+08:00",
+            "pickup_at": "2026-10-16T16:00:00+08:00",
+            "deposit_method": "cash",
+            "deposit_reference": "3067589630474",
+            "final_method": "gcash",
+            "final_reference": "5350768414286",
+            "proof_reference": "8880676449496",
+            "submission_key": "eb776ea3-c00a-46a7-b863-3acf85658c5d",
+            "expected_total": 1020,
+            "expected_deposit": 510,
+            "items": [
+                {
+                    "product_id": 2,
+                    "package_option_id": 3,
+                    "quantity": 1,
+                    "themes": "Blush pink garden flowers",
+                    "special_request": "Arrange small roses around the top edge and write Happy Birthday Bella in the center.",
+                    "add_ons": [
+                        {
+                            "add_on_id": 3,
+                            "quantity": 1
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "first_name": "Gabriel",
+            "last_name": "Cruz",
+            "phone_number": "09171499889",
+            "stage": "deposit",
+            "public": true,
+            "created_at": "2026-10-08T09:30:00+08:00",
+            "preparing_at": "2026-10-11T10:00:00+08:00",
+            "ready_at": "2026-10-11T16:00:00+08:00",
+            "cancelled_at": "2026-10-11T12:00:00+08:00",
+            "pickup_at": "2026-10-17T14:00:00+08:00",
+            "deposit_method": "gcash",
+            "deposit_reference": "6565764683465",
+            "final_method": "cash",
+            "final_reference": "6831260679787",
+            "proof_reference": "7565784602041",
+            "submission_key": "d4d6e0a8-d682-4e1f-8a14-ccf6cb81bddf",
+            "expected_total": 1850,
+            "expected_deposit": 925,
+            "items": [
+                {
+                    "product_id": 2,
+                    "package_option_id": 4,
+                    "quantity": 1,
+                    "themes": "Basketball in orange and black",
+                    "special_request": "Place a basketball design on top and add a simple black border around the base.",
+                    "add_ons": [
+                        {
+                            "add_on_id": 4,
+                            "quantity": 1
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "first_name": "Amelia",
+            "last_name": "Garcia",
+            "phone_number": "09176777094",
+            "stage": "receipts",
+            "public": true,
+            "created_at": "2026-10-05T09:30:00+08:00",
+            "preparing_at": "2026-10-11T10:00:00+08:00",
+            "ready_at": "2026-10-11T16:00:00+08:00",
+            "cancelled_at": "2026-10-11T12:00:00+08:00",
+            "pickup_at": "2026-10-18T15:00:00+08:00",
+            "deposit_method": "cash",
+            "deposit_reference": "2997369381910",
+            "final_method": "gcash",
+            "final_reference": "8553032378900",
+            "proof_reference": "7852019456006",
+            "submission_key": "9061163b-89fc-45df-a27b-ac399eac4d3f",
+            "expected_total": 1450,
+            "expected_deposit": 725,
+            "items": [
+                {
+                    "product_id": 3,
+                    "package_option_id": 5,
+                    "quantity": 1,
+                    "themes": "White and gold graduation",
+                    "special_request": "Write Congratulations Amelia with gold lettering and add a small graduation cap.",
+                    "add_ons": []
+                }
+            ]
+        },
+        {
+            "first_name": "Lucas",
+            "last_name": "Torres",
+            "phone_number": "09179896808",
+            "stage": "receipts",
+            "public": true,
+            "created_at": "2026-10-06T09:30:00+08:00",
+            "preparing_at": "2026-10-11T10:00:00+08:00",
+            "ready_at": "2026-10-11T16:00:00+08:00",
+            "cancelled_at": "2026-10-11T12:00:00+08:00",
+            "pickup_at": "2026-10-14T16:00:00+08:00",
+            "deposit_method": "gcash",
+            "deposit_reference": "6780374737946",
+            "final_method": "cash",
+            "final_reference": "5735000156244",
+            "proof_reference": "1805799186453",
+            "submission_key": "7e66dd60-8b35-4d62-812b-86d5a305fa5a",
+            "expected_total": 1400,
+            "expected_deposit": 700,
+            "items": [
+                {
+                    "product_id": 4,
+                    "package_option_id": 6,
+                    "quantity": 1,
+                    "themes": "Forest green camping adventure",
+                    "special_request": "Add small trees around the sides and place a tent design on the top.",
+                    "add_ons": [
+                        {
+                            "add_on_id": 5,
+                            "quantity": 2
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "first_name": "Victoria",
+            "last_name": "Ramos",
+            "phone_number": "09170222914",
+            "stage": "confirmed",
+            "public": false,
+            "created_at": "2026-10-07T09:30:00+08:00",
+            "preparing_at": "2026-10-11T10:00:00+08:00",
+            "ready_at": "2026-10-11T16:00:00+08:00",
+            "cancelled_at": "2026-10-11T12:00:00+08:00",
+            "pickup_at": "2026-10-15T14:00:00+08:00",
+            "deposit_method": "cash",
+            "deposit_reference": "4398520624628",
+            "final_method": "gcash",
+            "final_reference": "1388575494172",
+            "proof_reference": "1752874034879",
+            "submission_key": "4bab241e-08ef-42c1-a078-d8c4736a5b61",
+            "expected_total": 950,
+            "expected_deposit": 475,
+            "items": [
+                {
+                    "product_id": 1,
+                    "package_option_id": 1,
+                    "quantity": 1,
+                    "themes": "Lilac stars and clouds",
+                    "special_request": "Use lilac and white icing with a few silver stars and write Happy Birthday Vicky.",
+                    "add_ons": [
+                        {
+                            "add_on_id": 2,
+                            "quantity": 1
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "first_name": "Daniel",
+            "last_name": "Flores",
+            "phone_number": "09171081328",
+            "stage": "confirmed",
+            "public": false,
+            "created_at": "2026-10-08T09:30:00+08:00",
+            "preparing_at": "2026-10-11T10:00:00+08:00",
+            "ready_at": "2026-10-11T16:00:00+08:00",
+            "cancelled_at": "2026-10-11T12:00:00+08:00",
+            "pickup_at": "2026-10-16T15:00:00+08:00",
+            "deposit_method": "gcash",
+            "deposit_reference": "9732933778478",
+            "final_method": "cash",
+            "final_reference": "5154852065298",
+            "proof_reference": "8745906795929",
+            "submission_key": "f3f9d287-cc18-4ce5-8d19-432b7af60f66",
+            "expected_total": 3000,
+            "expected_deposit": 1500,
+            "items": [
+                {
+                    "product_id": 1,
+                    "package_option_id": 2,
+                    "quantity": 2,
+                    "themes": "Red racing car celebration",
+                    "special_request": "Add a checkered border and a small red car decoration without covering the greeting.",
+                    "add_ons": []
+                }
+            ]
+        },
+        {
+            "first_name": "Olivia",
+            "last_name": "Aquino",
+            "phone_number": "09173144840",
+            "stage": "confirmed",
+            "public": false,
+            "created_at": "2026-10-05T09:30:00+08:00",
+            "preparing_at": "2026-10-11T10:00:00+08:00",
+            "ready_at": "2026-10-11T16:00:00+08:00",
+            "cancelled_at": "2026-10-11T12:00:00+08:00",
+            "pickup_at": "2026-10-17T16:00:00+08:00",
+            "deposit_method": "cash",
+            "deposit_reference": "7898838446319",
+            "final_method": "gcash",
+            "final_reference": "8164157218634",
+            "proof_reference": "1279136029477",
+            "submission_key": "3503ffb5-7140-4c19-abf8-d56ef9adc82b",
+            "expected_total": 1150,
+            "expected_deposit": 575,
+            "items": [
+                {
+                    "product_id": 2,
+                    "package_option_id": 3,
+                    "quantity": 1,
+                    "themes": "Peach flowers and soft ivory",
+                    "special_request": "Use small peach flowers near the base and write Happy Anniversary in brown lettering.",
+                    "add_ons": [
+                        {
+                            "add_on_id": 4,
+                            "quantity": 1
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "first_name": "Nathan",
+            "last_name": "Castillo",
+            "phone_number": "09174616376",
+            "stage": "preparing",
+            "public": false,
+            "created_at": "2026-10-06T09:30:00+08:00",
+            "preparing_at": "2026-10-11T10:00:00+08:00",
+            "ready_at": "2026-10-11T16:00:00+08:00",
+            "cancelled_at": "2026-10-11T12:00:00+08:00",
+            "pickup_at": "2026-10-18T14:00:00+08:00",
+            "deposit_method": "gcash",
+            "deposit_reference": "1089482649593",
+            "final_method": "cash",
+            "final_reference": "5415658272586",
+            "proof_reference": "1653230407447",
+            "submission_key": "411d47bd-356d-4364-98c7-9e3f8e5e141b",
+            "expected_total": 1750,
+            "expected_deposit": 875,
+            "items": [
+                {
+                    "product_id": 2,
+                    "package_option_id": 4,
+                    "quantity": 1,
+                    "themes": "Space planets in navy and silver",
+                    "special_request": "Place a moon and several small stars on top with navy icing around the sides.",
+                    "add_ons": [
+                        {
+                            "add_on_id": 5,
+                            "quantity": 1
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "first_name": "Mia",
+            "last_name": "Villanueva",
+            "phone_number": "09175065587",
+            "stage": "preparing",
+            "public": false,
+            "created_at": "2026-10-07T09:30:00+08:00",
+            "preparing_at": "2026-10-11T10:00:00+08:00",
+            "ready_at": "2026-10-11T16:00:00+08:00",
+            "cancelled_at": "2026-10-11T12:00:00+08:00",
+            "pickup_at": "2026-10-14T15:00:00+08:00",
+            "deposit_method": "cash",
+            "deposit_reference": "1036522285482",
+            "final_method": "gcash",
+            "final_reference": "7862998459691",
+            "proof_reference": "6749070265544",
+            "submission_key": "19eb81d3-5cba-4f5a-8a27-241c2850b70c",
+            "expected_total": 1450,
+            "expected_deposit": 725,
+            "items": [
+                {
+                    "product_id": 3,
+                    "package_option_id": 5,
+                    "quantity": 1,
+                    "themes": "Rainbow pastel birthday",
+                    "special_request": "Arrange pastel colors in a rainbow and add white clouds on both ends.",
+                    "add_ons": []
+                }
+            ]
+        },
+        {
+            "first_name": "Ethan",
+            "last_name": "Navarro",
+            "phone_number": "09177097853",
+            "stage": "preparing",
+            "public": false,
+            "created_at": "2026-10-08T09:30:00+08:00",
+            "preparing_at": "2026-10-11T10:00:00+08:00",
+            "ready_at": "2026-10-11T16:00:00+08:00",
+            "cancelled_at": "2026-10-11T12:00:00+08:00",
+            "pickup_at": "2026-10-15T16:00:00+08:00",
+            "deposit_method": "gcash",
+            "deposit_reference": "2074233138126",
+            "final_method": "cash",
+            "final_reference": "5270780352633",
+            "proof_reference": "6520410599046",
+            "submission_key": "2f62c6e3-08c7-4b6a-85c9-6b47d7e10e88",
+            "expected_total": 1250,
+            "expected_deposit": 625,
+            "items": [
+                {
+                    "product_id": 4,
+                    "package_option_id": 6,
+                    "quantity": 1,
+                    "themes": "Safari animals in sage green",
+                    "special_request": "Add a lion and giraffe design with small leaves around the bottom edge.",
+                    "add_ons": [
+                        {
+                            "add_on_id": 5,
+                            "quantity": 1
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "first_name": "Chloe",
+            "last_name": "Bautista",
+            "phone_number": "09175138752",
+            "stage": "ready_for_pickup",
+            "public": false,
+            "created_at": "2026-10-05T09:30:00+08:00",
+            "preparing_at": "2026-10-11T10:00:00+08:00",
+            "ready_at": "2026-10-11T16:00:00+08:00",
+            "cancelled_at": "2026-10-11T12:00:00+08:00",
+            "pickup_at": "2026-10-12T14:00:00+08:00",
+            "deposit_method": "cash",
+            "deposit_reference": "6782890943692",
+            "final_method": "gcash",
+            "final_reference": "4288782406179",
+            "proof_reference": "8845956932013",
+            "submission_key": "fdde1cbf-5ea4-4c2e-b52b-8fc8c723845e",
+            "expected_total": 920,
+            "expected_deposit": 460,
+            "items": [
+                {
+                    "product_id": 1,
+                    "package_option_id": 1,
+                    "quantity": 1,
+                    "themes": "Sunflowers in yellow and cream",
+                    "special_request": "Decorate the top edge with sunflowers and write Happy Birthday Chloe in the middle.",
+                    "add_ons": [
+                        {
+                            "add_on_id": 3,
+                            "quantity": 1
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "first_name": "Adrian",
+            "last_name": "Dela Rosa",
+            "phone_number": "09178711011",
+            "stage": "ready_for_pickup",
+            "public": false,
+            "created_at": "2026-10-06T09:30:00+08:00",
+            "preparing_at": "2026-10-11T10:00:00+08:00",
+            "ready_at": "2026-10-11T16:00:00+08:00",
+            "cancelled_at": "2026-10-11T12:00:00+08:00",
+            "pickup_at": "2026-10-12T15:00:00+08:00",
+            "deposit_method": "gcash",
+            "deposit_reference": "5602888413437",
+            "final_method": "cash",
+            "final_reference": "8632080388696",
+            "proof_reference": "1218815170720",
+            "submission_key": "0c63ac8d-f72b-4b23-a8d3-d584f491dab3",
+            "expected_total": 1500,
+            "expected_deposit": 750,
+            "items": [
+                {
+                    "product_id": 1,
+                    "package_option_id": 2,
+                    "quantity": 1,
+                    "themes": "Simple navy and white celebration",
+                    "special_request": "Use clean navy borders and write Congratulations Adrian with a small star decoration.",
+                    "add_ons": []
+                }
+            ]
+        },
+        {
+            "first_name": "Hannah",
+            "last_name": "Lim",
+            "phone_number": "09179344442",
+            "stage": "ready_for_pickup",
+            "public": false,
+            "created_at": "2026-10-07T09:30:00+08:00",
+            "preparing_at": "2026-10-11T10:00:00+08:00",
+            "ready_at": "2026-10-11T16:00:00+08:00",
+            "cancelled_at": "2026-10-11T12:00:00+08:00",
+            "pickup_at": "2026-10-12T16:00:00+08:00",
+            "deposit_method": "cash",
+            "deposit_reference": "7618398597044",
+            "final_method": "gcash",
+            "final_reference": "7597190799206",
+            "proof_reference": "2923432392369",
+            "submission_key": "7c55cc4e-0d39-4567-a1b4-88ff4ed99424",
+            "expected_total": 1950,
+            "expected_deposit": 975,
+            "items": [
+                {
+                    "product_id": 2,
+                    "package_option_id": 3,
+                    "quantity": 2,
+                    "themes": "Pink heart birthday",
+                    "special_request": "Arrange pink hearts on the sides and write Happy Birthday Hannah in white icing.",
+                    "add_ons": [
+                        {
+                            "add_on_id": 5,
+                            "quantity": 1
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "first_name": "Joaquin",
+            "last_name": "Rivera",
+            "phone_number": "09172080469",
+            "stage": "completed",
+            "public": false,
+            "created_at": "2026-10-08T09:30:00+08:00",
+            "preparing_at": "2026-10-08T10:00:00+08:00",
+            "ready_at": "2026-10-09T11:00:00+08:00",
+            "cancelled_at": "2026-10-11T12:00:00+08:00",
+            "pickup_at": "2026-10-09T14:00:00+08:00",
+            "deposit_method": "gcash",
+            "deposit_reference": "8315688030762",
+            "final_method": "cash",
+            "final_reference": "8022540147953",
+            "proof_reference": "2822403892903",
+            "submission_key": "057c3aa5-dcb7-4ca8-9d72-6149e9739d7f",
+            "expected_total": 2200,
+            "expected_deposit": 1100,
+            "items": [
+                {
+                    "product_id": 2,
+                    "package_option_id": 4,
+                    "quantity": 1,
+                    "themes": "Football field in green and white",
+                    "special_request": "Use a green top with white field lines and write Happy Birthday Joaquin near the goal.",
+                    "add_ons": [
+                        {
+                            "add_on_id": 1,
+                            "quantity": 2
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "first_name": "Ella",
+            "last_name": "Fernandez",
+            "phone_number": "09173273999",
+            "stage": "completed",
+            "public": false,
+            "created_at": "2026-10-05T09:30:00+08:00",
+            "preparing_at": "2026-10-09T10:00:00+08:00",
+            "ready_at": "2026-10-10T11:00:00+08:00",
+            "cancelled_at": "2026-10-11T12:00:00+08:00",
+            "pickup_at": "2026-10-10T15:00:00+08:00",
+            "deposit_method": "cash",
+            "deposit_reference": "7529077961126",
+            "final_method": "gcash",
+            "final_reference": "8632350107487",
+            "proof_reference": "7329540759398",
+            "submission_key": "4ee6c6e0-93b0-4056-b285-21e406c88c4c",
+            "expected_total": 1450,
+            "expected_deposit": 725,
+            "items": [
+                {
+                    "product_id": 3,
+                    "package_option_id": 5,
+                    "quantity": 1,
+                    "themes": "Dusty rose wedding anniversary",
+                    "special_request": "Add a ring of small flowers around the top and write Happy Anniversary Ella and Marco.",
+                    "add_ons": []
+                }
+            ]
+        },
+        {
+            "first_name": "Marco",
+            "last_name": "Domingo",
+            "phone_number": "09174822616",
+            "stage": "completed",
+            "public": false,
+            "created_at": "2026-10-06T09:30:00+08:00",
+            "preparing_at": "2026-10-10T10:00:00+08:00",
+            "ready_at": "2026-10-11T11:00:00+08:00",
+            "cancelled_at": "2026-10-11T12:00:00+08:00",
+            "pickup_at": "2026-10-11T16:00:00+08:00",
+            "deposit_method": "gcash",
+            "deposit_reference": "2707163255533",
+            "final_method": "cash",
+            "final_reference": "6186385532662",
+            "proof_reference": "6991568250071",
+            "submission_key": "27b35759-b419-4547-8be9-c10bbb6cb043",
+            "expected_total": 1250,
+            "expected_deposit": 625,
+            "items": [
+                {
+                    "product_id": 4,
+                    "package_option_id": 6,
+                    "quantity": 1,
+                    "themes": "Coffee colors in beige and brown",
+                    "special_request": "Use brown piping around a beige top and write Happy Birthday Marco with a small coffee cup design.",
+                    "add_ons": [
+                        {
+                            "add_on_id": 5,
+                            "quantity": 1
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "first_name": "Grace",
+            "last_name": "Tan",
+            "phone_number": "09170043285",
+            "stage": "cancelled_unpaid",
+            "public": true,
+            "created_at": "2026-10-07T09:30:00+08:00",
+            "preparing_at": "2026-10-11T10:00:00+08:00",
+            "ready_at": "2026-10-11T16:00:00+08:00",
+            "cancelled_at": "2026-10-11T12:00:00+08:00",
+            "pickup_at": "2026-10-17T14:00:00+08:00",
+            "deposit_method": "cash",
+            "deposit_reference": "7064915048189",
+            "final_method": "gcash",
+            "final_reference": "2164971530965",
+            "proof_reference": "4155064433585",
+            "submission_key": "62a79efe-4652-4928-abaf-9e84d3778212",
+            "expected_total": 1050,
+            "expected_deposit": 525,
+            "items": [
+                {
+                    "product_id": 1,
+                    "package_option_id": 1,
+                    "quantity": 1,
+                    "themes": "Daisies in white and soft yellow",
+                    "special_request": "Arrange small daisies around the sides and keep the top greeting simple.",
+                    "add_ons": [
+                        {
+                            "add_on_id": 4,
+                            "quantity": 1
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "first_name": "Samuel",
+            "last_name": "Pascual",
+            "phone_number": "09176378672",
+            "stage": "cancelled_deposit",
+            "public": false,
+            "created_at": "2026-10-08T09:30:00+08:00",
+            "preparing_at": "2026-10-11T10:00:00+08:00",
+            "ready_at": "2026-10-11T16:00:00+08:00",
+            "cancelled_at": "2026-10-11T12:00:00+08:00",
+            "pickup_at": "2026-10-18T15:00:00+08:00",
+            "deposit_method": "gcash",
+            "deposit_reference": "5540632821163",
+            "final_method": "cash",
+            "final_reference": "5677869947767",
+            "proof_reference": "3135007336810",
+            "submission_key": "e7223d13-0b0a-4ed8-a233-e733ef08762f",
+            "expected_total": 1500,
+            "expected_deposit": 750,
+            "items": [
+                {
+                    "product_id": 1,
+                    "package_option_id": 2,
+                    "quantity": 1,
+                    "themes": "Dinosaurs in green and orange",
+                    "special_request": "Add small dinosaur shapes and leafy borders with Happy Birthday Sam on top.",
+                    "add_ons": []
+                }
+            ]
+        }
+    ]
+}

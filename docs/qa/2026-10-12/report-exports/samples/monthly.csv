@@ -1,0 +1,61 @@
+﻿"Aling Chona Cakes & Cupcakes",,,,,,
+"Financial report",,,,,,
+"Report period","Jan 1, 2026 to Dec 31, 2026",,,,,
+"Business timezone",Asia/Manila,,,,,
+Currency,PHP,,,,,
+Generated,"2026-10-12 01:30:06 +08:00",,,,,
+"Completed orders",3,,,,,
+,,,,,,
+"Financial summary",,,,,,
+Metric,"Amount (PHP)",,,,,
+"Completed sales",4900.00,,,,,
+"Verified collections",12610.00,,,,,
+"Retained cancellation deposits",750.00,,,,,
+"Valid expenses",2650.00,,,,,
+"Operational result",3000.00,,,,,
+,,,,,,
+"Collections by payment method",,,,,,
+"Payment method","Verified collections (PHP)",,,,,
+Cash,5660.00,,,,,
+GCash,6950.00,,,,,
+"Total verified collections",12610.00,,,,,
+,,,,,,
+"Expenses by category",,,,,,
+Category,"Amount (PHP)",,,,,
+Groceries,70.00,,,,,
+Packaging,0.00,,,,,
+Equipment,1600.00,,,,,
+Miscellaneous,980.00,,,,,
+"Total valid expenses",2650.00,,,,,
+,,,,,,
+"Package performance",,,,,,
+Package,"Packages sold",Orders,"Package sales (PHP)","Paid extras (PHP)","Total sales (PHP)",
+"Chocolate Moist Cake Package (with Free Puto Cheese)",1,1,1600.00,600.00,2200.00,
+"Chiffon Celebration Bundle (with Free Kutsinta)",1,1,1450.00,0.00,1450.00,
+"Chocolate Deluxe Feast Bundle (with Free Leche Flan)",1,1,1100.00,150.00,1250.00,
+Total,3,3,4150.00,750.00,4900.00,
+,,,,,,
+"Monthly financial trends",,,,,,
+Period,"Completed sales (PHP)","Verified collections (PHP)","Retained deposits (PHP)","Valid expenses (PHP)","Operational result (PHP)","Completed orders"
+2026-01,0.00,0.00,0.00,0.00,0.00,0
+2026-02,0.00,0.00,0.00,0.00,0.00,0
+2026-03,0.00,0.00,0.00,0.00,0.00,0
+2026-04,0.00,0.00,0.00,0.00,0.00,0
+2026-05,0.00,0.00,0.00,0.00,0.00,0
+2026-06,0.00,0.00,0.00,0.00,0.00,0
+2026-07,0.00,0.00,0.00,0.00,0.00,0
+2026-08,0.00,0.00,0.00,0.00,0.00,0
+2026-09,0.00,0.00,0.00,0.00,0.00,0
+2026-10,4900.00,12610.00,750.00,2650.00,3000.00,3
+2026-11,0.00,0.00,0.00,0.00,0.00,0
+2026-12,0.00,0.00,0.00,0.00,0.00,0
+Total,4900.00,12610.00,750.00,2650.00,3000.00,3
+,,,,,,
+"Report notes",,,,,,
+"Completed sales use order completion dates and saved order prices, including paid extras.",,,,,,
+"Verified collections use payment dates. Unverified and rejected receipts are excluded.",,,,,,
+"Retained cancellation deposits use customer cancellation dates and are separate from completed sales.",,,,,,
+"Valid expenses use expense dates and exclude voided entries.",,,,,,
+"Operational result = completed sales + retained cancellation deposits - valid expenses. Collections are not added again.",,,,,,
+"Operational result is not accounting profit. Cost of goods sold and other accounting costs are unavailable.",,,,,,
+"Package order counts are per package and may overlap when one order contains several packages.",,,,,,

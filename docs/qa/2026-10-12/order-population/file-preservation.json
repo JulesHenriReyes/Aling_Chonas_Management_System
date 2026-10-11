@@ -1,0 +1,23 @@
+{
+    "unrelated_dirty_files_unchanged": [
+        "public\/css\/bakery-ui.css",
+        "public\/js\/bakery-ui.js",
+        "resources\/views\/admin\/orders\/index.blade.php"
+    ],
+    "unrelated_concurrent_changes_preserved": [
+        {
+            "path": "public\/css\/workspace-refinements.css",
+            "modified_at": "2026-10-11T18:48:07+02:00",
+            "current_sha256": "03ec8e2ad9788db4d5f94ca0c17f47ea945aef6daeead6343cc1de490b0a7591",
+            "baseline_sha256": "5a676c46f1c915714e0113bcfa63c3f69d23e9bd77e6084b9faf0698e516d3f9"
+        },
+        {
+            "path": "resources\/views\/admin\/dashboard.blade.php",
+            "modified_at": "2026-10-11T18:48:07+02:00",
+            "current_sha256": "cff25a848ab5cf407fb86c1ff3048224bee716958702348083a168c2ce6ea0e9",
+            "baseline_sha256": "31137f32be07647a0f7ab390f39498f07fc58b6bc9c6c97eb041e0dc73019b12"
+        }
+    ],
+    "controller_only_intended_fix": true,
+    "study_docx_present_and_unchanged": true
+}

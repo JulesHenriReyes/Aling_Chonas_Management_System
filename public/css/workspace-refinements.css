@@ -242,9 +242,22 @@
     background-color: rgba(60, 36, 21, 0.06);
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (min-width: 641px) {
     .inventory-filters {
-        grid-template-columns: minmax(180px, 1.5fr) repeat(2, minmax(130px, 1fr)) !important;
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    }
+    .inventory-filters .filter-field-search {
+        grid-column: 1 / -1 !important;
+    }
+}
+
+@media (max-width: 640px) {
+    .inventory-filters {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        padding: 0.75rem 0.875rem !important;
+    }
+    .inventory-filters .filter-field-search {
+        grid-column: 1 / -1 !important;
     }
 }
 .stock-value { display:block; font-variant-numeric:tabular-nums; white-space:nowrap; }
@@ -534,33 +547,29 @@
 
 /* Page entrance transition */
 #main-content {
-    animation: pageContentEnter 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation: pageContentEnter 0.18s ease-out both;
 }
 
 @keyframes pageContentEnter {
     from {
-        opacity: 0.7;
-        transform: translateY(6px);
+        opacity: 0.85;
     }
     to {
         opacity: 1;
-        transform: none;
     }
 }
 
 /* Tab & filter view transitions */
 .tab-content-enter {
-    animation: tabContentEnter 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation: tabContentEnter 0.2s ease-out both;
 }
 
 @keyframes tabContentEnter {
     from {
-        opacity: 0.6;
-        transform: translateY(5px);
+        opacity: 0.65;
     }
     to {
         opacity: 1;
-        transform: translateY(0);
     }
 }
 
@@ -627,21 +636,84 @@
 }
 
 #hero-login-splash .splash-content {
-    transition: padding 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: padding 0.85s cubic-bezier(0.16, 1, 0.3, 1), max-width 0.85s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-#hero-login-splash h1 {
+#hero-login-splash:not(.is-docking) .splash-content {
+    padding: 3rem 4rem;
+}
+
+#hero-login-splash:not(.is-docking) .splash-title {
+    font-size: 2.75rem;
+    line-height: 1.15;
+}
+
+#hero-login-splash:not(.is-docking) .splash-subtitle {
+    font-size: 1rem;
+    margin-top: 0.5rem;
+}
+
+@media (max-width: 639px) {
+    #hero-login-splash:not(.is-docking) .splash-content {
+        padding: 2rem 1.5rem;
+    }
+    #hero-login-splash:not(.is-docking) .splash-title {
+        font-size: 1.75rem;
+    }
+}
+
+#hero-login-splash h1,
+#hero-login-splash .splash-title {
     transition: font-size 0.85s cubic-bezier(0.16, 1, 0.3, 1), line-height 0.85s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-#hero-login-splash.is-docking .splash-content {
-    padding-inline: 1.5rem !important;
-    padding-block: 1.25rem !important;
+#hero-login-splash .splash-subtitle {
+    transition: font-size 0.85s cubic-bezier(0.16, 1, 0.3, 1), margin-top 0.85s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-#hero-login-splash.is-docking h1 {
-    font-size: 1.5rem !important;
+/* Docked state: exactly matches dashboard hero banner styles and alignment */
+#hero-login-splash.is-docking .splash-content {
+    padding: 1.75rem 2rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+@media (max-width: 639px) {
+    #hero-login-splash.is-docking .splash-content {
+        padding: 1.25rem 1.25rem 3.5rem 1.25rem !important;
+    }
+}
+
+#hero-login-splash.is-docking h1,
+#hero-login-splash.is-docking .splash-title {
+    font-size: 1.875rem !important;
     line-height: 1.25 !important;
+}
+
+@media (max-width: 768px) {
+    #hero-login-splash.is-docking h1,
+    #hero-login-splash.is-docking .splash-title {
+        font-size: 1.5rem !important;
+    }
+}
+
+@media (max-width: 639px) {
+    #hero-login-splash.is-docking h1,
+    #hero-login-splash.is-docking .splash-title {
+        font-size: 1.25rem !important;
+    }
+}
+
+#hero-login-splash.is-docking .splash-subtitle {
+    font-size: 0.875rem !important;
+    margin-top: 0.25rem !important;
+}
+
+@media (max-width: 639px) {
+    #hero-login-splash.is-docking .splash-subtitle {
+        font-size: 0.6875rem !important;
+        margin-top: 0.125rem !important;
+    }
 }
 
 #hero-login-splash.is-docking .splash-skip-btn {
@@ -680,6 +752,28 @@
     transition: opacity 0.75s ease 0.15s, transform 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
 }
 
+/* Banner action buttons & carousel controls: hidden on first appearance & transition, appear only when settled */
+.hero-banner-actions,
+.hero-banner-carousel-controls {
+    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-intro-active .hero-banner-actions,
+.hero-intro-active .hero-banner-carousel-controls {
+    opacity: 0 !important;
+    transform: translateY(10px) !important;
+    pointer-events: none !important;
+    transition: none !important;
+}
+
+.hero-intro-active.hero-intro-settled .hero-banner-actions,
+.hero-intro-active.hero-intro-settled .hero-banner-carousel-controls {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    pointer-events: auto !important;
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s !important;
+}
+
 /* Respect user preference for reduced motion */
 @media (prefers-reduced-motion: reduce) {
     #main-content,
@@ -690,9 +784,12 @@
         display: none !important;
     }
     .hero-intro-active #dashboard-kpi-ledger,
-    .hero-intro-active #dashboard-workspace-grid {
+    .hero-intro-active #dashboard-workspace-grid,
+    .hero-intro-active .hero-banner-actions,
+    .hero-intro-active .hero-banner-carousel-controls {
         opacity: 1 !important;
         transform: none !important;
+        pointer-events: auto !important;
         transition: none !important;
     }
     #orders-status-tabs .orders-status-link,
@@ -712,7 +809,7 @@
  .orders-scroll { max-height:65dvh; }
  .catalog-price-tier { grid-template-columns:4rem minmax(0,1fr); }
  .catalog-price-tier > span:last-child { grid-column:1/-1; }
- .package-associations, .inventory-filters, .advanced-filter-fields { grid-template-columns:minmax(0,1fr); }
+ .package-associations, .advanced-filter-fields { grid-template-columns:minmax(0,1fr); }
  .operational-result { grid-template-columns:minmax(0,1fr); }
  .expense-total { width:100%; margin-left:0; }
  .order-view .order-money { gap:.5rem; }

@@ -1,4 +1,4 @@
-@props(['value', 'label' => null, 'tooltip' => null, 'align' => 'top-right'])
+@props(['value', 'label' => null, 'tooltip' => null, 'align' => 'center'])
 @php
     $tone = match($value) {
         'pending', 'partially_paid', 'low_stock', 'low', 'awaiting_verification', 'expiring_soon', 'unknown_expiry' => 'status-attention',

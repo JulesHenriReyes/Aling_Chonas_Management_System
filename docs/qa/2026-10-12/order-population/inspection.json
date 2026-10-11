@@ -1,0 +1,176 @@
+{
+    "actual": {
+        "db": "aling_chona_db",
+        "port": 3306,
+        "version": "10.4.32-MariaDB"
+    },
+    "app_timezone": "UTC",
+    "business_timezone": "Asia\/Manila",
+    "now": "2026-10-11T16:40:56+00:00",
+    "business_now": "2026-10-12T00:40:56+08:00",
+    "staff": [
+        {
+            "id": 1,
+            "role": "owner"
+        },
+        {
+            "id": 2,
+            "role": "assistant"
+        }
+    ],
+    "order_counts": [],
+    "catalog": [
+        {
+            "id": 1,
+            "name": "Vanilla Chiffon Cake Package",
+            "options": [
+                {
+                    "id": 1,
+                    "layers": 1,
+                    "price": "800.00"
+                },
+                {
+                    "id": 2,
+                    "layers": 2,
+                    "price": "1500.00"
+                }
+            ],
+            "extras": [
+                {
+                    "id": 1,
+                    "name": "Cupcakes (Box of 6)",
+                    "price": "300.00"
+                },
+                {
+                    "id": 2,
+                    "name": "Puto Cheese (Box of 12)",
+                    "price": "150.00"
+                },
+                {
+                    "id": 3,
+                    "name": "Kutsinta (Box of 12)",
+                    "price": "120.00"
+                },
+                {
+                    "id": 4,
+                    "name": "Leche Flan (Whole)",
+                    "price": "250.00"
+                },
+                {
+                    "id": 5,
+                    "name": "Puto bongbong",
+                    "price": "150.00"
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "name": "Chocolate Moist Cake Package (with Free Puto Cheese)",
+            "options": [
+                {
+                    "id": 3,
+                    "layers": 1,
+                    "price": "900.00"
+                },
+                {
+                    "id": 4,
+                    "layers": 2,
+                    "price": "1600.00"
+                }
+            ],
+            "extras": [
+                {
+                    "id": 1,
+                    "name": "Cupcakes (Box of 6)",
+                    "price": "300.00"
+                },
+                {
+                    "id": 2,
+                    "name": "Puto Cheese (Box of 12)",
+                    "price": "150.00"
+                },
+                {
+                    "id": 3,
+                    "name": "Kutsinta (Box of 12)",
+                    "price": "120.00"
+                },
+                {
+                    "id": 4,
+                    "name": "Leche Flan (Whole)",
+                    "price": "250.00"
+                },
+                {
+                    "id": 5,
+                    "name": "Puto bongbong",
+                    "price": "150.00"
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "name": "Chiffon Celebration Bundle (with Free Kutsinta)",
+            "options": [
+                {
+                    "id": 5,
+                    "layers": 2,
+                    "price": "1450.00"
+                }
+            ],
+            "extras": [
+                {
+                    "id": 1,
+                    "name": "Cupcakes (Box of 6)",
+                    "price": "300.00"
+                },
+                {
+                    "id": 2,
+                    "name": "Puto Cheese (Box of 12)",
+                    "price": "150.00"
+                },
+                {
+                    "id": 3,
+                    "name": "Kutsinta (Box of 12)",
+                    "price": "120.00"
+                },
+                {
+                    "id": 4,
+                    "name": "Leche Flan (Whole)",
+                    "price": "250.00"
+                },
+                {
+                    "id": 5,
+                    "name": "Puto bongbong",
+                    "price": "150.00"
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "name": "Chocolate Deluxe Feast Bundle (with Free Leche Flan)",
+            "options": [
+                {
+                    "id": 6,
+                    "layers": 1,
+                    "price": "1100.00"
+                }
+            ],
+            "extras": [
+                {
+                    "id": 2,
+                    "name": "Puto Cheese (Box of 12)",
+                    "price": "150.00"
+                },
+                {
+                    "id": 4,
+                    "name": "Leche Flan (Whole)",
+                    "price": "250.00"
+                },
+                {
+                    "id": 5,
+                    "name": "Puto bongbong",
+                    "price": "150.00"
+                }
+            ]
+        }
+    ]
+}

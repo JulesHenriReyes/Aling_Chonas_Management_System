@@ -1,0 +1,26 @@
+{
+  "populated": {
+    "pages": 3,
+    "all_values_present": true,
+    "headers_footers_valid": true,
+    "text_inside_page": true
+  },
+  "empty": {
+    "pages": 3,
+    "all_values_present": true,
+    "headers_footers_valid": true,
+    "text_inside_page": true
+  },
+  "monthly": {
+    "pages": 2,
+    "all_values_present": true,
+    "headers_footers_valid": true,
+    "text_inside_page": true
+  },
+  "stress": {
+    "pages": 8,
+    "all_values_present": true,
+    "headers_footers_valid": true,
+    "text_inside_page": true
+  }
+}

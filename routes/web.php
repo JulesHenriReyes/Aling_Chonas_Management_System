@@ -145,6 +145,7 @@ Route::middleware(['auth', 'role:owner,assistant'])->group(function () {
     Route::get('/reports', [ReportsController::class, 'index'])->middleware('can:view-reports')->name('reports.index');
     Route::get('/reports/records', [ReportsController::class, 'records'])->middleware('can:view-reports')->name('reports.records');
     Route::get('/reports/export', [ReportsController::class, 'export'])->middleware('can:view-reports')->name('reports.export');
+    Route::get('/reports/export/pdf', [ReportsController::class, 'exportPdf'])->middleware('can:view-reports')->name('reports.export.pdf');
     Route::get('/pickup-schedule', [PickupScheduleController::class, 'index'])->name('schedule.index');
 
     Route::middleware(['can:manage-users', 'role:owner'])->group(function () {

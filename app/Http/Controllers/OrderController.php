@@ -45,6 +45,11 @@ class OrderController extends Controller
         if ($request->filled('status')) {
             if ($request->status === 'awaiting_deposit' || $request->status === 'deposit') {
                 $query->workflowQueue('deposit');
+            } elseif ($request->status === 'receipts') {
+                $query->workflowQueue('receipts');
+            } elseif ($request->status === 'confirmed') {
+                $query->where('status', 'confirmed')->workflowQueue('booked')
+                    ->whereDoesntHave('paymentProofs', fn ($proof) => $proof->where('status', 'awaiting_verification'));
             } else {
                 $query->where('status', $request->status);
             }

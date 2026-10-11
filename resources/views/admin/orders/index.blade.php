@@ -19,8 +19,8 @@
 
     <!-- Filters & Search -->
     <div class="orders-filters">
-        <!-- Status Tabs -->
-        <nav id="orders-status-tabs" aria-label="Order status filters">
+        <!-- Status Tabs (Desktop only: hidden on mobile) -->
+        <nav id="orders-status-tabs" class="hidden sm:flex" aria-label="Order status filters">
             @php
                 $currentStatus = request('status', '');
                 $currentQueue = request('queue', '');
@@ -35,6 +35,12 @@
                     'completed' => 'Completed',
                     'cancelled' => 'Cancelled',
                 ];
+                $selectedStatusFilter = match(true) {
+                    $currentQueue === 'deposit' || $currentStatus === 'deposit' || $currentStatus === 'awaiting_deposit' => 'deposit',
+                    $currentQueue === 'receipts' || $currentStatus === 'receipts' => 'receipts',
+                    !empty($currentStatus) => $currentStatus,
+                    default => '',
+                };
             @endphp
             @foreach ($statuses as $key => $label)
                 @php
@@ -76,6 +82,15 @@
                         <x-icon name="close" class="w-3.5 h-3.5" />
                     </button>
                 </div>
+            </div>
+            {{-- Mobile Status Dropdown --}}
+            <div class="orders-filter-field orders-filter-status sm:hidden">
+                <label for="orders-status-select">Status</label>
+                <select id="orders-status-select" aria-label="Filter orders by status">
+                    @foreach ($statuses as $key => $label)
+                        <option value="{{ $key }}" @selected($selectedStatusFilter === $key)>{{ $label }}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="orders-filter-field orders-filter-origin">
                 <label for="orders-origin">Order origin</label>

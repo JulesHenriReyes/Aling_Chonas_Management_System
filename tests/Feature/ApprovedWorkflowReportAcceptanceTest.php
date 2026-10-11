@@ -61,10 +61,23 @@ class ApprovedWorkflowReportAcceptanceTest extends TestCase
         $period = ReportPeriod::resolve(['mode' => 'month', 'month' => $month]);
         $report = app(FinancialReportService::class)->report($period);
         $csv = $this->get(route('reports.export', $period->query()))->assertOk()->streamedContent();
-        $rows = array_map('str_getcsv', explode("\n", trim($csv)));
-        $header = array_shift($rows);
-        $rows = collect($rows)->map(fn ($row) => array_combine($header, $row));
-        $csvSummary = $rows->firstWhere('section', 'summary');
+        $file = fopen('php://temp', 'w+');
+        fwrite($file, substr($csv, 3));
+        rewind($file);
+        $rows = [];
+        while (($row = fgetcsv($file)) !== false) {
+            $rows[] = $row;
+        }
+        fclose($file);
+        $summaryStart = array_search('Financial summary', array_column($rows, 0), true);
+        $csvSummary = array_column(array_slice($rows, $summaryStart + 2, 5), 1, 0);
+        $trendStart = array_search('Daily financial trends', array_column($rows, 0), true);
+        $csvTrends = array_slice($rows, $trendStart + 2, count($report['trends']));
+        $csvMapping = [
+            'sales' => ['Completed sales', 1], 'gross_collections' => ['Verified collections', 2],
+            'payment_collections' => ['Verified collections', 2], 'cancellation_income' => ['Retained cancellation deposits', 3],
+            'expenses' => ['Valid expenses', 4], 'operational_net_income' => ['Operational result', 5],
+        ];
         $metrics = ['sales', 'gross_collections', 'payment_collections', 'cancellation_income', 'expenses', 'operational_net_income'];
         foreach ($metrics as $index => $metric) {
             $expected = $expectedCents[$index];
@@ -75,8 +88,9 @@ class ApprovedWorkflowReportAcceptanceTest extends TestCase
                 $this->assertSame($expected, (int) round($records->viewData('total') * 100), "$month drilldown total $metric");
                 $this->assertSame($expected, (int) round($records->viewData('records')->sum('amount') * 100), "$month record rows $metric");
             }
-            $this->assertSame($expected, (int) round((float) $csvSummary[$metric] * 100), "$month CSV summary $metric");
-            $this->assertSame($expected, (int) round($rows->where('section', 'trend')->sum($metric) * 100), "$month CSV trend $metric");
+            [$csvLabel, $csvColumn] = $csvMapping[$metric];
+            $this->assertSame($expected, (int) round((float) $csvSummary[$csvLabel] * 100), "$month CSV summary $metric");
+            $this->assertSame($expected, (int) round(array_sum(array_column($csvTrends, $csvColumn)) * 100), "$month CSV trend $metric");
         }
         $this->assertSame((int) round($report['summary']['payment_collections'] * 100), (int) round($report['methods']->sum('net') * 100));
     }

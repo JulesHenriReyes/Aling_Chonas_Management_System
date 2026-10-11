@@ -302,7 +302,6 @@ window.positionTooltip = function(el, refs, show, position, align) {
             if (!trigger || !panel) return;
 
             panel.style.visibility = 'hidden';
-            const originalDisplay = panel.style.display;
             if (getComputedStyle(panel).display === 'none') {
                 panel.style.display = 'block';
             }
@@ -314,34 +313,45 @@ window.positionTooltip = function(el, refs, show, position, align) {
             const vw = window.innerWidth;
             const vh = window.innerHeight;
             const gap = 8;
+            const margin = 12;
 
             let top;
-            const canFitTop = tRect.top - gap - pHeight >= 8;
-            const canFitBottom = tRect.bottom + gap + pHeight <= vh - 8;
+            const canFitTop = tRect.top - gap - pHeight >= margin;
+            const canFitBottom = tRect.bottom + gap + pHeight <= vh - margin;
             if (position === 'bottom') {
                 top = (canFitBottom || !canFitTop) ? (tRect.bottom + gap) : (tRect.top - gap - pHeight);
             } else {
                 top = (canFitTop || !canFitBottom) ? (tRect.top - gap - pHeight) : (tRect.bottom + gap);
             }
-            if (top < 8) top = 8;
-            else if (top + pHeight > vh - 8) top = Math.max(8, vh - pHeight - 8);
+            if (top < margin) top = margin;
+            else if (top + pHeight > vh - margin) top = Math.max(margin, vh - pHeight - margin);
 
             let left;
-            if (align === 'center') {
-                left = tRect.left + (tRect.width / 2) - (pWidth / 2);
-            } else if (align === 'right') {
+            if (align === 'right') {
                 left = tRect.right - pWidth;
             } else if (align === 'left') {
                 left = tRect.left;
-            } else {
-                // 'top-right' (default): spawn above and to the right of the trigger icon
+            } else if (align === 'top-right' || align === 'bottom-right') {
                 left = tRect.left + (tRect.width / 2);
+            } else {
+                // 'center' (default)
+                left = tRect.left + (tRect.width / 2) - (pWidth / 2);
             }
-            if (left < 8) left = 8;
-            else if (left + pWidth > vw - 8) left = Math.max(8, vw - pWidth - 8);
 
-            panel.style.top = Math.round(top) + 'px';
-            panel.style.left = Math.round(left) + 'px';
+            if (left < margin) left = margin;
+            else if (left + pWidth > vw - margin) left = Math.max(margin, vw - pWidth - margin);
+
+            // Defensive compensation in case any ancestor has a CSS transform/filter creating a containing block
+            let parentOffsetX = 0;
+            let parentOffsetY = 0;
+            if (panel.offsetParent && panel.offsetParent !== document.body && panel.offsetParent !== document.documentElement) {
+                const opRect = panel.offsetParent.getBoundingClientRect();
+                parentOffsetX = opRect.left;
+                parentOffsetY = opRect.top;
+            }
+
+            panel.style.top = Math.round(top - parentOffsetY) + 'px';
+            panel.style.left = Math.round(left - parentOffsetX) + 'px';
             panel.style.visibility = 'visible';
         });
     } else {
@@ -463,6 +473,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         queueInput.remove();
                     }
 
+                    // Sync mobile status select dropdown
+                    const newStatusSelect = newForm.querySelector('#orders-status-select');
+                    const currentStatusSelect = ordersForm.querySelector('#orders-status-select');
+                    if (newStatusSelect && currentStatusSelect) {
+                        currentStatusSelect.value = newStatusSelect.value;
+                    }
+
                     // Sync inputs from URL parameters
                     const parsedUrl = new URL(url, window.location.origin);
                     const sInput = ordersForm.querySelector('input[name="search"]');
@@ -556,6 +573,30 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        // Mobile Status select dropdown
+        const statusSelect = ordersForm.querySelector('#orders-status-select');
+        if (statusSelect) {
+            statusSelect.addEventListener('change', () => {
+                const val = statusSelect.value;
+                let statusInput = ordersForm.querySelector('input[name="status"]');
+                let queueInput = ordersForm.querySelector('input[name="queue"]');
+                if (val === 'deposit' || val === 'receipts') {
+                    if (statusInput) statusInput.value = '';
+                    if (!queueInput) {
+                        queueInput = document.createElement('input');
+                        queueInput.type = 'hidden';
+                        queueInput.name = 'queue';
+                        ordersForm.appendChild(queueInput);
+                    }
+                    queueInput.value = val;
+                } else {
+                    if (statusInput) statusInput.value = val;
+                    if (queueInput) queueInput.remove();
+                }
+                triggerFormFilter();
+            });
+        }
+
         // Origin select dropdown
         const originSelect = ordersForm.querySelector('select[name="origin"]');
         if (originSelect) {
@@ -601,6 +642,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (sInput) sInput.value = '';
                 const qInput = ordersForm.querySelector('input[name="queue"]');
                 if (qInput) qInput.remove();
+                const curStatusSelect = ordersForm.querySelector('#orders-status-select');
+                if (curStatusSelect) curStatusSelect.value = '';
                 updateOrdersView(resetLink.href);
                 return;
             }

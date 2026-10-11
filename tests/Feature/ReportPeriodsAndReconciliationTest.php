@@ -79,12 +79,17 @@ class ReportPeriodsAndReconciliationTest extends TestCase
         }
         $this->get(route('reports.index',$period->query()))->assertOk()->assertSee('Sep 1, 2026')->assertSee('Saved cake name');
         $csv=$this->get(route('reports.export',$period->query()))->assertOk()->streamedContent();
-        $rows=array_map('str_getcsv',explode("\n",trim($csv))); $header=array_shift($rows);
-        $rows=array_map(fn($row)=>array_combine($header,$row),$rows);
-        $summary=collect($rows)->firstWhere('section','summary');
-        foreach($expected as $metric=>$amount) $this->assertEquals($amount,$summary[$metric]);
-        $this->assertEquals(2300,collect($rows)->where('section','trend')->sum('sales'));
-        $this->assertEquals(3500,collect($rows)->where('section','payment_method')->sum('payment_collections'));
+        $this->assertStringStartsWith("\xEF\xBB\xBF", $csv);
+        $file=fopen('php://temp','w+'); fwrite($file,substr($csv,3)); rewind($file);
+        $rows=[]; while(($row=fgetcsv($file))!==false) $rows[]=$row; fclose($file);
+        $summaryStart=array_search('Financial summary',array_column($rows,0),true);
+        $summary=array_column(array_slice($rows,$summaryStart+2,5),1,0);
+        foreach(['Completed sales'=>2300,'Verified collections'=>3500,'Retained cancellation deposits'=>500,'Valid expenses'=>300,'Operational result'=>2500] as $metric=>$amount)
+            $this->assertEquals($amount,$summary[$metric]);
+        $trendStart=array_search('Daily financial trends',array_column($rows,0),true);
+        $this->assertEquals(2300,array_sum(array_column(array_slice($rows,$trendStart+2,30),1)));
+        $methodsStart=array_search('Collections by payment method',array_column($rows,0),true);
+        $this->assertEquals(3500,array_sum(array_column(array_slice($rows,$methodsStart+2,2),1)));
     }
 
     public function test_empty_reports_zero_fill_and_use_monthly_trends_for_long_periods(): void

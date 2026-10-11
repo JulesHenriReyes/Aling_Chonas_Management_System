@@ -41,24 +41,25 @@
         </button>
 
         {{-- Foreground Welcome Presentation --}}
-        <div class="splash-content relative z-20 w-full px-6 sm:px-10 md:px-14 lg:px-16 py-8 flex flex-col justify-between max-w-5xl">
-            <div class="space-y-3 sm:space-y-4">
+        <div class="splash-content relative z-20 w-full px-5 pt-5 pb-14 sm:px-8 sm:py-7 flex flex-col justify-between min-h-[210px] sm:min-h-[220px]">
+            <div class="splash-inner max-w-xl space-y-2 sm:space-y-2.5">
                 <div class="flex items-center gap-2.5">
-                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-400 shadow-md" style="color: #5c3a21;">
-                        <span class="w-2 h-2 rounded-full animate-pulse" style="background-color: #5c3a21;"></span>
+                    <span class="splash-tag inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-400 shadow-sm" style="color: #5c3a21;">
+                        <span class="w-1.5 h-1.5 rounded-full animate-pulse" style="background-color: #5c3a21;"></span>
                         <span>Signature Bake</span>
                     </span>
-                    <span class="text-xs sm:text-sm text-amber-200/90 font-medium">· Chocolate Moist Packages</span>
+                    <span class="splash-tag-title text-xs text-amber-200/90 font-medium">· Chocolate Moist Packages</span>
                 </div>
 
                 <div>
-                    <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight drop-shadow-md">
+                    <h1 class="splash-title text-xl sm:text-2xl md:text-3xl font-extrabold text-white tracking-tight drop-shadow-sm">
                         Welcome back, {{ Auth::user()->first_name }}
                     </h1>
-                    <p class="text-xs sm:text-sm md:text-base text-stone-200 mt-1 sm:mt-2 max-w-2xl leading-relaxed">
+                    <p class="splash-subtitle text-[11px] sm:text-xs md:text-sm text-stone-200 mt-0.5 sm:mt-1">
                         {{ \App\Support\PickupCalendar::today()->format('l, F j, Y') }} ({{ config('bakery.pickup_timezone') }}) · Operations Active
                     </p>
                 </div>
+
             </div>
         </div>
     </div>
@@ -98,10 +99,11 @@
                     splash.style.boxShadow = '0 10px 25px -5px rgba(0, 0, 0, 0.3)';
 
                     this.cleanupTimer = setTimeout(() => {
+                        document.body.classList.add('hero-intro-settled');
                         splash.classList.add('is-hidden');
                         setTimeout(() => {
                             splash.style.display = 'none';
-                            document.body.classList.remove('hero-intro-active', 'hero-intro-docking');
+                            document.body.classList.remove('hero-intro-active', 'hero-intro-docking', 'hero-intro-settled');
                         }, 350);
                     }, 850);
                 },
@@ -112,7 +114,7 @@
                     if (splash) {
                         splash.style.display = 'none';
                     }
-                    document.body.classList.remove('hero-intro-active', 'hero-intro-docking');
+                    document.body.classList.remove('hero-intro-active', 'hero-intro-docking', 'hero-intro-settled');
                 }
             };
         };
@@ -194,7 +196,7 @@
         <div class="absolute inset-0 z-10 pointer-events-none" style="background: linear-gradient(to left, rgba(0,0,0,0.25), rgba(0,0,0,0));"></div>
 
         {{-- Foreground Overlay Content --}}
-        <div class="relative z-20 w-full px-4 py-4 sm:px-6 sm:py-6 md:px-8 md:py-7 flex flex-col md:flex-row md:items-center justify-between gap-4 sm:gap-6">
+        <div class="relative z-20 w-full px-5 pt-5 pb-14 sm:px-8 sm:py-7 flex flex-col justify-between min-h-[210px] sm:min-h-[220px]">
             <div class="max-w-xl space-y-2 sm:space-y-2.5">
                 <div class="flex items-center gap-2.5">
                     <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-400 shadow-sm" style="color: #5c3a21;">
@@ -212,48 +214,42 @@
                         {{ \App\Support\PickupCalendar::today()->format('l, F j, Y') }} ({{ config('bakery.pickup_timezone') }}) · Operations Active
                     </p>
                 </div>
-            </div>
 
-            {{-- Quick Actions & Controls inside Overlay --}}
-            <div class="flex flex-col sm:flex-row md:flex-col lg:flex-row items-start sm:items-center gap-3">
-                <div class="flex items-center gap-2">
+                {{-- Action Buttons: Clean, cohesive pair directly with greeting --}}
+                <div class="hero-banner-actions flex flex-wrap items-center gap-2 sm:gap-2.5 pt-1.5 sm:pt-2">
                     @can('manage-orders')
-                    <a href="{{ route('orders.create') }}" class="inline-flex items-center gap-1.5 bg-amber-400 hover:bg-amber-300 text-cocoa-950 font-bold text-xs sm:text-sm px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl shadow-md transition hover:-translate-y-0.5">
+                    <a href="{{ route('orders.create') }}" class="inline-flex items-center gap-1.5 bg-amber-400 hover:bg-amber-300 text-cocoa-950 font-bold text-xs sm:text-sm px-4 py-2 sm:px-4.5 sm:py-2.5 rounded-xl shadow-md transition hover:-translate-y-0.5 whitespace-nowrap">
                         <x-icon name="plus" class="w-4 h-4" /> New Staff Order
                     </a>
                     @endcan
-                    <a href="{{ route('public.order.index') }}" target="_blank" class="inline-flex items-center gap-1.5 bg-white/20 hover:bg-white/30 text-white border border-white/25 font-semibold text-xs sm:text-sm px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-xl backdrop-blur-md transition hover:-translate-y-0.5">
+                    <a href="{{ route('public.order.index') }}" target="_blank" class="inline-flex items-center gap-1.5 bg-white/20 hover:bg-white/30 text-white border border-white/25 font-semibold text-xs sm:text-sm px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl backdrop-blur-md transition hover:-translate-y-0.5 whitespace-nowrap">
                         Public Store <x-icon name="external" class="w-3.5 h-3.5 ml-0.5" />
                     </a>
-                    <a href="{{ route('dashboard', ['intro' => 1]) }}" title="Replay welcome intro animation" class="inline-flex items-center gap-1.5 bg-white/10 hover:bg-white/20 text-white/90 hover:text-white border border-white/20 font-semibold text-xs sm:text-sm px-2.5 py-2 sm:px-3 sm:py-2.5 rounded-xl backdrop-blur-md transition hover:-translate-y-0.5">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-                        <span class="hidden sm:inline">Replay</span>
-                    </a>
                 </div>
+            </div>
 
-                {{-- Carousel Controls: Pill Dots & Step Buttons --}}
-                <div class="flex items-center gap-1.5 self-end sm:self-auto bg-black/50 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/15 shadow-sm">
-                    <button type="button" @click="prev()" aria-label="Previous cake" 
-                            class="text-white/80 hover:text-white transition cursor-pointer"
-                            style="min-height:unset; height:22px; width:22px; padding:0; border:none; background:transparent; display:flex; align-items:center; justify-content:center;">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
-                    </button>
-                    <div class="flex items-center px-0.5">
-                        <template x-for="(slide, index) in slides" :key="index">
-                            <button type="button" @click="active = index" :aria-label="'Slide ' + (index + 1)"
-                                     class="flex items-center justify-center cursor-pointer focus:outline-none"
-                                     style="min-height:unset; height:18px; background:transparent; border:none; padding:0 3px;">
-                                <span class="block rounded-full transition-all duration-300"
-                                      :class="active === index ? 'w-5 h-1.5 bg-amber-400' : 'w-1.5 h-1.5 bg-white/40 hover:bg-white/70'"></span>
-                            </button>
-                        </template>
-                    </div>
-                    <button type="button" @click="next()" aria-label="Next cake" 
-                            class="text-white/80 hover:text-white transition cursor-pointer"
-                            style="min-height:unset; height:22px; width:22px; padding:0; border:none; background:transparent; display:flex; align-items:center; justify-content:center;">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
-                    </button>
+            {{-- Carousel Controls: Centered on mobile, floating cleanly in bottom-right corner on tablet/desktop --}}
+            <div class="hero-banner-carousel-controls absolute bottom-3 left-1/2 -translate-x-1/2 sm:left-auto sm:translate-x-0 sm:bottom-4 sm:right-6 z-20 flex items-center gap-1.5 bg-black/55 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/15 shadow-sm">
+                <button type="button" @click="prev()" aria-label="Previous cake" 
+                        class="text-white/80 hover:text-white transition cursor-pointer"
+                        style="min-height:unset; height:22px; width:22px; padding:0; border:none; background:transparent; display:flex; align-items:center; justify-content:center;">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+                </button>
+                <div class="flex items-center px-0.5">
+                    <template x-for="(slide, index) in slides" :key="index">
+                        <button type="button" @click="active = index" :aria-label="'Slide ' + (index + 1)"
+                                 class="flex items-center justify-center cursor-pointer focus:outline-none"
+                                 style="min-height:unset; height:18px; background:transparent; border:none; padding:0 3px;">
+                            <span class="block rounded-full transition-all duration-300"
+                                  :class="active === index ? 'w-5 h-1.5 bg-amber-400' : 'w-1.5 h-1.5 bg-white/40 hover:bg-white/70'"></span>
+                        </button>
+                    </template>
                 </div>
+                <button type="button" @click="next()" aria-label="Next cake" 
+                        class="text-white/80 hover:text-white transition cursor-pointer"
+                        style="min-height:unset; height:22px; width:22px; padding:0; border:none; background:transparent; display:flex; align-items:center; justify-content:center;">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+                </button>
             </div>
         </div>
     </div>

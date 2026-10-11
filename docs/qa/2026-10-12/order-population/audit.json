@@ -1,0 +1,272 @@
+{
+    "orders": [
+        {
+            "id": 1,
+            "order_number": "ORD-20261005-524DFEA9D2",
+            "customer": "Sofia Mendoza",
+            "stage": "pending",
+            "status": "pending",
+            "label": "Awaiting staff confirmation",
+            "total": 2200,
+            "paid": 0,
+            "balance": 2200
+        },
+        {
+            "id": 2,
+            "order_number": "ORD-20261006-09118B8CAB",
+            "customer": "Miguel Santos",
+            "stage": "pending",
+            "status": "pending",
+            "label": "Awaiting staff confirmation",
+            "total": 1500,
+            "paid": 0,
+            "balance": 1500
+        },
+        {
+            "id": 3,
+            "order_number": "ORD-20261007-7832F2A57C",
+            "customer": "Isabella Reyes",
+            "stage": "deposit",
+            "status": "confirmed",
+            "label": "Confirmed \u2014 awaiting deposit",
+            "total": 1020,
+            "paid": 0,
+            "balance": 1020
+        },
+        {
+            "id": 4,
+            "order_number": "ORD-20261008-277BCF143B",
+            "customer": "Gabriel Cruz",
+            "stage": "deposit",
+            "status": "confirmed",
+            "label": "Confirmed \u2014 awaiting deposit",
+            "total": 1850,
+            "paid": 0,
+            "balance": 1850
+        },
+        {
+            "id": 5,
+            "order_number": "ORD-20261005-FF702596C3",
+            "customer": "Amelia Garcia",
+            "stage": "receipts",
+            "status": "confirmed",
+            "label": "Receipt awaiting verification",
+            "total": 1450,
+            "paid": 0,
+            "balance": 1450
+        },
+        {
+            "id": 6,
+            "order_number": "ORD-20261006-CF14D58586",
+            "customer": "Lucas Torres",
+            "stage": "receipts",
+            "status": "confirmed",
+            "label": "Receipt awaiting verification",
+            "total": 1400,
+            "paid": 0,
+            "balance": 1400
+        },
+        {
+            "id": 7,
+            "order_number": "ORD-20261007-38F9C3C32F",
+            "customer": "Victoria Ramos",
+            "stage": "confirmed",
+            "status": "confirmed",
+            "label": "Deposit verified \u2014 booking secured",
+            "total": 950,
+            "paid": 475,
+            "balance": 475
+        },
+        {
+            "id": 8,
+            "order_number": "ORD-20261008-5DA5BD3F71",
+            "customer": "Daniel Flores",
+            "stage": "confirmed",
+            "status": "confirmed",
+            "label": "Deposit verified \u2014 booking secured",
+            "total": 3000,
+            "paid": 1500,
+            "balance": 1500
+        },
+        {
+            "id": 9,
+            "order_number": "ORD-20261005-C336E41F92",
+            "customer": "Olivia Aquino",
+            "stage": "confirmed",
+            "status": "confirmed",
+            "label": "Deposit verified \u2014 booking secured",
+            "total": 1150,
+            "paid": 575,
+            "balance": 575
+        },
+        {
+            "id": 10,
+            "order_number": "ORD-20261006-9E6A72127A",
+            "customer": "Nathan Castillo",
+            "stage": "preparing",
+            "status": "preparing",
+            "label": "Preparing",
+            "total": 1750,
+            "paid": 875,
+            "balance": 875
+        },
+        {
+            "id": 11,
+            "order_number": "ORD-20261007-84CC6276D0",
+            "customer": "Mia Villanueva",
+            "stage": "preparing",
+            "status": "preparing",
+            "label": "Preparing",
+            "total": 1450,
+            "paid": 725,
+            "balance": 725
+        },
+        {
+            "id": 12,
+            "order_number": "ORD-20261008-B8A520EA0A",
+            "customer": "Ethan Navarro",
+            "stage": "preparing",
+            "status": "preparing",
+            "label": "Preparing",
+            "total": 1250,
+            "paid": 625,
+            "balance": 625
+        },
+        {
+            "id": 13,
+            "order_number": "ORD-20261005-7DECCC8E24",
+            "customer": "Chloe Bautista",
+            "stage": "ready_for_pickup",
+            "status": "ready_for_pickup",
+            "label": "Ready for pickup",
+            "total": 920,
+            "paid": 460,
+            "balance": 460
+        },
+        {
+            "id": 14,
+            "order_number": "ORD-20261006-8F6F71A01D",
+            "customer": "Adrian Dela Rosa",
+            "stage": "ready_for_pickup",
+            "status": "ready_for_pickup",
+            "label": "Ready for pickup",
+            "total": 1500,
+            "paid": 750,
+            "balance": 750
+        },
+        {
+            "id": 15,
+            "order_number": "ORD-20261007-2BF7F79EB4",
+            "customer": "Hannah Lim",
+            "stage": "ready_for_pickup",
+            "status": "ready_for_pickup",
+            "label": "Ready for pickup",
+            "total": 1950,
+            "paid": 975,
+            "balance": 975
+        },
+        {
+            "id": 16,
+            "order_number": "ORD-20261008-6828185698",
+            "customer": "Joaquin Rivera",
+            "stage": "completed",
+            "status": "completed",
+            "label": "Completed",
+            "total": 2200,
+            "paid": 2200,
+            "balance": 0
+        },
+        {
+            "id": 17,
+            "order_number": "ORD-20261005-F502258EF1",
+            "customer": "Ella Fernandez",
+            "stage": "completed",
+            "status": "completed",
+            "label": "Completed",
+            "total": 1450,
+            "paid": 1450,
+            "balance": 0
+        },
+        {
+            "id": 18,
+            "order_number": "ORD-20261006-85F43EE179",
+            "customer": "Marco Domingo",
+            "stage": "completed",
+            "status": "completed",
+            "label": "Completed",
+            "total": 1250,
+            "paid": 1250,
+            "balance": 0
+        },
+        {
+            "id": 19,
+            "order_number": "ORD-20261007-5C1FD7EDB8",
+            "customer": "Grace Tan",
+            "stage": "cancelled_unpaid",
+            "status": "cancelled",
+            "label": "Cancelled",
+            "total": 1050,
+            "paid": 0,
+            "balance": 1050
+        },
+        {
+            "id": 20,
+            "order_number": "ORD-20261008-CFD5BB3A7F",
+            "customer": "Samuel Pascual",
+            "stage": "cancelled_deposit",
+            "status": "cancelled",
+            "label": "Cancelled",
+            "total": 1500,
+            "paid": 750,
+            "balance": 750
+        }
+    ],
+    "tab_counts": {
+        "pending": 2,
+        "deposit": 2,
+        "receipts": 2,
+        "confirmed": 3,
+        "preparing": 3,
+        "ready_for_pickup": 3,
+        "completed": 3,
+        "cancelled": 2
+    },
+    "report_summary": {
+        "sales": 4900,
+        "gross_collections": 12610,
+        "cancellation_income": 750,
+        "expenses": 2650,
+        "completed_order_count": 3,
+        "payment_collections": 12610,
+        "operational_net_income": 3000,
+        "period_start": "2026-10-01",
+        "period_end": "2026-10-31"
+    },
+    "batch_report_delta": {
+        "sales": 4900,
+        "gross_collections": 12610,
+        "cancellation_income": 750,
+        "expenses": 0
+    },
+    "completed_order_count": 3,
+    "payment_methods": [
+        {
+            "method": "cash",
+            "gross": 5660,
+            "net": 5660
+        },
+        {
+            "method": "gcash",
+            "gross": 6950,
+            "net": 6950
+        }
+    ],
+    "rendered_order_tabs": 8,
+    "csv_and_drilldowns_match": true,
+    "preexisting_business_rows_unchanged": 229,
+    "receipt_count": 2,
+    "verified": true,
+    "mode": "audit",
+    "engine_sha256": "8f3228ba951efa8eb0e1d3a6af0298a6055033ae072de549019ad1fa8ef41308",
+    "controller_sha256": "c9466aa9e047673d17af2a070d2198486dbc8d195b6203dc57862e4fcf094a3f"
+}

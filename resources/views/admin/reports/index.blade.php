@@ -7,7 +7,10 @@
             <h1>Reports</h1>
             <p>Sales, collections and daily operating costs.</p>
         </div>
-        <a class="ui-button" href="{{ route('reports.export', $period->query()) }}">Export CSV</a>
+        <div class="workspace-actions">
+            <a class="ui-button" href="{{ route('reports.export', $period->query()) }}">Export CSV</a>
+            <a class="ui-button" href="{{ route('reports.export.pdf', $period->query()) }}">Export PDF</a>
+        </div>
     </header>
 
     <form method="GET" class="workspace-filters report-filters" x-data="{ mode: @js(old('mode', $period->filters['mode'] ?? 'preset')) }" aria-label="Report period">
