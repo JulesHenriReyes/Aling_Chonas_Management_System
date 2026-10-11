@@ -30,6 +30,11 @@ return [
 
     'disks' => [
 
+        'design_references' => [
+            'driver' => 'local', 'root' => storage_path('app/order-design-references'),
+            'visibility' => 'private', 'serve' => false, 'throw' => true,
+        ],
+
         'staff_drafts' => [
             'driver' => 'local', 'root' => storage_path('app/staff-order-drafts'),
             'visibility' => 'private', 'serve' => false, 'throw' => true,

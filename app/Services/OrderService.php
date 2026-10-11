@@ -154,7 +154,14 @@ class OrderService
     ): OrderImage {
         $uploader = StaffAccess::requireOwner($uploader);
 
-        return $this->persistImage($order, $filePath, $originalFilename, $orderDetail, $uploader);
+        return DB::transaction(function () use ($order, $filePath, $originalFilename, $orderDetail, $uploader) {
+            $order = $this->lockOrder($order);
+            app(DesignChangeService::class)->assertNoPending($order);
+            if (! empty(app(DesignChangeStore::class)->read($order)['retention']['photos_expired_at'])) {
+                throw ValidationException::withMessages(['images' => 'Reference photos for this completed order have expired.']);
+            }
+            return $this->persistImage($order, $filePath, $originalFilename, $orderDetail, $uploader);
+        });
     }
 
     private function persistImage(Order $order, string $filePath, string $originalFilename, ?OrderDetail $orderDetail, ?User $uploader): OrderImage
@@ -446,6 +453,9 @@ class OrderService
                 ]);
             }
 
+            if (in_array($newStatus, ['preparing', 'ready_for_pickup'], true)) {
+                app(DesignChangeService::class)->assertNoPending($order);
+            }
             if ($newStatus === 'preparing' && ! $order->canStartPreparation()) {
                 throw ValidationException::withMessages(['status' => 'Preparation requires staff confirmation and the verified exact 50% deposit.']);
             }
@@ -525,6 +535,9 @@ class OrderService
                 $order->status = 'cancelled';
                 $order->cancellation_kind = 'customer';
                 $order->save();
+                DB::afterCommit(function () use ($order) {
+                    try { app(DesignChangeService::class)->close($order); } catch (\Throwable $error) { report($error); }
+                });
             }
 
             return $order;

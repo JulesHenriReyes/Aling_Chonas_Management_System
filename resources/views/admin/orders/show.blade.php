@@ -8,7 +8,9 @@
 try { const prefix=@js(session('completed_staff_browser_prefix')); for (const key of Object.keys(sessionStorage)) if (key.startsWith(prefix+'-')) sessionStorage.removeItem(key); } catch {}
 </script>
 @endif
-<div class="space-y-4 order-view">
+<link rel="stylesheet" href="{{ asset('css/design-changes.css') }}?v={{ filemtime(public_path('css/design-changes.css')) }}">
+<div class="space-y-4 order-view" data-order-live data-live-url="{{ route('orders.liveStatus', $order) }}" data-live-revision="{{ app(\App\Services\DesignChangeService::class)->liveRevision($order, $designChange) }}">
+    <div data-live-notice hidden class="design-notice" role="status">This order has an update. <button type="button" data-live-reload>Load the update</button> when you’re ready.</div>
     {{-- Breadcrumb --}}
     <div class="page-heading">
         <div class="flex items-center gap-2 text-sm">
@@ -31,6 +33,14 @@ try { const prefix=@js(session('completed_staff_browser_prefix')); for (const ke
                 <div class="flex items-center gap-3 flex-wrap">
                     <h1 class="text-2xl font-bold text-cocoa-600 font-mono">{{ $order->order_number }}</h1><span class="association-tag">{{ $order->user_id === null ? 'Public Web' : 'Staff order' }}</span>
                     <x-status :value="$order->status" :label="$order->workflowLabel()" class="order-workflow-status" />
+                    @if($designChange['hold'])
+                        <a href="#design-change" class="design-hold-badge">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span>Design change · preparation paused</span>
+                        </a>
+                    @endif
                     @if ($order->status !== 'cancelled')
                         <x-status :value="$order->payment_status" />
                     @elseif ($order->amount_paid > 0)
@@ -74,13 +84,23 @@ try { const prefix=@js(session('completed_staff_browser_prefix')); for (const ke
     <div class="review-layout">
         {{-- Main Content: Line Items, Images, Payments --}}
         <div class="review-main space-y-4">
+            @if ($designChange['pending'] || !$designChange['available'])
+                {{-- Active blocker: Pending review or record hold must be resolved first --}}
+                @include('partials.design-change-panel', ['staff' => true])
+            @endif
             {{-- Line Items --}}
             <div class="order-items bg-white border border-cocoa-100 rounded-xl p-4">
-                <div class="flex items-center justify-between border-b border-cocoa-100 pb-4 mb-5">
-                    <h2 class="text-sm font-semibold text-cocoa-600">Order Items & Customizations</h2>
+                <div class="flex flex-wrap items-center justify-between gap-2 border-b border-cocoa-100 pb-4 mb-5">
+                    <div class="flex items-center gap-2.5">
+                        <h2 class="text-sm font-semibold text-cocoa-600">Order Items & Customizations</h2>
+                        @if(!empty($designChange['latest']) && $designChange['latest']['status'] === 'approved')
+                            <a href="#design-change" class="design-diff-tag is-updated" title="Design updated via approved change request">Updated design</a>
+                        @endif
+                    </div>
                     <span class="text-sm text-cocoa-500">Saved prices</span>
                 </div>
 
+                @include('partials.order-reference-retention')
                 <div class="space-y-5">
                     @foreach ($order->orderDetails as $detail)
                         <div class="item-section space-y-3">
@@ -122,7 +142,7 @@ try { const prefix=@js(session('completed_staff_browser_prefix')); for (const ke
                             </div>
 
                             {{-- Per-Product Reference Images --}}
-                            @if ($detail->images->isNotEmpty())
+                            @if (!$designChange['photos_expired_at'] && $detail->images->isNotEmpty())
                                 <div class="pt-2 space-y-1.5">
                                     <span class="text-xs text-cocoa-500 font-bold block">Customer Reference {{ \Illuminate\Support\Str::plural('Photo', $detail->images->count()) }}</span>
                                     <div class="flex flex-wrap gap-2.5">
@@ -204,6 +224,11 @@ try { const prefix=@js(session('completed_staff_browser_prefix')); for (const ke
                 </div>
             </div>
 
+
+            @if (!$designChange['pending'] && $designChange['available'] && ($designChange['latest'] || $designChange['history_expired_at']))
+                {{-- Informational / History: Neatly placed below order specs alongside other review records --}}
+                @include('partials.design-change-panel', ['staff' => true])
+            @endif
 
             @include('admin.orders.staff-review')
             @include('admin.orders.proof-review')
@@ -405,7 +430,17 @@ try { const prefix=@js(session('completed_staff_browser_prefix')); for (const ke
             <div class="bg-white border border-cocoa-100 rounded-xl p-5 space-y-3">
                 <h2 id="order-actions" class="anchor-target text-sm font-semibold text-cocoa-600">Order actions</h2>
 
-                @if ($order->canStartPreparation())
+                @if ($designChange['hold'])
+                    <div class="design-hold" role="alert">
+                        <svg class="design-hold-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <div class="design-hold-text">
+                            <strong>Preparation paused.</strong>
+                            <a href="#design-change">Resolve the design change</a> before continuing.
+                        </div>
+                    </div>
+                @elseif ($order->canStartPreparation())
                     <form action="{{ route('orders.updateStatus', $order) }}" method="POST">
                         @csrf
                         @method('PATCH')
@@ -504,4 +539,5 @@ try { const prefix=@js(session('completed_staff_browser_prefix')); for (const ke
 
     </div>
 </div>
+<script defer src="{{ asset('js/order-live.js') }}"></script>
 @endsection

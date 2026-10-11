@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
         restoreBackground();
         if (previous && !visible(previous)) {
             const target = returnTargets.get(previous);
-            if (target?.isConnected && visible(target)) target.focus();
+            if (target?.isConnected && visible(target)) target.focus({ preventScroll: true });
             returnTargets.delete(previous);
         }
         activeOverlay = next || null;
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             branch = branch.parentElement;
         }
-        if (!next.contains(document.activeElement)) (focusable(next)[0] || next).focus();
+        if (!next.contains(document.activeElement)) (focusable(next)[0] || next).focus({ preventScroll: true });
     };
     const observer = new MutationObserver(syncOverlay);
     // Alpine teleports and AJAX can create dialogs after DOMContentLoaded.
@@ -65,11 +65,34 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     syncOverlay();
 
+    const syncSidebarCollapsedState = () => {
+        try {
+            const isCollapsed = localStorage.getItem('staff_sidebar_collapsed') === 'true';
+            if (isCollapsed) {
+                document.body.classList.add('sidebar-collapsed');
+                document.documentElement.classList.add('sidebar-collapsed');
+            } else {
+                document.body.classList.remove('sidebar-collapsed');
+                document.documentElement.classList.remove('sidebar-collapsed');
+            }
+            const isExpanded = !isCollapsed;
+            document.querySelectorAll('[data-sidebar-collapse]').forEach(btn => {
+                btn.setAttribute('aria-expanded', String(isExpanded));
+                btn.setAttribute('aria-label', isExpanded ? 'Collapse navigation' : 'Expand navigation');
+            });
+        } catch (e) {}
+    };
+    syncSidebarCollapsedState();
+
     document.addEventListener('click', (event) => {
         const collapseTrigger = event.target.closest('[data-sidebar-collapse]');
         if (collapseTrigger) {
             event.preventDefault();
             const collapsed = document.body.classList.toggle('sidebar-collapsed');
+            document.documentElement.classList.toggle('sidebar-collapsed', collapsed);
+            try {
+                localStorage.setItem('staff_sidebar_collapsed', collapsed ? 'true' : 'false');
+            } catch (e) {}
             const isExpanded = !collapsed;
             document.querySelectorAll('[data-sidebar-collapse]').forEach(btn => {
                 btn.setAttribute('aria-expanded', String(isExpanded));

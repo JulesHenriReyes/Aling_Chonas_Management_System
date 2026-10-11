@@ -29,7 +29,7 @@
 
             {{-- Customizations: Theme & Design Request --}}
             @if ($detail->themes || $detail->special_request)
-                <div class="pt-2 border-t border-cocoa-100/70 space-y-1.5 text-xs">
+                <div class="order-design-copy pt-2 border-t border-cocoa-100/70 space-y-1.5 text-xs">
                     @if ($detail->themes)
                         <div class="flex items-center gap-1.5 text-cocoa-600">
                             <span class="font-semibold text-cocoa-700">Theme/Colors:</span>
@@ -46,13 +46,13 @@
             @endif
 
             {{-- Reference Photos --}}
-            @if ($detail->images && $detail->images->isNotEmpty())
+            @if (empty($designChange['photos_expired_at']) && $detail->images && $detail->images->isNotEmpty())
                 <div class="pt-2 border-t border-cocoa-100/70 space-y-1.5 text-xs">
                     <span class="font-semibold text-cocoa-700 block">Reference photos:</span>
                     <div class="flex flex-wrap gap-2">
                         @foreach ($detail->images as $img)
-                            <a href="{{ $img->url() }}" target="_blank" rel="noopener noreferrer" class="block border border-cocoa-100 rounded-lg overflow-hidden w-14 h-14 bg-white hover:opacity-80 transition shrink-0">
-                                <img src="{{ $img->url() }}" alt="{{ $img->original_filename }}" class="w-full h-full object-cover">
+                            <a href="{{ $img->customerUrl($order->private_token) }}" target="_blank" rel="noopener noreferrer" class="block border border-cocoa-100 rounded-lg overflow-hidden w-14 h-14 bg-white hover:opacity-80 transition shrink-0">
+                                <img src="{{ $img->customerUrl($order->private_token) }}" alt="{{ $img->original_filename }}" loading="lazy" width="56" height="56" class="w-full h-full object-cover">
                             </a>
                         @endforeach
                     </div>

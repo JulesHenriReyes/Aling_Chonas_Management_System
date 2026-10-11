@@ -3,6 +3,7 @@
 @section('title', 'Manage Orders')
 
 @section('content')
+<link rel="stylesheet" href="{{ asset('css/design-changes.css') }}?v={{ filemtime(public_path('css/design-changes.css')) }}">
 <div class="space-y-6" x-data>
     <!-- Header -->
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -158,6 +159,8 @@
                                     'order_number' => $order->order_number,
                                     'status' => $order->status,
                                     'workflow_label' => $order->workflowLabel(),
+                                    'design_hold' => $designChanges[$order->id]['hold'],
+                                    'photos_expired' => (bool) $designChanges[$order->id]['photos_expired_at'],
                                     'payment_status' => $order->payment_status,
                                     'is_public' => $order->user_id === null,
                                     'origin_label' => $order->user_id === null ? 'Public Web' : 'Staff (' . ($order->user->first_name ?? 'Staff') . ')',
@@ -199,7 +202,7 @@
                                             ])->values(),
                                         ];
                                     })->values(),
-                                    'images' => $order->images->map(fn ($img) => [
+                                    'images' => $designChanges[$order->id]['photos_expired_at'] ? [] : $order->images->map(fn ($img) => [
                                         'id' => $img->id,
                                         'url' => $img->url(),
                                     ])->values(),
@@ -276,6 +279,7 @@
                                 </td>
                                 <td class="py-1.5 px-3 whitespace-nowrap align-middle">
                                     <x-status :value="$order->status" :label="$order->workflowLabel()" class="order-workflow-status" />
+                                    @if($designChanges[$order->id]['hold'])<a href="{{ route('orders.show', $order) }}#design-change" class="design-hold-badge mt-1"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><span>Design change · paused</span></a>@endif
                                 </td>
                                 <td class="py-1.5 px-3 text-right whitespace-nowrap align-middle" @click.stop>
                                     <a href="{{ route('orders.show', $order) }}{{ $order->hasAwaitingReceipt() && Gate::allows('review-proofs') ? '#proof-review' : ($order->status === 'ready_for_pickup' ? ($order->remaining_balance > 0 ? '#pickup-payment' : '#order-actions') : '') }}"
@@ -299,12 +303,14 @@
     <div x-data="{
         showDetailDrawer: false,
         detailLoading: false,
+        detailSequence: 0,
         drawerOrder: null,
         expandedImage: null,
         openOrderDetail(order) {
+            const request = ++this.detailSequence;
             this.drawerOrder = order;
             this.showDetailDrawer = true;
-            this.detailLoading = true;
+            this.detailLoading = false;
             this.expandedImage = null;
 
             fetch('/orders/' + order.id, {
@@ -318,17 +324,30 @@
                 return res.json();
             })
             .then(data => {
-                if (this.drawerOrder && this.drawerOrder.id === order.id) {
-                    this.drawerOrder = { ...this.drawerOrder, ...data.order };
+                if (request === this.detailSequence && this.showDetailDrawer && this.drawerOrder && this.drawerOrder.id === order.id) {
+                    if (data && data.order) {
+                        for (const [key, val] of Object.entries(data.order)) {
+                            if (['items', 'images', 'payments', 'proofs'].includes(key)) {
+                                if (JSON.stringify(this.drawerOrder[key]) !== JSON.stringify(val)) {
+                                    this.drawerOrder[key] = val;
+                                }
+                            } else if (this.drawerOrder[key] !== val) {
+                                this.drawerOrder[key] = val;
+                            }
+                        }
+                    }
                     this.detailLoading = false;
                 }
             })
             .catch(() => {
-                this.detailLoading = false;
+                if (request === this.detailSequence) {
+                    this.detailLoading = false;
+                }
             });
         },
         closeDetailDrawer() {
             this.showDetailDrawer = false;
+            this.detailSequence++;
             this.expandedImage = null;
         }
     }"
@@ -337,7 +356,7 @@
     x-show="showDetailDrawer"
     x-cloak
     data-detail-drawer
-    class="fixed left-0 right-0 bottom-0 z-30 overflow-hidden"
+    class="fixed left-0 right-0 bottom-0 z-50 overflow-hidden"
     style="top: var(--topbar-height, 3.5rem); height: calc(100dvh - var(--topbar-height, 3.5rem)); display: none;">
 
         <!-- Backdrop scrim: strictly below the header, clean dark scrim WITHOUT backdrop-blur -->
@@ -362,7 +381,6 @@
                  x-transition:leave-end="translate-x-full"
                  @click.away="closeDetailDrawer"
                  class="w-screen max-w-md sm:max-w-[440px] bg-white border-l border-cocoa-100 shadow-2xl flex flex-col h-full pointer-events-auto"
-                 data-dialog
                  role="dialog"
                  aria-modal="true"
                  aria-label="Order details">
@@ -375,6 +393,7 @@
                                 <div class="flex items-center gap-2 flex-wrap">
                                     <span class="status text-[11px]" :class="drawerOrder.has_unreviewed_proof || drawerOrder.status === 'pending' ? 'status-action' : (drawerOrder.status === 'cancelled' ? 'status-neutral' : (['ready_for_pickup','completed'].includes(drawerOrder.status) || drawerOrder.amount_paid > 0 && drawerOrder.status === 'confirmed' ? 'status-success' : 'status-progress'))"
                                           x-text="drawerOrder.workflow_label || drawerOrder.status"></span>
+                                    <a x-show="drawerOrder.design_hold" :href="drawerOrder.show_url + '#design-change'" class="design-hold-badge"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><span>Design change · paused</span></a>
                                     <span x-show="detailLoading" class="text-[10px] text-cocoa-400 italic">Syncing...</span>
                                 </div>
                                 <div class="flex items-center gap-2 mt-1">
@@ -387,7 +406,8 @@
                             <button type="button"
                                     @click="closeDetailDrawer"
                                     class="text-cocoa-400 hover:text-cocoa-700 p-1.5 rounded-lg hover:bg-cocoa-100/70 transition focus:outline-none shrink-0 cursor-pointer"
-                                    aria-label="Close detail panel">
+                                    aria-label="Close detail panel"
+                                    data-dialog-close>
                                 <x-icon name="close" class="w-4 h-4" />
                             </button>
                         </div>
@@ -402,6 +422,16 @@
                                         <span class="truncate">Payment receipt uploaded and awaiting verification.</span>
                                     </div>
                                     <a :href="drawerOrder.show_url" class="font-bold underline shrink-0 hover:text-amber-950">Review</a>
+                                </div>
+                            </template>
+                            <!-- Design Hold Alert -->
+                            <template x-if="drawerOrder.design_hold">
+                                <div class="bg-amber-50 border border-amber-200 text-amber-900 rounded-xl p-2.5 text-xs flex items-center justify-between gap-2 shadow-xs">
+                                    <div class="flex items-center gap-2 min-w-0">
+                                        <svg class="w-4 h-4 text-amber-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                        <span class="truncate">Design change review pending · preparation paused.</span>
+                                    </div>
+                                    <a :href="drawerOrder.show_url + '#design-change'" class="font-bold underline shrink-0 hover:text-amber-950">Review</a>
                                 </div>
                             </template>
 
@@ -480,6 +510,9 @@
                                                 </div>
                                             </div>
 
+                                            <template x-if="drawerOrder.photos_expired && drawerOrder.items && drawerOrder.items[0]?.id === item.id">
+                                                <p class="text-xs text-cocoa-600">Reference photos expired after the completed-order retention period.</p>
+                                            </template>
                                             <!-- Customization Specs (Compact Pills) -->
                                             <template x-if="item.layers || item.themes || item.special_request || (drawerOrder.images && drawerOrder.images.length > 0 && drawerOrder.items && drawerOrder.items[0]?.id === item.id)">
                                                 <div class="pt-2 border-t border-cocoa-100/70 space-y-1.5 text-xs">

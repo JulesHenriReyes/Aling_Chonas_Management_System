@@ -1,0 +1,39 @@
+{
+  "target": "WCAG 2.2 AA; changed notices and existing history disclosure only",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "measurements": [
+    {
+      "label": "customer",
+      "color": "rgb(104, 88, 75)",
+      "background": "rgb(255, 255, 255)",
+      "fontSize": 13,
+      "contrast": 6.804703602963622,
+      "resizedFontSize": 26
+    },
+    {
+      "label": "staff",
+      "color": "rgb(104, 88, 75)",
+      "background": "rgb(255, 255, 255)",
+      "fontSize": 13,
+      "contrast": 6.804703602963622,
+      "resizedFontSize": 26
+    }
+  ],
+  "checks": [
+    "customer: expiry text meets WCAG AA normal-text contrast (4.5:1)",
+    "customer: design history is reachable by Tab",
+    "customer: history has a visible keyboard focus outline",
+    "customer: Enter opens the history disclosure",
+    "customer: notice text doubles at 200% root text size",
+    "customer: enlarged notice wraps within its mobile container",
+    "staff: expiry text meets WCAG AA normal-text contrast (4.5:1)",
+    "staff: design history is reachable by Tab",
+    "staff: history has a visible keyboard focus outline",
+    "staff: Enter opens the history disclosure",
+    "staff: notice text doubles at 200% root text size",
+    "staff: enlarged notice wraps within its mobile container"
+  ]
+}

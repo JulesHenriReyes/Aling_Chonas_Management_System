@@ -1,0 +1,14 @@
+{
+  "checks": [
+    "photos customer 1440: no broken images",
+    "photos customer 1440: no horizontal overflow",
+    "photos staff 1440: no broken images",
+    "photos staff 1440: no horizontal overflow",
+    "photos customer 390: no broken images",
+    "photos customer 390: no horizontal overflow",
+    "photos staff 390: no broken images",
+    "photos staff 390: no horizontal overflow",
+    "No JavaScript errors"
+  ],
+  "errors": []
+}

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DesignChangeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\OrderController;
@@ -40,6 +41,15 @@ Route::middleware(PrivateOrderResponse::class)->prefix('/order/payment/{token}')
     Route::post('/cancel', [OrderPaymentPageController::class, 'cancel'])->middleware('throttle:10,1')->name('public.order.cancel');
     Route::get('/qr', [OrderPaymentPageController::class, 'qr'])->name('public.order.qr');
     Route::get('/save-link', [OrderPaymentPageController::class, 'saveLink'])->name('public.order.saveLink');
+    Route::get('/design-changes/new', [DesignChangeController::class, 'form'])->block()->name('public.designChanges.form');
+    Route::get('/live-status', [DesignChangeController::class, 'publicStatus'])->middleware('throttle:60,1')->name('public.order.liveStatus');
+    Route::post('/design-changes/draft', [DesignChangeController::class, 'saveDraft'])->middleware('throttle:60,1')->block()->name('public.designChanges.draft');
+    Route::post('/design-changes/uploads', [DesignChangeController::class, 'upload'])->middleware('throttle:public-design-changes')->block()->name('public.designChanges.upload');
+    Route::post('/design-changes', [DesignChangeController::class, 'submit'])->middleware('throttle:public-design-changes')->block()->name('public.designChanges.submit');
+    Route::post('/design-changes/{change}/withdraw', [DesignChangeController::class, 'withdraw'])->whereUuid('change')->middleware('throttle:public-design-changes')->name('public.designChanges.withdraw');
+    Route::get('/design-changes/{change}/references/{reference}', [DesignChangeController::class, 'publicReference'])->whereUuid('change')->name('public.designChanges.reference');
+    Route::get('/design-change-drafts/{draft}/references/{reference}', [DesignChangeController::class, 'draftReference'])->whereUuid(['draft', 'reference'])->name('public.designChanges.draftReference');
+    Route::get('/references/{image}', [DesignChangeController::class, 'currentReference'])->name('public.order.reference');
 });
 
 // Authentication is limited to internal Owner and Assistant users.
@@ -89,6 +99,10 @@ Route::middleware(['auth', 'role:owner,assistant'])->group(function () {
     Route::post('/orders', [OrderController::class, 'store'])->middleware('can:manage-orders')->block()->name('orders.store');
     Route::get('/orders/{order}/references/{image}', [OrderController::class, 'referenceImage'])->middleware(PrivateOrderResponse::class)->name('orders.images.show');
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+    Route::get('/orders/{order}/live-status', [DesignChangeController::class, 'staffStatus'])->middleware([PrivateOrderResponse::class, 'throttle:60,1'])->name('orders.liveStatus');
+    Route::post('/orders/{order}/design-changes/{change}/approve', [DesignChangeController::class, 'approve'])->whereUuid('change')->middleware('can:review-design-changes')->name('orders.designChanges.approve');
+    Route::post('/orders/{order}/design-changes/{change}/decline', [DesignChangeController::class, 'decline'])->whereUuid('change')->middleware('can:review-design-changes')->name('orders.designChanges.decline');
+    Route::get('/orders/{order}/design-changes/{change}/references/{reference}', [DesignChangeController::class, 'staffReference'])->whereUuid('change')->middleware(PrivateOrderResponse::class)->name('orders.designChanges.reference');
     Route::patch('/orders/{order}/status', [OrderController::class, 'updateStatus'])->middleware('can:update-order-status')->name('orders.updateStatus');
     Route::post('/orders/{order}/confirm', [OrderController::class, 'confirm'])->middleware('can:confirm-orders')->name('orders.confirm');
     Route::post('/orders/{order}/decline', [OrderController::class, 'decline'])->middleware('can:decline-orders')->name('orders.decline');

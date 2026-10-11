@@ -8,6 +8,8 @@ use App\Models\Order;
 use App\Models\OrderImage;
 use App\Models\Product;
 use App\Services\CatalogPricingService;
+use App\Services\DesignChangeService;
+use App\Services\DesignChangeStore;
 use App\Services\OrderDraftService;
 use App\Services\OrderService;
 use App\Services\OrderReviewService;
@@ -48,8 +50,13 @@ class OrderController extends Controller
             }
         }
         if ($request->filled('queue')) {
-            $request->validate(['queue' => ['required', Rule::in(['review', 'deposit', 'receipts', 'booked'])]]);
-            $query->workflowQueue($request->string('queue')->toString());
+            $request->validate(['queue' => ['required', Rule::in(['review', 'deposit', 'receipts', 'booked', 'changes'])]]);
+            if ($request->input('queue') === 'changes') {
+                $query->whereIn('id', app(DesignChangeStore::class)->pendingOrderIds())
+                    ->whereNull('user_id')->whereIn('status', ['pending', 'confirmed', 'preparing']);
+            } else {
+                $query->workflowQueue($request->string('queue')->toString());
+            }
         }
 
         if ($request->filled('origin')) {
@@ -80,8 +87,8 @@ class OrderController extends Controller
         }
 
         $orders = $query->paginate(10)->withQueryString();
-
-        return view('admin.orders.index', compact('orders'));
+        $designChanges = $orders->getCollection()->mapWithKeys(fn ($order) => [$order->id => app(DesignChangeService::class)->summary($order)]);
+        return view('admin.orders.index', compact('orders', 'designChanges'));
     }
 
     /**
@@ -188,9 +195,13 @@ class OrderController extends Controller
 
     public function referenceImage(Order $order, OrderImage $image)
     {
-        abort_unless((int) $image->order_id === $order->id && str_starts_with($image->file_path, 'staff/'.$order->id.'/')
-            && Storage::disk('staff_references')->exists($image->file_path), 404);
-        return Storage::disk('staff_references')->response($image->file_path);
+        abort_unless((int) $image->order_id === $order->id, 404);
+        app(\App\Services\CompletedOrderRetentionService::class)->assertPhotosAvailable($order);
+        $disk = app(DesignChangeService::class)->imageDisk($image->file_path);
+        abort_unless((int) $image->order_id === $order->id
+            && (str_starts_with($image->file_path, 'staff/'.$order->id.'/') || str_starts_with($image->file_path, 'design-changes/'))
+            && Storage::disk($disk)->exists($image->file_path), 404);
+        return Storage::disk($disk)->response($image->file_path);
     }
 
     public function saveDetailsDraft(Request $request, OrderDraftService $drafts)
@@ -351,6 +362,7 @@ class OrderController extends Controller
             'reviewer',
         ]);
 
+        $designChange = app(DesignChangeService::class)->summary($order);
         if ($request->wantsJson() || $request->ajax()) {
             return response()->json([
                 'order' => [
@@ -358,6 +370,8 @@ class OrderController extends Controller
                     'order_number' => $order->order_number,
                     'status' => $order->status,
                     'workflow_label' => $order->workflowLabel(),
+                    'design_hold' => $designChange['hold'],
+                    'photos_expired' => (bool) $designChange['photos_expired_at'],
                     'payment_status' => $order->payment_status,
                     'is_public' => $order->user_id === null,
                     'origin_label' => $order->user_id === null ? 'Public Web' : 'Staff (' . ($order->user->first_name ?? 'Staff') . ')',
@@ -399,7 +413,7 @@ class OrderController extends Controller
                             ])->values(),
                         ];
                     })->values(),
-                    'images' => $order->images->map(fn ($img) => [
+                    'images' => $designChange['photos_expired_at'] ? [] : $order->images->map(fn ($img) => [
                         'id' => $img->id,
                         'url' => $img->url(),
                     ])->values(),
@@ -434,7 +448,7 @@ class OrderController extends Controller
             'awaitingDeposit' => (clone $otherRequests)->where('status', 'confirmed')
                 ->whereDoesntHave('payments', fn ($query) => $query->where('amount', '>', 0))->count()];
 
-        return view('admin.orders.show', compact('order', 'pickupContext'));
+        return view('admin.orders.show', compact('order', 'pickupContext', 'designChange'));
     }
 
     public function confirm(Request $request, Order $order, OrderReviewService $reviews): RedirectResponse

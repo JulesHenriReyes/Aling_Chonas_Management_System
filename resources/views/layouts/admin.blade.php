@@ -26,9 +26,23 @@
         .sidebar-scroll::-webkit-scrollbar-track { background: transparent; }
         .sidebar-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
     </style>
+    <script>
+        try {
+            if (localStorage.getItem('staff_sidebar_collapsed') === 'true') {
+                document.documentElement.classList.add('sidebar-collapsed');
+            }
+        } catch (e) {}
+    </script>
     @include('partials.ui-assets')
 </head>
 <body class="bg-cream-50 text-cocoa-500 font-sans min-h-screen" x-data="{ sidebarOpen: false }">
+    <script>
+        try {
+            if (localStorage.getItem('staff_sidebar_collapsed') === 'true') {
+                document.body.classList.add('sidebar-collapsed');
+            }
+        } catch (e) {}
+    </script>
     @yield('splash')
     <a class="skip-link" href="#main-content">Skip to main content</a>
 

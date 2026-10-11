@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\PaymentSetting;
 use App\Services\PaymentReviewService;
 use App\Services\OrderService;
+use App\Services\DesignChangeService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
@@ -21,10 +22,11 @@ class OrderPaymentPageController extends Controller
 
     public function show(string $token)
     {
-        $order = $this->order($token)->load(['orderDetails.addOns', 'orderDetails.product', 'payments', 'paymentProofs']);
+        $order = $this->order($token)->load(['orderDetails.addOns', 'orderDetails.product', 'orderDetails.images', 'images', 'payments', 'paymentProofs']);
         $settings = PaymentSetting::first();
 
-        return view('public.payment', compact('order', 'settings'));
+        $designChange = app(DesignChangeService::class)->summary($order);
+        return view('public.payment', compact('order', 'settings', 'designChange'));
     }
 
     public function submit(Request $request, string $token, PaymentReviewService $reviews)

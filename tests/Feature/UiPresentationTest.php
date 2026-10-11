@@ -385,7 +385,7 @@ class UiPresentationTest extends TestCase
             ->assertSee('Exact 50% Deposit')
             ->assertSee('The 50% deposit locks in your baking schedule', false)
             ->assertSee('Private order link')
-            ->assertSee('Bookmark or copy this unique private link to track your order status and upload receipts without needing an account.', false);
+            ->assertSee('Keep this link private. Anyone with it can view your order, request design changes, upload receipts after staff confirmation, and cancel an eligible order.', false);
 
         // 3. Admin Workspace Targets
         $owner = User::create([

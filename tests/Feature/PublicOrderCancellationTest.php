@@ -75,7 +75,8 @@ class PublicOrderCancellationTest extends TestCase
         $this->assertDatabaseCount('payments', 1);
         $this->assertFalse(\Illuminate\Support\Facades\Schema::hasTable('refunds'));
         $reports = app(FinancialReportService::class);
-        $period = ReportPeriod::dates(now()->toDateString(), now()->toDateString());
+        $today = now(config('bakery.business_timezone', config('bakery.pickup_timezone')))->toDateString();
+        $period = ReportPeriod::dates($today, $today);
         $this->assertEquals(500.0, $reports->events($period, 'gross_collections')->sum('amount'));
         $this->assertEquals(500.0, $reports->events($period, 'cancellation_income')->sum('amount'));
         $this->assertEquals(0.0, $reports->events($period, 'sales')->sum('amount'));

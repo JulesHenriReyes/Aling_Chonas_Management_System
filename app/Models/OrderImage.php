@@ -35,8 +35,13 @@ class OrderImage extends Model
 
     public function url(): string
     {
-        return str_starts_with($this->file_path, 'staff/')
+        return str_starts_with($this->file_path, 'staff/') || str_starts_with($this->file_path, 'design-changes/')
             ? route('orders.images.show', ['order' => $this->order_id, 'image' => $this->id])
             : asset('storage/'.$this->file_path);
+    }
+
+    public function customerUrl(string $token): string
+    {
+        return route('public.order.reference', ['token' => $token, 'image' => $this->id]);
     }
 }

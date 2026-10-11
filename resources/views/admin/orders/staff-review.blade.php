@@ -13,7 +13,9 @@
         @if ($order->paymentProofs->isNotEmpty())
             <p class="p-3 bg-amber-50 text-amber-900 rounded-lg text-sm">A transfer was reported under the previous flow. The Owner must check it. Do not ask the customer to pay again or approve an impossible request just to accept its receipt.</p>
         @endif
-        @if (Gate::allows('confirm-orders') && ($order->paymentProofs->isEmpty() || Gate::allows('review-proofs')))
+        @if ($designChange['hold'])
+            <p class="design-hold">Resolve the pending design change before confirming this order.</p>
+        @elseif (Gate::allows('confirm-orders') && ($order->paymentProofs->isEmpty() || Gate::allows('review-proofs')))
             <form action="{{ route('orders.confirm', $order) }}" method="POST" data-action-form data-validation-active="{{ old('_workflow') === 'review' ? 'true' : 'false' }}" class="staff-confirmation-form" x-data="{ reviewed: @js((bool) old('feasibility_confirmed')) }">
                 @csrf
                 <input type="hidden" name="_workflow" value="review">

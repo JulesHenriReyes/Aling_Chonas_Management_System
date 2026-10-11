@@ -28,6 +28,7 @@ class OrderReviewService
             if ($order->paymentProofs()->exists()) {
                 StaffAccess::requireOwner($user);
             }
+            app(DesignChangeService::class)->assertNoPending($order);
             if ($order->pickupDeadline()->isPast()) {
                 throw ValidationException::withMessages(['review' => 'The requested pickup has passed. Review the request with the customer before confirming.']);
             }
@@ -59,6 +60,9 @@ class OrderReviewService
             }
             $order->forceFill(['status' => 'cancelled', 'review_status' => 'rejected', 'reviewed_by' => $user->id,
                 'reviewed_at' => now(), 'cancelled_at' => now(), 'cancellation_kind' => 'staff_rejected', 'cancellation_reason' => $reason])->save();
+            DB::afterCommit(function () use ($order) {
+                try { app(DesignChangeService::class)->close($order); } catch (\Throwable $error) { report($error); }
+            });
 
             return $order;
         });

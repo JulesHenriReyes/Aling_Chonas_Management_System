@@ -16,7 +16,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->scoped(\App\Services\DesignChangeStore::class);
+        $this->app->scoped(\App\Services\DesignChangeService::class);
     }
 
     /**
@@ -26,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $staffCanOperate = fn (User $user) => $user->is_active && in_array($user->role, ['owner', 'assistant'], true);
         $ownerCanManage = fn (User $user) => $user->is_active && $user->isOwner();
-        foreach (['view-records', 'update-order-status', 'confirm-orders', 'manage-expenses', 'manage-inventory'] as $capability) {
+        foreach (['view-records', 'update-order-status', 'confirm-orders', 'review-design-changes', 'manage-expenses', 'manage-inventory'] as $capability) {
             Gate::define($capability, $staffCanOperate);
         }
         foreach (['manage-users', 'manage-products', 'view-reports', 'manage-customers', 'manage-orders',
@@ -41,6 +42,10 @@ class AppServiceProvider extends ServiceProvider
         RateLimiter::for('public-receipts', fn (Request $request) => [
             Limit::perMinute(5)->by('receipt-ip:'.$request->ip()),
             Limit::perHour(10)->by('receipt-order:'.hash('sha256', (string) $request->route('token'))),
+        ]);
+        RateLimiter::for('public-design-changes', fn (Request $request) => [
+            Limit::perMinute(10)->by('design-ip:'.$request->ip()),
+            Limit::perHour(30)->by('design-order:'.hash('sha256', (string) $request->route('token'))),
         ]);
     }
 }

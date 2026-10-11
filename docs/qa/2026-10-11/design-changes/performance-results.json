@@ -1,0 +1,17 @@
+{
+    "empty_history_ten_orders": {
+        "median_ms": 3.832,
+        "p95_ms": 9.193
+    },
+    "10_past_requests_per_order": {
+        "median_ms": 8.823,
+        "p95_ms": 15.919,
+        "bytes_per_file": 7836
+    },
+    "100_past_requests_per_order": {
+        "median_ms": 29.305,
+        "p95_ms": 48.83,
+        "bytes_per_file": 77316
+    },
+    "scope": "Local metadata read + summary for 10 displayed orders; excludes PHP bootstrap, database queries, network, HTML and photo downloads. Synthetic history is kept in isolated benchmark storage."
+}

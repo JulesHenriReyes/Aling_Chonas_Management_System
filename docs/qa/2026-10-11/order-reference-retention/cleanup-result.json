@@ -1,0 +1,12 @@
+{
+    "apply": true,
+    "orders_checked": 3,
+    "photos_expired": 2,
+    "histories_expired": 1,
+    "files": 2,
+    "bytes": 136,
+    "protected_files": 0,
+    "skipped_orders": 1,
+    "errors": [],
+    "already_running": false
+}

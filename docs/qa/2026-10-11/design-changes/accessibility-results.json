@@ -1,0 +1,34 @@
+{
+  "target": "Targeted WCAG AA checks; no claim of a full accessibility audit.",
+  "checks": [
+    "Theme input has a visible 2px focus outline",
+    ".design-editor-fields label contrast 13.36:1 meets the 4.5:1 text target",
+    ".design-editor-fields .design-muted contrast 6.8:1 meets the 4.5:1 text target",
+    ".design-submit .ui-button.primary contrast 14.43:1 meets the 4.5:1 text target",
+    "Maximum-length unbroken proposed theme and long instructions fit the phone comparison",
+    "Keyboard opens the staff decline form",
+    "Approved maximum-length theme fits the saved customer design on a phone",
+    "Approved maximum-length theme fits the saved staff design on a phone",
+    "200% desktop zoom geometry (720 CSS px / 1440 physical px) retains the submission control without horizontal overflow"
+  ],
+  "contrast": [
+    {
+      "selector": ".design-editor-fields label",
+      "foreground": "rgb(67, 41, 27)",
+      "background": "rgb(255, 255, 255)",
+      "ratio": 13.36
+    },
+    {
+      "selector": ".design-editor-fields .design-muted",
+      "foreground": "rgb(104, 88, 75)",
+      "background": "rgb(255, 255, 255)",
+      "ratio": 6.8
+    },
+    {
+      "selector": ".design-submit .ui-button.primary",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(60, 36, 21)",
+      "ratio": 14.43
+    }
+  ]
+}

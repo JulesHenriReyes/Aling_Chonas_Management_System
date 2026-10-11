@@ -2,7 +2,8 @@
 @section('title', 'Your order · Aling Chona')
 @section('content')
 @php($proof = $order->paymentProofs->first())
-<div class="public-order-status max-w-5xl mx-auto space-y-4">
+<link rel="stylesheet" href="{{ asset('css/design-changes.css') }}?v={{ filemtime(public_path('css/design-changes.css')) }}">
+<div class="public-order-status max-w-5xl mx-auto space-y-4" data-order-live data-live-url="{{ route('public.order.liveStatus', $order->private_token) }}" data-live-revision="{{ app(\App\Services\DesignChangeService::class)->liveRevision($order, $designChange) }}">
     {{-- Progress Navigation --}}
     <nav class="store-progress mb-3 sm:mb-5" aria-label="Order progress">
         <a href="{{ route('public.order.index') }}">1. Choose package</a>
@@ -39,13 +40,24 @@
     @endif
 
     {{-- Order Progress Card --}}
+    <div data-live-notice hidden class="design-notice" role="status">Your order has an update. <button type="button" data-live-reload>Load the update</button> when you’re ready.</div>
     <section class="checkout-card p-4 sm:p-5 space-y-3" aria-labelledby="order-progress">
         <div class="flex items-center justify-between border-b border-cocoa-100 pb-3">
             <h2 id="order-progress" class="font-bold text-cocoa-700 text-sm">Order progress</h2>
             <x-status :value="$order->status" :label="$order->workflowLabel()" class="order-workflow-status" />
         </div>
         <div class="text-sm text-cocoa-600">
-            @if ($order->needsStaffReview() || $order->status === 'pending')
+            @if ($designChange['hold'])
+                <div class="design-hold mt-1" role="alert">
+                    <svg class="design-hold-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <div class="design-hold-text">
+                        <strong>Preparation paused.</strong> {{ $designChange['available'] ? 'The bakery is reviewing your design change. Your current design stays in place until approval.' : 'The bakery needs to restore the design change record before work can continue.' }}
+                        <a href="#design-change">View design change</a>
+                    </div>
+                </div>
+            @elseif ($order->needsStaffReview() || $order->status === 'pending')
                 <p><strong>Awaiting staff confirmation.</strong> The bakery will check your design, quantity, pickup schedule and capacity before opening payment. Keep this private link to check the decision.</p>
                 @if ($proof || $order->amount_paid > 0)
                     <p class="mt-2 text-amber-800">A payment or receipt was reported under the previous flow. The Owner needs to check it. Please do not transfer again; contact the bakery for reconciliation.</p>
@@ -102,6 +114,26 @@
                     </span>
                 </div>
 
+                @if ($designChange['available'] && !$designChange['hold'] && app(\App\Services\DesignChangeService::class)->eligible($order))
+                    <div class="design-entry">
+                        <div class="design-entry-content">
+                            <div class="design-entry-icon-wrap">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="design-entry-title">Want to update your design?</div>
+                                <div class="design-entry-subtitle">You can update the theme, piping instructions or reference photos before baking begins.</div>
+                            </div>
+                        </div>
+                        <a class="design-entry-btn ui-button quiet" href="{{ route('public.designChanges.form', $order->private_token) }}">
+                            <span>Request design change</span>
+                            <svg class="w-4 h-4 text-cocoa-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                        </a>
+                    </div>
+                @endif
+                @include('partials.order-reference-retention')
                 @include('partials.order-item-summary')
 
                 <div class="border-t border-cocoa-100 pt-4 space-y-3">
@@ -137,6 +169,7 @@
                     </p>
                 </div>
             </section>
+            @include('partials.design-change-panel', ['staff' => false])
 
         </div>
 
@@ -356,29 +389,5 @@
     </div>
 </div>
 
-<script>
-(() => {
-    let timer = null;
-    const checkStatus = async () => {
-        if (document.hidden || document.querySelector('[data-order-cancellation][open]')) return;
-        try {
-            const res = await fetch(window.location.href, { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
-            if (res.ok) {
-                const html = await res.text();
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                const newStatus = doc.querySelector('.order-workflow-status')?.textContent;
-                const currentStatus = document.querySelector('.order-workflow-status')?.textContent;
-                if (newStatus && currentStatus && newStatus.trim() !== currentStatus.trim()) {
-                    window.location.reload();
-                }
-            }
-        } catch {}
-    };
-    timer = setInterval(checkStatus, 30000);
-    document.addEventListener('visibilitychange', () => {
-        if (!document.hidden) checkStatus();
-    });
-})();
-</script>
+<script defer src="{{ asset('js/order-live.js') }}"></script>
 @endsection

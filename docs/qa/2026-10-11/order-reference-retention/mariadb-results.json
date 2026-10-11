@@ -1,0 +1,82 @@
+{
+    "status-rechecked-after-lock": {
+        "waited_for_row_lock": true,
+        "results": [
+            {
+                "apply": true,
+                "orders_checked": 1,
+                "photos_expired": 0,
+                "histories_expired": 0,
+                "files": 0,
+                "bytes": 0,
+                "protected_files": 0,
+                "skipped_orders": 0,
+                "errors": [],
+                "already_running": false
+            }
+        ]
+    },
+    "hold-rechecked-after-lock": {
+        "waited_for_row_lock": true,
+        "results": [
+            {
+                "apply": true,
+                "orders_checked": 1,
+                "photos_expired": 0,
+                "histories_expired": 0,
+                "files": 0,
+                "bytes": 0,
+                "protected_files": 0,
+                "skipped_orders": 1,
+                "errors": [],
+                "already_running": false
+            }
+        ]
+    },
+    "overlapping-cleanup-jobs": {
+        "waited_for_row_lock": true,
+        "results": [
+            {
+                "apply": true,
+                "orders_checked": 2,
+                "photos_expired": 1,
+                "histories_expired": 0,
+                "files": 1,
+                "bytes": 25,
+                "protected_files": 0,
+                "skipped_orders": 1,
+                "errors": [],
+                "already_running": false
+            },
+            {
+                "apply": true,
+                "orders_checked": 0,
+                "photos_expired": 0,
+                "histories_expired": 0,
+                "files": 0,
+                "bytes": 0,
+                "protected_files": 0,
+                "skipped_orders": 0,
+                "errors": [],
+                "already_running": true
+            }
+        ]
+    },
+    "completion-date-rechecked-after-lock": {
+        "waited_for_row_lock": true,
+        "results": [
+            {
+                "apply": true,
+                "orders_checked": 3,
+                "photos_expired": 0,
+                "histories_expired": 0,
+                "files": 0,
+                "bytes": 0,
+                "protected_files": 0,
+                "skipped_orders": 1,
+                "errors": [],
+                "already_running": false
+            }
+        ]
+    }
+}

@@ -1,0 +1,66 @@
+{
+    "duplicate-submission": {
+        "both_waited_for_row_lock": true,
+        "results": [
+            {
+                "status": "posted"
+            },
+            {
+                "status": "posted"
+            }
+        ]
+    },
+    "duplicate-approval": {
+        "both_waited_for_row_lock": true,
+        "results": [
+            {
+                "status": "posted"
+            },
+            {
+                "status": "posted"
+            }
+        ]
+    },
+    "two-different-requests": {
+        "both_waited_for_row_lock": true,
+        "results": [
+            {
+                "status": "posted"
+            },
+            {
+                "status": "rejected",
+                "fields": [
+                    "design_change"
+                ]
+            }
+        ]
+    },
+    "approval-vs-withdrawal": {
+        "both_waited_for_row_lock": true,
+        "results": [
+            {
+                "status": "rejected",
+                "fields": [
+                    "design_change"
+                ]
+            },
+            {
+                "status": "posted"
+            }
+        ]
+    },
+    "request-vs-ready": {
+        "both_waited_for_row_lock": true,
+        "results": [
+            {
+                "status": "posted"
+            },
+            {
+                "status": "rejected",
+                "fields": [
+                    "design_change"
+                ]
+            }
+        ]
+    }
+}
